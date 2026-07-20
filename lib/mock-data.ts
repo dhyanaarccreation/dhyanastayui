@@ -1,0 +1,662 @@
+// ============================================
+// DHYANA STAYS — Mock Data
+// Complete mock dataset for all Phase 1 screens
+// ============================================
+
+export interface Property {
+  id: string;
+  name: string;
+  slug: string;
+  tagline: string;
+  description: string;
+  story: string;
+  category: string;
+  location: {
+    city: string;
+    state: string;
+    country: string;
+    coordinates: { lat: number; lng: number };
+  };
+  images: string[];
+  price: number;
+  originalPrice?: number;
+  rating: number;
+  reviewCount: number;
+  maxGuests: number;
+  bedrooms: number;
+  bathrooms: number;
+  area: string;
+  amenities: string[];
+  highlights: string[];
+  host: {
+    name: string;
+    avatar: string;
+    since: string;
+    responseRate: string;
+    responseTime: string;
+    bio: string;
+    verified: boolean;
+    languages: string[];
+  };
+  houseRules: string[];
+  cancellationPolicy: string;
+  badges: string[];
+  isFeatured: boolean;
+  isTrending: boolean;
+  sustainability: string[];
+}
+
+export interface Review {
+  id: string;
+  propertyId: string;
+  userName: string;
+  avatar: string;
+  rating: number;
+  date: string;
+  comment: string;
+  travelType: string;
+  images?: string[];
+  hostReply?: string;
+}
+
+export interface Experience {
+  id: string;
+  name: string;
+  category: string;
+  description: string;
+  price: number;
+  duration: string;
+  rating: number;
+  reviewCount: number;
+  image: string;
+  location: string;
+}
+
+export interface BlogPost {
+  id: string;
+  title: string;
+  excerpt: string;
+  category: string;
+  author: string;
+  date: string;
+  readTime: string;
+  image: string;
+  slug: string;
+}
+
+export interface Testimonial {
+  id: string;
+  name: string;
+  avatar: string;
+  location: string;
+  rating: number;
+  comment: string;
+  stayName: string;
+}
+
+export interface FAQItem {
+  question: string;
+  answer: string;
+  category: string;
+}
+
+// ============================================
+// PROPERTIES
+// ============================================
+
+export const properties: Property[] = [
+  {
+    id: "1",
+    name: "The Canopy Tiny House",
+    slug: "canopy-tiny-house",
+    tagline: "Where the forest floor becomes your living room",
+    description: "Perched among ancient mango trees, The Canopy is a minimalist tiny house designed for those who crave silence, stars, and the gentle rustling of leaves. Every corner of this 280 sq ft retreat is thoughtfully crafted to maximize natural light and airflow.",
+    story: "Built by a retired architect who believed that the most profound luxury is simplicity, The Canopy was designed over three years using locally sourced teak and recycled steel. The structure sits on stilts to preserve the forest floor beneath, allowing wildlife to pass freely underneath.",
+    category: "Tiny House",
+    location: { city: "Auroville", state: "Tamil Nadu", country: "India", coordinates: { lat: 12.0059, lng: 79.8105 } },
+    images: [
+      "https://images.unsplash.com/photo-1571896349842-33c89424de2d?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1518602164578-cd0074062767?q=80&w=1200&auto=format&fit=crop",
+    ],
+    price: 4500,
+    originalPrice: 5500,
+    rating: 4.9,
+    reviewCount: 128,
+    maxGuests: 2,
+    bedrooms: 1,
+    bathrooms: 1,
+    area: "280 sq ft",
+    amenities: ["Wi-Fi", "Kitchen", "Outdoor Shower", "Campfire", "Organic Farm", "Yoga Deck", "Cycling", "Bird Watching"],
+    highlights: ["Architect-designed", "Forest immersion", "Zero waste", "Organic breakfast"],
+    host: { name: "Arjun Menon", avatar: "https://i.pravatar.cc/150?img=12", since: "2022", responseRate: "98%", responseTime: "< 1 hour", bio: "Architect and nature lover. I believe great stays are born from respecting the land.", verified: true, languages: ["English", "Tamil", "Hindi"] },
+    houseRules: ["Check-in: 2:00 PM", "Check-out: 11:00 AM", "No smoking indoors", "Quiet hours: 10 PM – 7 AM", "Pets welcome with notice"],
+    cancellationPolicy: "Free cancellation up to 7 days before check-in. 50% refund for cancellations 3-7 days before. No refund within 3 days.",
+    badges: ["Curated Stay", "Eco Certified", "Design Excellence"],
+    isFeatured: true,
+    isTrending: true,
+    sustainability: ["Solar powered", "Rainwater harvesting", "Organic farm", "Zero single-use plastic"],
+  },
+  {
+    id: "2",
+    name: "Stone Valley Farm Stay",
+    slug: "stone-valley-farm-stay",
+    tagline: "Where agriculture meets architecture",
+    description: "A stunning farm stay nestled between granite boulders and cashew plantations. Stone Valley offers an authentic farming experience wrapped in contemporary design — think exposed stone walls, floor-to-ceiling glass, and a farm-to-table kitchen.",
+    story: "What started as a family cashew farm three generations ago has been reimagined into a hospitality destination that celebrates agriculture. The original stone walls have been preserved and integrated into the new architecture.",
+    category: "Farm Stay",
+    location: { city: "Kodaikanal", state: "Tamil Nadu", country: "India", coordinates: { lat: 10.2381, lng: 77.4892 } },
+    images: [
+      "https://images.unsplash.com/photo-1548013146-72479768bada?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1523217582562-09d0def993a6?q=80&w=1200&auto=format&fit=crop",
+    ],
+    price: 6800,
+    rating: 4.8,
+    reviewCount: 94,
+    maxGuests: 6,
+    bedrooms: 3,
+    bathrooms: 2,
+    area: "1,200 sq ft",
+    amenities: ["Wi-Fi", "Kitchen", "Swimming Pool", "BBQ", "Organic Farm", "Campfire", "Parking", "Pet Friendly"],
+    highlights: ["Heritage stone walls", "Farm-to-table dining", "Swimming pool", "Family friendly"],
+    host: { name: "Priya Shankar", avatar: "https://i.pravatar.cc/150?img=25", since: "2021", responseRate: "95%", responseTime: "< 2 hours", bio: "Third-generation farmer turning our family land into unforgettable experiences.", verified: true, languages: ["English", "Tamil"] },
+    houseRules: ["Check-in: 3:00 PM", "Check-out: 11:00 AM", "No smoking", "Quiet hours: 10 PM – 6 AM"],
+    cancellationPolicy: "Free cancellation up to 14 days before check-in.",
+    badges: ["Curated Stay", "Family Friendly"],
+    isFeatured: true,
+    isTrending: false,
+    sustainability: ["Organic farming", "Solar water heater", "Composting"],
+  },
+  {
+    id: "3",
+    name: "Nila Wellness Retreat",
+    slug: "nila-wellness-retreat",
+    tagline: "Heal. Breathe. Transform.",
+    description: "An Ayurvedic wellness retreat set on the banks of the Nila river. This sustainably built bamboo-and-laterite complex offers yoga halls, meditation gardens, Ayurvedic treatment rooms, and riverside villas designed for deep healing.",
+    story: "Founded by a couple who left corporate careers to pursue their passion for traditional healing, Nila was built entirely using local materials — bamboo, laterite, and palm thatch — following ancient Vastu principles.",
+    category: "Wellness Retreat",
+    location: { city: "Palakkad", state: "Kerala", country: "India", coordinates: { lat: 10.7867, lng: 76.6548 } },
+    images: [
+      "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?q=80&w=1200&auto=format&fit=crop",
+    ],
+    price: 8500,
+    rating: 4.95,
+    reviewCount: 67,
+    maxGuests: 4,
+    bedrooms: 2,
+    bathrooms: 2,
+    area: "900 sq ft",
+    amenities: ["Yoga Hall", "Meditation Garden", "Ayurvedic Spa", "Organic Kitchen", "River Access", "Library", "Wi-Fi"],
+    highlights: ["Ayurvedic treatments", "Riverside location", "Yoga sessions", "Digital detox"],
+    host: { name: "Dr. Lakshmi Nair", avatar: "https://i.pravatar.cc/150?img=26", since: "2020", responseRate: "99%", responseTime: "< 30 min", bio: "Ayurvedic physician & wellness architect. Every stay here is a journey inward.", verified: true, languages: ["English", "Malayalam", "Hindi"] },
+    houseRules: ["Check-in: 2:00 PM", "Check-out: 10:00 AM", "No alcohol", "No smoking", "Silence zone after 9 PM"],
+    cancellationPolicy: "Free cancellation up to 10 days before check-in.",
+    badges: ["Curated Stay", "Wellness Certified", "Eco Certified", "Signature Stay"],
+    isFeatured: true,
+    isTrending: true,
+    sustainability: ["Bamboo construction", "Solar energy", "Rainwater harvesting", "Zero waste kitchen", "Native landscaping"],
+  },
+  {
+    id: "4",
+    name: "The Glass Pavilion",
+    slug: "glass-pavilion",
+    tagline: "Luxury framed by the Western Ghats",
+    description: "A stunning glass-walled villa offering 270° views of the Western Ghats. Designed by an award-winning architect, this luxurious 3-bedroom retreat features an infinity pool, private chef service, and floor-to-ceiling windows that blur the line between indoors and nature.",
+    story: "The Glass Pavilion was conceived as an experiment in transparent architecture — the idea that a building should frame the landscape rather than obstruct it.",
+    category: "Luxury Villa",
+    location: { city: "Wayanad", state: "Kerala", country: "India", coordinates: { lat: 11.6854, lng: 76.1320 } },
+    images: [
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1483683804023-6ccdb62f86ef?q=80&w=1200&auto=format&fit=crop",
+    ],
+    price: 18500,
+    originalPrice: 22000,
+    rating: 4.85,
+    reviewCount: 42,
+    maxGuests: 6,
+    bedrooms: 3,
+    bathrooms: 3,
+    area: "2,400 sq ft",
+    amenities: ["Infinity Pool", "Private Chef", "Wi-Fi", "AC", "Home Theatre", "BBQ", "Wine Cellar", "Parking", "Gym"],
+    highlights: ["270° mountain views", "Infinity pool", "Private chef", "Award-winning design"],
+    host: { name: "Rahul & Meera Kapoor", avatar: "https://i.pravatar.cc/150?img=13", since: "2023", responseRate: "100%", responseTime: "< 1 hour", bio: "We design luxury that respects nature. Every stay should be a masterpiece.", verified: true, languages: ["English", "Hindi", "Malayalam"] },
+    houseRules: ["Check-in: 3:00 PM", "Check-out: 12:00 PM", "No parties", "Pool rules apply"],
+    cancellationPolicy: "Free cancellation up to 21 days before check-in. 50% refund for 7-21 days.",
+    badges: ["Curated Stay", "Signature Stay", "Luxury Collection"],
+    isFeatured: true,
+    isTrending: true,
+    sustainability: ["Solar panels", "Natural ventilation"],
+  },
+  {
+    id: "5",
+    name: "Bamboo Nest Eco Stay",
+    slug: "bamboo-nest-eco-stay",
+    tagline: "Live like nature intended",
+    description: "A cluster of elevated bamboo cabins connected by wooden walkways through a dense spice plantation. Each cabin is designed to be completely off-grid while offering surprising comfort — handwoven mattresses, solar-heated showers, and stargazing decks.",
+    story: "Bamboo Nest was built by a community of local artisans using traditional construction techniques. No machine-cut wood was used — every joint is hand-carved.",
+    category: "Eco Stay",
+    location: { city: "Munnar", state: "Kerala", country: "India", coordinates: { lat: 10.0889, lng: 77.0595 } },
+    images: [
+      "https://images.unsplash.com/photo-1571055107559-3e67626fa8be?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop",
+    ],
+    price: 3200,
+    rating: 4.7,
+    reviewCount: 156,
+    maxGuests: 2,
+    bedrooms: 1,
+    bathrooms: 1,
+    area: "200 sq ft",
+    amenities: ["Stargazing Deck", "Organic Meals", "Spice Garden", "Guided Trek", "Campfire", "Bird Watching"],
+    highlights: ["100% off-grid", "Handcrafted bamboo", "Spice plantation", "Stargazing"],
+    host: { name: "Thomas Kurien", avatar: "https://i.pravatar.cc/150?img=14", since: "2019", responseRate: "92%", responseTime: "< 3 hours", bio: "Conservationist and storyteller. My stays are built by the community, for the community.", verified: true, languages: ["English", "Malayalam"] },
+    houseRules: ["Check-in: 2:00 PM", "Check-out: 11:00 AM", "No plastic allowed", "Respect wildlife"],
+    cancellationPolicy: "Free cancellation up to 5 days before check-in.",
+    badges: ["Curated Stay", "Eco Certified", "Community Built"],
+    isFeatured: false,
+    isTrending: true,
+    sustainability: ["100% off-grid", "Bamboo construction", "No plastic", "Community built", "Native landscaping"],
+  },
+  {
+    id: "6",
+    name: "Heritage Courtyard Villa",
+    slug: "heritage-courtyard-villa",
+    tagline: "A 200-year-old story, retold for today",
+    description: "A meticulously restored 200-year-old Chettinad mansion with original hand-painted tiles, carved wooden columns, and a central courtyard. Modern comforts have been seamlessly integrated while preserving every historical detail.",
+    story: "This villa was almost demolished before an architect-conservationist stepped in to save it. Three years and 400 artisans later, it stands as a testament to Chettinad heritage.",
+    category: "Heritage Home",
+    location: { city: "Karaikudi", state: "Tamil Nadu", country: "India", coordinates: { lat: 10.0735, lng: 78.7811 } },
+    images: [
+      "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?q=80&w=1200&auto=format&fit=crop",
+    ],
+    price: 7200,
+    rating: 4.9,
+    reviewCount: 83,
+    maxGuests: 8,
+    bedrooms: 4,
+    bathrooms: 3,
+    area: "3,500 sq ft",
+    amenities: ["Courtyard", "Heritage Kitchen", "Library", "Wi-Fi", "AC", "Garden", "Cooking Class", "Heritage Walk"],
+    highlights: ["200-year-old mansion", "Original tile work", "Chettinad cooking class", "Heritage architecture"],
+    host: { name: "Vijay Raghavan", avatar: "https://i.pravatar.cc/150?img=15", since: "2021", responseRate: "96%", responseTime: "< 1 hour", bio: "Architecture conservationist. I believe old buildings have stories worth saving.", verified: true, languages: ["English", "Tamil", "Hindi"] },
+    houseRules: ["Check-in: 2:00 PM", "Check-out: 11:00 AM", "No smoking", "Photography welcome"],
+    cancellationPolicy: "Free cancellation up to 14 days before check-in.",
+    badges: ["Curated Stay", "Heritage Certified", "Signature Stay"],
+    isFeatured: true,
+    isTrending: false,
+    sustainability: ["Restored heritage", "Natural ventilation", "Rainwater harvesting"],
+  },
+];
+
+// ============================================
+// CATEGORIES
+// ============================================
+
+export const categories = [
+  { name: "Tiny Houses", icon: "Home", count: 24, slug: "tiny-houses", description: "Minimalist living, maximum experience" },
+  { name: "Farm Stays", icon: "Sprout", count: 38, slug: "farm-stays", description: "Connect with the land" },
+  { name: "Wellness Retreats", icon: "Heart", count: 15, slug: "wellness-retreats", description: "Heal body and soul" },
+  { name: "Luxury Villas", icon: "Crown", count: 12, slug: "luxury-villas", description: "Uncompromising elegance" },
+  { name: "Eco Stays", icon: "Leaf", count: 29, slug: "eco-stays", description: "Sustainable luxury" },
+  { name: "Heritage Homes", icon: "Landmark", count: 18, slug: "heritage-homes", description: "Stories in stone" },
+  { name: "Workations", icon: "Laptop", count: 21, slug: "workations", description: "Work from paradise" },
+  { name: "Couple Escapes", icon: "HeartHandshake", count: 27, slug: "couple-escapes", description: "Romance redefined" },
+  { name: "Family Holidays", icon: "Users", count: 33, slug: "family-holidays", description: "Memories for generations" },
+  { name: "Pet Friendly", icon: "PawPrint", count: 16, slug: "pet-friendly", description: "Bring your fur baby" },
+  { name: "Adventure Camps", icon: "Mountain", count: 11, slug: "adventure-camps", description: "Thrill seekers welcome" },
+  { name: "Boutique Resorts", icon: "Castle", count: 8, slug: "boutique-resorts", description: "Intimate grandeur" },
+];
+
+// ============================================
+// DESTINATIONS
+// ============================================
+
+export const destinations = [
+  { name: "Auroville", state: "Tamil Nadu", image: "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?q=80&w=1200&auto=format&fit=crop", properties: 12 },
+  { name: "Kodaikanal", state: "Tamil Nadu", image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=1200&auto=format&fit=crop", properties: 8 },
+  { name: "Wayanad", state: "Kerala", image: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?q=80&w=1200&auto=format&fit=crop", properties: 15 },
+  { name: "Munnar", state: "Kerala", image: "https://images.unsplash.com/photo-1519046904884-53103b34b206?q=80&w=1200&auto=format&fit=crop", properties: 11 },
+  { name: "Coorg", state: "Karnataka", image: "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?q=80&w=1200&auto=format&fit=crop", properties: 9 },
+  { name: "Goa", state: "Goa", image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200&auto=format&fit=crop", properties: 18 },
+];
+
+// ============================================
+// REVIEWS
+// ============================================
+
+export const reviews: Review[] = [
+  { id: "r1", propertyId: "1", userName: "Ananya Sharma", avatar: "https://i.pravatar.cc/150?img=32", rating: 5, date: "2026-06-15", comment: "The Canopy is everything the photos promise and more. Waking up to birdsong and coffee brewed on a wood stove — this is the real luxury. Arjun's attention to detail is extraordinary.", travelType: "Couple", images: ["https://images.unsplash.com/photo-1571896349842-33c89424de2d?q=80&w=800&auto=format&fit=crop"] },
+  { id: "r2", propertyId: "1", userName: "Rohan Desai", avatar: "https://i.pravatar.cc/150?img=16", rating: 5, date: "2026-05-28", comment: "I came here to disconnect and I succeeded completely. The zero-waste approach is genuine — not performative. Best decision of 2026.", travelType: "Solo", hostReply: "Thank you, Rohan! Your respect for our ecosystem made you the perfect guest." },
+  { id: "r3", propertyId: "2", userName: "Deepika Menon", avatar: "https://i.pravatar.cc/150?img=33", rating: 5, date: "2026-06-01", comment: "Our kids loved the farm experience! Milking cows, picking cashews, and swimming in the natural pool. Priya made us feel like family.", travelType: "Family" },
+  { id: "r4", propertyId: "3", userName: "Kavitha Reddy", avatar: "https://i.pravatar.cc/150?img=34", rating: 5, date: "2026-05-10", comment: "I've been to wellness retreats across the world — Bali, Thailand, Sedona. Nila rivals them all at a fraction of the cost. The Ayurvedic treatments were life-changing.", travelType: "Solo" },
+  { id: "r5", propertyId: "4", userName: "Amit & Neha Joshi", avatar: "https://i.pravatar.cc/150?img=17", rating: 5, date: "2026-04-22", comment: "The infinity pool overlooking the Ghats at sunrise is a memory we'll carry forever. Worth every rupee.", travelType: "Couple" },
+];
+
+// ============================================
+// EXPERIENCES
+// ============================================
+
+export const experiences: Experience[] = [
+  { id: "e1", name: "Sunrise Yoga at Auroville", category: "Wellness", description: "Begin your day with a guided yoga session overlooking the Matrimandir at golden hour.", price: 800, duration: "1.5 hours", rating: 4.9, reviewCount: 45, image: "https://images.unsplash.com/photo-1521401830884-6c03c1c87ebb?q=80&w=800&auto=format&fit=crop", location: "Auroville" },
+  { id: "e2", name: "Farm-to-Table Cooking Class", category: "Food", description: "Harvest ingredients from an organic farm and cook a traditional South Indian meal with a master chef.", price: 1500, duration: "3 hours", rating: 4.8, reviewCount: 32, image: "https://images.unsplash.com/photo-1544787219-7f47ccb76574?q=80&w=800&auto=format&fit=crop", location: "Kodaikanal" },
+  { id: "e3", name: "Western Ghats Trek", category: "Adventure", description: "A guided trek through pristine shola forests with a naturalist who knows every bird and butterfly.", price: 1200, duration: "5 hours", rating: 4.7, reviewCount: 28, image: "https://images.unsplash.com/photo-1533105079780-92b9be482077?q=80&w=800&auto=format&fit=crop", location: "Munnar" },
+  { id: "e4", name: "Pottery Workshop", category: "Culture", description: "Shape clay on a traditional wheel with a fourth-generation potter in a riverside studio.", price: 600, duration: "2 hours", rating: 4.6, reviewCount: 19, image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=800&auto=format&fit=crop", location: "Auroville" },
+  { id: "e5", name: "Spice Plantation Tour", category: "Nature", description: "Walk through a working spice plantation learning about pepper, cardamom, and vanilla cultivation.", price: 500, duration: "2 hours", rating: 4.8, reviewCount: 56, image: "https://images.unsplash.com/photo-1465101162946-4377e57745c3?q=80&w=800&auto=format&fit=crop", location: "Wayanad" },
+  { id: "e6", name: "Night Photography Safari", category: "Photography", description: "Capture the Milky Way and nocturnal wildlife with a professional astrophotographer.", price: 2000, duration: "4 hours", rating: 4.9, reviewCount: 14, image: "https://images.unsplash.com/photo-1611095973763-414019e72400?q=80&w=800&auto=format&fit=crop", location: "Coorg" },
+];
+
+// ============================================
+// BLOG POSTS
+// ============================================
+
+export const blogPosts: BlogPost[] = [
+  { id: "b1", title: "Why Tiny Houses Are the Future of Sustainable Travel", excerpt: "Discover how minimalist architecture is revolutionizing the hospitality industry and why travellers are choosing less over more.", category: "Architecture", author: "Dhyana Editorial", date: "2026-06-28", readTime: "6 min", image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=1200&auto=format&fit=crop", slug: "tiny-houses-future" },
+  { id: "b2", title: "The Art of Farm-to-Table: A Journey Through South Indian Kitchens", excerpt: "From tamarind groves to coconut toddy, explore how India's farm stays are redefining culinary tourism.", category: "Food & Culture", author: "Priya Shankar", date: "2026-06-15", readTime: "8 min", image: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=1200&auto=format&fit=crop", slug: "farm-to-table-south-india" },
+  { id: "b3", title: "Designing for Peace: Architecture That Heals", excerpt: "How spatial design, natural materials, and biophilic principles create environments that actively promote wellness.", category: "Wellness", author: "Dr. Lakshmi Nair", date: "2026-05-30", readTime: "7 min", image: "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1200&auto=format&fit=crop", slug: "architecture-that-heals" },
+  { id: "b4", title: "Investing in Curated Stays: A New Asset Class", excerpt: "Why fractional hospitality investment is becoming the smartest alternative investment for millennials.", category: "Investment", author: "Dhyana Investment Team", date: "2026-05-15", readTime: "10 min", image: "https://images.unsplash.com/photo-1600891964599-f61ba0e24092?q=80&w=1200&auto=format&fit=crop", slug: "investing-curated-stays" },
+];
+
+// ============================================
+// TESTIMONIALS
+// ============================================
+
+export const testimonials: Testimonial[] = [
+  { id: "t1", name: "Meera Krishnan", avatar: "https://i.pravatar.cc/150?img=35", location: "Mumbai", rating: 5, comment: "Dhyana Stays has completely changed how my family travels. Every property feels handpicked, authentic, and deeply connected to its surroundings. We've booked four stays in the last year.", stayName: "Stone Valley Farm Stay" },
+  { id: "t2", name: "Aditya Rao", avatar: "https://i.pravatar.cc/150?img=18", location: "Bangalore", rating: 5, comment: "As an architect, I'm extremely particular about design. Dhyana's curated collection genuinely maintains a standard I rarely see on other platforms. The inspection process makes a real difference.", stayName: "The Glass Pavilion" },
+  { id: "t3", name: "Sunita & Raj Malhotra", avatar: "https://i.pravatar.cc/150?img=36", location: "Delhi", rating: 5, comment: "We invested in a Dhyana property through their split investment model. The transparency in reporting and the quality of the operations team gives us complete confidence in our investment.", stayName: "Investor" },
+];
+
+// ============================================
+// FAQ
+// ============================================
+
+export const faqItems: FAQItem[] = [
+  { question: "What makes Dhyana Stays different from other booking platforms?", answer: "Every property on Dhyana Stays is personally inspected and scored across architecture, hospitality, sustainability, safety, and guest experience. We don't list every stay — we curate unforgettable experiences. Each property must pass a comprehensive quality inspection before being published.", category: "General" },
+  { question: "How does the curated inspection process work?", answer: "Our expert inspectors evaluate every property across 7 categories: Architecture, Interior Design, Hospitality, Cleanliness, Sustainability, Safety, and Guest Experience. Properties scoring below 70/100 are not approved. Approved stays receive quality badges based on their scores.", category: "General" },
+  { question: "What is the cancellation policy?", answer: "Cancellation policies vary by property. Most stays offer free cancellation up to 7-14 days before check-in. Each property's specific policy is clearly displayed on its listing page and during the booking process.", category: "Bookings" },
+  { question: "How does the Split Investment model work?", answer: "Each curated hospitality project is divided into investment units. Investors purchase one or more units and receive proportional revenue share from bookings. Dhyana Stays handles all operations including design, construction, marketing, and guest management.", category: "Investment" },
+  { question: "Can I list my property on Dhyana Stays?", answer: "Yes! Apply as a host through our platform. You'll need to complete KYC verification, submit property details and photos, and pass our Curated Stay Inspection. Only properties meeting our quality standards are published.", category: "Hosting" },
+  { question: "What payment methods are accepted?", answer: "We accept UPI (GPay, PhonePe, Paytm), Credit/Debit Cards (Visa, MasterCard, RuPay), Net Banking, and Wallets. All payments are processed securely through Razorpay.", category: "Payments" },
+  { question: "Do you offer experiences beyond accommodation?", answer: "Absolutely! Dhyana Stays offers curated local experiences including yoga sessions, cooking classes, farm tours, adventure activities, cycling tours, and more. You can add these during booking or book separately.", category: "Experiences" },
+  { question: "Is there a loyalty program?", answer: "Yes! Our rewards program lets you earn points for bookings, reviews, referrals, and completing your profile. Points can be redeemed for discounts on future bookings. Premium membership offers additional benefits.", category: "Rewards" },
+];
+
+// ============================================
+// STATS
+// ============================================
+
+export const platformStats = {
+  totalStays: 312,
+  totalGuests: 28400,
+  totalDestinations: 45,
+  averageRating: 4.82,
+  sustainableStays: 187,
+  countries: 1,
+};
+
+// ============================================
+// NAVIGATION
+// ============================================
+
+export const navLinks = [
+  { label: "Home", href: "/" },
+  { label: "Explore Stays", href: "/stays" },
+  { label: "Experiences", href: "/experiences" },
+  { label: "Food", href: "/food" },
+  { label: "Business", href: "/business" },
+  { label: "About Us", href: "/about" },
+  { label: "Contact", href: "/contact" },
+];
+
+// ============================================
+// HOMEPAGE SERVICES HUB (tabbed section)
+// ============================================
+
+export interface FoodItem {
+  id: string;
+  name: string;
+  image: string;
+  cuisine: string;
+  veg: boolean;
+  pricePerPlate: number;
+  serves: string;
+  cooks: { name: string; avatar: string; specialty: string }[];
+}
+
+export const foodMenu: FoodItem[] = [
+  {
+    id: "f1",
+    name: "Chettinad Home Thali",
+    image: "https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=800&q=80",
+    cuisine: "South Indian",
+    veg: true,
+    pricePerPlate: 350,
+    serves: "1 person",
+    cooks: [
+      { name: "Meena Akka", avatar: "https://i.pravatar.cc/150?img=47", specialty: "Chettinad" },
+      { name: "Raju Anna", avatar: "https://i.pravatar.cc/150?img=59", specialty: "Village style" },
+    ],
+  },
+  {
+    id: "f2",
+    name: "Farm Harvest Bowl",
+    image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&q=80",
+    cuisine: "Organic · Farm to Table",
+    veg: true,
+    pricePerPlate: 420,
+    serves: "1 person",
+    cooks: [
+      { name: "Chef Elena", avatar: "https://i.pravatar.cc/150?img=44", specialty: "Continental" },
+      { name: "Priya Shankar", avatar: "https://i.pravatar.cc/150?img=25", specialty: "Farm cuisine" },
+    ],
+  },
+  {
+    id: "f3",
+    name: "Auroville Breakfast Basket",
+    image: "https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?w=800&q=80",
+    cuisine: "Continental · Bakes",
+    veg: true,
+    pricePerPlate: 280,
+    serves: "1 person",
+    cooks: [
+      { name: "Marc D", avatar: "https://i.pravatar.cc/150?img=13", specialty: "Sourdough & bakes" },
+      { name: "Meena Akka", avatar: "https://i.pravatar.cc/150?img=47", specialty: "Filter coffee" },
+    ],
+  },
+  {
+    id: "f4",
+    name: "Dum Biryani Pot (Family)",
+    image: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=800&q=80",
+    cuisine: "Hyderabadi",
+    veg: false,
+    pricePerPlate: 950,
+    serves: "3–4 persons",
+    cooks: [
+      { name: "Raju Anna", avatar: "https://i.pravatar.cc/150?img=59", specialty: "Dum biryani" },
+      { name: "Chef Imran", avatar: "https://i.pravatar.cc/150?img=68", specialty: "Nizami dishes" },
+    ],
+  },
+];
+
+export interface EventPlanner {
+  id: string;
+  name: string;
+  type: string;
+  image: string;
+  rating: number;
+  eventsDone: number;
+  startingPrice: number;
+  tags: string[];
+}
+
+export const eventPlanners: EventPlanner[] = [
+  {
+    id: "ep1",
+    name: "Saffron Knots",
+    type: "Wedding Planners",
+    image: "https://images.unsplash.com/photo-1519741497674-611481863552?w=800&q=80",
+    rating: 4.9,
+    eventsDone: 140,
+    startingPrice: 150000,
+    tags: ["Destination weddings", "Farm venues", "Decor & rituals"],
+  },
+  {
+    id: "ep2",
+    name: "Hushh Surprises",
+    type: "Surprise Events",
+    image: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=800&q=80",
+    rating: 4.8,
+    eventsDone: 320,
+    startingPrice: 4500,
+    tags: ["Proposals", "Birthdays", "Candlelight setups"],
+  },
+  {
+    id: "ep3",
+    name: "Gather & Grow",
+    type: "Retreat & Corporate",
+    image: "https://images.unsplash.com/photo-1511578314322-379afb476865?w=800&q=80",
+    rating: 4.7,
+    eventsDone: 95,
+    startingPrice: 35000,
+    tags: ["Team offsites", "Wellness retreats", "Workshops"],
+  },
+];
+
+export interface LocalEvent {
+  id: string;
+  title: string;
+  image: string;
+  date: string;
+  venue: string;
+  price: number;
+  spotsLeft: number;
+  kind: string;
+}
+
+export const localEvents: LocalEvent[] = [
+  {
+    id: "le1",
+    title: "Terracotta Pottery Workshop",
+    image: "https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=800&q=80",
+    date: "Sat, Jul 25",
+    venue: "Auroville · 2.1 km",
+    price: 850,
+    spotsLeft: 6,
+    kind: "Workshop",
+  },
+  {
+    id: "le2",
+    title: "Sunrise Beach Yoga Circle",
+    image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&q=80",
+    date: "Sun, Jul 26",
+    venue: "Serenity Beach · 4 km",
+    price: 300,
+    spotsLeft: 12,
+    kind: "Wellness",
+  },
+  {
+    id: "le3",
+    title: "Full Moon Folk Concert",
+    image: "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=800&q=80",
+    date: "Fri, Jul 31",
+    venue: "Adishakti Theatre · 3.5 km",
+    price: 600,
+    spotsLeft: 30,
+    kind: "Music",
+  },
+  {
+    id: "le4",
+    title: "Chettinad Cooking Class",
+    image: "https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=800&q=80",
+    date: "Wed, Jul 29",
+    venue: "Stone Valley Farm · 1 km",
+    price: 1200,
+    spotsLeft: 4,
+    kind: "Workshop",
+  },
+];
+
+export interface RentalVehicle {
+  id: string;
+  name: string;
+  type: string;
+  image: string;
+  pricePerDay: number;
+  features: string[];
+}
+
+export const rentalVehicles: RentalVehicle[] = [
+  {
+    id: "rv1",
+    name: "Vespa ZX 125",
+    type: "Scooter",
+    image: "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=800&q=80",
+    pricePerDay: 450,
+    features: ["2 helmets", "Unlimited km", "Doorstep delivery"],
+  },
+  {
+    id: "rv2",
+    name: "Royal Enfield Classic 350",
+    type: "Motorcycle",
+    image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80",
+    pricePerDay: 900,
+    features: ["Touring ready", "Full tank", "24×7 assist"],
+  },
+  {
+    id: "rv3",
+    name: "Mahindra Thar 4×4",
+    type: "SUV",
+    image: "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=800&q=80",
+    pricePerDay: 3200,
+    features: ["Self-drive", "Insurance incl.", "Hill ready"],
+  },
+  {
+    id: "rv4",
+    name: "City Trail Bicycle",
+    type: "Bicycle",
+    image: "https://images.unsplash.com/photo-1485965120184-e220f721d03e?w=800&q=80",
+    pricePerDay: 150,
+    features: ["Helmet", "Lock & lights", "Free map"],
+  },
+];
+
+export interface Hostel {
+  id: string;
+  name: string;
+  location: string;
+  image: string;
+  bedPrice: number;
+  rating: number;
+  perks: string[];
+}
+
+export const hostels: Hostel[] = [
+  {
+    id: "h1",
+    name: "Wander Nest Auroville",
+    location: "Auroville, Tamil Nadu",
+    image: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=800&q=80",
+    bedPrice: 499,
+    rating: 4.6,
+    perks: ["Female dorm", "Lockers", "Free Wi-Fi"],
+  },
+  {
+    id: "h2",
+    name: "Backpacker's Barn",
+    location: "Kodaikanal, Tamil Nadu",
+    image: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&q=80",
+    bedPrice: 449,
+    rating: 4.5,
+    perks: ["Bonfire nights", "Café", "Trek desk"],
+  },
+  {
+    id: "h3",
+    name: "The Common Room",
+    location: "Pondicherry",
+    image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=800&q=80",
+    bedPrice: 599,
+    rating: 4.7,
+    perks: ["Co-work space", "AC dorms", "Breakfast"],
+  },
+];
