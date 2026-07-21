@@ -1,4 +1,5 @@
 import Link from "next/link";
+import ContactSection from "@/app/components/ContactSection";
 import {
   Leaf,
   Heart,
@@ -143,7 +144,7 @@ const finalCtas = [
   { label: "Become a Host", href: "/host/onboarding", primary: false },
   { label: "Partner With Us", href: "/business", primary: false },
   { label: "Invest With Us", href: "/business", primary: false },
-  { label: "Contact Our Team", href: "/contact", primary: false },
+  { label: "Contact Our Team", href: "#contact", primary: false },
 ];
 
 export default function AboutPage() {
@@ -519,6 +520,11 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+
+      {/* ================= CONTACT ================= */}
+      <div className="bg-surface/40">
+        <ContactSection />
+      </div>
 
       {/* ================= FINAL CTA ================= */}
       <section className="py-24">

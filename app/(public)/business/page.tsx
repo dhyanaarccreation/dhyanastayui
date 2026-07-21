@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import ContactSection from "@/app/components/ContactSection";
 import {
   Home,
   IndianRupee,
@@ -875,9 +876,14 @@ export default function BusinessPage() {
           </form>
         </div>
         <p className="text-center text-[11px] text-subtle mt-3 flex items-center justify-center gap-1.5">
-          <Users size={11} /> Prefer a human? Our partner team replies within a day — <Link href="/contact" className="text-primary hover:underline">contact us</Link>.
+          <Users size={11} /> Prefer a human? Our partner team replies within a day — <Link href="#contact" className="text-primary hover:underline">contact us</Link>.
         </p>
       </section>
+
+      {/* ================= CONTACT ================= */}
+      <div className="bg-surface/40 border-t border-surface-hover">
+        <ContactSection />
+      </div>
     </div>
   );
 }

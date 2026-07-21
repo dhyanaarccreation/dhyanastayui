@@ -97,12 +97,20 @@ export default function Navbar() {
 
           {/* Desktop Actions */}
           <div className="hidden lg:flex items-center gap-3">
-            <button className="p-2 rounded-lg text-muted hover:text-foreground hover:bg-surface-hover transition-colors">
+            <Link
+              href="/stays"
+              aria-label="Search stays"
+              className="p-2 rounded-lg text-muted hover:text-foreground hover:bg-surface-hover transition-colors"
+            >
               <Search size={18} />
-            </button>
-            <button className="p-2 rounded-lg text-muted hover:text-foreground hover:bg-surface-hover transition-colors">
+            </Link>
+            <Link
+              href="/traveller/wishlist"
+              aria-label="View wishlist"
+              className="p-2 rounded-lg text-muted hover:text-foreground hover:bg-surface-hover transition-colors"
+            >
               <Heart size={18} />
-            </button>
+            </Link>
             <ThemeToggle />
             <Link
               href="/login"

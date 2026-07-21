@@ -53,7 +53,7 @@ type TabKey = (typeof tabs)[number]["key"];
 const viewAll: Record<TabKey, { href: string; label: string }> = {
   stays: { href: "/stays", label: "View all stays" },
   food: { href: "/food", label: "Explore curated food" },
-  planners: { href: "/local-services", label: "All planners & managers" },
+  planners: { href: "/event-planners", label: "All event planners" },
   events: { href: "/experiences", label: "All events & workshops" },
   vehicles: { href: "/bike-rental", label: "All rentals" },
   hostels: { href: "/stays?category=hostels", label: "All budget stays" },
@@ -274,10 +274,10 @@ export default function ServicesSection() {
                       </span>
                     </p>
                     <Link
-                      href="/local-services"
+                      href={`/event-planners/${ep.id}`}
                       className="px-3.5 py-1.5 text-xs font-medium rounded-full border border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-colors"
                     >
-                      Enquire
+                      View &amp; Book
                     </Link>
                   </div>
                 </div>

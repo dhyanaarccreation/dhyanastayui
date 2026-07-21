@@ -1,6 +1,6 @@
 // ============================================
 // DHYANA STAYS — Multi-Role Dashboard Registry
-// Single source of truth for all 17 dashboards:
+// Single source of truth for all 19 dashboards:
 // header dropdown, sidebar nav, role switcher,
 // and the generic dashboard pages.
 // ============================================
@@ -87,6 +87,7 @@ export const dashboardRoles: DashboardRole[] = [
       { label: "AI Trip Planner", href: "/traveller/ai-planner", icon: Star },
       { label: "Wishlist", href: "/traveller/wishlist", icon: Heart },
       { label: "Travel SIP", href: "/traveller/sip", icon: PiggyBank },
+      { label: "Membership", href: "/traveller/membership", icon: Crown },
       { label: "Rewards & Coupons", href: "/traveller/rewards", icon: Gift },
       { label: "Settings", href: "/traveller/settings", icon: Settings },
       { label: "Support", href: "/traveller/support", icon: HelpCircle },
@@ -151,25 +152,17 @@ export const dashboardRoles: DashboardRole[] = [
     persona: "Rahul Verma",
     icon: Crown,
     group: "Travel & Stays",
+    nav: [
+      { label: "Cluster Overview", href: "/super-host", icon: LayoutDashboard },
+      { label: "Properties & Pricing", href: "/super-host/properties", icon: Building },
+      { label: "Staff & Quality", href: "/super-host/staff", icon: Users },
+      { label: "Settings", href: "/super-host/settings", icon: Settings },
+    ],
     stats: [
-      { label: "Regions Managed", value: "5", delta: "TN · KL · KA" },
+      { label: "Properties in Cluster", value: "32", delta: "5 regions" },
       { label: "Network Occupancy", value: "81%", delta: "+4% QoQ" },
       { label: "Quarterly Revenue", value: "₹2.1Cr", delta: "+9% QoQ" },
       { label: "Team Members", value: "38", delta: "6 regional hosts" },
-    ],
-    sections: [
-      {
-        id: "regional-overview",
-        title: "Regional Overview",
-        icon: Map,
-        bullets: ["Revenue Monitoring", "Occupancy Trends", "Inspection Status"],
-      },
-      {
-        id: "growth",
-        title: "Growth & Teams",
-        icon: TrendingUp,
-        bullets: ["Marketing Campaigns", "Team Performance", "Expansion Planning"],
-      },
     ],
   },
 
@@ -627,43 +620,44 @@ export const dashboardRoles: DashboardRole[] = [
     ],
   },
   {
+    slug: "regional-admin",
+    title: "Regional Admin Dashboard",
+    badge: "Regional Admin",
+    persona: "Meera Chandran",
+    icon: Map,
+    group: "Business & Admin",
+    nav: [
+      { label: "Regional Overview", href: "/regional-admin", icon: LayoutDashboard },
+      { label: "Approvals & Assignments", href: "/regional-admin/approvals", icon: ShieldCheck },
+      { label: "Regional Marketing", href: "/regional-admin/marketing", icon: Megaphone },
+      { label: "Settings", href: "/regional-admin/settings", icon: Settings },
+    ],
+    stats: [
+      { label: "Region", value: "TN · Pondicherry", delta: "assigned scope" },
+      { label: "Pending Approvals", value: "6", delta: "3 hosts · 3 properties" },
+      { label: "Regional Revenue", value: "₹18.2L", delta: "+12% MoM" },
+      { label: "Open Escalations", value: "2", delta: "1 SLA at risk" },
+    ],
+  },
+  {
     slug: "super-admin",
     title: "Super Admin Dashboard",
     badge: "Super Admin",
     persona: "Root Access",
     icon: Shield,
     group: "Business & Admin",
+    nav: [
+      { label: "Overview", href: "/super-admin", icon: LayoutDashboard },
+      { label: "Platform Control", href: "/super-admin/platform", icon: Server },
+      { label: "Commerce Rules", href: "/super-admin/commerce", icon: Percent },
+      { label: "Security & Access", href: "/super-admin/security", icon: Lock },
+      { label: "Systems & AI", href: "/super-admin/systems", icon: Database },
+    ],
     stats: [
       { label: "Modules Online", value: "26/26", delta: "all healthy" },
       { label: "Feature Flags", value: "14", delta: "3 in rollout" },
       { label: "System Uptime", value: "99.98%", delta: "30 days" },
       { label: "Audit Events Today", value: "1,872", delta: "0 critical" },
-    ],
-    sections: [
-      {
-        id: "platform",
-        title: "Platform Control",
-        icon: Server,
-        bullets: ["All Modules", "Feature Flags", "Listing / Delisting", "Advertisements", "Platform Configuration"],
-      },
-      {
-        id: "commerce",
-        title: "Commerce Rules",
-        icon: Percent,
-        bullets: ["Pricing Rules", "Commission Rules", "Revenue Control"],
-      },
-      {
-        id: "security",
-        title: "Security & Access",
-        icon: Lock,
-        bullets: ["Security", "User Permissions", "Audit Logs"],
-      },
-      {
-        id: "systems",
-        title: "Systems & AI",
-        icon: Database,
-        bullets: ["Integrations", "System Health", "AI Settings", "Backup & Recovery"],
-      },
     ],
   },
 ];

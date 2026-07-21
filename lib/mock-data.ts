@@ -70,6 +70,11 @@ export interface Experience {
   reviewCount: number;
   image: string;
   location: string;
+  gallery?: string[];
+  video?: string;
+  host?: { name: string; role: string; avatar: string };
+  included?: string[];
+  groupSize?: string;
 }
 
 export interface BlogPost {
@@ -319,6 +324,13 @@ export const destinations = [
   { name: "Munnar", state: "Kerala", image: "https://images.unsplash.com/photo-1519046904884-53103b34b206?q=80&w=1200&auto=format&fit=crop", properties: 11 },
   { name: "Coorg", state: "Karnataka", image: "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?q=80&w=1200&auto=format&fit=crop", properties: 9 },
   { name: "Goa", state: "Goa", image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200&auto=format&fit=crop", properties: 18 },
+  { name: "Pondicherry", state: "Pondicherry", image: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?q=80&w=1200&auto=format&fit=crop", properties: 14 },
+  { name: "Ooty", state: "Tamil Nadu", image: "https://images.unsplash.com/photo-1593693411515-c20261bcad6e?q=80&w=1200&auto=format&fit=crop", properties: 7 },
+  { name: "Chikmagalur", state: "Karnataka", image: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=1200&auto=format&fit=crop", properties: 10 },
+  { name: "Alleppey", state: "Kerala", image: "https://images.unsplash.com/photo-1544194215-541c2d3561a4?q=80&w=1200&auto=format&fit=crop", properties: 13 },
+  { name: "Hampi", state: "Karnataka", image: "https://images.unsplash.com/photo-1573790387438-4da905039392?q=80&w=1200&auto=format&fit=crop", properties: 6 },
+  { name: "Yelagiri", state: "Tamil Nadu", image: "https://images.unsplash.com/photo-1591017403286-fd8493524e1e?q=80&w=1200&auto=format&fit=crop", properties: 5 },
+  { name: "Palakkad", state: "Kerala", image: "https://images.unsplash.com/photo-1616684000067-36952fde56ec?q=80&w=1200&auto=format&fit=crop", properties: 8 },
 ];
 
 // ============================================
@@ -338,12 +350,126 @@ export const reviews: Review[] = [
 // ============================================
 
 export const experiences: Experience[] = [
-  { id: "e1", name: "Sunrise Yoga at Auroville", category: "Wellness", description: "Begin your day with a guided yoga session overlooking the Matrimandir at golden hour.", price: 800, duration: "1.5 hours", rating: 4.9, reviewCount: 45, image: "https://images.unsplash.com/photo-1521401830884-6c03c1c87ebb?q=80&w=800&auto=format&fit=crop", location: "Auroville" },
-  { id: "e2", name: "Farm-to-Table Cooking Class", category: "Food", description: "Harvest ingredients from an organic farm and cook a traditional South Indian meal with a master chef.", price: 1500, duration: "3 hours", rating: 4.8, reviewCount: 32, image: "https://images.unsplash.com/photo-1544787219-7f47ccb76574?q=80&w=800&auto=format&fit=crop", location: "Kodaikanal" },
-  { id: "e3", name: "Western Ghats Trek", category: "Adventure", description: "A guided trek through pristine shola forests with a naturalist who knows every bird and butterfly.", price: 1200, duration: "5 hours", rating: 4.7, reviewCount: 28, image: "https://images.unsplash.com/photo-1533105079780-92b9be482077?q=80&w=800&auto=format&fit=crop", location: "Munnar" },
-  { id: "e4", name: "Pottery Workshop", category: "Culture", description: "Shape clay on a traditional wheel with a fourth-generation potter in a riverside studio.", price: 600, duration: "2 hours", rating: 4.6, reviewCount: 19, image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=800&auto=format&fit=crop", location: "Auroville" },
-  { id: "e5", name: "Spice Plantation Tour", category: "Nature", description: "Walk through a working spice plantation learning about pepper, cardamom, and vanilla cultivation.", price: 500, duration: "2 hours", rating: 4.8, reviewCount: 56, image: "https://images.unsplash.com/photo-1465101162946-4377e57745c3?q=80&w=800&auto=format&fit=crop", location: "Wayanad" },
-  { id: "e6", name: "Night Photography Safari", category: "Photography", description: "Capture the Milky Way and nocturnal wildlife with a professional astrophotographer.", price: 2000, duration: "4 hours", rating: 4.9, reviewCount: 14, image: "https://images.unsplash.com/photo-1611095973763-414019e72400?q=80&w=800&auto=format&fit=crop", location: "Coorg" },
+  {
+    id: "e1",
+    name: "Sunrise Yoga at Auroville",
+    category: "Wellness",
+    description: "Begin your day with a guided yoga session overlooking the Matrimandir at golden hour. We move through a slow, breath-led vinyasa sequence as the sun comes up over the amphitheatre, then close with 15 minutes of silent meditation. No experience needed — mats, blocks and water are provided.",
+    price: 800,
+    duration: "1.5 hours",
+    rating: 4.9,
+    reviewCount: 45,
+    image: "https://images.unsplash.com/photo-1521401830884-6c03c1c87ebb?q=80&w=800&auto=format&fit=crop",
+    location: "Auroville",
+    gallery: [
+      "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=800&auto=format&fit=crop",
+    ],
+    video: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",
+    host: { name: "Kavitha Ram", role: "Certified Hatha & Vinyasa instructor · 8 years", avatar: "https://i.pravatar.cc/150?img=45" },
+    included: ["Guided vinyasa sequence", "Yoga mat & props", "Herbal tea after class", "Meditation cushion"],
+    groupSize: "Up to 12 people",
+  },
+  {
+    id: "e2",
+    name: "Farm-to-Table Cooking Class",
+    category: "Food",
+    description: "Harvest ingredients from an organic farm and cook a traditional South Indian meal with a master chef. You'll pick vegetables straight off the vine, learn to grind a fresh masala on a stone grinder, and plate a full meal you'll then sit down and eat together.",
+    price: 1500,
+    duration: "3 hours",
+    rating: 4.8,
+    reviewCount: 32,
+    image: "https://images.unsplash.com/photo-1544787219-7f47ccb76574?q=80&w=800&auto=format&fit=crop",
+    location: "Kodaikanal",
+    gallery: [
+      "https://images.unsplash.com/photo-1607301405390-d831c242f59b?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1552083375-1447ce886485?q=80&w=800&auto=format&fit=crop",
+    ],
+    video: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/friday.mp4",
+    host: { name: "Chef Elena", role: "Farm cuisine specialist · Stone Valley kitchen", avatar: "https://i.pravatar.cc/150?img=44" },
+    included: ["Farm harvest walk", "Hands-on cooking session", "Full meal & recipe card", "Apron to keep"],
+    groupSize: "Up to 8 people",
+  },
+  {
+    id: "e3",
+    name: "Western Ghats Trek",
+    category: "Adventure",
+    description: "A guided trek through pristine shola forests with a naturalist who knows every bird and butterfly. The trail climbs gently through montane grassland before dropping into a cloud forest — expect waterfalls, wild elephant tracks, and views across three states on a clear day.",
+    price: 1200,
+    duration: "5 hours",
+    rating: 4.7,
+    reviewCount: 28,
+    image: "https://images.unsplash.com/photo-1533105079780-92b9be482077?q=80&w=800&auto=format&fit=crop",
+    location: "Munnar",
+    gallery: [
+      "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1500534623283-312aade485b7?q=80&w=800&auto=format&fit=crop",
+    ],
+    video: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",
+    host: { name: "Joseph Varghese", role: "Naturalist & trek guide · 12 years", avatar: "https://i.pravatar.cc/150?img=52" },
+    included: ["Naturalist-led trek", "Packed trail lunch", "First-aid & safety gear", "Binoculars for the group"],
+    groupSize: "Up to 10 people",
+  },
+  {
+    id: "e4",
+    name: "Pottery Workshop",
+    category: "Culture",
+    description: "Shape clay on a traditional wheel with a fourth-generation potter in a riverside studio. You'll learn to centre the clay, pull a basic form, and glaze a piece to take home once it's fired — no prior experience necessary, just a willingness to get your hands messy.",
+    price: 600,
+    duration: "2 hours",
+    rating: 4.6,
+    reviewCount: 19,
+    image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=800&auto=format&fit=crop",
+    location: "Auroville",
+    gallery: [
+      "https://images.unsplash.com/photo-1594736797933-d0501ba2fe65?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?q=80&w=800&auto=format&fit=crop",
+    ],
+    video: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/friday.mp4",
+    host: { name: "Murugan K.", role: "Fourth-generation potter · Auroville studio", avatar: "https://i.pravatar.cc/150?img=53" },
+    included: ["Wheel-throwing session", "Clay & glazing materials", "Firing & pickup (7 days)", "Apron provided"],
+    groupSize: "Up to 6 people",
+  },
+  {
+    id: "e5",
+    name: "Spice Plantation Tour",
+    category: "Nature",
+    description: "Walk through a working spice plantation learning about pepper, cardamom, and vanilla cultivation. Your guide will show you how each spice grows, let you taste it fresh off the vine, and explain the harvest calendar that's shaped this region's economy for centuries.",
+    price: 500,
+    duration: "2 hours",
+    rating: 4.8,
+    reviewCount: 56,
+    image: "https://images.unsplash.com/photo-1465101162946-4377e57745c3?q=80&w=800&auto=format&fit=crop",
+    location: "Wayanad",
+    gallery: [
+      "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=800&auto=format&fit=crop",
+    ],
+    video: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",
+    host: { name: "Beena Thomas", role: "Plantation owner · 3rd generation", avatar: "https://i.pravatar.cc/150?img=49" },
+    included: ["Guided plantation walk", "Fresh spice tastings", "Take-home spice sampler", "Filter coffee"],
+    groupSize: "Up to 15 people",
+  },
+  {
+    id: "e6",
+    name: "Night Photography Safari",
+    category: "Photography",
+    description: "Capture the Milky Way and nocturnal wildlife with a professional astrophotographer. We head to a dark-sky spot away from any light pollution, set up tripods, and shoot long-exposure star trails while listening for owls and civets in the coffee estate around us.",
+    price: 2000,
+    duration: "4 hours",
+    rating: 4.9,
+    reviewCount: 14,
+    image: "https://images.unsplash.com/photo-1611095973763-414019e72400?q=80&w=800&auto=format&fit=crop",
+    location: "Coorg",
+    gallery: [
+      "https://images.unsplash.com/photo-1500534623283-312aade485b7?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=800&auto=format&fit=crop",
+    ],
+    video: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/friday.mp4",
+    host: { name: "Arjun Iyer", role: "Astrophotographer & guide", avatar: "https://i.pravatar.cc/150?img=68" },
+    included: ["Tripod & camera settings guidance", "Dark-sky location transport", "Hot coffee & snacks", "RAW editing tips"],
+    groupSize: "Up to 6 people",
+  },
 ];
 
 // ============================================
@@ -406,7 +532,6 @@ export const navLinks = [
   { label: "Food", href: "/food" },
   { label: "Business", href: "/business" },
   { label: "About Us", href: "/about" },
-  { label: "Contact", href: "/contact" },
 ];
 
 // ============================================
@@ -422,6 +547,7 @@ export interface FoodItem {
   pricePerPlate: number;
   serves: string;
   cooks: { name: string; avatar: string; specialty: string }[];
+  story?: string;
 }
 
 export const foodMenu: FoodItem[] = [
@@ -437,6 +563,7 @@ export const foodMenu: FoodItem[] = [
       { name: "Meena Akka", avatar: "https://i.pravatar.cc/150?img=47", specialty: "Chettinad" },
       { name: "Raju Anna", avatar: "https://i.pravatar.cc/150?img=59", specialty: "Village style" },
     ],
+    story: "A recipe passed down four generations in Meena Akka's family — the same stone-ground spice mix her grandmother used in a Karaikudi kitchen.",
   },
   {
     id: "f2",
@@ -450,6 +577,7 @@ export const foodMenu: FoodItem[] = [
       { name: "Chef Elena", avatar: "https://i.pravatar.cc/150?img=44", specialty: "Continental" },
       { name: "Priya Shankar", avatar: "https://i.pravatar.cc/150?img=25", specialty: "Farm cuisine" },
     ],
+    story: "Whatever's ready in the Stone Valley kitchen garden that morning goes in the bowl — the menu genuinely changes with the harvest.",
   },
   {
     id: "f3",
@@ -463,6 +591,7 @@ export const foodMenu: FoodItem[] = [
       { name: "Marc D", avatar: "https://i.pravatar.cc/150?img=13", specialty: "Sourdough & bakes" },
       { name: "Meena Akka", avatar: "https://i.pravatar.cc/150?img=47", specialty: "Filter coffee" },
     ],
+    story: "Marc's sourdough starter has been alive since 2019 — baked fresh every morning in a wood-fired oven he built himself.",
   },
   {
     id: "f4",
@@ -476,6 +605,60 @@ export const foodMenu: FoodItem[] = [
       { name: "Raju Anna", avatar: "https://i.pravatar.cc/150?img=59", specialty: "Dum biryani" },
       { name: "Chef Imran", avatar: "https://i.pravatar.cc/150?img=68", specialty: "Nizami dishes" },
     ],
+    story: "Sealed with dough and slow-cooked over embers for 40 minutes — Chef Imran trained under a Nizami kitchen in old Hyderabad.",
+  },
+  {
+    id: "f5",
+    name: "Kerala Sadya (Banana Leaf)",
+    image: "https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=800&q=80",
+    cuisine: "Kerala · Traditional",
+    veg: true,
+    pricePerPlate: 380,
+    serves: "1 person",
+    cooks: [
+      { name: "Lakshmi Warrier", avatar: "https://i.pravatar.cc/150?img=32", specialty: "Kerala sadya" },
+      { name: "Chef Sudhakaran", avatar: "https://i.pravatar.cc/150?img=51", specialty: "Onam specials" },
+    ],
+    story: "A 12-dish feast served on a fresh banana leaf, the way Lakshmi's mother made it for every Onam back home in Palakkad.",
+  },
+  {
+    id: "f6",
+    name: "Goan Fish Curry & Rice",
+    image: "https://images.unsplash.com/photo-1600335895229-6e75511892c8?w=800&q=80",
+    cuisine: "Goan · Coastal",
+    veg: false,
+    pricePerPlate: 480,
+    serves: "1 person",
+    cooks: [
+      { name: "Fernando D'Souza", avatar: "https://i.pravatar.cc/150?img=15", specialty: "Goan seafood" },
+    ],
+    story: "Fernando buys the catch himself at the Malim jetty before sunrise — the curry never sees a freezer.",
+  },
+  {
+    id: "f7",
+    name: "Coorg Pandi Curry",
+    image: "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=800&q=80",
+    cuisine: "Coorg · Kodava",
+    veg: false,
+    pricePerPlate: 520,
+    serves: "1 person",
+    cooks: [
+      { name: "Appachu Kalappa", avatar: "https://i.pravatar.cc/150?img=53", specialty: "Kodava cuisine" },
+    ],
+    story: "Made with kachampuli, the sour-smoked vinegar unique to Coorg — a Kodava wedding-feast recipe from Appachu's family.",
+  },
+  {
+    id: "f8",
+    name: "Ayurvedic Wellness Thali",
+    image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=800&q=80",
+    cuisine: "Sattvic · Ayurvedic",
+    veg: true,
+    pricePerPlate: 340,
+    serves: "1 person",
+    cooks: [
+      { name: "Dr. Anjali Menon", avatar: "https://i.pravatar.cc/150?img=48", specialty: "Ayurvedic diet planning" },
+    ],
+    story: "Balanced by an Ayurvedic doctor for your dosha, not just your taste buds — no onion, no garlic, cooked in cold-pressed coconut oil.",
   },
 ];
 
@@ -488,6 +671,11 @@ export interface EventPlanner {
   eventsDone: number;
   startingPrice: number;
   tags: string[];
+  description?: string;
+  gallery?: string[];
+  packages?: { name: string; price: number; guests: string; includes: string[] }[];
+  brochures?: { title: string; note: string }[];
+  testimonials?: { name: string; location: string; avatar: string; comment: string; eventType: string }[];
 }
 
 export const eventPlanners: EventPlanner[] = [
@@ -500,6 +688,25 @@ export const eventPlanners: EventPlanner[] = [
     eventsDone: 140,
     startingPrice: 150000,
     tags: ["Destination weddings", "Farm venues", "Decor & rituals"],
+    description: "Saffron Knots has planned 140+ weddings across Dhyana's curated farm stays and heritage properties — from intimate courtyard ceremonies to four-day destination celebrations. Every plan covers venue styling, vendor coordination, and rituals, handled by a team that lives on-site through the whole event.",
+    gallery: [
+      "https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=800&q=80",
+      "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=800&q=80",
+      "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=800&q=80",
+    ],
+    packages: [
+      { name: "Intimate Ceremony", price: 150000, guests: "Up to 50 guests", includes: ["Venue styling & decor", "Day-of coordination", "Rituals setup"] },
+      { name: "Classic Wedding", price: 350000, guests: "Up to 200 guests", includes: ["Full planning & vendor management", "Catering coordination", "Photography tie-up", "3-day decor build"] },
+      { name: "Grand Destination", price: 750000, guests: "Up to 400 guests", includes: ["Multi-day itinerary", "Venue sourcing across regions", "Full vendor & guest logistics", "Dedicated on-site team"] },
+    ],
+    brochures: [
+      { title: "Saffron Knots — Wedding Packages 2026", note: "Pricing, inclusions & timelines" },
+      { title: "Saffron Knots — Portfolio Lookbook", note: "40 past weddings, styled by season" },
+    ],
+    testimonials: [
+      { name: "Ritu & Karthik", location: "Chennai", avatar: "https://i.pravatar.cc/150?img=20", comment: "They handled everything — we just showed up. The farm venue styling looked exactly like the moodboard we'd sent, down to the flowers.", eventType: "Classic Wedding" },
+      { name: "Meera Iyer", location: "Bangalore", avatar: "https://i.pravatar.cc/150?img=23", comment: "Our families are spread across three cities and Saffron Knots coordinated all the travel and stays too, not just the wedding day.", eventType: "Grand Destination" },
+    ],
   },
   {
     id: "ep2",
@@ -510,6 +717,24 @@ export const eventPlanners: EventPlanner[] = [
     eventsDone: 320,
     startingPrice: 4500,
     tags: ["Proposals", "Birthdays", "Candlelight setups"],
+    description: "320+ surprises pulled off without a single leak. Hushh Surprises specialises in proposal setups, surprise birthdays and candlelight dinners at Dhyana properties — booked secretly, built while you're both at dinner, ready by the time you walk back to the room.",
+    gallery: [
+      "https://images.unsplash.com/photo-1530023367847-a683933f4172?w=800&q=80",
+      "https://images.unsplash.com/photo-1478146059778-26028b07395a?w=800&q=80",
+      "https://images.unsplash.com/photo-1527529482837-4698179dc6ce?w=800&q=80",
+    ],
+    packages: [
+      { name: "Candlelight Proposal", price: 4500, guests: "For 2", includes: ["Private candlelight setup", "Photo of the moment", "1-hour hold on the space"] },
+      { name: "Surprise Birthday", price: 12000, guests: "Up to 20 guests", includes: ["Decor & balloon styling", "Cake coordination", "Music & lighting"] },
+      { name: "Full Celebration Takeover", price: 28000, guests: "Up to 50 guests", includes: ["Venue booking within the property", "Decor, catering & entertainment", "Dedicated event runner on the day"] },
+    ],
+    brochures: [
+      { title: "Hushh Surprises — Setup Styles Guide", note: "12 themes, pricing per guest count" },
+    ],
+    testimonials: [
+      { name: "Arjun Nair", location: "Kochi", avatar: "https://i.pravatar.cc/150?img=15", comment: "I was terrified she'd figure it out but the team snuck the whole setup in during our sunset walk. Perfect timing, zero stress.", eventType: "Candlelight Proposal" },
+      { name: "Divya Sharma", location: "Pune", avatar: "https://i.pravatar.cc/150?img=29", comment: "Booked a surprise birthday for my dad's 60th — they matched the decor to his favourite football club colours without me even asking twice.", eventType: "Surprise Birthday" },
+    ],
   },
   {
     id: "ep3",
@@ -520,6 +745,23 @@ export const eventPlanners: EventPlanner[] = [
     eventsDone: 95,
     startingPrice: 35000,
     tags: ["Team offsites", "Wellness retreats", "Workshops"],
+    description: "Gather & Grow runs team offsites and wellness retreats at farm and heritage properties — half-day workshops to multi-day corporate retreats, with facilitation, catering and logistics handled end to end so HR teams don't have to chase five vendors.",
+    gallery: [
+      "https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?w=800&q=80",
+      "https://images.unsplash.com/photo-1556125574-d7f27ec36a06?w=800&q=80",
+      "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=800&q=80",
+    ],
+    packages: [
+      { name: "Half-Day Offsite", price: 35000, guests: "Up to 20 people", includes: ["Workshop facilitation", "Meeting space setup", "Working lunch"] },
+      { name: "Full Wellness Retreat", price: 85000, guests: "Up to 30 people", includes: ["2-day itinerary", "Yoga & mindfulness sessions", "All meals included", "Evening activities"] },
+      { name: "Multi-Day Corporate Retreat", price: 180000, guests: "Up to 60 people", includes: ["3-day full logistics", "Facilitation & team activities", "Accommodation coordination", "Dedicated retreat manager"] },
+    ],
+    brochures: [
+      { title: "Gather & Grow — Corporate Retreat Guide", note: "Formats, pricing & sample agendas" },
+    ],
+    testimonials: [
+      { name: "Sandeep Rao", location: "HR Lead, Chennai", avatar: "https://i.pravatar.cc/150?img=33", comment: "First offsite where I didn't have to manage five different vendors myself. Gather & Grow ran the whole two days and the team feedback was the best we've had.", eventType: "Full Wellness Retreat" },
+    ],
   },
 ];
 

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import {
   X,
   Send,
@@ -15,6 +15,7 @@ import {
   Star,
   Sparkles,
   Bell,
+  BellOff,
   Bike,
   Utensils,
   CloudSun,
@@ -24,6 +25,14 @@ import {
   LocateFixed,
   BadgeCheck,
   MessageCircle,
+  Sliders,
+  Mic,
+  MicOff,
+  Volume2,
+  IndianRupee,
+  Navigation,
+  SkipForward,
+  Loader2,
 } from "lucide-react";
 import { properties } from "@/lib/mock-data";
 import { LogoMark } from "./Logo";
@@ -31,9 +40,10 @@ import { LogoMark } from "./Logo";
 // ============================================
 // Module 15 — AI Trip Planner / Itinerary Widget
 // Floating on every page. UI-only mock: planner
-// timeline with live tracking + rescheduling,
-// AI assistant (web + property DB fetch), and
-// end-to-end SOS assistance.
+// timeline with live tracking + rescheduling +
+// Advanced mode, AI assistant with voice input/
+// output (Web Speech API), a global notification
+// kill switch, and end-to-end SOS assistance.
 // ============================================
 
 type Tab = "planner" | "assistant" | "sos";
@@ -52,6 +62,38 @@ interface ChatMsg {
   text: string;
   sources?: string[];
 }
+
+// Minimal ambient typing for the Web Speech API — not in default TS lib.
+interface SpeechRecognitionResultLike {
+  transcript: string;
+}
+interface SpeechRecognitionEventLike {
+  results: { [index: number]: { [index: number]: SpeechRecognitionResultLike } };
+}
+interface SpeechRecognitionLike {
+  lang: string;
+  interimResults: boolean;
+  continuous: boolean;
+  onresult: ((e: SpeechRecognitionEventLike) => void) | null;
+  onend: (() => void) | null;
+  onerror: (() => void) | null;
+  start: () => void;
+  stop: () => void;
+}
+
+type SpeechRecognitionWindow = Window & {
+  SpeechRecognition?: new () => SpeechRecognitionLike;
+  webkitSpeechRecognition?: new () => SpeechRecognitionLike;
+};
+
+function getSpeechRecognitionCtor(): (new () => SpeechRecognitionLike) | undefined {
+  if (typeof window === "undefined") return undefined;
+  const w = window as SpeechRecognitionWindow;
+  return w.SpeechRecognition ?? w.webkitSpeechRecognition;
+}
+
+// No external event to subscribe to — browser capability is static for the session.
+const noopSubscribe = () => () => {};
 
 const fmt = (min: number) => {
   const h24 = Math.floor(min / 60) % 24;
@@ -104,6 +146,81 @@ export default function TripPlannerWidget() {
     },
   ]);
 
+  // ---------- Notification kill switch ----------
+  const [notificationsOn, setNotificationsOn] = useState(true);
+
+  // ---------- Advanced mode (Planner tab) ----------
+  const [advanced, setAdvanced] = useState(false);
+  const [spentToday] = useState(5200);
+  const [dayBudget] = useState(8000);
+  const [regenerating, setRegenerating] = useState(false);
+  const [regenerated, setRegenerated] = useState(false);
+
+  // ---------- Voice assistance (Assistant tab) ----------
+  // useSyncExternalStore reads browser capability without an effect+setState
+  // round-trip — snapshot matches SSR (false) until hydrated on the client.
+  const voiceInputSupported = useSyncExternalStore(
+    noopSubscribe,
+    () => Boolean(getSpeechRecognitionCtor()),
+    () => false
+  );
+  const voiceOutputSupported = useSyncExternalStore(
+    noopSubscribe,
+    () => typeof window !== "undefined" && "speechSynthesis" in window,
+    () => false
+  );
+  const [listening, setListening] = useState(false);
+  const [speakingIdx, setSpeakingIdx] = useState<number | null>(null);
+  const recognitionRef = useRef<SpeechRecognitionLike | null>(null);
+
+  useEffect(() => {
+    const SR = getSpeechRecognitionCtor();
+    if (SR && !recognitionRef.current) {
+      const rec = new SR();
+      rec.lang = "en-IN";
+      rec.interimResults = false;
+      rec.continuous = false;
+      recognitionRef.current = rec;
+    }
+  }, []);
+
+  const startListening = () => {
+    const rec = recognitionRef.current;
+    if (!rec) return;
+    rec.onresult = (e: SpeechRecognitionEventLike) => {
+      const transcript = e.results[0][0].transcript;
+      setInput(transcript);
+      setListening(false);
+      send(transcript);
+    };
+    rec.onend = () => setListening(false);
+    rec.onerror = () => setListening(false);
+    setListening(true);
+    rec.start();
+  };
+
+  const stopListening = () => {
+    recognitionRef.current?.stop();
+    setListening(false);
+  };
+
+  const speak = (text: string, idx: number) => {
+    if (typeof window === "undefined" || !window.speechSynthesis) return;
+    if (speakingIdx === idx) {
+      window.speechSynthesis.cancel();
+      setSpeakingIdx(null);
+      return;
+    }
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = "en-IN";
+    utterance.rate = 1;
+    utterance.onend = () => setSpeakingIdx(null);
+    utterance.onerror = () => setSpeakingIdx(null);
+    setSpeakingIdx(idx);
+    window.speechSynthesis.speak(utterance);
+  };
+
   // Preference-matched shortlist (mock scores)
   const shortlist = [
     { p: properties.find((x) => x.slug === "canopy-tiny-house")!, match: 96 },
@@ -118,6 +235,28 @@ export default function TripPlannerWidget() {
     setRescheduled(true);
   };
 
+  const markDone = (id: number) =>
+    setPlan((prev) => prev.map((it) => (it.id === id ? { ...it, status: "done" } : it)));
+
+  const skipItem = (id: number) =>
+    setPlan((prev) => prev.filter((it) => it.id !== id));
+
+  const regenerateRemaining = () => {
+    setRegenerating(true);
+    setRegenerated(false);
+    setTimeout(() => {
+      setPlan((prev) =>
+        prev.map((it) =>
+          it.status === "later"
+            ? { ...it, sub: "Re-optimised · Naturellement (4.5★, 1.2 km)" }
+            : it
+        )
+      );
+      setRegenerating(false);
+      setRegenerated(true);
+    }, 1600);
+  };
+
   const send = (text: string) => {
     const q = text.trim();
     if (!q) return;
@@ -129,6 +268,8 @@ export default function TripPlannerWidget() {
     setReplyIdx((i) => i + 1);
     setInput("");
   };
+
+  const mutedNotice = !notificationsOn && (delayAlert || (plan.some((p) => p.status !== "done")));
 
   return (
     <>
@@ -142,7 +283,7 @@ export default function TripPlannerWidget() {
       >
         <span className="relative flex items-center justify-center w-9 h-9 rounded-full bg-background">
           <LogoMark size={26} />
-          {delayAlert && (
+          {delayAlert && notificationsOn && (
             <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-terracotta animate-pulse" />
           )}
         </span>
@@ -179,6 +320,16 @@ export default function TripPlannerWidget() {
               Live · tracking your Auroville trip
             </p>
           </div>
+          <button
+            onClick={() => setNotificationsOn((v) => !v)}
+            aria-label={notificationsOn ? "Mute notifications" : "Unmute notifications"}
+            title={notificationsOn ? "Notifications on — tap to mute" : "Notifications muted — tap to unmute"}
+            className={`p-2 rounded-lg transition-colors ${
+              notificationsOn ? "text-muted hover:text-foreground hover:bg-surface-hover" : "text-terracotta bg-terracotta/10"
+            }`}
+          >
+            {notificationsOn ? <Bell size={17} /> : <BellOff size={17} />}
+          </button>
           <button
             onClick={() => setOpen(false)}
             aria-label="Close planner"
@@ -245,8 +396,64 @@ export default function TripPlannerWidget() {
               </div>
             </div>
 
+            {/* Advanced mode toggle */}
+            <button
+              onClick={() => setAdvanced((v) => !v)}
+              className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl border transition-colors ${
+                advanced ? "border-sage/50 bg-sage/10" : "border-border bg-surface hover:border-sage/30"
+              }`}
+            >
+              <span className="flex items-center gap-2 text-xs font-semibold text-foreground">
+                <Sliders size={13} className={advanced ? "text-sage" : "text-subtle"} />
+                Advanced mode
+              </span>
+              <span
+                className={`relative inline-flex w-9 h-5 rounded-full transition-colors shrink-0 ${
+                  advanced ? "bg-sage" : "bg-surface-hover border border-border"
+                }`}
+              >
+                <span
+                  className={`absolute top-[3px] w-3.5 h-3.5 rounded-full bg-white shadow transition-all ${
+                    advanced ? "left-[19px]" : "left-[3px]"
+                  }`}
+                />
+              </span>
+            </button>
+
+            {/* Advanced widgets: weather + budget */}
+            {advanced && (
+              <div className="grid grid-cols-2 gap-3 animate-fade-in">
+                <div className="rounded-xl bg-surface border border-border p-3">
+                  <p className="text-[10px] uppercase tracking-wider text-subtle flex items-center gap-1"><CloudSun size={11} /> Today</p>
+                  <p className="text-sm font-semibold text-foreground mt-1">31°C · Sunny</p>
+                  <p className="text-[11px] text-subtle">Auroville, TN</p>
+                </div>
+                <div className="rounded-xl bg-surface border border-border p-3">
+                  <p className="text-[10px] uppercase tracking-wider text-subtle flex items-center gap-1"><IndianRupee size={11} /> Spent today</p>
+                  <p className="text-sm font-semibold text-foreground mt-1">₹{spentToday.toLocaleString("en-IN")} <span className="text-subtle font-normal">/ ₹{dayBudget.toLocaleString("en-IN")}</span></p>
+                  <div className="h-1.5 rounded-full bg-surface-hover overflow-hidden mt-1.5">
+                    <div
+                      className={`h-full rounded-full ${spentToday > dayBudget ? "bg-terracotta" : "bg-sage"}`}
+                      style={{ width: `${Math.min(100, (spentToday / dayBudget) * 100)}%` }}
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Notification muted micro-affordance */}
+            {mutedNotice && (
+              <button
+                onClick={() => setNotificationsOn(true)}
+                className="w-full flex items-center gap-2 rounded-xl border border-border bg-surface px-3.5 py-2.5 text-left hover:border-terracotta/40 transition-colors"
+              >
+                <BellOff size={13} className="text-terracotta shrink-0" />
+                <span className="text-xs text-muted flex-1">Notifications muted — tap to turn back on</span>
+              </button>
+            )}
+
             {/* Timing alert */}
-            {delayAlert && (
+            {delayAlert && notificationsOn && (
               <div className="rounded-xl border border-terracotta/40 bg-terracotta/10 p-3.5 animate-fade-in">
                 <div className="flex items-start gap-2.5">
                   <AlertTriangle size={16} className="text-terracotta mt-0.5 shrink-0" />
@@ -276,7 +483,7 @@ export default function TripPlannerWidget() {
                 </div>
               </div>
             )}
-            {rescheduled && (
+            {rescheduled && notificationsOn && (
               <div className="rounded-xl border border-sage/40 bg-sage/10 p-3 flex items-center gap-2 animate-fade-in">
                 <Check size={14} className="text-sage shrink-0" />
                 <p className="text-xs text-muted">
@@ -288,9 +495,26 @@ export default function TripPlannerWidget() {
 
             {/* Day timeline */}
             <div>
-              <p className="text-[11px] font-semibold uppercase tracking-wider text-subtle mb-3">
-                Today&apos;s plan
-              </p>
+              <div className="flex items-center justify-between mb-3">
+                <p className="text-[11px] font-semibold uppercase tracking-wider text-subtle">
+                  Today&apos;s plan
+                </p>
+                {advanced && (
+                  <button
+                    onClick={regenerateRemaining}
+                    disabled={regenerating}
+                    className="flex items-center gap-1.5 text-[11px] font-semibold text-sage hover:underline disabled:opacity-60"
+                  >
+                    {regenerating ? <Loader2 size={11} className="animate-spin" /> : <Sparkles size={11} />}
+                    {regenerating ? "Regenerating…" : "Regenerate remaining"}
+                  </button>
+                )}
+              </div>
+              {regenerated && (
+                <p className="text-[11px] text-sage mb-3 flex items-center gap-1.5 animate-fade-in">
+                  <Check size={11} /> Remaining stops re-optimised for today&apos;s traffic.
+                </p>
+              )}
               <div className="space-y-1">
                 {plan.map((item, i) => (
                   <div key={item.id} className="flex gap-3">
@@ -327,6 +551,25 @@ export default function TripPlannerWidget() {
                         {item.title}
                       </p>
                       <p className="text-xs text-muted">{item.sub}</p>
+                      {advanced && item.status !== "done" && (
+                        <div className="flex items-center gap-3 mt-1.5">
+                          <button
+                            onClick={() => markDone(item.id)}
+                            className="flex items-center gap-1 text-[10px] font-medium text-sage hover:underline"
+                          >
+                            <Check size={10} /> Mark done
+                          </button>
+                          <button className="flex items-center gap-1 text-[10px] font-medium text-muted hover:text-foreground">
+                            <Navigation size={10} /> Directions
+                          </button>
+                          <button
+                            onClick={() => skipItem(item.id)}
+                            className="flex items-center gap-1 text-[10px] font-medium text-subtle hover:text-terracotta"
+                          >
+                            <SkipForward size={10} /> Skip
+                          </button>
+                        </div>
+                      )}
                     </div>
                   </div>
                 ))}
@@ -334,16 +577,18 @@ export default function TripPlannerWidget() {
             </div>
 
             {/* Next-up nudge */}
-            <div className="rounded-xl bg-surface border border-border p-3 flex items-start gap-2.5">
-              <Bell size={14} className="text-primary mt-0.5 shrink-0" />
-              <p className="text-xs text-muted">
-                Leave by{" "}
-                <span className="text-foreground font-medium">
-                  {fmt((rescheduled ? 16 * 60 + 30 + 30 : 16 * 60 + 30) - 20)}
-                </span>{" "}
-                to reach your bike pickup on time — 20 min away by auto.
-              </p>
-            </div>
+            {notificationsOn && (
+              <div className="rounded-xl bg-surface border border-border p-3 flex items-start gap-2.5">
+                <Bell size={14} className="text-primary mt-0.5 shrink-0" />
+                <p className="text-xs text-muted">
+                  Leave by{" "}
+                  <span className="text-foreground font-medium">
+                    {fmt((rescheduled ? 16 * 60 + 30 + 30 : 16 * 60 + 30) - 20)}
+                  </span>{" "}
+                  to reach your bike pickup on time — 20 min away by auto.
+                </p>
+              </div>
+            )}
 
             {/* Preference-matched shortlist */}
             <div>
@@ -410,9 +655,20 @@ export default function TripPlannerWidget() {
                       <LogoMark size={18} />
                     </span>
                     <div className="max-w-[85%]">
-                      <p className="rounded-2xl rounded-tl-sm bg-surface border border-border text-sm text-foreground px-4 py-2.5">
-                        {m.text}
-                      </p>
+                      <div className="rounded-2xl rounded-tl-sm bg-surface border border-border text-sm text-foreground px-4 py-2.5 flex items-start gap-2">
+                        <span className="flex-1">{m.text}</span>
+                        {voiceOutputSupported && (
+                          <button
+                            onClick={() => speak(m.text, i)}
+                            aria-label={speakingIdx === i ? "Stop reading aloud" : "Read aloud"}
+                            className={`shrink-0 p-1 rounded-full transition-colors ${
+                              speakingIdx === i ? "text-sage" : "text-subtle hover:text-foreground"
+                            }`}
+                          >
+                            <Volume2 size={13} className={speakingIdx === i ? "animate-pulse" : ""} />
+                          </button>
+                        )}
+                      </div>
                       {m.sources && (
                         <div className="flex flex-wrap gap-1.5 mt-1.5">
                           {m.sources.map((s) => (
@@ -433,6 +689,13 @@ export default function TripPlannerWidget() {
                     </div>
                   </div>
                 )
+              )}
+              {listening && (
+                <div className="flex justify-end animate-fade-in">
+                  <p className="flex items-center gap-2 text-xs text-sage bg-sage/10 border border-sage/30 rounded-full px-3.5 py-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-sage animate-pulse" /> Listening…
+                  </p>
+                </div>
               )}
             </div>
 
@@ -459,10 +722,23 @@ export default function TripPlannerWidget() {
               }}
               className="p-4 border-t border-border bg-surface flex items-center gap-2"
             >
+              {voiceInputSupported && (
+                <button
+                  type="button"
+                  onClick={listening ? stopListening : startListening}
+                  aria-label={listening ? "Stop voice input" : "Speak your question"}
+                  title={listening ? "Stop listening" : "Ask by voice"}
+                  className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 transition-colors ${
+                    listening ? "bg-terracotta text-white animate-pulse" : "bg-background border border-border text-muted hover:text-sage hover:border-sage/50"
+                  }`}
+                >
+                  <Mic size={16} />
+                </button>
+              )}
               <input
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder="Ask about your stay, places, timings…"
+                placeholder={listening ? "Listening…" : "Ask about your stay, places, timings…"}
                 className="flex-1 bg-background border border-border rounded-full px-4 py-2.5 text-sm text-foreground placeholder-subtle focus:border-sage outline-none"
               />
               <button
@@ -473,6 +749,11 @@ export default function TripPlannerWidget() {
                 <Send size={16} />
               </button>
             </form>
+            {!voiceInputSupported && (
+              <p className="px-5 pb-3 -mt-2 text-[10px] text-subtle flex items-center gap-1">
+                <MicOff size={10} /> Voice input isn&apos;t supported in this browser — try Chrome or Edge.
+              </p>
+            )}
           </>
         )}
 
