@@ -39,8 +39,8 @@
   --color-border-light: #DCDCDC; /* Light Gray */
 
   --color-text-primary: #2B2B2B;   /* Dark Charcoal */
-  --color-text-secondary: #777777; /* Soft Gray */
-  --color-text-tertiary: #9A958A;
+  --color-text-secondary: #686868; /* Soft Gray — darkened from #777777 for WCAG AA contrast (4.5:1+) */
+  --color-text-tertiary: #6D685D;  /* darkened from #9A958A for WCAG AA contrast (4.5:1+) */
 
   /* Warm Orange — primary CTA (token keeps its legacy "gold" name) */
   --color-gold: #E48A4A;
@@ -64,7 +64,7 @@
 
   --color-text-primary: #F6F1E8;   /* Cream */
   --color-text-secondary: #B7AFA0; /* Warm muted gray */
-  --color-text-tertiary: #8A8175;
+  --color-text-tertiary: #999084;  /* lightened from #8A8175 for WCAG AA contrast (4.5:1+) */
 
   /* Warm Orange — primary CTA, brightened for dark surfaces */
   --color-gold: #E9995C;

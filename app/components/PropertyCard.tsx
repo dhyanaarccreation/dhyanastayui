@@ -8,10 +8,10 @@ export default function PropertyCard({ property }: { property: Property }) {
   return (
     <Link
       href={`/stays/${property.slug}`}
-      className="group rounded-[28px] overflow-hidden bg-surface card-hover"
+      className="group rounded-2xl sm:rounded-[28px] overflow-hidden bg-surface card-hover"
     >
       {/* Image */}
-      <div className="relative h-64 overflow-hidden bg-surface-hover">
+      <div className="relative h-40 sm:h-64 overflow-hidden bg-surface-hover">
         <img loading="lazy"
           src={property.images[0]}
           alt={property.name}
@@ -21,36 +21,36 @@ export default function PropertyCard({ property }: { property: Property }) {
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/0 to-black/10" />
 
         {/* Category overlay */}
-        <div className="absolute top-4 left-4 flex gap-2">
-          <span className="px-3 py-1 text-[10px] font-medium uppercase tracking-wider bg-white/85 backdrop-blur-sm text-sage rounded-full">
+        <div className="absolute top-2.5 left-2.5 sm:top-4 sm:left-4 flex gap-1.5 sm:gap-2">
+          <span className="px-2 sm:px-3 py-0.5 sm:py-1 text-[9px] sm:text-[10px] font-medium uppercase tracking-wider bg-white/85 backdrop-blur-sm text-sage rounded-full">
             {property.category}
           </span>
           {property.isTrending && (
-            <span className="px-3 py-1 text-[10px] font-medium uppercase tracking-wider bg-primary/20 backdrop-blur-sm text-primary rounded-full flex items-center gap-1">
+            <span className="px-2 sm:px-3 py-0.5 sm:py-1 text-[9px] sm:text-[10px] font-medium uppercase tracking-wider bg-primary/20 backdrop-blur-sm text-primary rounded-full flex items-center gap-1">
               <TrendingUp size={10} /> Trending
             </span>
           )}
         </div>
 
         {/* Rating pill + Wishlist */}
-        <div className="absolute top-4 right-4 flex items-center gap-2">
-          <span className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-background/70 backdrop-blur-sm text-xs font-medium text-white">
+        <div className="absolute top-2.5 right-2.5 sm:top-4 sm:right-4 flex items-center gap-1.5 sm:gap-2">
+          <span className="flex items-center gap-1 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-background/70 backdrop-blur-sm text-[10px] sm:text-xs font-medium text-white">
             <Star size={11} className="text-primary fill-primary" />
             {property.rating}
           </span>
-          <button className="p-2 rounded-full bg-background/50 backdrop-blur-sm text-white/80 hover:text-red-400 transition-colors">
+          <button className="p-1.5 sm:p-2 rounded-full bg-background/50 backdrop-blur-sm text-white/80 hover:text-red-400 transition-colors">
             <Heart size={16} />
           </button>
         </div>
 
         {/* Price overlay */}
-        <div className="absolute bottom-4 right-4 text-right">
-          <div className="text-lg font-bold text-white">
+        <div className="absolute bottom-2.5 right-2.5 sm:bottom-4 sm:right-4 text-right">
+          <div className="text-sm sm:text-lg font-bold text-white">
             ₹{property.price.toLocaleString()}
-            <span className="text-xs font-normal text-white/70"> /night</span>
+            <span className="text-[10px] sm:text-xs font-normal text-white/70"> /night</span>
           </div>
           {property.originalPrice && (
-            <div className="text-xs text-white/60 line-through">
+            <div className="text-[10px] sm:text-xs text-white/60 line-through">
               ₹{property.originalPrice.toLocaleString()}
             </div>
           )}
@@ -58,9 +58,9 @@ export default function PropertyCard({ property }: { property: Property }) {
       </div>
 
       {/* Content */}
-      <div className="p-5">
-        <div className="flex items-start justify-between gap-2 mb-2">
-          <h3 className="text-base font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-1">
+      <div className="p-3 sm:p-5">
+        <div className="flex items-start justify-between gap-2 mb-1 sm:mb-2">
+          <h3 className="text-sm sm:text-base font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-1">
             {property.name}
           </h3>
           <div className="flex items-center gap-1 shrink-0">
@@ -74,14 +74,14 @@ export default function PropertyCard({ property }: { property: Property }) {
           </div>
         </div>
 
-        <div className="flex items-center gap-1 text-xs text-muted mb-3">
+        <div className="flex items-center gap-1 text-xs text-muted mb-1.5 sm:mb-3">
           <MapPin size={12} />
           <span>
             {property.location.city}, {property.location.state}
           </span>
         </div>
 
-        <p className="text-xs text-subtle line-clamp-2 mb-4">
+        <p className="text-xs text-subtle line-clamp-2 mb-2 sm:mb-4">
           {property.tagline}
         </p>
 

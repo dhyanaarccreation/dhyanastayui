@@ -3,13 +3,11 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import ServicesSection, { SpotlightSection } from "./components/ServicesSection";
 import DestinationsSection from "./components/DestinationsSection";
+import TestimonialsCarousel from "./components/TestimonialsCarousel";
 import {
   Search,
-  Star,
   ArrowRight,
-  MapPin,
   Users,
-  Quote,
   CalendarDays,
   Sparkles,
   Bot,
@@ -20,8 +18,8 @@ import {
 } from "lucide-react";
 import {
   categories,
-  experiences,
   testimonials,
+  totalGuestStoryCount,
   blogPosts,
 } from "@/lib/mock-data";
 
@@ -36,42 +34,42 @@ function HeroSection() {
   ];
 
   return (
-    <section className="relative bg-background pt-32 md:pt-40 pb-10 overflow-hidden">
+    <section className="relative bg-background pt-[70px] md:pt-40 pb-6 md:pb-8 overflow-hidden">
       {/* Decorative soft blobs */}
       <div className="absolute -top-24 -left-32 w-[420px] h-[420px] rounded-full bg-sage/15 blur-3xl pointer-events-none" />
       <div className="absolute top-24 -right-32 w-[380px] h-[380px] rounded-full bg-primary/10 blur-3xl pointer-events-none" />
 
-      <div className="relative max-w-[1400px] mx-auto px-6 lg:px-8 grid lg:grid-cols-2 gap-14 items-center">
+      <div className="relative max-w-[1400px] mx-auto px-6 lg:px-8 grid lg:grid-cols-2 gap-5 sm:gap-14 items-center">
         {/* Left: copy */}
         <div className="animate-fade-in-up">
-          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-surface shadow-organic mb-6">
+          <span className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-surface shadow-organic mb-3 sm:mb-6">
             <Sparkles size={14} className="text-primary" />
             <span className="text-xs font-semibold text-foreground tracking-wide uppercase">
               India&apos;s Premier Curated Stays
             </span>
           </span>
 
-          <h1 className="heading-organic text-4xl sm:text-5xl lg:text-6xl text-foreground mb-6 max-w-xl">
+          <h1 className="heading-organic text-[1.85rem] leading-[1.15] sm:text-5xl lg:text-6xl text-foreground mb-2.5 sm:mb-6 max-w-xl">
             Stays You&apos;ll Fall In Love With{" "}
             <span className="text-primary">From the First Glance</span>
           </h1>
 
-          <p className="text-muted text-base lg:text-lg max-w-lg mb-8 leading-relaxed">
+          <p className="text-muted text-sm sm:text-base lg:text-lg max-w-lg mb-3 sm:mb-5 lg:mb-8 leading-relaxed">
             Architect-inspected properties, warm local hospitality, and
             experiences designed to feel like home — curated across India&apos;s
             most beautiful destinations.
           </p>
 
-          <div className="flex flex-wrap items-center gap-3 mb-10">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-4 sm:mb-6 lg:mb-10">
             <Link
               href="/stays"
-              className="px-7 py-3.5 text-sm font-semibold bg-primary text-primary-foreground rounded-full shadow-organic hover:bg-primary-hover hover:-translate-y-0.5 transition-all"
+              className="px-5 py-2.5 sm:px-7 sm:py-3.5 text-sm font-semibold bg-primary text-primary-foreground rounded-full shadow-organic hover:bg-primary-hover hover:-translate-y-0.5 transition-all"
             >
               Explore Stays
             </Link>
             <Link
               href="/traveller/ai-planner"
-              className="flex items-center gap-2 px-7 py-3.5 text-sm font-semibold bg-surface border border-sage text-sage rounded-full hover:bg-sage hover:text-white transition-all"
+              className="flex items-center gap-2 px-5 py-2.5 sm:px-7 sm:py-3.5 text-sm font-semibold bg-surface border border-sage text-sage rounded-full hover:bg-sage hover:text-white transition-all"
             >
               <Sparkles size={16} />
               Plan My Trip with AI
@@ -79,13 +77,14 @@ function HeroSection() {
           </div>
 
           {/* Feature highlights */}
-          <div className="grid grid-cols-3 gap-4 max-w-md">
+          <div className="grid grid-cols-3 gap-2.5 sm:gap-4 max-w-md">
             {features.map((f) => (
-              <div key={f.label} className="flex flex-col items-start gap-2.5">
-                <span className="w-11 h-11 rounded-full bg-sage/12 text-sage flex items-center justify-center">
-                  <f.icon size={18} />
+              <div key={f.label} className="flex flex-col items-start gap-1.5 sm:gap-2.5">
+                <span className="w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-sage/12 text-sage flex items-center justify-center shrink-0">
+                  <f.icon size={16} className="sm:hidden" />
+                  <f.icon size={18} className="hidden sm:block" />
                 </span>
-                <span className="text-xs font-medium text-foreground leading-tight">
+                <span className="text-[11px] sm:text-xs font-medium text-foreground leading-tight">
                   {f.label}
                 </span>
               </div>
@@ -95,7 +94,7 @@ function HeroSection() {
 
         {/* Right: organic blob image */}
         <div className="relative animate-fade-in">
-          <div className="relative rounded-[40px] rounded-tr-[120px] overflow-hidden shadow-organic aspect-[4/5] max-w-md mx-auto">
+          <div className="relative rounded-[40px] rounded-tr-[120px] overflow-hidden shadow-organic aspect-[4/5] max-w-[230px] sm:max-w-md mx-auto">
             <img
               src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=1400&auto=format&fit=crop"
               alt="A curated Dhyana Stays property nestled in nature"
@@ -104,25 +103,26 @@ function HeroSection() {
             />
           </div>
           {/* floating badge */}
-          <div className="absolute bottom-6 -left-2 sm:left-4 bg-surface rounded-[24px] shadow-organic px-5 py-4 flex items-center gap-3">
-            <span className="w-10 h-10 rounded-full bg-sage/15 text-sage flex items-center justify-center shrink-0">
-              <ShieldCheck size={18} />
+          <div className="absolute top-3 left-3 bottom-auto sm:top-auto sm:bottom-6 sm:left-4 bg-surface rounded-[24px] shadow-organic px-3 py-2.5 sm:px-5 sm:py-4 flex items-center gap-2.5 sm:gap-3">
+            <span className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-sage/15 text-sage flex items-center justify-center shrink-0">
+              <ShieldCheck size={16} className="sm:hidden" />
+              <ShieldCheck size={18} className="hidden sm:block" />
             </span>
             <div>
-              <p className="text-sm font-bold text-foreground leading-tight">
+              <p className="text-xs sm:text-sm font-bold text-foreground leading-tight">
                 100% Curated
               </p>
-              <p className="text-[11px] text-muted">Every stay inspected</p>
+              <p className="text-[10px] sm:text-[11px] text-muted">Every stay inspected</p>
             </div>
           </div>
         </div>
       </div>
 
       {/* Floating search bar */}
-      <div className="relative max-w-4xl mx-auto px-6 mt-16 lg:mt-20">
+      <div className="relative max-w-4xl mx-auto px-6 mt-5 sm:mt-8 lg:mt-12">
         <div className="bg-surface rounded-[28px] shadow-organic p-2 animate-fade-in-up">
           <div className="flex flex-col md:flex-row items-stretch gap-2">
-            <div className="flex-1 flex items-center gap-3 px-5 py-3 rounded-[18px] bg-background">
+            <div className="flex-1 flex items-center gap-3 px-4 py-2.5 md:px-5 md:py-3 rounded-[18px] bg-background">
               <Search size={18} className="text-subtle shrink-0" />
               <input
                 type="text"
@@ -130,19 +130,19 @@ function HeroSection() {
                 className="w-full bg-transparent text-foreground placeholder-subtle text-sm focus:outline-none"
               />
             </div>
-            <div className="flex items-center gap-3 px-5 py-3 rounded-[18px] bg-background">
+            <div className="flex items-center gap-3 px-4 py-2.5 md:px-5 md:py-3 rounded-[18px] bg-background">
               <CalendarDays size={18} className="text-subtle shrink-0" />
               <span className="text-sm text-subtle whitespace-nowrap">
                 Check-in — Check-out
               </span>
             </div>
-            <div className="flex items-center gap-3 px-5 py-3 rounded-[18px] bg-background">
+            <div className="flex items-center gap-3 px-4 py-2.5 md:px-5 md:py-3 rounded-[18px] bg-background">
               <Users size={18} className="text-subtle shrink-0" />
               <span className="text-sm text-subtle">Guests</span>
             </div>
             <Link
               href="/stays"
-              className="flex items-center justify-center gap-2 px-8 py-3 bg-primary text-primary-foreground font-semibold text-sm rounded-[18px] hover:bg-primary-hover transition-colors whitespace-nowrap"
+              className="flex items-center justify-center gap-2 px-8 py-2.5 md:py-3 bg-primary text-primary-foreground font-semibold text-sm rounded-[18px] hover:bg-primary-hover transition-colors whitespace-nowrap"
             >
               <Search size={16} />
               Search
@@ -170,19 +170,19 @@ function AiPlannerSection() {
   ];
 
   return (
-    <section className="py-12 md:py-16 bg-background">
+    <section className="py-6 md:py-12 bg-background">
       <div className="max-w-[1400px] mx-auto px-6 lg:px-8">
-        <div className="rounded-[32px] bg-sage overflow-hidden shadow-organic">
-          <div className="grid lg:grid-cols-2 gap-10 items-center p-8 md:p-12">
+        <div className="rounded-2xl sm:rounded-[32px] bg-sage overflow-hidden shadow-organic">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 sm:gap-6 lg:gap-10 items-center p-4 sm:p-6 md:p-12">
             {/* Left: pitch + prompt */}
             <div>
               <span className="text-xs font-semibold text-white/80 uppercase tracking-widest flex items-center gap-1.5">
                 <Bot size={14} /> AI Trip Planner
               </span>
-              <h2 className="heading-organic text-3xl lg:text-5xl text-white mt-3">
+              <h2 className="heading-organic text-xl sm:text-3xl lg:text-5xl text-white mt-2 sm:mt-3">
                 Tell Us the Trip. We Build the Plan.
               </h2>
-              <p className="text-white/80 mt-4 leading-relaxed max-w-lg">
+              <p className="text-white/80 text-sm sm:text-base mt-2 sm:mt-4 leading-relaxed max-w-lg">
                 Describe your dream trip in one line — the AI shortlists stays that
                 match your preferences, builds a day-by-day itinerary, tracks you
                 through the trip, reschedules when you run late, and keeps SOS help
@@ -192,28 +192,28 @@ function AiPlannerSection() {
               {/* Prompt input (opens the planner) */}
               <Link
                 href="/traveller/ai-planner"
-                className="mt-7 flex items-center gap-3 rounded-[20px] bg-white p-2 pl-5 shadow-organic hover:-translate-y-0.5 transition-all group"
+                className="mt-3.5 sm:mt-7 flex items-center gap-2 sm:gap-3 rounded-2xl sm:rounded-[20px] bg-white p-1.5 pl-4 sm:p-2 sm:pl-5 shadow-organic hover:-translate-y-0.5 transition-all group"
               >
                 <Sparkles size={16} className="text-sage shrink-0" />
                 <span className="flex-1 text-sm text-neutral-500 truncate">
                   Describe your dream trip — &ldquo;quiet mountain cabin for two, fast wifi…&rdquo;
                 </span>
-                <span className="px-5 py-2.5 text-sm font-semibold bg-primary text-primary-foreground rounded-2xl group-hover:bg-primary-hover transition-colors whitespace-nowrap">
+                <span className="px-4 py-2 sm:px-5 sm:py-2.5 text-sm font-semibold bg-primary text-primary-foreground rounded-2xl group-hover:bg-primary-hover transition-colors whitespace-nowrap">
                   Plan with AI
                 </span>
               </Link>
-              <div className="flex flex-wrap gap-2 mt-4">
+              <div className="flex flex-wrap gap-1.5 sm:gap-2 mt-2.5 sm:mt-4">
                 {promptChips.map((c) => (
                   <Link
                     key={c}
                     href="/traveller/ai-planner"
-                    className="px-3.5 py-1.5 text-xs text-white/85 border border-white/25 rounded-full hover:bg-white/10 transition-colors"
+                    className="px-3 py-1 sm:px-3.5 sm:py-1.5 text-xs text-white/85 border border-white/25 rounded-full hover:bg-white/10 transition-colors"
                   >
                     &ldquo;{c}&rdquo;
                   </Link>
                 ))}
               </div>
-              <p className="text-[11px] text-white/60 mt-5 flex items-center gap-1.5">
+              <p className="text-[11px] text-white/60 mt-3 sm:mt-5 flex items-center gap-1.5">
                 <Bot size={11} />
                 Also available on every page — tap the AI Planner button at the bottom right.
               </p>
@@ -221,8 +221,8 @@ function AiPlannerSection() {
 
             {/* Right: live itinerary preview */}
             <div className="relative">
-              <div className="rounded-[24px] bg-white shadow-organic p-5 max-w-sm mx-auto">
-                <div className="flex items-center justify-between mb-4">
+              <div className="rounded-2xl sm:rounded-[24px] bg-white shadow-organic p-3.5 sm:p-5 max-w-sm mx-auto">
+                <div className="flex items-center justify-between mb-2.5 sm:mb-4">
                   <p className="text-sm font-semibold text-neutral-800">Auroville Escape · Day 2</p>
                   <span className="flex items-center gap-1.5 text-[10px] font-semibold text-sage uppercase tracking-wider">
                     <span className="w-1.5 h-1.5 rounded-full bg-sage animate-pulse" /> Live tracking
@@ -244,7 +244,7 @@ function AiPlannerSection() {
                       </span>
                       {i < preview.length - 1 && <span className="w-px flex-1 bg-neutral-200 my-1" />}
                     </div>
-                    <div className={`pb-4 ${p.state === "done" ? "opacity-50" : ""}`}>
+                    <div className={`pb-2.5 sm:pb-4 ${p.state === "done" ? "opacity-50" : ""}`}>
                       <p className="text-[10px] text-neutral-400 tabular-nums flex items-center gap-1">
                         <Clock size={9} /> {p.time}
                         {p.state === "now" && (
@@ -255,12 +255,12 @@ function AiPlannerSection() {
                     </div>
                   </div>
                 ))}
-                <div className="rounded-[14px] bg-terracotta/10 px-3.5 py-2.5 text-[11px] text-neutral-500">
+                <div className="rounded-xl sm:rounded-[14px] bg-terracotta/10 px-3 py-2 sm:px-3.5 sm:py-2.5 text-[11px] text-neutral-500">
                   Running 30 min late — <span className="text-terracotta font-semibold">auto-rescheduled</span> your beach ride &amp; dinner.
                 </div>
               </div>
               {/* floating chip */}
-              <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 px-4 py-2 rounded-full bg-primary shadow-organic text-xs font-semibold text-primary-foreground whitespace-nowrap">
+              <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-primary shadow-organic text-xs font-semibold text-primary-foreground whitespace-nowrap">
                 <Sparkles size={12} /> 96% match with your preferences
               </div>
             </div>
@@ -294,14 +294,14 @@ function CategoriesSection() {
   };
 
   return (
-    <section className="py-24 bg-background">
+    <section className="py-8 md:py-14 bg-background">
       <div className="max-w-[1400px] mx-auto px-6 lg:px-8">
-        <div className="flex items-end justify-between mb-14">
+        <div className="flex items-end justify-between mb-3 sm:mb-5 lg:mb-14">
           <div>
             <span className="text-xs font-semibold text-sage uppercase tracking-widest">
               Explore
             </span>
-            <h2 className="heading-organic text-3xl lg:text-5xl text-foreground mt-2">
+            <h2 className="heading-organic text-xl sm:text-3xl lg:text-5xl text-foreground mt-1 sm:mt-2">
               Find Your Perfect Escape
             </h2>
           </div>
@@ -313,179 +313,32 @@ function CategoriesSection() {
           </Link>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 stagger-children">
-          {categories.slice(0, 12).map((cat) => (
-            <Link
-              key={cat.slug}
-              href={`/stays?category=${cat.slug}`}
-              className="group p-6 rounded-[28px] bg-surface card-hover text-center"
-            >
-              <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  loading="lazy"
-                  src={iconMap[cat.icon]}
-                  alt=""
-                  aria-hidden="true"
-                  className="w-14 h-14 object-contain drop-shadow-[0_6px_10px_rgba(0,0,0,0.25)] transition-transform duration-300 ease-out group-hover:-translate-y-1.5 group-hover:scale-110 group-hover:rotate-[-4deg]"
-                />
-              </div>
-              <h3 className="text-sm font-medium text-foreground mb-1">
-                {cat.name}
-              </h3>
-              <p className="text-xs text-subtle">{cat.count} stays</p>
-            </Link>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ============================================
-// EXPERIENCES SECTION
-// ============================================
-function ExperiencesSection() {
-  return (
-    <section className="py-24 bg-background">
-      <div className="max-w-[1400px] mx-auto px-6 lg:px-8">
-        <div className="flex items-end justify-between mb-14">
-          <div>
-            <span className="text-xs font-semibold text-sage uppercase tracking-widest">
-              Beyond Stays
-            </span>
-            <h2 className="heading-organic text-3xl lg:text-5xl text-foreground mt-2">
-              Curated Experiences
-            </h2>
-            <p className="text-muted mt-3 max-w-lg">
-              Yoga at dawn, pottery with local artisans, farm-to-table cooking —
-              your stay is just the beginning.
-            </p>
-          </div>
-          <Link
-            href="/experiences"
-            className="hidden md:flex items-center gap-2 text-sm text-primary hover:underline"
-          >
-            All Experiences <ArrowRight size={14} />
-          </Link>
-        </div>
-
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 stagger-children">
-          {experiences.map((exp) => (
-            <Link
-              key={exp.id}
-              href={`/experiences/${exp.id}`}
-              className="group rounded-[28px] overflow-hidden bg-surface card-hover"
-            >
-              <div className="relative h-48 overflow-hidden bg-surface-hover">
-                <img loading="lazy"
-                  src={exp.image}
-                  alt={exp.name}
-                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute top-4 left-4">
-                  <span className="px-3 py-1 text-[10px] font-medium uppercase tracking-wider bg-white/85 backdrop-blur-sm text-sage rounded-full">
-                    {exp.category}
-                  </span>
-                </div>
-              </div>
-              <div className="p-5">
-                <h3 className="text-base font-semibold text-foreground group-hover:text-primary transition-colors mb-1">
-                  {exp.name}
-                </h3>
-                <div className="flex items-center gap-2 text-xs text-muted mb-3">
-                  <MapPin size={12} />
-                  {exp.location}
-                  <span className="text-border">·</span>
-                  {exp.duration}
-                </div>
-                <p className="text-xs text-subtle line-clamp-2 mb-4">
-                  {exp.description}
-                </p>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-1">
-                    <Star
-                      size={12}
-                      className="text-primary fill-primary"
-                    />
-                    <span className="text-xs font-medium text-foreground">
-                      {exp.rating}
-                    </span>
-                    <span className="text-xs text-subtle">
-                      ({exp.reviewCount})
-                    </span>
-                  </div>
-                  <span className="text-sm font-semibold text-foreground">
-                    ₹{exp.price.toLocaleString()}
-                  </span>
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-
-// ============================================
-// TESTIMONIALS SECTION
-// ============================================
-function TestimonialsSection() {
-  return (
-    <section className="py-24 bg-background">
-      <div className="max-w-[1400px] mx-auto px-6 lg:px-8">
-        <div className="text-center mb-14">
-          <span className="text-xs font-semibold text-sage uppercase tracking-widest">
-            Guest Stories
-          </span>
-          <h2 className="heading-organic text-3xl lg:text-5xl text-foreground mt-2">
-            What Our Guests Say
-          </h2>
-        </div>
-
-        <div className="grid md:grid-cols-3 gap-6 stagger-children">
-          {testimonials.map((t) => (
-            <div
-              key={t.id}
-              className="p-8 rounded-[28px] bg-surface card-hover relative"
-            >
-              <Quote
-                size={32}
-                className="text-sage/20 absolute top-6 right-6"
-              />
-              <div className="flex items-center gap-3 mb-6">
-                <img loading="lazy"
-                  src={t.avatar}
-                  alt={t.name}
-                  className="w-12 h-12 rounded-full object-cover border border-border"
-                />
-                <div>
-                  <h4 className="text-sm font-semibold text-foreground">
-                    {t.name}
-                  </h4>
-                  <p className="text-xs text-subtle">{t.location}</p>
-                </div>
-              </div>
-              <div className="flex gap-1 mb-4">
-                {Array.from({ length: t.rating }).map((_, i) => (
-                  <Star
-                    key={i}
-                    size={14}
-                    className="text-primary fill-primary"
+        <div className="relative">
+          <div className="flex overflow-x-auto overscroll-x-contain snap-x snap-mandatory scroll-smooth scrollbar-hide gap-2.5 sm:gap-4 -mx-6 px-6 pb-1 sm:grid sm:grid-cols-3 sm:mx-0 sm:px-0 sm:pb-0 sm:overflow-visible sm:snap-none md:grid-cols-4 lg:grid-cols-6 stagger-children">
+            {categories.slice(0, 12).map((cat) => (
+              <Link
+                key={cat.slug}
+                href={`/stays?category=${cat.slug}`}
+                className="group shrink-0 w-[92px] snap-start sm:w-auto sm:shrink p-2.5 sm:p-6 rounded-2xl sm:rounded-[28px] bg-surface card-hover text-center"
+              >
+                <div className="w-9 h-9 sm:w-16 sm:h-16 mx-auto mb-1.5 sm:mb-4 flex items-center justify-center">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    loading="lazy"
+                    src={iconMap[cat.icon]}
+                    alt=""
+                    aria-hidden="true"
+                    className="w-8 h-8 sm:w-14 sm:h-14 object-contain drop-shadow-[0_6px_10px_rgba(0,0,0,0.25)] transition-transform duration-300 ease-out group-hover:-translate-y-1.5 group-hover:scale-110 group-hover:rotate-[-4deg]"
                   />
-                ))}
-              </div>
-              <p className="text-sm text-muted leading-relaxed mb-4">
-                &ldquo;{t.comment}&rdquo;
-              </p>
-              <p className="text-xs text-subtle">
-                Stayed at{" "}
-                <span className="text-sage font-medium">{t.stayName}</span>
-              </p>
-            </div>
-          ))}
+                </div>
+                <h3 className="text-[11px] sm:text-sm font-medium text-foreground mb-0.5 sm:mb-1 leading-tight">
+                  {cat.name}
+                </h3>
+                <p className="text-[10px] sm:text-xs text-subtle">{cat.count} stays</p>
+              </Link>
+            ))}
+          </div>
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-background to-transparent sm:hidden" />
         </div>
       </div>
     </section>
@@ -497,14 +350,14 @@ function TestimonialsSection() {
 // ============================================
 function BlogSection() {
   return (
-    <section className="py-24 bg-background">
+    <section className="py-8 md:py-14 bg-background">
       <div className="max-w-[1400px] mx-auto px-6 lg:px-8">
-        <div className="flex items-end justify-between mb-14">
+        <div className="flex items-end justify-between mb-3 sm:mb-5 lg:mb-14">
           <div>
             <span className="text-xs font-semibold text-sage uppercase tracking-widest">
               Stories & Inspiration
             </span>
-            <h2 className="heading-organic text-3xl lg:text-5xl text-foreground mt-2">
+            <h2 className="heading-organic text-xl sm:text-3xl lg:text-5xl text-foreground mt-1 sm:mt-2">
               From the Journal
             </h2>
           </div>
@@ -516,37 +369,40 @@ function BlogSection() {
           </Link>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 stagger-children">
-          {blogPosts.map((post) => (
-            <Link
-              key={post.id}
-              href={`/blog/${post.slug}`}
-              className="group rounded-[28px] overflow-hidden bg-surface card-hover"
-            >
-              <div className="relative h-44 overflow-hidden bg-surface-hover">
-                <img loading="lazy"
-                  src={post.image}
-                  alt={post.title}
-                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-              </div>
-              <div className="p-5">
-                <span className="text-[10px] font-medium text-sage uppercase tracking-wider">
-                  {post.category}
-                </span>
-                <h3 className="text-sm font-semibold text-foreground mt-2 mb-2 group-hover:text-primary transition-colors line-clamp-2">
-                  {post.title}
-                </h3>
-                <p className="text-xs text-subtle line-clamp-2 mb-3">
-                  {post.excerpt}
-                </p>
-                <div className="flex items-center justify-between text-xs text-subtle">
-                  <span>{post.date}</span>
-                  <span>{post.readTime} read</span>
+        <div className="relative">
+          <div className="flex overflow-x-auto overscroll-x-contain snap-x snap-mandatory scroll-smooth scrollbar-hide gap-3 md:gap-6 -mx-6 px-6 pb-1 md:grid md:grid-cols-2 md:mx-0 md:px-0 md:pb-0 md:overflow-visible md:snap-none lg:grid-cols-4 stagger-children">
+            {blogPosts.map((post) => (
+              <Link
+                key={post.id}
+                href={`/blog/${post.slug}`}
+                className="group shrink-0 w-[175px] snap-start md:w-auto md:shrink rounded-2xl md:rounded-[28px] overflow-hidden bg-surface card-hover"
+              >
+                <div className="relative h-28 md:h-44 overflow-hidden bg-surface-hover">
+                  <img loading="lazy"
+                    src={post.image}
+                    alt={post.title}
+                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
                 </div>
-              </div>
-            </Link>
-          ))}
+                <div className="p-3 md:p-5">
+                  <span className="text-[9px] md:text-[10px] font-medium text-sage uppercase tracking-wider">
+                    {post.category}
+                  </span>
+                  <h3 className="text-xs md:text-sm font-semibold text-foreground mt-1 md:mt-2 mb-1 md:mb-2 group-hover:text-primary transition-colors line-clamp-2">
+                    {post.title}
+                  </h3>
+                  <p className="text-[11px] md:text-xs text-subtle line-clamp-2 mb-1.5 md:mb-3">
+                    {post.excerpt}
+                  </p>
+                  <div className="flex items-center justify-between text-[10px] md:text-xs text-subtle">
+                    <span>{post.date}</span>
+                    <span>{post.readTime} read</span>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-background to-transparent md:hidden" />
         </div>
       </div>
     </section>
@@ -558,25 +414,25 @@ function BlogSection() {
 // ============================================
 function CTASection() {
   return (
-    <section className="py-24 bg-background">
+    <section className="py-8 md:py-14 bg-background">
       <div className="max-w-[1400px] mx-auto px-6 lg:px-8">
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid md:grid-cols-2 gap-3 sm:gap-4 md:gap-6">
           {/* For Hosts */}
-          <div className="relative rounded-[32px] overflow-hidden p-10 lg:p-14 bg-primary shadow-organic group">
+          <div className="relative rounded-2xl sm:rounded-[32px] overflow-hidden p-5 sm:p-10 lg:p-14 bg-primary shadow-organic group">
             <div className="relative z-10">
               <span className="text-xs font-semibold text-white/80 uppercase tracking-widest">
                 For Property Owners
               </span>
-              <h3 className="heading-organic text-2xl lg:text-4xl text-white mt-3 mb-4">
+              <h3 className="heading-organic text-xl sm:text-2xl lg:text-4xl text-white mt-2 sm:mt-3 mb-2 sm:mb-4">
                 List Your Stay
               </h3>
-              <p className="text-sm text-white/85 mb-8 max-w-sm leading-relaxed">
+              <p className="text-sm text-white/85 mb-4 sm:mb-8 max-w-sm leading-relaxed">
                 Join India&apos;s most prestigious curated stays network. Our
                 architecture team will inspect, score, and elevate your property.
               </p>
               <Link
-                href="/host/onboarding"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-white text-primary font-semibold text-sm rounded-full shadow-organic hover:-translate-y-0.5 transition-all"
+                href="/business"
+                className="inline-flex items-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 bg-white text-primary font-semibold text-sm rounded-full shadow-organic hover:-translate-y-0.5 transition-all"
               >
                 Apply as Host <ArrowRight size={14} />
               </Link>
@@ -584,22 +440,22 @@ function CTASection() {
           </div>
 
           {/* For Investors */}
-          <div className="relative rounded-[32px] overflow-hidden p-10 lg:p-14 bg-sage shadow-organic group">
+          <div className="relative rounded-2xl sm:rounded-[32px] overflow-hidden p-5 sm:p-10 lg:p-14 bg-sage shadow-organic group">
             <div className="relative z-10">
               <span className="text-xs font-semibold text-white/80 uppercase tracking-widest">
                 For Investors
               </span>
-              <h3 className="heading-organic text-2xl lg:text-4xl text-white mt-3 mb-4">
+              <h3 className="heading-organic text-xl sm:text-2xl lg:text-4xl text-white mt-2 sm:mt-3 mb-2 sm:mb-4">
                 Invest in Hospitality
               </h3>
-              <p className="text-sm text-white/85 mb-8 max-w-sm leading-relaxed">
+              <p className="text-sm text-white/85 mb-4 sm:mb-8 max-w-sm leading-relaxed">
                 Fractional ownership of curated stays with transparent ROI
                 tracking, professional management, and monthly revenue
                 distribution.
               </p>
               <Link
                 href="/investor"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-white text-sage font-semibold text-sm rounded-full shadow-organic hover:-translate-y-0.5 transition-all"
+                className="inline-flex items-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 bg-white text-sage font-semibold text-sm rounded-full shadow-organic hover:-translate-y-0.5 transition-all"
               >
                 Explore Projects <ArrowRight size={14} />
               </Link>
@@ -625,8 +481,7 @@ export default function HomePage() {
         <CategoriesSection />
         <ServicesSection />
         <DestinationsSection />
-        <ExperiencesSection />
-        <TestimonialsSection />
+        <TestimonialsCarousel testimonials={testimonials} totalCount={totalGuestStoryCount} />
         <BlogSection />
         <CTASection />
       </main>

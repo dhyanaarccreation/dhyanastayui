@@ -1,11 +1,33 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { Mail, Lock, Eye, EyeOff, ArrowRight } from "lucide-react";
+import { Mail, Lock, Eye, EyeOff, ArrowRight, AlertCircle } from "lucide-react";
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export default function LoginPage() {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
+  const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
+
+  const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const data = new FormData(e.currentTarget);
+    const email = String(data.get("email") ?? "").trim();
+    const password = String(data.get("password") ?? "");
+
+    const next: typeof errors = {};
+    if (!email) next.email = "Email address is required.";
+    else if (!EMAIL_RE.test(email)) next.email = "Enter a valid email address.";
+    if (!password) next.password = "Password is required.";
+
+    setErrors(next);
+    if (Object.keys(next).length === 0) {
+      router.push("/");
+    }
+  };
 
   return (
     <div className="min-h-screen flex">
@@ -58,7 +80,7 @@ export default function LoginPage() {
           </div>
 
           {/* Form */}
-          <form className="space-y-5">
+          <form className="space-y-5" noValidate onSubmit={handleSubmit}>
             <div>
               <label className="block text-xs font-medium text-muted mb-2 uppercase tracking-wider">
                 Email Address
@@ -70,10 +92,19 @@ export default function LoginPage() {
                 />
                 <input
                   type="email"
+                  name="email"
                   placeholder="you@example.com"
-                  className="w-full pl-11 pr-4 py-3.5 bg-surface border border-border rounded-xl text-sm text-foreground placeholder-muted focus:outline-none focus:border-primary transition-colors"
+                  aria-invalid={!!errors.email}
+                  className={`w-full pl-11 pr-4 py-3.5 bg-surface border rounded-xl text-sm text-foreground placeholder-muted focus:outline-none transition-colors ${
+                    errors.email ? "border-terracotta focus:border-terracotta" : "border-border focus:border-primary"
+                  }`}
                 />
               </div>
+              {errors.email && (
+                <p className="flex items-center gap-1.5 text-xs text-terracotta mt-2">
+                  <AlertCircle size={12} /> {errors.email}
+                </p>
+              )}
             </div>
 
             <div>
@@ -95,8 +126,12 @@ export default function LoginPage() {
                 />
                 <input
                   type={showPassword ? "text" : "password"}
+                  name="password"
                   placeholder="Enter your password"
-                  className="w-full pl-11 pr-12 py-3.5 bg-surface border border-border rounded-xl text-sm text-foreground placeholder-muted focus:outline-none focus:border-primary transition-colors"
+                  aria-invalid={!!errors.password}
+                  className={`w-full pl-11 pr-12 py-3.5 bg-surface border rounded-xl text-sm text-foreground placeholder-muted focus:outline-none transition-colors ${
+                    errors.password ? "border-terracotta focus:border-terracotta" : "border-border focus:border-primary"
+                  }`}
                 />
                 <button
                   type="button"
@@ -106,6 +141,11 @@ export default function LoginPage() {
                   {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
               </div>
+              {errors.password && (
+                <p className="flex items-center gap-1.5 text-xs text-terracotta mt-2">
+                  <AlertCircle size={12} /> {errors.password}
+                </p>
+              )}
             </div>
 
             <div className="flex items-center gap-2">

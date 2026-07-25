@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import {
   Home,
+  Compass,
   Utensils,
   PartyPopper,
   CalendarDays,
@@ -24,6 +25,7 @@ import {
 } from "lucide-react";
 import {
   properties,
+  experiences,
   foodMenu,
   eventPlanners,
   localEvents,
@@ -36,11 +38,14 @@ import PropertyCard from "./PropertyCard";
 // HOMEPAGE SERVICES HUB
 // Replaces the single "Featured Stays" block with
 // a tabbed hub so new visitors can see every
-// Dhyana service at a glance.
+// Dhyana service at a glance — including the
+// standalone "Curated Experiences" list, folded in
+// here so it isn't a near-duplicate second section.
 // ============================================
 
 const tabs = [
   { key: "stays", label: "Curated Stays", icon: Home },
+  { key: "experiences", label: "Experiences", icon: Compass },
   { key: "food", label: "Curated Food", icon: Utensils },
   { key: "planners", label: "Event Planners", icon: PartyPopper },
   { key: "events", label: "Events & Workshops", icon: CalendarDays },
@@ -52,6 +57,7 @@ type TabKey = (typeof tabs)[number]["key"];
 
 const viewAll: Record<TabKey, { href: string; label: string }> = {
   stays: { href: "/stays", label: "View all stays" },
+  experiences: { href: "/experiences", label: "All experiences" },
   food: { href: "/food", label: "Explore curated food" },
   planners: { href: "/event-planners", label: "All event planners" },
   events: { href: "/experiences", label: "All events & workshops" },
@@ -72,19 +78,19 @@ export default function ServicesSection() {
   const featured = properties.filter((p) => p.isFeatured).slice(0, 3);
 
   return (
-    <section className="py-24 bg-background">
+    <section className="py-8 md:py-14 bg-background">
       <div className="max-w-[1400px] mx-auto px-6 lg:px-8">
-      <div className="rounded-[32px] bg-surface-hover p-6 md:p-10 lg:p-12">
+      <div className="rounded-2xl sm:rounded-[32px] bg-surface-hover p-3.5 sm:p-5 md:p-10 lg:p-12">
         {/* Header */}
-        <div className="flex items-end justify-between mb-8">
+        <div className="flex items-end justify-between mb-3 sm:mb-5 lg:mb-8">
           <div>
             <span className="text-xs font-semibold text-sage uppercase tracking-widest">
               One platform · Every experience
             </span>
-            <h2 className="heading-organic text-3xl lg:text-5xl text-foreground mt-2">
+            <h2 className="heading-organic text-xl sm:text-3xl lg:text-5xl text-foreground mt-1 sm:mt-2">
               Explore Dhyana Services
             </h2>
-            <p className="text-muted mt-3 max-w-lg">
+            <p className="text-muted text-sm sm:text-base mt-1.5 sm:mt-3 max-w-lg">
               Stays, food, events, rides and budget beds — everything curated,
               inspected and bookable in one place.
             </p>
@@ -97,54 +103,105 @@ export default function ServicesSection() {
           </Link>
         </div>
 
-        {/* Tab bar */}
-        <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-1 mb-10 -mx-1 px-1">
-          {tabs.map(({ key, label, icon: Icon }) => (
-            <button
-              key={key}
-              onClick={() => setTab(key)}
-              className={`shrink-0 flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-medium border transition-all ${
-                tab === key
-                  ? "bg-primary text-primary-foreground border-primary shadow-organic"
-                  : "bg-surface border-border text-muted hover:text-foreground hover:border-border-light"
-              }`}
-            >
-              <Icon size={15} />
-              {label}
-            </button>
-          ))}
+        {/* Tab bar — wraps into a fixed 2-row block; that block scrolls
+            horizontally as one unit if it doesn't fit the width. */}
+        <div className="overflow-x-auto overscroll-x-contain scroll-smooth scrollbar-hide -mx-1 px-1 pb-1 mb-3 sm:mb-5 lg:mb-10">
+          <div className="grid grid-rows-2 grid-flow-col gap-1.5 sm:gap-2 w-max">
+            {tabs.map(({ key, label, icon: Icon }) => (
+              <button
+                key={key}
+                onClick={() => setTab(key)}
+                className={`shrink-0 flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-medium border whitespace-nowrap transition-all ${
+                  tab === key
+                    ? "bg-primary text-primary-foreground border-primary shadow-organic"
+                    : "bg-surface border-border text-muted hover:text-foreground hover:border-border-light"
+                }`}
+              >
+                <Icon size={14} className="sm:hidden" />
+                <Icon size={15} className="hidden sm:block" />
+                {label}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* ============ STAYS ============ */}
         {tab === "stays" && (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 stagger-children">
+          <div className="relative flex overflow-x-auto overscroll-x-contain snap-x snap-mandatory scroll-smooth scrollbar-hide gap-3 md:gap-6 -mx-6 px-6 pb-1 md:grid md:grid-cols-2 md:mx-0 md:px-0 md:pb-0 md:overflow-visible md:snap-none lg:grid-cols-3 stagger-children">
             {featured.map((property) => (
-              <PropertyCard key={property.id} property={property} />
+              <div key={property.id} className="shrink-0 w-[220px] snap-start md:w-auto md:shrink">
+                <PropertyCard property={property} />
+              </div>
             ))}
+            <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-surface-hover to-transparent md:hidden" />
+          </div>
+        )}
+
+        {/* ============ EXPERIENCES ============ */}
+        {tab === "experiences" && (
+          <div className="relative flex overflow-x-auto overscroll-x-contain snap-x snap-mandatory scroll-smooth scrollbar-hide gap-3 sm:gap-6 -mx-6 px-6 pb-1 sm:grid sm:grid-cols-2 sm:mx-0 sm:px-0 sm:pb-0 sm:overflow-visible sm:snap-none lg:grid-cols-4 stagger-children">
+            {experiences.map((exp) => (
+              <Link
+                key={exp.id}
+                href={`/experiences/${exp.id}`}
+                className="group shrink-0 w-[175px] snap-start sm:w-auto sm:shrink rounded-2xl sm:rounded-[28px] overflow-hidden bg-surface card-hover"
+              >
+                <div className="relative h-28 sm:h-40 overflow-hidden bg-surface-hover">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img loading="lazy"
+                    src={exp.image}
+                    alt={exp.name}
+                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <span className="absolute top-2 left-2 sm:top-3 sm:left-3 px-2 sm:px-2.5 py-0.5 text-[9px] sm:text-[10px] font-medium uppercase tracking-wider bg-white/85 backdrop-blur-sm text-sage rounded-full">
+                    {exp.category}
+                  </span>
+                </div>
+                <div className="p-3 sm:p-4">
+                  <h3 className="text-sm sm:text-base font-semibold text-foreground group-hover:text-primary transition-colors mb-0.5 sm:mb-1 line-clamp-1">
+                    {exp.name}
+                  </h3>
+                  <div className="flex items-center gap-1.5 text-xs text-muted mb-1.5 sm:mb-2">
+                    <MapPin size={11} className="shrink-0" />
+                    <span className="truncate">{exp.location} · {exp.duration}</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-1">
+                      <Star size={12} className="text-primary fill-primary" />
+                      <span className="text-xs font-medium text-foreground">{exp.rating}</span>
+                    </div>
+                    <span className="text-sm font-semibold text-foreground">
+                      ₹{exp.price.toLocaleString("en-IN")}
+                    </span>
+                  </div>
+                </div>
+              </Link>
+            ))}
+            <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-surface-hover to-transparent sm:hidden" />
           </div>
         )}
 
         {/* ============ FOOD (pre-book: qty + cook) ============ */}
         {tab === "food" && (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 stagger-children">
+          <div className="relative flex overflow-x-auto overscroll-x-contain snap-x snap-mandatory scroll-smooth scrollbar-hide gap-3 sm:gap-6 -mx-6 px-6 pb-1 sm:grid sm:grid-cols-2 sm:mx-0 sm:px-0 sm:pb-0 sm:overflow-visible sm:snap-none lg:grid-cols-4 stagger-children">
             {foodMenu.map((f) => (
               <div
                 key={f.id}
-                className="rounded-[28px] overflow-hidden bg-surface card-hover flex flex-col"
+                className="shrink-0 w-[175px] snap-start sm:w-auto sm:shrink rounded-2xl sm:rounded-[28px] overflow-hidden bg-surface card-hover flex flex-col"
               >
-                <div className="relative h-40 overflow-hidden">
+                <div className="relative h-28 sm:h-40 overflow-hidden">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img loading="lazy"
                     src={f.image}
                     alt={f.name}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform"
                   />
-                  <span className="absolute top-3 left-3 flex items-center gap-1 px-2.5 py-1 text-[10px] font-medium uppercase tracking-wider bg-background/80 backdrop-blur-sm text-foreground rounded-full">
+                  <span className="absolute top-2 left-2 sm:top-3 sm:left-3 flex items-center gap-1 px-2 sm:px-2.5 py-0.5 sm:py-1 text-[9px] sm:text-[10px] font-medium uppercase tracking-wider bg-background/80 backdrop-blur-sm text-foreground rounded-full">
                     {f.veg && <Leaf size={10} className="text-sage" />}
                     {f.cuisine}
                   </span>
                 </div>
-                <div className="p-4 flex flex-col flex-1">
+                <div className="p-2.5 sm:p-4 flex flex-col flex-1">
                   <div className="flex items-start justify-between gap-2">
                     <p className="text-sm font-semibold text-foreground">
                       {f.name}
@@ -220,33 +277,34 @@ export default function ServicesSection() {
                 </div>
               </div>
             ))}
+            <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-surface-hover to-transparent sm:hidden" />
           </div>
         )}
 
         {/* ============ EVENT PLANNERS ============ */}
         {tab === "planners" && (
-          <div className="grid md:grid-cols-3 gap-6 stagger-children">
+          <div className="relative flex overflow-x-auto overscroll-x-contain snap-x snap-mandatory scroll-smooth scrollbar-hide gap-3 md:gap-6 -mx-6 px-6 pb-1 md:grid md:grid-cols-3 md:mx-0 md:px-0 md:pb-0 md:overflow-visible md:snap-none stagger-children">
             {eventPlanners.map((ep) => (
               <div
                 key={ep.id}
-                className="rounded-[28px] overflow-hidden bg-surface card-hover"
+                className="shrink-0 w-[200px] snap-start md:w-auto md:shrink rounded-2xl md:rounded-[28px] overflow-hidden bg-surface card-hover"
               >
-                <div className="relative h-48 overflow-hidden">
+                <div className="relative h-32 md:h-48 overflow-hidden">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img loading="lazy"
                     src={ep.image}
                     alt={ep.name}
                     className="w-full h-full object-cover"
                   />
-                  <span className="absolute top-3 left-3 px-2.5 py-1 text-[10px] font-medium uppercase tracking-wider bg-white/85 backdrop-blur-sm text-sage rounded-full">
+                  <span className="absolute top-2 left-2 md:top-3 md:left-3 px-2 md:px-2.5 py-0.5 md:py-1 text-[9px] md:text-[10px] font-medium uppercase tracking-wider bg-white/85 backdrop-blur-sm text-sage rounded-full">
                     {ep.type}
                   </span>
-                  <span className="absolute top-3 right-3 flex items-center gap-1 px-2 py-1 text-xs bg-background/80 backdrop-blur-sm text-foreground rounded-full">
+                  <span className="absolute top-2 right-2 md:top-3 md:right-3 flex items-center gap-1 px-1.5 md:px-2 py-0.5 md:py-1 text-[10px] md:text-xs bg-background/80 backdrop-blur-sm text-foreground rounded-full">
                     <Star size={11} className="text-primary fill-primary" />
                     {ep.rating}
                   </span>
                 </div>
-                <div className="p-5">
+                <div className="p-3 md:p-5">
                   <div className="flex items-center gap-1.5">
                     <p className="text-base font-semibold text-foreground">
                       {ep.name}
@@ -283,32 +341,33 @@ export default function ServicesSection() {
                 </div>
               </div>
             ))}
+            <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-surface-hover to-transparent md:hidden" />
           </div>
         )}
 
         {/* ============ LOCAL EVENTS & WORKSHOPS ============ */}
         {tab === "events" && (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 stagger-children">
+          <div className="relative flex overflow-x-auto overscroll-x-contain snap-x snap-mandatory scroll-smooth scrollbar-hide gap-3 sm:gap-6 -mx-6 px-6 pb-1 sm:grid sm:grid-cols-2 sm:mx-0 sm:px-0 sm:pb-0 sm:overflow-visible sm:snap-none lg:grid-cols-4 stagger-children">
             {localEvents.map((le) => (
               <div
                 key={le.id}
-                className="rounded-[28px] overflow-hidden bg-surface card-hover"
+                className="shrink-0 w-[175px] snap-start sm:w-auto sm:shrink rounded-2xl sm:rounded-[28px] overflow-hidden bg-surface card-hover"
               >
-                <div className="relative h-40 overflow-hidden">
+                <div className="relative h-28 sm:h-40 overflow-hidden">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img loading="lazy"
                     src={le.image}
                     alt={le.title}
                     className="w-full h-full object-cover"
                   />
-                  <span className="absolute top-3 left-3 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider bg-background/85 backdrop-blur-sm text-foreground rounded-full">
+                  <span className="absolute top-2 left-2 sm:top-3 sm:left-3 px-2 sm:px-2.5 py-0.5 sm:py-1 text-[9px] sm:text-[10px] font-semibold uppercase tracking-wider bg-background/85 backdrop-blur-sm text-foreground rounded-full">
                     {le.date}
                   </span>
-                  <span className="absolute top-3 right-3 px-2 py-1 text-[10px] font-medium bg-primary/90 text-primary-foreground rounded-full">
+                  <span className="absolute top-2 right-2 sm:top-3 sm:right-3 px-1.5 sm:px-2 py-0.5 sm:py-1 text-[9px] sm:text-[10px] font-medium bg-primary/90 text-primary-foreground rounded-full">
                     {le.kind}
                   </span>
                 </div>
-                <div className="p-4">
+                <div className="p-2.5 sm:p-4">
                   <p className="text-sm font-semibold text-foreground leading-snug">
                     {le.title}
                   </p>
@@ -334,29 +393,30 @@ export default function ServicesSection() {
                 </div>
               </div>
             ))}
+            <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-surface-hover to-transparent sm:hidden" />
           </div>
         )}
 
         {/* ============ VEHICLE RENTALS ============ */}
         {tab === "vehicles" && (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 stagger-children">
+          <div className="relative flex overflow-x-auto overscroll-x-contain snap-x snap-mandatory scroll-smooth scrollbar-hide gap-3 sm:gap-6 -mx-6 px-6 pb-1 sm:grid sm:grid-cols-2 sm:mx-0 sm:px-0 sm:pb-0 sm:overflow-visible sm:snap-none lg:grid-cols-4 stagger-children">
             {rentalVehicles.map((rv) => (
               <div
                 key={rv.id}
-                className="rounded-[28px] overflow-hidden bg-surface card-hover"
+                className="shrink-0 w-[175px] snap-start sm:w-auto sm:shrink rounded-2xl sm:rounded-[28px] overflow-hidden bg-surface card-hover"
               >
-                <div className="relative h-40 overflow-hidden">
+                <div className="relative h-28 sm:h-40 overflow-hidden">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img loading="lazy"
                     src={rv.image}
                     alt={rv.name}
                     className="w-full h-full object-cover"
                   />
-                  <span className="absolute top-3 left-3 px-2.5 py-1 text-[10px] font-medium uppercase tracking-wider bg-background/80 backdrop-blur-sm text-foreground rounded-full">
+                  <span className="absolute top-2 left-2 sm:top-3 sm:left-3 px-2 sm:px-2.5 py-0.5 sm:py-1 text-[9px] sm:text-[10px] font-medium uppercase tracking-wider bg-background/80 backdrop-blur-sm text-foreground rounded-full">
                     {rv.type}
                   </span>
                 </div>
-                <div className="p-4">
+                <div className="p-2.5 sm:p-4">
                   <p className="text-sm font-semibold text-foreground">
                     {rv.name}
                   </p>
@@ -388,33 +448,34 @@ export default function ServicesSection() {
                 </div>
               </div>
             ))}
+            <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-surface-hover to-transparent sm:hidden" />
           </div>
         )}
 
         {/* ============ HOSTELS & BUDGET ============ */}
         {tab === "hostels" && (
-          <div className="grid md:grid-cols-3 gap-6 stagger-children">
+          <div className="relative flex overflow-x-auto overscroll-x-contain snap-x snap-mandatory scroll-smooth scrollbar-hide gap-3 md:gap-6 -mx-6 px-6 pb-1 md:grid md:grid-cols-3 md:mx-0 md:px-0 md:pb-0 md:overflow-visible md:snap-none stagger-children">
             {hostels.map((h) => (
               <div
                 key={h.id}
-                className="rounded-[28px] overflow-hidden bg-surface card-hover"
+                className="shrink-0 w-[200px] snap-start md:w-auto md:shrink rounded-2xl md:rounded-[28px] overflow-hidden bg-surface card-hover"
               >
-                <div className="relative h-44 overflow-hidden">
+                <div className="relative h-32 md:h-44 overflow-hidden">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img loading="lazy"
                     src={h.image}
                     alt={h.name}
                     className="w-full h-full object-cover"
                   />
-                  <span className="absolute top-3 left-3 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider bg-sage/90 text-white rounded-full">
+                  <span className="absolute top-2 left-2 md:top-3 md:left-3 px-2 md:px-2.5 py-0.5 md:py-1 text-[9px] md:text-[10px] font-semibold uppercase tracking-wider bg-sage/90 text-white rounded-full">
                     Budget friendly
                   </span>
-                  <span className="absolute top-3 right-3 flex items-center gap-1 px-2 py-1 text-xs bg-background/80 backdrop-blur-sm text-foreground rounded-full">
+                  <span className="absolute top-2 right-2 md:top-3 md:right-3 flex items-center gap-1 px-1.5 md:px-2 py-0.5 md:py-1 text-[10px] md:text-xs bg-background/80 backdrop-blur-sm text-foreground rounded-full">
                     <Star size={11} className="text-primary fill-primary" />
                     {h.rating}
                   </span>
                 </div>
-                <div className="p-5">
+                <div className="p-3 md:p-5">
                   <p className="text-base font-semibold text-foreground">
                     {h.name}
                   </p>
@@ -449,6 +510,7 @@ export default function ServicesSection() {
                 </div>
               </div>
             ))}
+            <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-surface-hover to-transparent md:hidden" />
           </div>
         )}
 
@@ -534,7 +596,7 @@ export function SpotlightSection() {
   }, []);
 
   return (
-    <section className="pt-28 md:pt-32 pb-4 bg-background">
+    <section className="pt-10 md:pt-14 pb-4 bg-background">
       <div className="max-w-[1400px] mx-auto px-6 lg:px-8">
         {sponsoredAds.length > 0 ? (
           /* ---- Sponsored ads: right-to-left slider ---- */
@@ -544,7 +606,7 @@ export function SpotlightSection() {
               style={{ transform: `translateX(-${slide * 100}%)` }}
             >
               {sponsoredAds.map((ad) => (
-                <div key={ad.headline} className="relative w-full shrink-0 min-h-[300px]">
+                <div key={ad.headline} className="relative w-full shrink-0 min-h-[220px] sm:min-h-[300px]">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img loading="lazy"
                     src={ad.image}
@@ -552,27 +614,27 @@ export function SpotlightSection() {
                     className="absolute inset-0 w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/60 to-black/20" />
-                  <div className="relative p-8 md:p-12 max-w-xl">
-                    <div className="flex items-center gap-2 mb-4 flex-wrap">
-                      <span className="flex items-center gap-1.5 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider bg-white/10 backdrop-blur-sm text-white/90 rounded-full border border-white/20">
+                  <div className="relative p-4 sm:p-5 md:p-8 lg:p-12 max-w-xl">
+                    <div className="flex items-center gap-1.5 sm:gap-2 mb-2 sm:mb-4 flex-wrap">
+                      <span className="flex items-center gap-1.5 px-2.5 sm:px-3 py-0.5 sm:py-1 text-[9px] sm:text-[10px] font-semibold uppercase tracking-wider bg-white/10 backdrop-blur-sm text-white/90 rounded-full border border-white/20">
                         <Megaphone size={11} /> Spotlight · Sponsored
                       </span>
-                      <span className="flex items-center gap-1 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider bg-primary text-primary-foreground rounded-full">
+                      <span className="flex items-center gap-1 px-2.5 sm:px-3 py-0.5 sm:py-1 text-[9px] sm:text-[10px] font-semibold uppercase tracking-wider bg-primary text-primary-foreground rounded-full">
                         <BadgePercent size={11} /> {ad.offer}
                       </span>
                     </div>
                     <p className="text-xs text-white/70 uppercase tracking-widest mb-1">
                       {ad.partner}
                     </p>
-                    <h3 className="heading-organic text-3xl md:text-4xl text-white">
+                    <h3 className="heading-organic text-lg sm:text-2xl md:text-4xl text-white">
                       {ad.headline}
                     </h3>
-                    <p className="text-sm text-white/80 mt-3 leading-relaxed">
+                    <p className="text-xs sm:text-sm text-white/80 mt-1.5 sm:mt-3 leading-relaxed line-clamp-2 sm:line-clamp-none">
                       {ad.copy}
                     </p>
                     <Link
                       href={ad.href}
-                      className="inline-flex items-center gap-2 mt-6 px-6 py-3 text-sm font-medium bg-primary text-primary-foreground rounded-full hover:bg-primary-hover transition-colors"
+                      className="inline-flex items-center gap-2 mt-3 sm:mt-6 px-4 sm:px-6 py-2 sm:py-3 text-sm font-medium bg-primary text-primary-foreground rounded-full hover:bg-primary-hover transition-colors"
                     >
                       Explore <ArrowRight size={15} />
                     </Link>

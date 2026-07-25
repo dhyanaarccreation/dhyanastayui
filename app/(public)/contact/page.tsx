@@ -1,10 +1,34 @@
 "use client";
 
 import { useState } from "react";
-import { Mail, Phone, MapPin, ArrowRight } from "lucide-react";
+import { Mail, Phone, MapPin, ArrowRight, AlertCircle } from "lucide-react";
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+type ContactErrors = { firstName?: string; lastName?: string; email?: string; message?: string };
 
 export default function ContactPage() {
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [errors, setErrors] = useState<ContactErrors>({});
+
+  const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const data = new FormData(e.currentTarget);
+    const firstName = String(data.get("firstName") ?? "").trim();
+    const lastName = String(data.get("lastName") ?? "").trim();
+    const email = String(data.get("email") ?? "").trim();
+    const message = String(data.get("message") ?? "").trim();
+
+    const next: ContactErrors = {};
+    if (!firstName) next.firstName = "Required.";
+    if (!lastName) next.lastName = "Required.";
+    if (!email) next.email = "Email address is required.";
+    else if (!EMAIL_RE.test(email)) next.email = "Enter a valid email address.";
+    if (!message) next.message = "Please tell us how we can help.";
+
+    setErrors(next);
+    if (Object.keys(next).length === 0) setIsSubmitted(true);
+  };
 
   return (
     <div className="bg-background min-h-screen pb-24">
@@ -14,7 +38,7 @@ export default function ContactPage() {
           Get in Touch
         </h1>
         <p className="text-muted max-w-2xl mx-auto">
-          Whether you're looking to book a stay, list your property, or discuss an architectural project, our team is here to help.
+          Whether you&apos;re looking to book a stay, list your property, or discuss an architectural project, our team is here to help.
         </p>
       </div>
 
@@ -95,13 +119,7 @@ export default function ContactPage() {
           {/* Contact Form */}
           <div className="bg-surface border border-border rounded-2xl p-8">
             {!isSubmitted ? (
-              <form 
-                className="space-y-6"
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  setIsSubmitted(true);
-                }}
-              >
+              <form className="space-y-6" noValidate onSubmit={handleSubmit}>
                 <div className="grid grid-cols-2 gap-6">
                   <div>
                     <label className="block text-xs font-medium text-muted mb-2 uppercase tracking-wider">
@@ -109,10 +127,18 @@ export default function ContactPage() {
                     </label>
                     <input
                       type="text"
-                      required
+                      name="firstName"
                       placeholder="First name"
-                      className="w-full px-4 py-3 bg-background border border-border rounded-xl text-sm text-foreground placeholder-muted focus:outline-none focus:border-primary transition-colors"
+                      aria-invalid={!!errors.firstName}
+                      className={`w-full px-4 py-3 bg-background border rounded-xl text-sm text-foreground placeholder-muted focus:outline-none transition-colors ${
+                        errors.firstName ? "border-terracotta focus:border-terracotta" : "border-border focus:border-primary"
+                      }`}
                     />
+                    {errors.firstName && (
+                      <p className="flex items-center gap-1.5 text-xs text-terracotta mt-1.5">
+                        <AlertCircle size={11} /> {errors.firstName}
+                      </p>
+                    )}
                   </div>
                   <div>
                     <label className="block text-xs font-medium text-muted mb-2 uppercase tracking-wider">
@@ -120,10 +146,18 @@ export default function ContactPage() {
                     </label>
                     <input
                       type="text"
-                      required
+                      name="lastName"
                       placeholder="Last name"
-                      className="w-full px-4 py-3 bg-background border border-border rounded-xl text-sm text-foreground placeholder-muted focus:outline-none focus:border-primary transition-colors"
+                      aria-invalid={!!errors.lastName}
+                      className={`w-full px-4 py-3 bg-background border rounded-xl text-sm text-foreground placeholder-muted focus:outline-none transition-colors ${
+                        errors.lastName ? "border-terracotta focus:border-terracotta" : "border-border focus:border-primary"
+                      }`}
                     />
+                    {errors.lastName && (
+                      <p className="flex items-center gap-1.5 text-xs text-terracotta mt-1.5">
+                        <AlertCircle size={11} /> {errors.lastName}
+                      </p>
+                    )}
                   </div>
                 </div>
 
@@ -133,17 +167,28 @@ export default function ContactPage() {
                   </label>
                   <input
                     type="email"
-                    required
+                    name="email"
                     placeholder="you@example.com"
-                    className="w-full px-4 py-3 bg-background border border-border rounded-xl text-sm text-foreground placeholder-muted focus:outline-none focus:border-primary transition-colors"
+                    aria-invalid={!!errors.email}
+                    className={`w-full px-4 py-3 bg-background border rounded-xl text-sm text-foreground placeholder-muted focus:outline-none transition-colors ${
+                      errors.email ? "border-terracotta focus:border-terracotta" : "border-border focus:border-primary"
+                    }`}
                   />
+                  {errors.email && (
+                    <p className="flex items-center gap-1.5 text-xs text-terracotta mt-1.5">
+                      <AlertCircle size={11} /> {errors.email}
+                    </p>
+                  )}
                 </div>
 
                 <div>
                   <label className="block text-xs font-medium text-muted mb-2 uppercase tracking-wider">
                     Inquiry Type
                   </label>
-                  <select className="w-full px-4 py-3 bg-background border border-border rounded-xl text-sm text-foreground focus:outline-none focus:border-primary transition-colors appearance-none">
+                  <select
+                    name="inquiryType"
+                    className="w-full px-4 py-3 bg-background border border-border rounded-xl text-sm text-foreground focus:outline-none focus:border-primary transition-colors appearance-none"
+                  >
                     <option>General Inquiry</option>
                     <option>Booking Support</option>
                     <option>Hosting with Dhyana</option>
@@ -157,11 +202,19 @@ export default function ContactPage() {
                     Message
                   </label>
                   <textarea
-                    required
+                    name="message"
                     rows={4}
                     placeholder="How can we help you?"
-                    className="w-full px-4 py-3 bg-background border border-border rounded-xl text-sm text-foreground placeholder-muted focus:outline-none focus:border-primary transition-colors resize-none"
+                    aria-invalid={!!errors.message}
+                    className={`w-full px-4 py-3 bg-background border rounded-xl text-sm text-foreground placeholder-muted focus:outline-none transition-colors resize-none ${
+                      errors.message ? "border-terracotta focus:border-terracotta" : "border-border focus:border-primary"
+                    }`}
                   ></textarea>
+                  {errors.message && (
+                    <p className="flex items-center gap-1.5 text-xs text-terracotta mt-1.5">
+                      <AlertCircle size={11} /> {errors.message}
+                    </p>
+                  )}
                 </div>
 
                 <button

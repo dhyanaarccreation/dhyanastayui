@@ -131,8 +131,13 @@ const cannedReplies: ChatMsg[] = [
   },
 ];
 
-export default function TripPlannerWidget() {
-  const [open, setOpen] = useState(false);
+export default function TripPlannerWidget({
+  open,
+  onClose,
+}: {
+  open: boolean;
+  onClose: () => void;
+}) {
   const [tab, setTab] = useState<Tab>("planner");
   const [plan, setPlan] = useState<PlanItem[]>(initialPlan);
   const [delayAlert, setDelayAlert] = useState(true);
@@ -273,37 +278,17 @@ export default function TripPlannerWidget() {
 
   return (
     <>
-      {/* ---------- Floating launcher (all pages, bottom-right) ---------- */}
-      <button
-        onClick={() => setOpen(true)}
-        aria-label="Open AI Trip Planner"
-        className={`fixed bottom-6 right-6 z-[60] flex items-center gap-2.5 pl-2.5 pr-4 py-2.5 rounded-full bg-surface border border-sage/40 shadow-[0_8px_32px_rgba(0,0,0,0.25)] hover:border-sage hover:-translate-y-0.5 transition-all ${
-          open ? "opacity-0 pointer-events-none" : "opacity-100"
-        }`}
-      >
-        <span className="relative flex items-center justify-center w-9 h-9 rounded-full bg-background">
-          <LogoMark size={26} />
-          {delayAlert && notificationsOn && (
-            <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-terracotta animate-pulse" />
-          )}
-        </span>
-        <span className="text-sm font-medium text-foreground">
-          AI Planner
-        </span>
-        <Sparkles size={14} className="text-sage" />
-      </button>
-
       {/* ---------- Mobile backdrop ---------- */}
       {open && (
         <div
-          className="fixed inset-0 z-[65] bg-black/50 backdrop-blur-sm sm:hidden"
-          onClick={() => setOpen(false)}
+          className="fixed inset-0 z-[82] bg-black/50 backdrop-blur-sm sm:hidden"
+          onClick={onClose}
         />
       )}
 
       {/* ---------- Slide-over panel ---------- */}
       <aside
-        className={`fixed inset-y-0 right-0 z-[70] w-full sm:w-[400px] bg-background border-l border-border shadow-2xl flex flex-col transition-transform duration-300 ${
+        className={`fixed inset-y-0 right-0 z-[85] w-full sm:w-[400px] bg-background border-l border-border shadow-2xl flex flex-col transition-transform duration-300 ${
           open ? "translate-x-0" : "translate-x-full"
         }`}
         aria-hidden={!open}
@@ -331,7 +316,7 @@ export default function TripPlannerWidget() {
             {notificationsOn ? <Bell size={17} /> : <BellOff size={17} />}
           </button>
           <button
-            onClick={() => setOpen(false)}
+            onClick={onClose}
             aria-label="Close planner"
             className="p-2 rounded-lg text-muted hover:text-foreground hover:bg-surface-hover transition-colors"
           >

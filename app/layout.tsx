@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
 import { ThemeProvider } from "@/app/components/ThemeProvider";
-import TripPlannerWidget from "@/app/components/TripPlannerWidget";
+import FloatingActions from "@/app/components/FloatingActions";
 import "./globals.css";
 
 const inter = Inter({
@@ -42,10 +42,10 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${inter.variable} ${playfair.variable} antialiased`}
     >
-      <body className="min-h-screen flex flex-col">
+      <body className="min-h-screen flex flex-col" suppressHydrationWarning>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
           {children}
-          <TripPlannerWidget />
+          <FloatingActions />
         </ThemeProvider>
       </body>
     </html>

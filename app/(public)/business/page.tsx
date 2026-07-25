@@ -58,8 +58,8 @@ interface Card {
 
 const cards: Record<TabKey, Card[]> = {
   host: [
-    { icon: Home, title: "List your property", desc: "Submit your stay with photos and papers — our systematic checks and a manager call get you approved fast.", cta: "Start listing", href: "/host/onboarding" },
-    { icon: BadgeCheck, title: "Become a host", desc: "New to hosting? We guide you from first photo to first guest, with quality standards that earn the Curated badge.", cta: "Join as a host", href: "/host/onboarding" },
+    { icon: Home, title: "List your property", desc: "Submit your stay with photos and papers — our systematic checks and a manager call get you approved fast.", cta: "Start listing", href: "/become-a-host" },
+    { icon: BadgeCheck, title: "Become a host", desc: "New to hosting? We guide you from first photo to first guest, with quality standards that earn the Curated badge.", cta: "Join as a host", href: "/become-a-host" },
   ],
   invest: [],
   consultancy: [
@@ -68,8 +68,7 @@ const cards: Record<TabKey, Card[]> = {
   ],
   partners: [],
   influencers: [
-    { icon: Camera, title: "Influencer program", desc: "Stay free at curated properties, earn on your promo code, and co-create content with our team.", cta: "Apply as influencer", href: "/contact" },
-    { icon: Star, title: "Influencer dashboard", desc: "Track collabs, promo-code earnings, free stay credits and your tier progress.", cta: "Open dashboard", href: "/influencer" },
+    { icon: Camera, title: "Influencer program", desc: "Stay free at curated properties, earn on your promo code, and co-create content with our team.", cta: "Apply as influencer", href: "/business/apply-influencer" },
   ],
   careers: [
     { icon: Briefcase, title: "Careers at Dhyana", desc: "Engineering, operations, curation, field inspection — build India's most loved stay platform.", cta: "See open roles", href: "/careers" },
@@ -205,13 +204,13 @@ interface Answer {
   href: string;
 }
 const answers: Answer[] = [
-  { match: ["list", "property", "host"], text: "To list your property, start host onboarding — upload photos and papers, clear our checks, and a manager calls you for approval.", cta: "Start listing", href: "/host/onboarding" },
+  { match: ["list", "property", "host"], text: "To list your property, start host onboarding — upload photos and papers, clear our checks, and a manager calls you for approval.", cta: "Start listing", href: "/become-a-host" },
   { match: ["invest", "roi", "return", "plan", "land", "lease"], text: "We have three models: Landowner Partnership (you keep ~70%), Land Leasing (fixed passive income), and Joint Investment (partners share 50–60%, Dhyana takes 40–50% for running everything). All three are on this page under Invest — our desk will map you to the right one.", cta: "Talk to the investment desk", href: "/contact" },
   { match: ["architect", "design", "consult", "build"], text: "Our architecture team does master plans, drawings and BOQ; the hospitality team does business plans and branding. Book either consultancy online.", cta: "Book consultancy", href: "/consultancy/architecture" },
   { match: ["event", "wedding", "planner"], text: "Event planners join as partners — your packages get booked by travellers across our stays. The partner team will onboard you.", cta: "Apply as event partner", href: "/contact" },
   { match: ["bike", "rental", "vehicle", "car"], text: "Rental providers plug their fleet into stay bookings with doorstep delivery. Apply and our partner team takes it from there.", cta: "Apply as rental partner", href: "/contact" },
   { match: ["food", "kitchen", "cook", "restaurant"], text: "Food partners serve pre-booked meals to guests — with named cooks guests can choose. Apply and we'll verify your kitchen.", cta: "Apply as food partner", href: "/contact" },
-  { match: ["influencer", "creator", "instagram", "promo"], text: "Our influencer program has Nano, Micro and Macro tiers — free curated stays, promo-code earnings and campaign collabs, tracked in your own dashboard.", cta: "Apply as influencer", href: "/contact" },
+  { match: ["influencer", "creator", "instagram", "promo"], text: "Our influencer program has Nano, Micro and Macro tiers — free curated stays, promo-code earnings and campaign collabs, tracked in your own dashboard.", cta: "Apply as influencer", href: "/business/apply-influencer" },
   { match: ["job", "career", "hiring", "work"], text: "We're hiring across engineering, operations and curation — and we love field people who know their regions.", cta: "See open roles", href: "/careers" },
   { match: ["volunteer"], text: "Volunteers join farm work-exchanges, festival crews and community projects at partner properties. Tell us your interests.", cta: "Apply to volunteer", href: "/contact" },
 ];
@@ -322,7 +321,7 @@ export default function BusinessPage() {
 
         {/* Cards for active tab */}
         {cards[tab].length > 0 && (
-        <div className={`grid gap-6 stagger-children ${cards[tab].length > 3 ? "sm:grid-cols-2 lg:grid-cols-4" : cards[tab].length === 2 ? "md:grid-cols-2" : "md:grid-cols-3"}`}>
+        <div className={`grid gap-6 stagger-children ${cards[tab].length > 3 ? "sm:grid-cols-2 lg:grid-cols-4" : cards[tab].length === 2 ? "md:grid-cols-2" : cards[tab].length === 1 ? "max-w-xl mx-auto" : "md:grid-cols-3"}`}>
           {cards[tab].map((c) => (
             <div key={c.title} className="bg-surface border border-surface-hover hover:border-border rounded-2xl p-6 flex flex-col card-hover">
               <span className="w-11 h-11 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-4">

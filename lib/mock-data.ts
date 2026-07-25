@@ -97,6 +97,10 @@ export interface Testimonial {
   rating: number;
   comment: string;
   stayName: string;
+  category: "guest-stays" | "experiences" | "investors";
+  propertySlug?: string;
+  experienceId?: string;
+  helpfulCount?: number;
 }
 
 export interface FAQItem {
@@ -222,7 +226,7 @@ export const properties: Property[] = [
     bedrooms: 3,
     bathrooms: 3,
     area: "2,400 sq ft",
-    amenities: ["Infinity Pool", "Private Chef", "Wi-Fi", "AC", "Home Theatre", "BBQ", "Wine Cellar", "Parking", "Gym"],
+    amenities: ["Infinity Pool", "Private Pool", "Bathtub", "Private Chef", "Wi-Fi", "AC", "Home Theatre", "BBQ", "Wine Cellar", "Parking", "Gym"],
     highlights: ["270° mountain views", "Infinity pool", "Private chef", "Award-winning design"],
     host: { name: "Rahul & Meera Kapoor", avatar: "https://i.pravatar.cc/150?img=13", since: "2023", responseRate: "100%", responseTime: "< 1 hour", bio: "We design luxury that respects nature. Every stay should be a masterpiece.", verified: true, languages: ["English", "Hindi", "Malayalam"] },
     houseRules: ["Check-in: 3:00 PM", "Check-out: 12:00 PM", "No parties", "Pool rules apply"],
@@ -291,6 +295,67 @@ export const properties: Property[] = [
     isFeatured: true,
     isTrending: false,
     sustainability: ["Restored heritage", "Natural ventilation", "Rainwater harvesting"],
+  },
+  {
+    id: "7",
+    name: "Sunset Shore Beach House",
+    slug: "sunset-shore-beach-house",
+    tagline: "Where the tide meets your doorstep",
+    description: "A thatched-roof beach house steps from the Arabian Sea, built for slow mornings on the sand and long, unhurried sunsets. Open-plan living spills onto a private veranda facing the water.",
+    story: "Once a fisherman's cottage, Sunset Shore was rebuilt plank by plank using reclaimed wood and local laterite, keeping the original footprint so the dunes around it were never disturbed.",
+    category: "Beach House",
+    location: { city: "Goa", state: "Goa", country: "India", coordinates: { lat: 15.2993, lng: 74.1240 } },
+    images: [
+      "https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1520454974749-611b7248ffdb?q=80&w=1200&auto=format&fit=crop",
+    ],
+    price: 9500,
+    originalPrice: 11000,
+    rating: 4.75,
+    reviewCount: 71,
+    maxGuests: 5,
+    bedrooms: 2,
+    bathrooms: 2,
+    area: "1,400 sq ft",
+    amenities: ["Wi-Fi", "Public Pool", "Bathtub", "AC", "Beach Access", "BBQ", "Parking", "Home Theatre"],
+    highlights: ["Beachfront location", "Private veranda", "Sunset views", "5-minute walk to the shacks"],
+    host: { name: "Ines D'Souza", avatar: "https://i.pravatar.cc/150?img=32", since: "2022", responseRate: "97%", responseTime: "< 2 hours", bio: "Goan by birth, host by heart. I want every guest to slow down the way this coast taught me to.", verified: true, languages: ["English", "Konkani", "Hindi"] },
+    houseRules: ["Check-in: 3:00 PM", "Check-out: 11:00 AM", "No loud music after 10 PM", "No outside guests at the pool"],
+    cancellationPolicy: "Free cancellation up to 7 days before check-in.",
+    badges: ["Curated Stay", "Beachfront"],
+    isFeatured: false,
+    isTrending: true,
+    sustainability: ["Reclaimed wood construction", "Solar water heater", "Dune conservation"],
+  },
+  {
+    id: "8",
+    name: "Whispering Pines Adventure Camp",
+    slug: "whispering-pines-adventure-camp",
+    tagline: "Pitch a tent, chase a sunrise",
+    description: "A cluster of walk-in safari tents set in a pine and coffee estate above Coorg, built for trekkers and campfire people. Days start with guided treks and end with everyone around the same fire.",
+    story: "Started by two trekking guides who got tired of guests having nowhere to stay after a trek, Whispering Pines keeps things deliberately simple — canvas, firewood, and good trails.",
+    category: "Adventure Camp",
+    location: { city: "Coorg", state: "Karnataka", country: "India", coordinates: { lat: 12.4244, lng: 75.7382 } },
+    images: [
+      "https://images.unsplash.com/photo-1445308394109-4ec2920981b1?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?q=80&w=1200&auto=format&fit=crop",
+    ],
+    price: 2200,
+    rating: 4.6,
+    reviewCount: 103,
+    maxGuests: 2,
+    bedrooms: 1,
+    bathrooms: 1,
+    area: "120 sq ft",
+    amenities: ["Wi-Fi", "Bonfire", "Guided Trek", "Common Bathrooms", "Parking"],
+    highlights: ["Guided sunrise treks", "Nightly bonfire", "Coffee estate setting", "Budget-friendly"],
+    host: { name: "Kiran & Deepak", avatar: "https://i.pravatar.cc/150?img=51", since: "2021", responseRate: "94%", responseTime: "< 3 hours", bio: "Trekking guides first, hosts second. We'll get you up for the sunrise if it kills us.", verified: true, languages: ["English", "Kannada", "Hindi"] },
+    houseRules: ["Check-in: 12:00 PM", "Check-out: 10:00 AM", "No AC — pack for the hills", "Lights out at the campfire by 11 PM"],
+    cancellationPolicy: "Free cancellation up to 3 days before check-in.",
+    badges: ["Curated Stay", "Budget Friendly"],
+    isFeatured: false,
+    isTrending: false,
+    sustainability: ["Solar lighting", "No single-use plastic", "Local guide employment"],
   },
 ];
 
@@ -470,6 +535,121 @@ export const experiences: Experience[] = [
     included: ["Tripod & camera settings guidance", "Dark-sky location transport", "Hot coffee & snacks", "RAW editing tips"],
     groupSize: "Up to 6 people",
   },
+  {
+    id: "e7",
+    name: "Ayurvedic Massage & Herbal Bath Ritual",
+    category: "Wellness",
+    description: "A traditional Kerala Ayurvedic therapy session tailored to your dosha, followed by a warm herbal steam bath. The house physician reviews your constitution first, then two therapists work in synchronised strokes with medicated oils pressed from herbs grown on the property.",
+    price: 1800,
+    duration: "2 hours",
+    rating: 4.9,
+    reviewCount: 37,
+    image: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?q=80&w=800&auto=format&fit=crop",
+    location: "Palakkad",
+    gallery: [
+      "https://images.unsplash.com/photo-1600334129128-685c5582fd35?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1519823551278-64ac92734fb1?q=80&w=800&auto=format&fit=crop",
+    ],
+    video: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",
+    host: { name: "Dr. Lakshmi Nair", role: "Ayurvedic physician · Nila Wellness", avatar: "https://i.pravatar.cc/150?img=47" },
+    included: ["Dosha consultation", "Synchronised Abhyanga massage", "Herbal steam bath", "Post-therapy herbal tea"],
+    groupSize: "1 person",
+  },
+  {
+    id: "e8",
+    name: "Chettinad Spice Trail & Feast",
+    category: "Food",
+    description: "Explore a centuries-old spice trading town and cook a fiery Chettinad meal from scratch. You'll visit a family-run spice grinder, learn to roast and blend a Chettinad masala, and finish with a banana-leaf feast shared with the family that hosts you.",
+    price: 1400,
+    duration: "3.5 hours",
+    rating: 4.7,
+    reviewCount: 24,
+    image: "https://images.unsplash.com/photo-1596797038530-2c107229654b?q=80&w=800&auto=format&fit=crop",
+    location: "Pondicherry",
+    gallery: [
+      "https://images.unsplash.com/photo-1585937421612-70a008356fbe?q=80&w=800&auto=format&fit=crop",
+    ],
+    video: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/friday.mp4",
+    host: { name: "Meena Akka", role: "Home cook · Chettinad kitchen, 4th generation", avatar: "https://i.pravatar.cc/150?img=29" },
+    included: ["Spice market walk", "Hands-on masala grinding", "Banana-leaf feast", "Recipe booklet"],
+    groupSize: "Up to 10 people",
+  },
+  {
+    id: "e9",
+    name: "Backwater Kayaking at Dawn",
+    category: "Adventure",
+    description: "Paddle a two-person kayak through narrow backwater canals as the mist lifts off the water. Your guide threads you past coconut groves, toddy tappers heading out for the morning harvest, and villages that only wake once the sun's fully up.",
+    price: 900,
+    duration: "2.5 hours",
+    rating: 4.8,
+    reviewCount: 41,
+    image: "https://images.unsplash.com/photo-1593693411515-c20261bcad6e?q=80&w=800&auto=format&fit=crop",
+    location: "Alleppey",
+    gallery: [
+      "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?q=80&w=800&auto=format&fit=crop",
+    ],
+    video: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",
+    host: { name: "Vinod P.", role: "Backwater kayak guide · 9 years", avatar: "https://i.pravatar.cc/150?img=59" },
+    included: ["Two-person kayak & gear", "Life jacket & dry bag", "Guided canal route", "Fresh coconut water stop"],
+    groupSize: "Up to 8 people (pairs)",
+  },
+  {
+    id: "e10",
+    name: "Bharatanatyam Dance Immersion",
+    category: "Culture",
+    description: "Learn the foundational adavus of Bharatanatyam from a trained classical dancer, then watch a short recital set to live nagaswaram music. The session closes with a short lesson in the mudras (hand gestures) used to tell stories through the form.",
+    price: 750,
+    duration: "2 hours",
+    rating: 4.6,
+    reviewCount: 22,
+    image: "https://images.unsplash.com/photo-1688820661462-a44e4b2770e8?q=80&w=800&auto=format&fit=crop",
+    location: "Pondicherry",
+    gallery: [
+      "https://images.unsplash.com/photo-1630663129615-a2331ed88ab6?q=80&w=800&auto=format&fit=crop",
+    ],
+    video: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/friday.mp4",
+    host: { name: "Revathi Krishnan", role: "Bharatanatyam dancer & teacher · 15 years", avatar: "https://i.pravatar.cc/150?img=38" },
+    included: ["Basic adavu lesson", "Live recital", "Mudra storytelling session", "Traditional refreshments"],
+    groupSize: "Up to 12 people",
+  },
+  {
+    id: "e11",
+    name: "Birdwatching Trail in the Western Ghats",
+    category: "Nature",
+    description: "A slow, early-morning walk through shola forest edge and coffee estate with a birder who can call in a Malabar trogon from fifty metres. Bring your own binoculars or borrow ours — expect hornbills, flycatchers, and if you're lucky, a Nilgiri wood-pigeon.",
+    price: 700,
+    duration: "3 hours",
+    rating: 4.8,
+    reviewCount: 33,
+    image: "https://images.unsplash.com/photo-1444464666168-49d633b86797?q=80&w=800&auto=format&fit=crop",
+    location: "Coorg",
+    gallery: [
+      "https://images.unsplash.com/photo-1660294534711-75a9474fecb0?q=80&w=800&auto=format&fit=crop",
+    ],
+    video: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",
+    host: { name: "Suresh Kumar", role: "Birding guide · Western Ghats specialist", avatar: "https://i.pravatar.cc/150?img=61" },
+    included: ["Early-morning guided walk", "Binoculars (if needed)", "Bird checklist for the region", "Filter coffee at the estate"],
+    groupSize: "Up to 8 people",
+  },
+  {
+    id: "e12",
+    name: "Golden Hour Tea Estate Shoot",
+    category: "Photography",
+    description: "Photograph rolling tea estates at first light with a local photographer who knows exactly which ridge catches the best mist. We shoot from three vantage points as pickers start their day, then review compositions together over breakfast.",
+    price: 1300,
+    duration: "3 hours",
+    rating: 4.9,
+    reviewCount: 18,
+    image: "https://images.unsplash.com/photo-1491497895121-1334fc14d8c9?q=80&w=800&auto=format&fit=crop",
+    location: "Munnar",
+    gallery: [
+      "https://images.unsplash.com/photo-1522747776116-64ee03be1dad?q=80&w=800&auto=format&fit=crop",
+    ],
+    video: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/friday.mp4",
+    host: { name: "Nikhil Varma", role: "Landscape photographer · Munnar estates", avatar: "https://i.pravatar.cc/150?img=65" },
+    included: ["Three-location shoot route", "Composition & light guidance", "Breakfast review session", "Estate access permit"],
+    groupSize: "Up to 5 people",
+  },
 ];
 
 // ============================================
@@ -488,10 +668,20 @@ export const blogPosts: BlogPost[] = [
 // ============================================
 
 export const testimonials: Testimonial[] = [
-  { id: "t1", name: "Meera Krishnan", avatar: "https://i.pravatar.cc/150?img=35", location: "Mumbai", rating: 5, comment: "Dhyana Stays has completely changed how my family travels. Every property feels handpicked, authentic, and deeply connected to its surroundings. We've booked four stays in the last year.", stayName: "Stone Valley Farm Stay" },
-  { id: "t2", name: "Aditya Rao", avatar: "https://i.pravatar.cc/150?img=18", location: "Bangalore", rating: 5, comment: "As an architect, I'm extremely particular about design. Dhyana's curated collection genuinely maintains a standard I rarely see on other platforms. The inspection process makes a real difference.", stayName: "The Glass Pavilion" },
-  { id: "t3", name: "Sunita & Raj Malhotra", avatar: "https://i.pravatar.cc/150?img=36", location: "Delhi", rating: 5, comment: "We invested in a Dhyana property through their split investment model. The transparency in reporting and the quality of the operations team gives us complete confidence in our investment.", stayName: "Investor" },
+  { id: "t1", name: "Meera Krishnan", avatar: "https://i.pravatar.cc/150?img=35", location: "Mumbai", rating: 5, comment: "Dhyana Stays has completely changed how my family travels. Every property feels handpicked, authentic, and deeply connected to its surroundings. We've booked four stays in the last year.", stayName: "Stone Valley Farm Stay", category: "guest-stays", propertySlug: "stone-valley-farm-stay", helpfulCount: 24 },
+  { id: "t2", name: "Aditya Rao", avatar: "https://i.pravatar.cc/150?img=18", location: "Bangalore", rating: 5, comment: "As an architect, I'm extremely particular about design. Dhyana's curated collection genuinely maintains a standard I rarely see on other platforms. The inspection process makes a real difference.", stayName: "The Glass Pavilion", category: "guest-stays", propertySlug: "glass-pavilion", helpfulCount: 19 },
+  { id: "t3", name: "Sunita & Raj Malhotra", avatar: "https://i.pravatar.cc/150?img=36", location: "Delhi", rating: 5, comment: "We invested in a Dhyana property through their split investment model. The transparency in reporting and the quality of the operations team gives us complete confidence in our investment.", stayName: "the Split Investment Program", category: "investors", helpfulCount: 15 },
+  { id: "t4", name: "Kabir Malhotra", avatar: "https://i.pravatar.cc/150?img=12", location: "Pune", rating: 5, comment: "The sunrise yoga session at Auroville was unlike anything I'd done before — quiet, unhurried, and led by someone who actually knew what she was doing. I've booked two more sessions since.", stayName: "Sunrise Yoga at Auroville", category: "experiences", experienceId: "e1", helpfulCount: 11 },
+  { id: "t5", name: "Priya Nair", avatar: "https://i.pravatar.cc/150?img=47", location: "Kochi", rating: 4, comment: "Nila Wellness Retreat was exactly the reset I needed. The staff remembered my name by day two, the food was incredible, and the silence at night was the best part of the whole trip.", stayName: "Nila Wellness Retreat", category: "guest-stays", propertySlug: "nila-wellness-retreat", helpfulCount: 17 },
+  { id: "t6", name: "Farhan Sheikh", avatar: "https://i.pravatar.cc/150?img=52", location: "Hyderabad", rating: 5, comment: "Joined the Joint Investment model on a new property last year and the quarterly reports have been detailed and on time, every time. This is the first hospitality investment I've made that felt genuinely transparent.", stayName: "the Joint Investment Program", category: "investors", helpfulCount: 9 },
+  { id: "t7", name: "Ananya Iyer", avatar: "https://i.pravatar.cc/150?img=41", location: "Chennai", rating: 5, comment: "The farm-to-table cooking class at Stone Valley is worth booking on its own, even without staying the night. Chef Elena walked us through the kitchen garden before we cooked, so every ingredient had a story.", stayName: "Farm-to-Table Cooking Class", category: "experiences", experienceId: "e2", helpfulCount: 21 },
+  { id: "t8", name: "Rohan & Divya Shah", avatar: "https://i.pravatar.cc/150?img=15", location: "Ahmedabad", rating: 5, comment: "Bamboo Nest completely won over our kids — treehouse living, real trails, zero screens. We're already planning our next trip back for the monsoon season.", stayName: "Bamboo Nest Eco Stay", category: "guest-stays", propertySlug: "bamboo-nest-eco-stay", helpfulCount: 13 },
+  { id: "t9", name: "Devika Menon", avatar: "https://i.pravatar.cc/150?img=29", location: "Coimbatore", rating: 4, comment: "Heritage Courtyard Villa was full of small, thoughtful touches — handwritten welcome notes, local snacks, a host who actually sat down and told us the property's history over chai.", stayName: "Heritage Courtyard Villa", category: "guest-stays", propertySlug: "heritage-courtyard-villa", helpfulCount: 8 },
 ];
+
+// Total guest stories/reviews collected across the platform — used by the
+// testimonials carousel's trailing "N more guest stories" CTA card.
+export const totalGuestStoryCount = 21;
 
 // ============================================
 // FAQ
@@ -529,7 +719,6 @@ export const navLinks = [
   { label: "Home", href: "/" },
   { label: "Explore Stays", href: "/stays" },
   { label: "Experiences", href: "/experiences" },
-  { label: "Food", href: "/food" },
   { label: "Business", href: "/business" },
   { label: "About Us", href: "/about" },
 ];

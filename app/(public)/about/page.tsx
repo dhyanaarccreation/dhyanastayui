@@ -29,6 +29,13 @@ import {
   BarChart3,
   Megaphone,
   Eye,
+  Layers,
+  Filter,
+  ImageOff,
+  FileQuestion,
+  Coffee,
+  CloudSun,
+  CalendarClock,
 } from "lucide-react";
 import { testimonials, platformStats } from "@/lib/mock-data";
 
@@ -56,9 +63,41 @@ const problems = [
 ];
 
 const comparison = {
-  traditional: ["Lists almost any property", "Focuses only on bookings", "Little involvement after listing", "Minimal operational guidance", "No design or story focus"],
-  dhyana: ["Curated properties only — inspected before listing", "Architecture-led hospitality development", "Consultancy, operations & revenue support for life", "AI-powered guest experiences & trip planning", "Sustainability, local culture & community built in"],
+  traditional: ["Multiple websites", "Endless searching", "Generic listings", "Manual planning", "Scattered information", "Time-consuming"],
+  dhyana: ["Curated stays only", "Purpose-based search", "Authentic property stories", "AI-powered itinerary", "Personalized recommendations", "Everything in one platform"],
 };
+
+const storyOneBefore = [
+  { icon: Layers, text: "Ten tabs open — booking sites, Maps, YouTube, blogs, socials" },
+  { icon: Filter, text: "Confusing filters that don't match how you actually search" },
+  { icon: ImageOff, text: "Fake or outdated photos that don't match the property" },
+  { icon: FileQuestion, text: "No story, no context — just a generic listing" },
+];
+
+const storyOneAfter = [
+  "Property story, architecture & why it was built",
+  "Verified amenities & curated photography",
+  "Nearby attractions & host introduction",
+  "A sustainability & guest-experience score",
+];
+
+const travelPurposes = ["Family Gathering", "Nature", "Weekend Getaway", "Large Social Space"];
+
+const storyTwoBefore = [
+  { icon: MapPin, text: "Google Maps for routes, Instagram for ideas" },
+  { icon: Coffee, text: "Blogs and YouTube for restaurants & cafés" },
+  { icon: CloudSun, text: "A separate app just to check the weather" },
+  { icon: CalendarClock, text: "Hours spent stitching it all into a schedule" },
+];
+
+const storyTwoAfter = [
+  "Curated stays, attractions & restaurants in one plan",
+  "Daily schedule with weather, routes & bike rentals",
+  "Local events & experiences matched to your interests",
+  "Auto-updates the moment plans or weather change",
+];
+
+const plannerInputs = ["Destination", "Travel Dates", "Budget", "Interests"];
 
 const ecosystem = [
   "Curated Stay Marketplace", "Hospitality Consultancy", "Architecture & Master Planning", "Interior Design",
@@ -141,7 +180,7 @@ const faqs = [
 
 const finalCtas = [
   { label: "Book a Stay", href: "/stays", primary: true },
-  { label: "Become a Host", href: "/host/onboarding", primary: false },
+  { label: "Become a Host", href: "/become-a-host", primary: false },
   { label: "Partner With Us", href: "/business", primary: false },
   { label: "Invest With Us", href: "/business", primary: false },
   { label: "Contact Our Team", href: "#contact", primary: false },
@@ -246,10 +285,122 @@ export default function AboutPage() {
             ))}
           </div>
 
+          {/* ============ THE PROBLEMS WE SOLVE — before/after storytelling ============ */}
+          <div className="text-center mt-20 mb-10">
+            <span className="text-xs font-semibold text-primary uppercase tracking-widest">The Problems We Solve</span>
+            <h3 className="heading-display text-2xl lg:text-4xl text-foreground mt-2">
+              From Confusing Search to Complete Confidence
+            </h3>
+          </div>
+
+          {/* Story 1 — Finding the Perfect Stay */}
+          <div>
+            <div className="text-center mb-6">
+              <span className="text-[11px] font-semibold text-sage uppercase tracking-widest">Story 1 · Discovery</span>
+              <h4 className="text-xl lg:text-2xl font-semibold text-foreground mt-1.5">Finding the Perfect Stay</h4>
+            </div>
+            <div className="grid lg:grid-cols-2 gap-5 items-stretch">
+              {/* Before */}
+              <div className="rounded-2xl border border-border bg-surface p-7 flex flex-col">
+                <span className="inline-flex self-start px-3 py-1 rounded-full bg-terracotta/10 text-terracotta text-[11px] font-semibold uppercase tracking-wider mb-5">
+                  The Current Reality
+                </span>
+                <ul className="space-y-3 flex-1">
+                  {storyOneBefore.map((p) => (
+                    <li key={p.text} className="flex gap-3 text-sm text-muted">
+                      <p.icon size={16} className="text-terracotta shrink-0 mt-0.5" /> {p.text}
+                    </li>
+                  ))}
+                </ul>
+                <p className="text-xs text-subtle italic mt-6 pt-5 border-t border-border">
+                  &ldquo;Finding the perfect stay shouldn&apos;t require searching ten different websites.&rdquo;
+                </p>
+              </div>
+              {/* After */}
+              <div className="rounded-2xl border border-primary/40 bg-primary/5 p-7 flex flex-col">
+                <span className="inline-flex self-start px-3 py-1 rounded-full bg-primary text-primary-foreground text-[11px] font-semibold uppercase tracking-wider mb-5">
+                  The Dhyana Stays Experience
+                </span>
+                <div className="flex flex-wrap gap-2 mb-5">
+                  {travelPurposes.map((p) => (
+                    <span key={p} className="px-3 py-1.5 rounded-full bg-surface border border-primary/30 text-xs font-medium text-foreground">
+                      {p}
+                    </span>
+                  ))}
+                </div>
+                <ul className="space-y-3 flex-1">
+                  {storyOneAfter.map((text) => (
+                    <li key={text} className="flex gap-3 text-sm text-foreground">
+                      <Check size={16} className="text-sage shrink-0 mt-0.5" /> {text}
+                    </li>
+                  ))}
+                </ul>
+                <p className="text-xs text-foreground font-medium mt-6 pt-5 border-t border-primary/20">
+                  &ldquo;We don&apos;t just help you find a room — we help you discover the perfect experience.&rdquo;
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Story 2 — AI Trip Planner */}
+          <div className="mt-14">
+            <div className="text-center mb-6">
+              <span className="text-[11px] font-semibold text-sage uppercase tracking-widest">Story 2 · Planning</span>
+              <h4 className="text-xl lg:text-2xl font-semibold text-foreground mt-1.5">AI Trip Planner</h4>
+            </div>
+            <div className="grid lg:grid-cols-2 gap-5 items-stretch">
+              {/* Before */}
+              <div className="rounded-2xl border border-border bg-surface p-7 flex flex-col">
+                <span className="inline-flex self-start px-3 py-1 rounded-full bg-terracotta/10 text-terracotta text-[11px] font-semibold uppercase tracking-wider mb-5">
+                  Traditional Travel Planning
+                </span>
+                <ul className="space-y-3 flex-1">
+                  {storyTwoBefore.map((p) => (
+                    <li key={p.text} className="flex gap-3 text-sm text-muted">
+                      <p.icon size={16} className="text-terracotta shrink-0 mt-0.5" /> {p.text}
+                    </li>
+                  ))}
+                </ul>
+                <p className="text-xs text-subtle italic mt-6 pt-5 border-t border-border">
+                  &ldquo;Planning your trip becomes a full-time project before your holiday even begins.&rdquo;
+                </p>
+              </div>
+              {/* After */}
+              <div className="rounded-2xl border border-primary/40 bg-primary/5 p-7 flex flex-col">
+                <span className="inline-flex self-start px-3 py-1 rounded-full bg-primary text-primary-foreground text-[11px] font-semibold uppercase tracking-wider mb-5">
+                  AI Trip Planner
+                </span>
+                <div className="flex flex-wrap gap-2 mb-5">
+                  {plannerInputs.map((p) => (
+                    <span key={p} className="px-3 py-1.5 rounded-full bg-surface border border-primary/30 text-xs font-medium text-foreground">
+                      {p}
+                    </span>
+                  ))}
+                </div>
+                <ul className="space-y-3 flex-1">
+                  {storyTwoAfter.map((text) => (
+                    <li key={text} className="flex gap-3 text-sm text-foreground">
+                      <Check size={16} className="text-sage shrink-0 mt-0.5" /> {text}
+                    </li>
+                  ))}
+                </ul>
+                <p className="text-xs text-foreground font-medium mt-6 pt-5 border-t border-primary/20">
+                  &ldquo;One intelligent planner. One personalized journey. Zero planning stress.&rdquo;
+                </p>
+                <Link
+                  href="/traveller/ai-planner"
+                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary hover:underline mt-4"
+                >
+                  Try the AI Planner <ArrowRight size={12} />
+                </Link>
+              </div>
+            </div>
+          </div>
+
           {/* Comparison infographic */}
-          <div className="grid md:grid-cols-2 gap-6 mt-14">
+          <div className="grid md:grid-cols-2 gap-6 mt-16">
             <div className="rounded-2xl border border-border bg-surface p-7">
-              <p className="text-sm font-semibold text-muted mb-5">Traditional booking platforms</p>
+              <p className="text-sm font-semibold text-muted mb-5">Traditional Travel</p>
               <ul className="space-y-3">
                 {comparison.traditional.map((c) => (
                   <li key={c} className="flex gap-2.5 text-sm text-muted">
@@ -259,7 +410,7 @@ export default function AboutPage() {
               </ul>
             </div>
             <div className="rounded-2xl border border-primary/40 bg-primary/5 p-7">
-              <p className="text-sm font-semibold text-primary mb-5">The Dhyana Stays approach</p>
+              <p className="text-sm font-semibold text-primary mb-5">Dhyana Stays</p>
               <ul className="space-y-3">
                 {comparison.dhyana.map((c) => (
                   <li key={c} className="flex gap-2.5 text-sm text-foreground">
@@ -268,6 +419,17 @@ export default function AboutPage() {
                 ))}
               </ul>
             </div>
+          </div>
+
+          {/* Closing hero message */}
+          <div className="mt-8 rounded-[28px] bg-gradient-to-br from-primary to-primary-hover p-8 md:p-12 text-center">
+            <p className="text-white/70 text-[11px] font-semibold uppercase tracking-widest mb-3">
+              We Are Not Building Another Booking Platform
+            </p>
+            <p className="heading-display text-xl md:text-3xl text-white leading-snug max-w-3xl mx-auto">
+              We are building the future of curated travel — where discovering the perfect stay and
+              planning the perfect journey happen together, in one intelligent ecosystem.
+            </p>
           </div>
         </div>
       </section>

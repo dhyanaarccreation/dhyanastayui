@@ -7,12 +7,13 @@ import {
   Map as MapIcon,
   ChevronDown,
   X,
-  Star,
+  MapPin,
+  Home,
   Users,
   Sparkles,
   Check,
 } from "lucide-react";
-import { properties, categories } from "@/lib/mock-data";
+import { properties, categories, type Property } from "@/lib/mock-data";
 import PropertyCard from "@/app/components/PropertyCard";
 
 type PriceBucket = "any" | "under-5k" | "5k-10k" | "10k-20k" | "above-20k";
@@ -26,9 +27,27 @@ const priceBuckets: { key: PriceBucket; label: string; test: (price: number) => 
   { key: "above-20k", label: "Above ₹20,000", test: (p) => p > 20000 },
 ];
 
-const ratingOptions = [4.5, 4, 0]; // 0 = "Any"
-const stateOptions = ["Tamil Nadu", "Kerala", "Karnataka", "Goa", "Pondicherry"];
-const amenityOptions = ["Wi-Fi", "Pool", "Kitchen", "Pet Friendly", "Parking", "Campfire", "AC", "BBQ"];
+// Destinations & property types are derived straight from the live property
+// catalog, so every filter option is guaranteed to have at least one result.
+const destinationOptions = Array.from(new Set(properties.map((p) => p.location.city))).sort();
+const typeOptions = Array.from(new Set(properties.map((p) => p.category))).sort();
+
+// Curated amenity facets — basics like Wi-Fi are assumed on every property
+// and left out; AC/Non-AC are a paired positive/negative test.
+const amenityOptions: { key: string; label: string; test: (p: Property) => boolean }[] = [
+  { key: "ac", label: "AC", test: (p) => p.amenities.includes("AC") },
+  { key: "non-ac", label: "Non-AC", test: (p) => !p.amenities.includes("AC") },
+  { key: "private-pool", label: "Private Pool", test: (p) => p.amenities.includes("Private Pool") },
+  { key: "public-pool", label: "Public Pool", test: (p) => p.amenities.includes("Public Pool") },
+  { key: "swimming-pool", label: "Swimming Pool", test: (p) => p.amenities.includes("Swimming Pool") },
+  { key: "infinity-pool", label: "Infinity Pool", test: (p) => p.amenities.includes("Infinity Pool") },
+  { key: "bathtub", label: "Bathtub", test: (p) => p.amenities.includes("Bathtub") },
+  { key: "home-theatre", label: "Home Theatre", test: (p) => p.amenities.includes("Home Theatre") },
+  { key: "private-chef", label: "Private Chef", test: (p) => p.amenities.includes("Private Chef") },
+  { key: "gym", label: "Gym", test: (p) => p.amenities.includes("Gym") },
+  { key: "ayurvedic-spa", label: "Ayurvedic Spa", test: (p) => p.amenities.includes("Ayurvedic Spa") },
+  { key: "pet-friendly", label: "Pet Friendly", test: (p) => p.amenities.includes("Pet Friendly") },
+];
 
 export default function StaysDiscoveryPage() {
   const [showMap, setShowMap] = useState(false);
@@ -39,32 +58,34 @@ export default function StaysDiscoveryPage() {
 
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [priceBucket, setPriceBucket] = useState<PriceBucket>("any");
-  const [minRating, setMinRating] = useState(0);
   const [minGuests, setMinGuests] = useState(1);
-  const [selectedStates, setSelectedStates] = useState<string[]>([]);
-  const [selectedAmenities, setSelectedAmenities] = useState<string[]>([]);
+  const [selectedDestinations, setSelectedDestinations] = useState<string[]>([]);
+  const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
+  const [selectedAmenityKeys, setSelectedAmenityKeys] = useState<string[]>([]);
   const [trendingOnly, setTrendingOnly] = useState(false);
 
-  const toggleState = (s: string) =>
-    setSelectedStates((prev) => (prev.includes(s) ? prev.filter((x) => x !== s) : [...prev, s]));
-  const toggleAmenity = (a: string) =>
-    setSelectedAmenities((prev) => (prev.includes(a) ? prev.filter((x) => x !== a) : [...prev, a]));
+  const toggleDestination = (d: string) =>
+    setSelectedDestinations((prev) => (prev.includes(d) ? prev.filter((x) => x !== d) : [...prev, d]));
+  const toggleType = (t: string) =>
+    setSelectedTypes((prev) => (prev.includes(t) ? prev.filter((x) => x !== t) : [...prev, t]));
+  const toggleAmenity = (key: string) =>
+    setSelectedAmenityKeys((prev) => (prev.includes(key) ? prev.filter((x) => x !== key) : [...prev, key]));
 
   const clearFilters = () => {
     setPriceBucket("any");
-    setMinRating(0);
     setMinGuests(1);
-    setSelectedStates([]);
-    setSelectedAmenities([]);
+    setSelectedDestinations([]);
+    setSelectedTypes([]);
+    setSelectedAmenityKeys([]);
     setTrendingOnly(false);
   };
 
   const activeFilterCount =
     (priceBucket !== "any" ? 1 : 0) +
-    (minRating > 0 ? 1 : 0) +
     (minGuests > 1 ? 1 : 0) +
-    selectedStates.length +
-    selectedAmenities.length +
+    selectedDestinations.length +
+    selectedTypes.length +
+    selectedAmenityKeys.length +
     (trendingOnly ? 1 : 0);
 
   const activeCategoryName = categories.find((c) => c.slug === activeCategory)?.name;
@@ -83,20 +104,20 @@ export default function StaysDiscoveryPage() {
         p.location.state.toLowerCase().includes(q) ||
         p.tagline.toLowerCase().includes(q);
       const matchesPrice = priceTest(p.price);
-      const matchesRating = p.rating >= minRating;
       const matchesGuests = p.maxGuests >= minGuests;
-      const matchesState = selectedStates.length === 0 || selectedStates.includes(p.location.state);
+      const matchesDestination = selectedDestinations.length === 0 || selectedDestinations.includes(p.location.city);
+      const matchesType = selectedTypes.length === 0 || selectedTypes.includes(p.category);
       const matchesAmenities =
-        selectedAmenities.length === 0 ||
-        selectedAmenities.every((a) => p.amenities.some((pa) => pa.toLowerCase().includes(a.toLowerCase())));
+        selectedAmenityKeys.length === 0 ||
+        selectedAmenityKeys.every((key) => amenityOptions.find((o) => o.key === key)!.test(p));
       const matchesTrending = !trendingOnly || p.isTrending;
       return (
         matchesCategory &&
         matchesSearch &&
         matchesPrice &&
-        matchesRating &&
         matchesGuests &&
-        matchesState &&
+        matchesDestination &&
+        matchesType &&
         matchesAmenities &&
         matchesTrending
       );
@@ -107,7 +128,7 @@ export default function StaysDiscoveryPage() {
     else if (sortBy === "rating") list = [...list].sort((a, b) => b.rating - a.rating);
 
     return list;
-  }, [search, activeCategory, activeCategoryName, priceTest, minRating, minGuests, selectedStates, selectedAmenities, trendingOnly, sortBy]);
+  }, [search, activeCategory, activeCategoryName, priceTest, minGuests, selectedDestinations, selectedTypes, selectedAmenityKeys, trendingOnly, sortBy]);
 
   const sortLabels: Record<SortKey, string> = {
     recommended: "Recommended",
@@ -239,17 +260,19 @@ export default function StaysDiscoveryPage() {
             {/* Active filter chips */}
             {activeFilterCount > 0 && (
               <div className="flex flex-wrap items-center gap-2 mb-6">
+                {selectedDestinations.map((d) => (
+                  <FilterChip key={d} label={d} onClear={() => toggleDestination(d)} />
+                ))}
+                {selectedTypes.map((t) => (
+                  <FilterChip key={t} label={t} onClear={() => toggleType(t)} />
+                ))}
+                {selectedAmenityKeys.map((key) => (
+                  <FilterChip key={key} label={amenityOptions.find((o) => o.key === key)!.label} onClear={() => toggleAmenity(key)} />
+                ))}
                 {priceBucket !== "any" && (
                   <FilterChip label={priceBuckets.find((b) => b.key === priceBucket)!.label} onClear={() => setPriceBucket("any")} />
                 )}
-                {minRating > 0 && <FilterChip label={`${minRating}+ rating`} onClear={() => setMinRating(0)} />}
                 {minGuests > 1 && <FilterChip label={`${minGuests}+ guests`} onClear={() => setMinGuests(1)} />}
-                {selectedStates.map((s) => (
-                  <FilterChip key={s} label={s} onClear={() => toggleState(s)} />
-                ))}
-                {selectedAmenities.map((a) => (
-                  <FilterChip key={a} label={a} onClear={() => toggleAmenity(a)} />
-                ))}
                 {trendingOnly && <FilterChip label="Trending only" onClear={() => setTrendingOnly(false)} />}
                 <button onClick={clearFilters} className="text-xs text-primary hover:underline ml-1">
                   Clear all
@@ -338,6 +361,73 @@ export default function StaysDiscoveryPage() {
             </div>
 
             <div className="flex-1 overflow-y-auto px-5 py-5 space-y-7">
+              {/* Destination */}
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-wider text-subtle mb-3 flex items-center gap-1.5">
+                  <MapPin size={12} /> Destination
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {destinationOptions.map((d) => (
+                    <button
+                      key={d}
+                      onClick={() => toggleDestination(d)}
+                      className={`px-3.5 py-2 rounded-full text-xs font-medium border transition-colors ${
+                        selectedDestinations.includes(d) ? "bg-sage text-white border-sage" : "bg-surface border-border text-muted hover:text-foreground"
+                      }`}
+                    >
+                      {d}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Property Type */}
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-wider text-subtle mb-3 flex items-center gap-1.5">
+                  <Home size={12} /> Property Type
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {typeOptions.map((t) => (
+                    <button
+                      key={t}
+                      onClick={() => toggleType(t)}
+                      className={`px-3.5 py-2 rounded-full text-xs font-medium border transition-colors ${
+                        selectedTypes.includes(t) ? "bg-primary text-primary-foreground border-primary" : "bg-surface border-border text-muted hover:text-foreground"
+                      }`}
+                    >
+                      {t}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Amenities */}
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-wider text-subtle mb-3">
+                  Amenities <span className="normal-case text-subtle/70">· Wi-Fi included everywhere</span>
+                </p>
+                <div className="grid grid-cols-2 gap-2.5">
+                  {amenityOptions.map((a) => (
+                    <button
+                      key={a.key}
+                      onClick={() => toggleAmenity(a.key)}
+                      className={`flex items-center gap-2 px-3 py-2 rounded-xl border text-xs font-medium transition-colors text-left ${
+                        selectedAmenityKeys.includes(a.key) ? "border-sage bg-sage/10 text-foreground" : "border-border bg-surface text-muted hover:text-foreground"
+                      }`}
+                    >
+                      <span
+                        className={`w-4 h-4 rounded-md border flex items-center justify-center shrink-0 ${
+                          selectedAmenityKeys.includes(a.key) ? "bg-sage border-sage text-white" : "border-border-light"
+                        }`}
+                      >
+                        {selectedAmenityKeys.includes(a.key) && <Check size={11} />}
+                      </span>
+                      {a.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
               {/* Price */}
               <div>
                 <p className="text-xs font-semibold uppercase tracking-wider text-subtle mb-3">Price per night</p>
@@ -351,30 +441,6 @@ export default function StaysDiscoveryPage() {
                       }`}
                     >
                       {b.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Rating */}
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-wider text-subtle mb-3">Minimum rating</p>
-                <div className="flex flex-wrap gap-2">
-                  {ratingOptions.map((r) => (
-                    <button
-                      key={r}
-                      onClick={() => setMinRating(r)}
-                      className={`flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-medium border transition-colors ${
-                        minRating === r ? "bg-primary text-primary-foreground border-primary" : "bg-surface border-border text-muted hover:text-foreground"
-                      }`}
-                    >
-                      {r > 0 ? (
-                        <>
-                          <Star size={11} className={minRating === r ? "fill-white" : "fill-primary text-primary"} /> {r}+
-                        </>
-                      ) : (
-                        "Any"
-                      )}
                     </button>
                   ))}
                 </div>
@@ -402,49 +468,6 @@ export default function StaysDiscoveryPage() {
                       +
                     </button>
                   </div>
-                </div>
-              </div>
-
-              {/* State */}
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-wider text-subtle mb-3">Region</p>
-                <div className="flex flex-wrap gap-2">
-                  {stateOptions.map((s) => (
-                    <button
-                      key={s}
-                      onClick={() => toggleState(s)}
-                      className={`px-3.5 py-2 rounded-full text-xs font-medium border transition-colors ${
-                        selectedStates.includes(s) ? "bg-sage text-white border-sage" : "bg-surface border-border text-muted hover:text-foreground"
-                      }`}
-                    >
-                      {s}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Amenities */}
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-wider text-subtle mb-3">Amenities</p>
-                <div className="grid grid-cols-2 gap-2.5">
-                  {amenityOptions.map((a) => (
-                    <button
-                      key={a}
-                      onClick={() => toggleAmenity(a)}
-                      className={`flex items-center gap-2 px-3 py-2 rounded-xl border text-xs font-medium transition-colors text-left ${
-                        selectedAmenities.includes(a) ? "border-sage bg-sage/10 text-foreground" : "border-border bg-surface text-muted hover:text-foreground"
-                      }`}
-                    >
-                      <span
-                        className={`w-4 h-4 rounded-md border flex items-center justify-center shrink-0 ${
-                          selectedAmenities.includes(a) ? "bg-sage border-sage text-white" : "border-border-light"
-                        }`}
-                      >
-                        {selectedAmenities.includes(a) && <Check size={11} />}
-                      </span>
-                      {a}
-                    </button>
-                  ))}
                 </div>
               </div>
 

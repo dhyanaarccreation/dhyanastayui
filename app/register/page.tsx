@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import {
   Mail,
@@ -12,11 +13,60 @@ import {
   Phone,
   MapPin,
   Check,
+  AlertCircle,
 } from "lucide-react";
 
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const STRONG_PASSWORD_RE = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/;
+
+type Step1Errors = { firstName?: string; lastName?: string; email?: string; phone?: string; password?: string };
+type Step2Errors = { state?: string; city?: string; terms?: string };
+
 export default function RegisterPage() {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [step, setStep] = useState(1);
+  const [step1Errors, setStep1Errors] = useState<Step1Errors>({});
+  const [step2Errors, setStep2Errors] = useState<Step2Errors>({});
+
+  const handleStep1Submit = (e: React.SubmitEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const data = new FormData(e.currentTarget);
+    const firstName = String(data.get("firstName") ?? "").trim();
+    const lastName = String(data.get("lastName") ?? "").trim();
+    const email = String(data.get("email") ?? "").trim();
+    const phone = String(data.get("phone") ?? "").trim();
+    const password = String(data.get("password") ?? "");
+
+    const next: Step1Errors = {};
+    if (!firstName) next.firstName = "Required.";
+    if (!lastName) next.lastName = "Required.";
+    if (!email) next.email = "Email address is required.";
+    else if (!EMAIL_RE.test(email)) next.email = "Enter a valid email address.";
+    if (!phone) next.phone = "Mobile number is required.";
+    if (!password) next.password = "Password is required.";
+    else if (!STRONG_PASSWORD_RE.test(password))
+      next.password = "Min 8 characters, with uppercase, lowercase, number & special character.";
+
+    setStep1Errors(next);
+    if (Object.keys(next).length === 0) setStep(2);
+  };
+
+  const handleStep2Submit = (e: React.SubmitEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const data = new FormData(e.currentTarget);
+    const state = String(data.get("state") ?? "").trim();
+    const city = String(data.get("city") ?? "").trim();
+    const terms = data.get("terms");
+
+    const next: Step2Errors = {};
+    if (!state) next.state = "Required.";
+    if (!city) next.city = "Required.";
+    if (!terms) next.terms = "You must agree to the Terms & Conditions to continue.";
+
+    setStep2Errors(next);
+    if (Object.keys(next).length === 0) router.push("/verify-otp");
+  };
 
   return (
     <div className="min-h-screen flex">
@@ -96,13 +146,7 @@ export default function RegisterPage() {
                 <div className="flex-1 h-px bg-border" />
               </div>
 
-              <form
-                className="space-y-4"
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  setStep(2);
-                }}
-              >
+              <form className="space-y-4" noValidate onSubmit={handleStep1Submit}>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label className="block text-xs font-medium text-muted mb-2 uppercase tracking-wider">
@@ -115,10 +159,19 @@ export default function RegisterPage() {
                       />
                       <input
                         type="text"
+                        name="firstName"
                         placeholder="First name"
-                        className="w-full pl-11 pr-4 py-3.5 bg-surface border border-border rounded-xl text-sm text-foreground placeholder-muted focus:outline-none focus:border-primary transition-colors"
+                        aria-invalid={!!step1Errors.firstName}
+                        className={`w-full pl-11 pr-4 py-3.5 bg-surface border rounded-xl text-sm text-foreground placeholder-muted focus:outline-none transition-colors ${
+                          step1Errors.firstName ? "border-terracotta focus:border-terracotta" : "border-border focus:border-primary"
+                        }`}
                       />
                     </div>
+                    {step1Errors.firstName && (
+                      <p className="flex items-center gap-1.5 text-xs text-terracotta mt-1.5">
+                        <AlertCircle size={11} /> {step1Errors.firstName}
+                      </p>
+                    )}
                   </div>
                   <div>
                     <label className="block text-xs font-medium text-muted mb-2 uppercase tracking-wider">
@@ -126,9 +179,18 @@ export default function RegisterPage() {
                     </label>
                     <input
                       type="text"
+                      name="lastName"
                       placeholder="Last name"
-                      className="w-full px-4 py-3.5 bg-surface border border-border rounded-xl text-sm text-foreground placeholder-muted focus:outline-none focus:border-primary transition-colors"
+                      aria-invalid={!!step1Errors.lastName}
+                      className={`w-full px-4 py-3.5 bg-surface border rounded-xl text-sm text-foreground placeholder-muted focus:outline-none transition-colors ${
+                        step1Errors.lastName ? "border-terracotta focus:border-terracotta" : "border-border focus:border-primary"
+                      }`}
                     />
+                    {step1Errors.lastName && (
+                      <p className="flex items-center gap-1.5 text-xs text-terracotta mt-1.5">
+                        <AlertCircle size={11} /> {step1Errors.lastName}
+                      </p>
+                    )}
                   </div>
                 </div>
 
@@ -143,10 +205,19 @@ export default function RegisterPage() {
                     />
                     <input
                       type="email"
+                      name="email"
                       placeholder="you@example.com"
-                      className="w-full pl-11 pr-4 py-3.5 bg-surface border border-border rounded-xl text-sm text-foreground placeholder-muted focus:outline-none focus:border-primary transition-colors"
+                      aria-invalid={!!step1Errors.email}
+                      className={`w-full pl-11 pr-4 py-3.5 bg-surface border rounded-xl text-sm text-foreground placeholder-muted focus:outline-none transition-colors ${
+                        step1Errors.email ? "border-terracotta focus:border-terracotta" : "border-border focus:border-primary"
+                      }`}
                     />
                   </div>
+                  {step1Errors.email && (
+                    <p className="flex items-center gap-1.5 text-xs text-terracotta mt-1.5">
+                      <AlertCircle size={11} /> {step1Errors.email}
+                    </p>
+                  )}
                 </div>
 
                 <div>
@@ -160,10 +231,19 @@ export default function RegisterPage() {
                     />
                     <input
                       type="tel"
+                      name="phone"
                       placeholder="+91 98765 43210"
-                      className="w-full pl-11 pr-4 py-3.5 bg-surface border border-border rounded-xl text-sm text-foreground placeholder-muted focus:outline-none focus:border-primary transition-colors"
+                      aria-invalid={!!step1Errors.phone}
+                      className={`w-full pl-11 pr-4 py-3.5 bg-surface border rounded-xl text-sm text-foreground placeholder-muted focus:outline-none transition-colors ${
+                        step1Errors.phone ? "border-terracotta focus:border-terracotta" : "border-border focus:border-primary"
+                      }`}
                     />
                   </div>
+                  {step1Errors.phone && (
+                    <p className="flex items-center gap-1.5 text-xs text-terracotta mt-1.5">
+                      <AlertCircle size={11} /> {step1Errors.phone}
+                    </p>
+                  )}
                 </div>
 
                 <div>
@@ -177,8 +257,12 @@ export default function RegisterPage() {
                     />
                     <input
                       type={showPassword ? "text" : "password"}
+                      name="password"
                       placeholder="Min 8 characters"
-                      className="w-full pl-11 pr-12 py-3.5 bg-surface border border-border rounded-xl text-sm text-foreground placeholder-muted focus:outline-none focus:border-primary transition-colors"
+                      aria-invalid={!!step1Errors.password}
+                      className={`w-full pl-11 pr-12 py-3.5 bg-surface border rounded-xl text-sm text-foreground placeholder-muted focus:outline-none transition-colors ${
+                        step1Errors.password ? "border-terracotta focus:border-terracotta" : "border-border focus:border-primary"
+                      }`}
                     />
                     <button
                       type="button"
@@ -203,9 +287,15 @@ export default function RegisterPage() {
                       />
                     ))}
                   </div>
-                  <p className="text-[10px] text-subtle mt-1">
-                    Must include uppercase, lowercase, number & special character
-                  </p>
+                  {step1Errors.password ? (
+                    <p className="flex items-center gap-1.5 text-xs text-terracotta mt-1.5">
+                      <AlertCircle size={11} /> {step1Errors.password}
+                    </p>
+                  ) : (
+                    <p className="text-[10px] text-subtle mt-1">
+                      Must include uppercase, lowercase, number & special character
+                    </p>
+                  )}
                 </div>
 
                 <button
@@ -220,12 +310,15 @@ export default function RegisterPage() {
 
           {/* Step 2: Location & Preferences */}
           {step === 2 && (
-            <form className="space-y-5 animate-fade-in">
+            <form className="space-y-5 animate-fade-in" noValidate onSubmit={handleStep2Submit}>
               <div>
                 <label className="block text-xs font-medium text-muted mb-2 uppercase tracking-wider">
                   Country
                 </label>
-                <select className="w-full px-4 py-3.5 bg-surface border border-border rounded-xl text-sm text-foreground focus:outline-none focus:border-primary transition-colors appearance-none">
+                <select
+                  name="country"
+                  className="w-full px-4 py-3.5 bg-surface border border-border rounded-xl text-sm text-foreground focus:outline-none focus:border-primary transition-colors appearance-none"
+                >
                   <option>India</option>
                   <option>United States</option>
                   <option>United Kingdom</option>
@@ -241,9 +334,18 @@ export default function RegisterPage() {
                   </label>
                   <input
                     type="text"
+                    name="state"
                     placeholder="Your state"
-                    className="w-full px-4 py-3.5 bg-surface border border-border rounded-xl text-sm text-foreground placeholder-muted focus:outline-none focus:border-primary transition-colors"
+                    aria-invalid={!!step2Errors.state}
+                    className={`w-full px-4 py-3.5 bg-surface border rounded-xl text-sm text-foreground placeholder-muted focus:outline-none transition-colors ${
+                      step2Errors.state ? "border-terracotta focus:border-terracotta" : "border-border focus:border-primary"
+                    }`}
                   />
+                  {step2Errors.state && (
+                    <p className="flex items-center gap-1.5 text-xs text-terracotta mt-1.5">
+                      <AlertCircle size={11} /> {step2Errors.state}
+                    </p>
+                  )}
                 </div>
                 <div>
                   <label className="block text-xs font-medium text-muted mb-2 uppercase tracking-wider">
@@ -251,9 +353,18 @@ export default function RegisterPage() {
                   </label>
                   <input
                     type="text"
+                    name="city"
                     placeholder="Your city"
-                    className="w-full px-4 py-3.5 bg-surface border border-border rounded-xl text-sm text-foreground placeholder-muted focus:outline-none focus:border-primary transition-colors"
+                    aria-invalid={!!step2Errors.city}
+                    className={`w-full px-4 py-3.5 bg-surface border rounded-xl text-sm text-foreground placeholder-muted focus:outline-none transition-colors ${
+                      step2Errors.city ? "border-terracotta focus:border-terracotta" : "border-border focus:border-primary"
+                    }`}
                   />
+                  {step2Errors.city && (
+                    <p className="flex items-center gap-1.5 text-xs text-terracotta mt-1.5">
+                      <AlertCircle size={11} /> {step2Errors.city}
+                    </p>
+                  )}
                 </div>
               </div>
 
@@ -263,6 +374,7 @@ export default function RegisterPage() {
                 </label>
                 <input
                   type="text"
+                  name="referral"
                   placeholder="Enter referral code"
                   className="w-full px-4 py-3.5 bg-surface border border-border rounded-xl text-sm text-foreground placeholder-muted focus:outline-none focus:border-primary transition-colors"
                 />
@@ -273,6 +385,7 @@ export default function RegisterPage() {
                   <input
                     type="checkbox"
                     id="terms"
+                    name="terms"
                     className="mt-1 w-4 h-4 rounded bg-surface border-border accent-primary"
                   />
                   <label htmlFor="terms" className="text-xs text-muted">
@@ -286,10 +399,16 @@ export default function RegisterPage() {
                     </Link>
                   </label>
                 </div>
+                {step2Errors.terms && (
+                  <p className="flex items-center gap-1.5 text-xs text-terracotta">
+                    <AlertCircle size={11} /> {step2Errors.terms}
+                  </p>
+                )}
                 <div className="flex items-start gap-3">
                   <input
                     type="checkbox"
                     id="marketing"
+                    name="marketing"
                     className="mt-1 w-4 h-4 rounded bg-surface border-border accent-primary"
                   />
                   <label htmlFor="marketing" className="text-xs text-muted">
@@ -306,12 +425,12 @@ export default function RegisterPage() {
                 >
                   Back
                 </button>
-                <Link
-                  href="/verify-otp"
+                <button
+                  type="submit"
                   className="flex-1 py-3.5 bg-gradient-to-r from-primary to-primary-hover text-primary-foreground font-semibold text-sm rounded-xl hover:shadow-[0_0_30px_rgba(16,185,129,0.3)] transition-all flex items-center justify-center gap-2"
                 >
                   Create Account <ArrowRight size={16} />
-                </Link>
+                </button>
               </div>
             </form>
           )}
