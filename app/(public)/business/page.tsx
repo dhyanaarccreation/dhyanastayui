@@ -8,10 +8,6 @@ import {
   IndianRupee,
   HardHat,
   Hotel,
-  PartyPopper,
-  Bike,
-  UtensilsCrossed,
-  Megaphone,
   Star,
   Users,
   Briefcase,
@@ -24,10 +20,6 @@ import {
   TrendingUp,
   Camera,
   BadgeCheck,
-  Phone,
-  Mail,
-  MapPin,
-  ShieldCheck,
 } from "lucide-react";
 
 // ============================================
@@ -42,7 +34,6 @@ const tabs = [
   { key: "host", label: "Host & List", icon: Home },
   { key: "invest", label: "Invest", icon: IndianRupee },
   { key: "consultancy", label: "Consultancy", icon: HardHat },
-  { key: "partners", label: "Partners", icon: PartyPopper },
   { key: "influencers", label: "Influencers", icon: Star },
   { key: "careers", label: "Careers", icon: Briefcase },
 ] as const;
@@ -66,7 +57,6 @@ const cards: Record<TabKey, Card[]> = {
     { icon: HardHat, title: "Architecture consultancy", desc: "Master plans, drawings, BOQ and site supervision for resorts, tiny houses and eco stays.", cta: "Book architecture", href: "/consultancy/architecture" },
     { icon: Hotel, title: "Hospitality consultancy", desc: "Business plans, revenue models, branding and operations manuals for your property.", cta: "Book hospitality", href: "/consultancy/hospitality" },
   ],
-  partners: [],
   influencers: [
     { icon: Camera, title: "Influencer program", desc: "Stay free at curated properties, earn on your promo code, and co-create content with our team.", cta: "Apply as influencer", href: "/business/apply-influencer" },
   ],
@@ -119,46 +109,6 @@ const investModels = [
     split: { partners: 55, dhyana: 45, partnersLabel: "Landowner + investor 50–60%", dhyanaLabel: "Dhyana 40–50%" },
   },
 ];
-
-// ---------- Partner applications ----------
-const partnerTypes = [
-  {
-    key: "events",
-    icon: PartyPopper,
-    title: "List your events",
-    desc: "Weddings, surprises, corporate offsites & workshops booked by travellers across our stays.",
-    perks: ["Bookings from every stay nearby", "12% commission only on booked events", "Your own partner dashboard"],
-  },
-  {
-    key: "rental",
-    icon: Bike,
-    title: "Rental fleet partner",
-    desc: "Bikes, scooters, cars — plug your fleet into stay bookings with doorstep delivery.",
-    perks: ["Guests book with their stay", "Weekly Friday payouts", "Insurance & overdue support"],
-  },
-  {
-    key: "food",
-    icon: UtensilsCrossed,
-    title: "Food partner",
-    desc: "Home kitchens and restaurants serving pre-booked meals with named cooks guests can choose.",
-    perks: ["Pre-bookings with quantity & cook", "Chef stories that sell", "10% commission, weekly payouts"],
-  },
-  {
-    key: "marketing",
-    icon: Megaphone,
-    title: "Marketing partner",
-    desc: "Agencies and regional promoters running campaigns in our app placements, region by region.",
-    perks: ["Region-wise ad placements", "Performance dashboard", "Co-branded campaigns"],
-  },
-] as const;
-type PartnerKey = (typeof partnerTypes)[number]["key"];
-
-const eventKinds = ["Weddings", "Surprise events", "Corporate", "Festivals", "Workshops"];
-const vehicleKinds = ["Scooter", "Motorcycle", "Car / SUV", "Bicycle", "EV"];
-const foodKinds = ["Pure veg", "Non-veg", "Both"];
-const kitchenKinds = ["Home kitchen", "Restaurant", "Cloud kitchen"];
-const marketingKinds = ["Agency", "Regional promoter", "Content studio"];
-const partnerRegions = ["Tamil Nadu", "Pondicherry", "Kerala", "Karnataka", "Goa"];
 
 // ---------- Rolling ads ----------
 const rollingAds = [
@@ -232,35 +182,6 @@ export default function BusinessPage() {
   const [tab, setTab] = useState<TabKey>("host");
   const [ad, setAd] = useState(0);
   const [input, setInput] = useState("");
-
-  // Partner application state
-  const [pType, setPType] = useState<PartnerKey>("events");
-  const [pSubmitted, setPSubmitted] = useState(false);
-  const [pName, setPName] = useState("");
-  const [pBusiness, setPBusiness] = useState("");
-  const [pPhone, setPPhone] = useState("");
-  const [pEmail, setPEmail] = useState("");
-  const [pCity, setPCity] = useState("");
-  const [pRegions, setPRegions] = useState<string[]>([]);
-  const [pKinds, setPKinds] = useState<string[]>([]);
-  const [pSingle, setPSingle] = useState("");
-  const [pExtra, setPExtra] = useState("");
-  const [pNotes, setPNotes] = useState("");
-  const [pDelivery, setPDelivery] = useState(true);
-
-  const switchPartner = (k: PartnerKey) => {
-    setPType(k);
-    setPKinds([]);
-    setPSingle("");
-    setPExtra("");
-    setPSubmitted(false);
-  };
-  const togglePKind = (v: string) =>
-    setPKinds((prev) => (prev.includes(v) ? prev.filter((x) => x !== v) : [...prev, v]));
-  const togglePRegion = (v: string) =>
-    setPRegions((prev) => (prev.includes(v) ? prev.filter((x) => x !== v) : [...prev, v]));
-  const partnerReady = pName.trim() && pPhone.trim();
-  const activePartner = partnerTypes.find((p) => p.key === pType)!;
 
   // Rolling ads — auto-advance every 5s
   useEffect(() => {
@@ -480,253 +401,6 @@ export default function BusinessPage() {
               >
                 Start your hospitality journey <ArrowRight size={15} />
               </Link>
-            </div>
-          </div>
-        )}
-
-        {/* Partners tab: application flow */}
-        {tab === "partners" && (
-          <div className="animate-fade-in space-y-10">
-            <p className="text-center text-muted max-w-2xl mx-auto -mt-2">
-              Pick what you do, tell us a little about your business, and our partner team
-              calls you within 2 business days.
-            </p>
-
-            {/* Type selector */}
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {partnerTypes.map((p) => (
-                <button
-                  key={p.key}
-                  onClick={() => switchPartner(p.key)}
-                  className={`text-left rounded-2xl border p-5 transition-all ${
-                    pType === p.key
-                      ? "border-primary bg-primary/5 shadow-[0_4px_20px_rgba(16,185,129,0.15)]"
-                      : "border-border bg-surface hover:border-border-light"
-                  }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <span
-                      className={`w-10 h-10 rounded-xl flex items-center justify-center ${
-                        pType === p.key ? "bg-primary text-primary-foreground" : "bg-primary/10 text-primary"
-                      }`}
-                    >
-                      <p.icon size={18} />
-                    </span>
-                    {pType === p.key && <Check size={16} className="text-primary" />}
-                  </div>
-                  <p className="text-sm font-semibold text-foreground mt-3">{p.title}</p>
-                  <p className="text-xs text-muted mt-1 leading-relaxed">{p.desc}</p>
-                </button>
-              ))}
-            </div>
-
-            <div className="grid lg:grid-cols-3 gap-6">
-              {/* Application form */}
-              <div className="lg:col-span-2 bg-surface border border-border rounded-2xl p-6 md:p-8">
-                {pSubmitted ? (
-                  <div className="text-center py-10 animate-fade-in">
-                    <span className="mx-auto w-16 h-16 rounded-full bg-sage/15 border border-sage/30 flex items-center justify-center">
-                      <Check size={28} className="text-sage" />
-                    </span>
-                    <h3 className="heading-display text-2xl text-foreground mt-5">Application received!</h3>
-                    <p className="text-sm text-muted mt-2 max-w-sm mx-auto leading-relaxed">
-                      Thanks{pName ? `, ${pName.split(" ")[0]}` : ""} — your{" "}
-                      <span className="text-foreground font-medium">{activePartner.title.toLowerCase()}</span>{" "}
-                      application is in. Our partner team will call{" "}
-                      <span className="text-foreground font-medium">{pPhone}</span> within 2 business days.
-                    </p>
-                    <p className="text-xs text-sage mt-3 flex items-center justify-center gap-1.5">
-                      <ShieldCheck size={13} /> Reference: PTN-2418 · keep your documents handy
-                    </p>
-                    <button
-                      onClick={() => setPSubmitted(false)}
-                      className="mt-6 px-5 py-2.5 text-sm border border-border rounded-full text-muted hover:text-foreground transition-colors"
-                    >
-                      Submit another application
-                    </button>
-                  </div>
-                ) : (
-                  <div className="space-y-5">
-                    <h3 className="text-base font-semibold text-foreground flex items-center gap-2">
-                      <activePartner.icon size={17} className="text-primary" />
-                      Apply · {activePartner.title}
-                    </h3>
-
-                    {/* Base fields */}
-                    <div className="grid sm:grid-cols-2 gap-4">
-                      <div>
-                        <label className="text-xs text-subtle block mb-1.5">Your name *</label>
-                        <input value={pName} onChange={(e) => setPName(e.target.value)} placeholder="Full name" className="w-full px-4 py-2.5 bg-background border border-border rounded-xl text-sm text-foreground placeholder-subtle focus:outline-none focus:border-primary" />
-                      </div>
-                      <div>
-                        <label className="text-xs text-subtle block mb-1.5">Business name</label>
-                        <input value={pBusiness} onChange={(e) => setPBusiness(e.target.value)} placeholder="e.g. Hushh Surprises" className="w-full px-4 py-2.5 bg-background border border-border rounded-xl text-sm text-foreground placeholder-subtle focus:outline-none focus:border-primary" />
-                      </div>
-                      <div>
-                        <label className="text-xs text-subtle mb-1.5 flex items-center gap-1"><Phone size={11} /> Phone *</label>
-                        <input value={pPhone} onChange={(e) => setPPhone(e.target.value)} placeholder="+91" className="w-full px-4 py-2.5 bg-background border border-border rounded-xl text-sm text-foreground placeholder-subtle focus:outline-none focus:border-primary" />
-                      </div>
-                      <div>
-                        <label className="text-xs text-subtle mb-1.5 flex items-center gap-1"><Mail size={11} /> Email</label>
-                        <input value={pEmail} onChange={(e) => setPEmail(e.target.value)} placeholder="you@example.com" className="w-full px-4 py-2.5 bg-background border border-border rounded-xl text-sm text-foreground placeholder-subtle focus:outline-none focus:border-primary" />
-                      </div>
-                      <div className="sm:col-span-2">
-                        <label className="text-xs text-subtle mb-1.5 flex items-center gap-1"><MapPin size={11} /> City / base location</label>
-                        <input value={pCity} onChange={(e) => setPCity(e.target.value)} placeholder="e.g. Auroville" className="w-full px-4 py-2.5 bg-background border border-border rounded-xl text-sm text-foreground placeholder-subtle focus:outline-none focus:border-primary" />
-                      </div>
-                    </div>
-
-                    {/* Type-specific fields */}
-                    {pType === "events" && (
-                      <>
-                        <div>
-                          <label className="text-xs text-subtle block mb-1.5">What do you plan? (pick all that apply)</label>
-                          <div className="flex flex-wrap gap-1.5">
-                            {eventKinds.map((k) => (
-                              <button key={k} onClick={() => togglePKind(k)} className={`px-3.5 py-1.5 rounded-full text-xs border transition-colors ${pKinds.includes(k) ? "bg-sage/15 text-sage border-sage/50" : "bg-background border-border text-muted hover:text-foreground"}`}>
-                                {pKinds.includes(k) && <Check size={10} className="inline mr-1" />}{k}
-                              </button>
-                            ))}
-                          </div>
-                        </div>
-                        <div>
-                          <label className="text-xs text-subtle block mb-1.5">Events done per year & portfolio link</label>
-                          <input value={pExtra} onChange={(e) => setPExtra(e.target.value)} placeholder="e.g. 40+ events · instagram.com/yourwork" className="w-full px-4 py-2.5 bg-background border border-border rounded-xl text-sm text-foreground placeholder-subtle focus:outline-none focus:border-primary" />
-                        </div>
-                      </>
-                    )}
-
-                    {pType === "rental" && (
-                      <>
-                        <div>
-                          <label className="text-xs text-subtle block mb-1.5">Vehicle types in your fleet</label>
-                          <div className="flex flex-wrap gap-1.5">
-                            {vehicleKinds.map((k) => (
-                              <button key={k} onClick={() => togglePKind(k)} className={`px-3.5 py-1.5 rounded-full text-xs border transition-colors ${pKinds.includes(k) ? "bg-sage/15 text-sage border-sage/50" : "bg-background border-border text-muted hover:text-foreground"}`}>
-                                {pKinds.includes(k) && <Check size={10} className="inline mr-1" />}{k}
-                              </button>
-                            ))}
-                          </div>
-                        </div>
-                        <div className="grid sm:grid-cols-2 gap-4">
-                          <div>
-                            <label className="text-xs text-subtle block mb-1.5">Fleet size</label>
-                            <input value={pExtra} onChange={(e) => setPExtra(e.target.value)} placeholder="e.g. 12 vehicles" className="w-full px-4 py-2.5 bg-background border border-border rounded-xl text-sm text-foreground placeholder-subtle focus:outline-none focus:border-primary" />
-                          </div>
-                          <div>
-                            <label className="text-xs text-subtle block mb-1.5">Doorstep delivery?</label>
-                            <button onClick={() => setPDelivery(!pDelivery)} className={`w-full px-4 py-2.5 rounded-xl text-sm border transition-colors flex items-center justify-between ${pDelivery ? "border-sage/50 bg-sage/10 text-sage" : "border-border bg-background text-muted"}`}>
-                              {pDelivery ? "Yes, we deliver to stays" : "Pickup from shop only"}
-                              {pDelivery && <Check size={14} />}
-                            </button>
-                          </div>
-                        </div>
-                      </>
-                    )}
-
-                    {pType === "food" && (
-                      <>
-                        <div className="grid sm:grid-cols-2 gap-4">
-                          <div>
-                            <label className="text-xs text-subtle block mb-1.5">Kitchen type</label>
-                            <div className="flex flex-wrap gap-1.5">
-                              {kitchenKinds.map((k) => (
-                                <button key={k} onClick={() => setPSingle(k)} className={`px-3.5 py-1.5 rounded-full text-xs border transition-colors ${pSingle === k ? "bg-primary text-primary-foreground border-primary" : "bg-background border-border text-muted hover:text-foreground"}`}>
-                                  {k}
-                                </button>
-                              ))}
-                            </div>
-                          </div>
-                          <div>
-                            <label className="text-xs text-subtle block mb-1.5">Menu</label>
-                            <div className="flex flex-wrap gap-1.5">
-                              {foodKinds.map((k) => (
-                                <button key={k} onClick={() => togglePKind(k)} className={`px-3.5 py-1.5 rounded-full text-xs border transition-colors ${pKinds.includes(k) ? "bg-sage/15 text-sage border-sage/50" : "bg-background border-border text-muted hover:text-foreground"}`}>
-                                  {k}
-                                </button>
-                              ))}
-                            </div>
-                          </div>
-                        </div>
-                        <div>
-                          <label className="text-xs text-subtle block mb-1.5">Cuisine specialties & FSSAI number</label>
-                          <input value={pExtra} onChange={(e) => setPExtra(e.target.value)} placeholder="e.g. Chettinad, farm-to-table · FSSAI 12224…" className="w-full px-4 py-2.5 bg-background border border-border rounded-xl text-sm text-foreground placeholder-subtle focus:outline-none focus:border-primary" />
-                        </div>
-                      </>
-                    )}
-
-                    {pType === "marketing" && (
-                      <>
-                        <div>
-                          <label className="text-xs text-subtle block mb-1.5">You are a…</label>
-                          <div className="flex flex-wrap gap-1.5">
-                            {marketingKinds.map((k) => (
-                              <button key={k} onClick={() => setPSingle(k)} className={`px-3.5 py-1.5 rounded-full text-xs border transition-colors ${pSingle === k ? "bg-primary text-primary-foreground border-primary" : "bg-background border-border text-muted hover:text-foreground"}`}>
-                                {k}
-                              </button>
-                            ))}
-                          </div>
-                        </div>
-                        <div>
-                          <label className="text-xs text-subtle block mb-1.5">Portfolio / past campaigns link</label>
-                          <input value={pExtra} onChange={(e) => setPExtra(e.target.value)} placeholder="e.g. behance.net/yourstudio" className="w-full px-4 py-2.5 bg-background border border-border rounded-xl text-sm text-foreground placeholder-subtle focus:outline-none focus:border-primary" />
-                        </div>
-                      </>
-                    )}
-
-                    {/* Regions */}
-                    <div>
-                      <label className="text-xs text-subtle block mb-1.5">Regions you can serve</label>
-                      <div className="flex flex-wrap gap-1.5">
-                        {partnerRegions.map((r) => (
-                          <button key={r} onClick={() => togglePRegion(r)} className={`px-3.5 py-1.5 rounded-full text-xs border transition-colors ${pRegions.includes(r) ? "bg-primary/15 text-primary border-primary/40" : "bg-background border-border text-muted hover:text-foreground"}`}>
-                            {pRegions.includes(r) && <Check size={10} className="inline mr-1" />}{r}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div>
-                      <label className="text-xs text-subtle block mb-1.5">Anything else? (optional)</label>
-                      <textarea value={pNotes} onChange={(e) => setPNotes(e.target.value)} rows={2} placeholder="Tell us what makes you special…" className="w-full px-4 py-2.5 bg-background border border-border rounded-xl text-sm text-foreground placeholder-subtle focus:outline-none focus:border-primary resize-none" />
-                    </div>
-
-                    <button
-                      onClick={() => partnerReady && setPSubmitted(true)}
-                      disabled={!partnerReady}
-                      className="w-full py-3 text-sm font-semibold bg-gradient-to-r from-primary to-primary-hover text-primary-foreground rounded-xl hover:shadow-[0_0_30px_rgba(16,185,129,0.3)] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                      {partnerReady ? `Submit ${activePartner.title.toLowerCase()} application` : "Add your name & phone to submit"}
-                    </button>
-                  </div>
-                )}
-              </div>
-
-              {/* Side: perks + how it works */}
-              <div className="space-y-6">
-                <div className="bg-gradient-to-br from-primary/10 to-surface border border-primary/25 rounded-2xl p-5">
-                  <p className="text-xs font-semibold uppercase tracking-wider text-primary mb-3">Why join as {activePartner.title.toLowerCase()}?</p>
-                  <ul className="space-y-2.5">
-                    {activePartner.perks.map((p) => (
-                      <li key={p} className="flex gap-2 text-xs text-muted leading-relaxed">
-                        <Check size={13} className="text-sage shrink-0 mt-0.5" /> {p}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="bg-surface border border-border rounded-2xl p-5">
-                  <p className="text-xs font-semibold uppercase tracking-wider text-subtle mb-4">How it works</p>
-                  {["Apply in 2 minutes", "Verification call & documents", "Onboarding & training", "Go live and start earning"].map((s, i, arr) => (
-                    <div key={s} className="flex gap-3">
-                      <div className="flex flex-col items-center">
-                        <span className="w-6 h-6 rounded-full bg-primary/10 text-primary text-[10px] font-bold flex items-center justify-center shrink-0">{i + 1}</span>
-                        {i < arr.length - 1 && <span className="w-px flex-1 bg-border my-1" />}
-                      </div>
-                      <p className="text-xs text-muted pb-4">{s}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
             </div>
           </div>
         )}

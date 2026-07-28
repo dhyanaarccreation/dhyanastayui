@@ -65,6 +65,8 @@ export interface DashboardRole {
   persona: string;
   icon: LucideIcon;
   group: "Travel & Stays" | "Partners" | "Operations" | "Business & Admin";
+  /** Excluded from the dashboard-picker menus (navbar, floating shortcut) — the dashboard page itself still works. */
+  hidden?: boolean;
   /** Custom sidebar (roles with hand-built pages). Others derive nav from sections. */
   nav?: { label: string; href: string; icon: LucideIcon }[];
   stats?: { label: string; value: string; delta?: string }[];
@@ -174,6 +176,7 @@ export const dashboardRoles: DashboardRole[] = [
     persona: "Sana Kapoor",
     icon: PartyPopper,
     group: "Partners",
+    hidden: true,
     nav: [
       { label: "Event Dashboard", href: "/event-planner", icon: LayoutDashboard },
       { label: "Event Bookings", href: "/event-planner#bookings", icon: CalendarDays },
@@ -256,6 +259,7 @@ export const dashboardRoles: DashboardRole[] = [
     persona: "Meena Lakshmi",
     icon: UtensilsCrossed,
     group: "Partners",
+    hidden: true,
     nav: [
       { label: "Food Dashboard", href: "/food-partner", icon: LayoutDashboard },
       { label: "Restaurant & Menu", href: "/food-partner/menu", icon: UtensilsCrossed },
@@ -297,6 +301,7 @@ export const dashboardRoles: DashboardRole[] = [
     persona: "Suresh Babu",
     icon: Bike,
     group: "Partners",
+    hidden: true,
     nav: [
       { label: "Rental Dashboard", href: "/bike-rental-provider", icon: LayoutDashboard },
       { label: "Fleet Management", href: "/bike-rental-provider/fleet", icon: Bike },

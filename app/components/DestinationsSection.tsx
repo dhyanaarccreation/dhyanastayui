@@ -58,13 +58,19 @@ export default function DestinationsSection() {
         {visible.length > 0 ? (
           <>
             <div className="relative">
-              <div className="flex overflow-x-auto overscroll-x-contain snap-x snap-mandatory scroll-smooth scrollbar-hide gap-2.5 sm:gap-4 -mx-6 px-6 pb-1 sm:grid sm:grid-cols-2 sm:mx-0 sm:px-0 sm:pb-0 sm:overflow-visible sm:snap-none lg:grid-cols-3 stagger-children">
+              <div
+                className={`flex overflow-x-auto overscroll-x-contain snap-x snap-mandatory scroll-smooth scrollbar-hide gap-2.5 sm:gap-4 -mx-6 px-6 pb-1 sm:grid sm:grid-cols-2 sm:mx-0 sm:px-0 sm:pb-0 sm:overflow-visible sm:snap-none stagger-children ${
+                  featured.length > 2 ? "lg:grid-cols-3" : ""
+                }`}
+              >
                 {featured.map((dest, i) => (
                   <Link
                     key={dest.name}
                     href={`/stays?destination=${dest.name.toLowerCase()}`}
                     className={`group relative shrink-0 w-[160px] snap-start sm:w-auto sm:shrink rounded-2xl sm:rounded-[28px] overflow-hidden card-hover ${
-                      i === 0 ? "min-h-[150px] sm:min-h-[320px] lg:row-span-2" : "min-h-[150px] sm:min-h-[200px]"
+                      i === 0 && featured.length > 2
+                        ? "min-h-[150px] sm:min-h-[320px] lg:row-span-2"
+                        : "min-h-[150px] sm:min-h-[200px] lg:min-h-[280px]"
                     }`}
                   >
                     {/* Background */}

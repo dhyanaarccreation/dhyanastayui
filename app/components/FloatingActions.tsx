@@ -88,23 +88,29 @@ export default function FloatingActions() {
               Choose your dashboard — switch anytime if you hold multiple roles
             </p>
             <div className="grid sm:grid-cols-2 gap-x-6">
-              {dashboardGroups.map((group) => (
-                <div key={group} className="mb-4 break-inside-avoid">
-                  <p className="text-[10px] font-semibold uppercase tracking-wider text-primary mb-1.5">
-                    {group}
-                  </p>
-                  {dashboardRoles
-                    .filter((r) => r.group === group)
-                    .map((r) => (
-                      <Link
-                        key={r.slug}
-                        href={`/${r.slug}`}
-                        onClick={() => setDashOpen(false)}
-                        className="flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-sm text-muted hover:text-foreground hover:bg-surface-hover transition-colors"
-                      >
-                        <r.icon size={15} className="text-subtle shrink-0" />
-                        {r.title.replace(" Dashboard", "")}
-                      </Link>
+              {[0, 1].map((col) => (
+                <div key={col}>
+                  {dashboardGroups
+                    .filter((_, i) => i % 2 === col)
+                    .map((group) => (
+                      <div key={group} className="mb-4">
+                        <p className="text-[10px] font-semibold uppercase tracking-wider text-primary mb-1.5">
+                          {group}
+                        </p>
+                        {dashboardRoles
+                          .filter((r) => r.group === group && !r.hidden)
+                          .map((r) => (
+                            <Link
+                              key={r.slug}
+                              href={`/${r.slug}`}
+                              onClick={() => setDashOpen(false)}
+                              className="flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-sm text-muted hover:text-foreground hover:bg-surface-hover transition-colors"
+                            >
+                              <r.icon size={15} className="text-subtle shrink-0" />
+                              {r.title.replace(" Dashboard", "")}
+                            </Link>
+                          ))}
+                      </div>
                     ))}
                 </div>
               ))}

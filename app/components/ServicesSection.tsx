@@ -5,52 +5,25 @@ import { useEffect, useState } from "react";
 import {
   Home,
   Compass,
-  Utensils,
-  PartyPopper,
-  CalendarDays,
-  Bike,
-  Backpack,
   ArrowRight,
   Star,
   MapPin,
-  Minus,
-  Plus,
-  Leaf,
-  ChefHat,
-  Ticket,
-  ShieldCheck,
-  Megaphone,
   Sparkles,
   BadgePercent,
+  Megaphone,
 } from "lucide-react";
-import {
-  properties,
-  experiences,
-  foodMenu,
-  eventPlanners,
-  localEvents,
-  rentalVehicles,
-  hostels,
-} from "@/lib/mock-data";
+import { properties, experiences } from "@/lib/mock-data";
 import PropertyCard from "./PropertyCard";
 
 // ============================================
 // HOMEPAGE SERVICES HUB
-// Replaces the single "Featured Stays" block with
-// a tabbed hub so new visitors can see every
-// Dhyana service at a glance — including the
-// standalone "Curated Experiences" list, folded in
-// here so it isn't a near-duplicate second section.
+// A focused hub for Dhyana's two core offerings —
+// curated stays and curated experiences.
 // ============================================
 
 const tabs = [
   { key: "stays", label: "Curated Stays", icon: Home },
-  { key: "experiences", label: "Experiences", icon: Compass },
-  { key: "food", label: "Curated Food", icon: Utensils },
-  { key: "planners", label: "Event Planners", icon: PartyPopper },
-  { key: "events", label: "Events & Workshops", icon: CalendarDays },
-  { key: "vehicles", label: "Vehicle Rentals", icon: Bike },
-  { key: "hostels", label: "Hostels & Budget", icon: Backpack },
+  { key: "experiences", label: "Curated Experiences", icon: Compass },
 ] as const;
 
 type TabKey = (typeof tabs)[number]["key"];
@@ -58,22 +31,10 @@ type TabKey = (typeof tabs)[number]["key"];
 const viewAll: Record<TabKey, { href: string; label: string }> = {
   stays: { href: "/stays", label: "View all stays" },
   experiences: { href: "/experiences", label: "All experiences" },
-  food: { href: "/food", label: "Explore curated food" },
-  planners: { href: "/event-planners", label: "All event planners" },
-  events: { href: "/experiences", label: "All events & workshops" },
-  vehicles: { href: "/bike-rental", label: "All rentals" },
-  hostels: { href: "/stays?category=hostels", label: "All budget stays" },
 };
 
 export default function ServicesSection() {
   const [tab, setTab] = useState<TabKey>("stays");
-  // Food pre-booking state: quantity + chosen cook per dish
-  const [qty, setQty] = useState<Record<string, number>>({});
-  const [cook, setCook] = useState<Record<string, string>>({});
-
-  const getQty = (id: string) => qty[id] ?? 1;
-  const changeQty = (id: string, d: number) =>
-    setQty((p) => ({ ...p, [id]: Math.min(20, Math.max(1, getQty(id) + d)) }));
 
   const featured = properties.filter((p) => p.isFeatured).slice(0, 3);
 
@@ -91,8 +52,8 @@ export default function ServicesSection() {
               Explore Dhyana Services
             </h2>
             <p className="text-muted text-sm sm:text-base mt-1.5 sm:mt-3 max-w-lg">
-              Stays, food, events, rides and budget beds — everything curated,
-              inspected and bookable in one place.
+              Handpicked stays and curated experiences — inspected and
+              bookable in one place.
             </p>
           </div>
           <Link
@@ -103,26 +64,23 @@ export default function ServicesSection() {
           </Link>
         </div>
 
-        {/* Tab bar — wraps into a fixed 2-row block; that block scrolls
-            horizontally as one unit if it doesn't fit the width. */}
-        <div className="overflow-x-auto overscroll-x-contain scroll-smooth scrollbar-hide -mx-1 px-1 pb-1 mb-3 sm:mb-5 lg:mb-10">
-          <div className="grid grid-rows-2 grid-flow-col gap-1.5 sm:gap-2 w-max">
-            {tabs.map(({ key, label, icon: Icon }) => (
-              <button
-                key={key}
-                onClick={() => setTab(key)}
-                className={`shrink-0 flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-medium border whitespace-nowrap transition-all ${
-                  tab === key
-                    ? "bg-primary text-primary-foreground border-primary shadow-organic"
-                    : "bg-surface border-border text-muted hover:text-foreground hover:border-border-light"
-                }`}
-              >
-                <Icon size={14} className="sm:hidden" />
-                <Icon size={15} className="hidden sm:block" />
-                {label}
-              </button>
-            ))}
-          </div>
+        {/* Tab bar */}
+        <div className="flex items-center gap-1.5 sm:gap-2 mb-3 sm:mb-5 lg:mb-10">
+          {tabs.map(({ key, label, icon: Icon }) => (
+            <button
+              key={key}
+              onClick={() => setTab(key)}
+              className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-medium border whitespace-nowrap transition-all ${
+                tab === key
+                  ? "bg-primary text-primary-foreground border-primary shadow-organic"
+                  : "bg-surface border-border text-muted hover:text-foreground hover:border-border-light"
+              }`}
+            >
+              <Icon size={14} className="sm:hidden" />
+              <Icon size={15} className="hidden sm:block" />
+              {label}
+            </button>
+          ))}
         </div>
 
         {/* ============ STAYS ============ */}
@@ -178,339 +136,6 @@ export default function ServicesSection() {
               </Link>
             ))}
             <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-surface-hover to-transparent sm:hidden" />
-          </div>
-        )}
-
-        {/* ============ FOOD (pre-book: qty + cook) ============ */}
-        {tab === "food" && (
-          <div className="relative flex overflow-x-auto overscroll-x-contain snap-x snap-mandatory scroll-smooth scrollbar-hide gap-3 sm:gap-6 -mx-6 px-6 pb-1 sm:grid sm:grid-cols-2 sm:mx-0 sm:px-0 sm:pb-0 sm:overflow-visible sm:snap-none lg:grid-cols-4 stagger-children">
-            {foodMenu.map((f) => (
-              <div
-                key={f.id}
-                className="shrink-0 w-[175px] snap-start sm:w-auto sm:shrink rounded-2xl sm:rounded-[28px] overflow-hidden bg-surface card-hover flex flex-col"
-              >
-                <div className="relative h-28 sm:h-40 overflow-hidden">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img loading="lazy"
-                    src={f.image}
-                    alt={f.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform"
-                  />
-                  <span className="absolute top-2 left-2 sm:top-3 sm:left-3 flex items-center gap-1 px-2 sm:px-2.5 py-0.5 sm:py-1 text-[9px] sm:text-[10px] font-medium uppercase tracking-wider bg-background/80 backdrop-blur-sm text-foreground rounded-full">
-                    {f.veg && <Leaf size={10} className="text-sage" />}
-                    {f.cuisine}
-                  </span>
-                </div>
-                <div className="p-2.5 sm:p-4 flex flex-col flex-1">
-                  <div className="flex items-start justify-between gap-2">
-                    <p className="text-sm font-semibold text-foreground">
-                      {f.name}
-                    </p>
-                    <p className="text-sm font-bold text-foreground whitespace-nowrap">
-                      ₹{f.pricePerPlate}
-                    </p>
-                  </div>
-                  <p className="text-xs text-subtle mt-0.5">
-                    Serves {f.serves}
-                  </p>
-
-                  {/* Choose your cook */}
-                  <p className="text-[10px] font-semibold uppercase tracking-wider text-subtle mt-3 mb-1.5 flex items-center gap-1">
-                    <ChefHat size={11} /> Choose your cook
-                  </p>
-                  <div className="flex gap-1.5 flex-wrap">
-                    {f.cooks.map((c) => {
-                      const selected = (cook[f.id] ?? f.cooks[0].name) === c.name;
-                      return (
-                        <button
-                          key={c.name}
-                          onClick={() =>
-                            setCook((p) => ({ ...p, [f.id]: c.name }))
-                          }
-                          title={c.specialty}
-                          className={`flex items-center gap-1.5 pl-1 pr-2.5 py-1 rounded-full border text-xs transition-colors ${
-                            selected
-                              ? "border-sage bg-sage/15 text-foreground"
-                              : "border-border text-muted hover:border-border-light"
-                          }`}
-                        >
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img loading="lazy"
-                            src={c.avatar}
-                            alt={c.name}
-                            className="w-5 h-5 rounded-full object-cover"
-                          />
-                          {c.name}
-                        </button>
-                      );
-                    })}
-                  </div>
-
-                  {/* Quantity + pre-book */}
-                  <div className="flex items-center justify-between mt-4 pt-3 border-t border-surface-hover">
-                    <div className="flex items-center gap-1">
-                      <button
-                        onClick={() => changeQty(f.id, -1)}
-                        aria-label="Decrease quantity"
-                        className="w-7 h-7 rounded-full border border-border text-muted hover:text-foreground hover:border-border-light flex items-center justify-center transition-colors"
-                      >
-                        <Minus size={12} />
-                      </button>
-                      <span className="w-8 text-center text-sm font-semibold text-foreground tabular-nums">
-                        {getQty(f.id)}
-                      </span>
-                      <button
-                        onClick={() => changeQty(f.id, 1)}
-                        aria-label="Increase quantity"
-                        className="w-7 h-7 rounded-full border border-border text-muted hover:text-foreground hover:border-border-light flex items-center justify-center transition-colors"
-                      >
-                        <Plus size={12} />
-                      </button>
-                    </div>
-                    <Link
-                      href="/food"
-                      className="px-3.5 py-1.5 text-xs font-medium rounded-full bg-primary text-primary-foreground hover:bg-primary-hover transition-colors"
-                    >
-                      Pre-book · ₹{f.pricePerPlate * getQty(f.id)}
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            ))}
-            <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-surface-hover to-transparent sm:hidden" />
-          </div>
-        )}
-
-        {/* ============ EVENT PLANNERS ============ */}
-        {tab === "planners" && (
-          <div className="relative flex overflow-x-auto overscroll-x-contain snap-x snap-mandatory scroll-smooth scrollbar-hide gap-3 md:gap-6 -mx-6 px-6 pb-1 md:grid md:grid-cols-3 md:mx-0 md:px-0 md:pb-0 md:overflow-visible md:snap-none stagger-children">
-            {eventPlanners.map((ep) => (
-              <div
-                key={ep.id}
-                className="shrink-0 w-[200px] snap-start md:w-auto md:shrink rounded-2xl md:rounded-[28px] overflow-hidden bg-surface card-hover"
-              >
-                <div className="relative h-32 md:h-48 overflow-hidden">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img loading="lazy"
-                    src={ep.image}
-                    alt={ep.name}
-                    className="w-full h-full object-cover"
-                  />
-                  <span className="absolute top-2 left-2 md:top-3 md:left-3 px-2 md:px-2.5 py-0.5 md:py-1 text-[9px] md:text-[10px] font-medium uppercase tracking-wider bg-white/85 backdrop-blur-sm text-sage rounded-full">
-                    {ep.type}
-                  </span>
-                  <span className="absolute top-2 right-2 md:top-3 md:right-3 flex items-center gap-1 px-1.5 md:px-2 py-0.5 md:py-1 text-[10px] md:text-xs bg-background/80 backdrop-blur-sm text-foreground rounded-full">
-                    <Star size={11} className="text-primary fill-primary" />
-                    {ep.rating}
-                  </span>
-                </div>
-                <div className="p-3 md:p-5">
-                  <div className="flex items-center gap-1.5">
-                    <p className="text-base font-semibold text-foreground">
-                      {ep.name}
-                    </p>
-                    <ShieldCheck size={14} className="text-sage" />
-                  </div>
-                  <p className="text-xs text-muted mt-0.5">
-                    {ep.eventsDone}+ events curated with Dhyana
-                  </p>
-                  <div className="flex flex-wrap gap-1.5 mt-3">
-                    {ep.tags.map((t) => (
-                      <span
-                        key={t}
-                        className="text-[10px] px-2 py-0.5 rounded-full bg-surface-hover text-muted"
-                      >
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-                  <div className="flex items-center justify-between mt-4 pt-3 border-t border-surface-hover">
-                    <p className="text-xs text-muted">
-                      From{" "}
-                      <span className="text-sm font-bold text-foreground">
-                        ₹{ep.startingPrice.toLocaleString("en-IN")}
-                      </span>
-                    </p>
-                    <Link
-                      href={`/event-planners/${ep.id}`}
-                      className="px-3.5 py-1.5 text-xs font-medium rounded-full border border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-colors"
-                    >
-                      View &amp; Book
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            ))}
-            <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-surface-hover to-transparent md:hidden" />
-          </div>
-        )}
-
-        {/* ============ LOCAL EVENTS & WORKSHOPS ============ */}
-        {tab === "events" && (
-          <div className="relative flex overflow-x-auto overscroll-x-contain snap-x snap-mandatory scroll-smooth scrollbar-hide gap-3 sm:gap-6 -mx-6 px-6 pb-1 sm:grid sm:grid-cols-2 sm:mx-0 sm:px-0 sm:pb-0 sm:overflow-visible sm:snap-none lg:grid-cols-4 stagger-children">
-            {localEvents.map((le) => (
-              <div
-                key={le.id}
-                className="shrink-0 w-[175px] snap-start sm:w-auto sm:shrink rounded-2xl sm:rounded-[28px] overflow-hidden bg-surface card-hover"
-              >
-                <div className="relative h-28 sm:h-40 overflow-hidden">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img loading="lazy"
-                    src={le.image}
-                    alt={le.title}
-                    className="w-full h-full object-cover"
-                  />
-                  <span className="absolute top-2 left-2 sm:top-3 sm:left-3 px-2 sm:px-2.5 py-0.5 sm:py-1 text-[9px] sm:text-[10px] font-semibold uppercase tracking-wider bg-background/85 backdrop-blur-sm text-foreground rounded-full">
-                    {le.date}
-                  </span>
-                  <span className="absolute top-2 right-2 sm:top-3 sm:right-3 px-1.5 sm:px-2 py-0.5 sm:py-1 text-[9px] sm:text-[10px] font-medium bg-primary/90 text-primary-foreground rounded-full">
-                    {le.kind}
-                  </span>
-                </div>
-                <div className="p-2.5 sm:p-4">
-                  <p className="text-sm font-semibold text-foreground leading-snug">
-                    {le.title}
-                  </p>
-                  <p className="text-xs text-muted mt-1 flex items-center gap-1">
-                    <MapPin size={10} /> {le.venue}
-                  </p>
-                  <div className="flex items-center justify-between mt-3 pt-3 border-t border-surface-hover">
-                    <div>
-                      <p className="text-sm font-bold text-foreground">
-                        ₹{le.price}
-                      </p>
-                      <p className="text-[10px] text-terracotta font-medium">
-                        {le.spotsLeft} spots left
-                      </p>
-                    </div>
-                    <Link
-                      href="/experiences"
-                      className="flex items-center gap-1 px-3.5 py-1.5 text-xs font-medium rounded-full bg-primary text-primary-foreground hover:bg-primary-hover transition-colors"
-                    >
-                      <Ticket size={12} /> Book spot
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            ))}
-            <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-surface-hover to-transparent sm:hidden" />
-          </div>
-        )}
-
-        {/* ============ VEHICLE RENTALS ============ */}
-        {tab === "vehicles" && (
-          <div className="relative flex overflow-x-auto overscroll-x-contain snap-x snap-mandatory scroll-smooth scrollbar-hide gap-3 sm:gap-6 -mx-6 px-6 pb-1 sm:grid sm:grid-cols-2 sm:mx-0 sm:px-0 sm:pb-0 sm:overflow-visible sm:snap-none lg:grid-cols-4 stagger-children">
-            {rentalVehicles.map((rv) => (
-              <div
-                key={rv.id}
-                className="shrink-0 w-[175px] snap-start sm:w-auto sm:shrink rounded-2xl sm:rounded-[28px] overflow-hidden bg-surface card-hover"
-              >
-                <div className="relative h-28 sm:h-40 overflow-hidden">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img loading="lazy"
-                    src={rv.image}
-                    alt={rv.name}
-                    className="w-full h-full object-cover"
-                  />
-                  <span className="absolute top-2 left-2 sm:top-3 sm:left-3 px-2 sm:px-2.5 py-0.5 sm:py-1 text-[9px] sm:text-[10px] font-medium uppercase tracking-wider bg-background/80 backdrop-blur-sm text-foreground rounded-full">
-                    {rv.type}
-                  </span>
-                </div>
-                <div className="p-2.5 sm:p-4">
-                  <p className="text-sm font-semibold text-foreground">
-                    {rv.name}
-                  </p>
-                  <ul className="mt-2 space-y-1">
-                    {rv.features.map((ft) => (
-                      <li
-                        key={ft}
-                        className="text-xs text-muted flex items-center gap-1.5"
-                      >
-                        <span className="w-1 h-1 rounded-full bg-sage" />
-                        {ft}
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="flex items-center justify-between mt-3 pt-3 border-t border-surface-hover">
-                    <p className="text-xs text-muted">
-                      <span className="text-sm font-bold text-foreground">
-                        ₹{rv.pricePerDay}
-                      </span>
-                      /day
-                    </p>
-                    <Link
-                      href="/bike-rental"
-                      className="px-3.5 py-1.5 text-xs font-medium rounded-full bg-primary text-primary-foreground hover:bg-primary-hover transition-colors"
-                    >
-                      Reserve
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            ))}
-            <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-surface-hover to-transparent sm:hidden" />
-          </div>
-        )}
-
-        {/* ============ HOSTELS & BUDGET ============ */}
-        {tab === "hostels" && (
-          <div className="relative flex overflow-x-auto overscroll-x-contain snap-x snap-mandatory scroll-smooth scrollbar-hide gap-3 md:gap-6 -mx-6 px-6 pb-1 md:grid md:grid-cols-3 md:mx-0 md:px-0 md:pb-0 md:overflow-visible md:snap-none stagger-children">
-            {hostels.map((h) => (
-              <div
-                key={h.id}
-                className="shrink-0 w-[200px] snap-start md:w-auto md:shrink rounded-2xl md:rounded-[28px] overflow-hidden bg-surface card-hover"
-              >
-                <div className="relative h-32 md:h-44 overflow-hidden">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img loading="lazy"
-                    src={h.image}
-                    alt={h.name}
-                    className="w-full h-full object-cover"
-                  />
-                  <span className="absolute top-2 left-2 md:top-3 md:left-3 px-2 md:px-2.5 py-0.5 md:py-1 text-[9px] md:text-[10px] font-semibold uppercase tracking-wider bg-sage/90 text-white rounded-full">
-                    Budget friendly
-                  </span>
-                  <span className="absolute top-2 right-2 md:top-3 md:right-3 flex items-center gap-1 px-1.5 md:px-2 py-0.5 md:py-1 text-[10px] md:text-xs bg-background/80 backdrop-blur-sm text-foreground rounded-full">
-                    <Star size={11} className="text-primary fill-primary" />
-                    {h.rating}
-                  </span>
-                </div>
-                <div className="p-3 md:p-5">
-                  <p className="text-base font-semibold text-foreground">
-                    {h.name}
-                  </p>
-                  <p className="text-xs text-muted mt-0.5 flex items-center gap-1">
-                    <MapPin size={11} /> {h.location}
-                  </p>
-                  <div className="flex flex-wrap gap-1.5 mt-3">
-                    {h.perks.map((pk) => (
-                      <span
-                        key={pk}
-                        className="text-[10px] px-2 py-0.5 rounded-full bg-surface-hover text-muted"
-                      >
-                        {pk}
-                      </span>
-                    ))}
-                  </div>
-                  <div className="flex items-center justify-between mt-4 pt-3 border-t border-surface-hover">
-                    <p className="text-xs text-muted">
-                      Beds from{" "}
-                      <span className="text-sm font-bold text-foreground">
-                        ₹{h.bedPrice}
-                      </span>
-                      /night
-                    </p>
-                    <Link
-                      href="/stays?category=hostels"
-                      className="px-3.5 py-1.5 text-xs font-medium rounded-full bg-primary text-primary-foreground hover:bg-primary-hover transition-colors"
-                    >
-                      Book a bed
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            ))}
-            <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-surface-hover to-transparent md:hidden" />
           </div>
         )}
 

@@ -10,32 +10,17 @@ import {
   User,
   ChevronDown,
   Heart,
-  Compass,
-  Utensils,
-  PartyPopper,
-  Bike,
-  Wrench,
 } from "lucide-react";
 import { navLinks } from "@/lib/mock-data";
 import { dashboardRoles, dashboardGroups } from "@/lib/dashboards";
 import { ThemeToggle } from "./ThemeToggle";
 import { LogoMark } from "./Logo";
 
-const experienceLinks = [
-  { label: "Curated Experiences", description: "Yoga, treks, workshops & more", href: "/experiences", icon: Compass },
-  { label: "Curated Food", description: "Home-cooked meals, delivered to your stay", href: "/food", icon: Utensils },
-  { label: "Event Planners", description: "Weddings, retreats & celebrations", href: "/event-planners", icon: PartyPopper },
-  { label: "Bike & Vehicle Rentals", description: "Explore at your own pace", href: "/bike-rental", icon: Bike },
-  { label: "Local Services", description: "Guides, help & everyday essentials", href: "/local-services", icon: Wrench },
-];
-
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [openMenu, setOpenMenu] = useState<"dashboard" | "experiences" | null>(null);
+  const [openMenu, setOpenMenu] = useState<"dashboard" | null>(null);
   const pathname = usePathname();
-  const expActive = experienceLinks.some((item) => pathname === item.href);
   const dashOpen = openMenu === "dashboard";
-  const expOpen = openMenu === "experiences";
   const desktopNavRef = useRef<HTMLElement>(null);
 
   // Close whichever dropdown is open on outside click or Escape —
@@ -76,78 +61,18 @@ export default function Navbar() {
           {/* Desktop Nav */}
           <nav className="hidden lg:flex items-center gap-1" ref={desktopNavRef}>
             {navLinks.map((link) => {
-              if (link.label === "Experiences") {
-                return (
-                  <div
-                    key={link.href}
-                    className="relative"
-                    onMouseEnter={() => setOpenMenu("experiences")}
-                    onMouseLeave={() => setOpenMenu((m) => (m === "experiences" ? null : m))}
-                  >
-                    <Link
-                      href={link.href}
-                      onClick={() => setOpenMenu(null)}
-                      aria-expanded={expOpen}
-                      className={`group relative flex items-center gap-1 px-4 py-2.5 text-sm font-medium rounded-full transition-colors duration-200 hover:bg-surface-hover ${
-                        expActive || expOpen ? "text-foreground" : "text-muted hover:text-foreground"
-                      }`}
-                    >
-                      {link.label}
-                      <ChevronDown
-                        size={14}
-                        className={`transition-transform duration-300 ${expOpen ? "rotate-180" : ""}`}
-                      />
-                      <span
-                        className={`pointer-events-none absolute left-4 right-4 -bottom-0.5 h-[2px] rounded-full bg-primary origin-left transition-transform duration-300 ease-out ${
-                          expActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
-                        }`}
-                      />
-                    </Link>
-
-                    {expOpen && (
-                      <div className="absolute left-0 top-full pt-3 w-[320px] animate-fade-in">
-                        <div className="rounded-[24px] border border-border bg-surface shadow-organic p-3">
-                          <p className="text-[10px] uppercase tracking-wider text-subtle px-3 pt-1 pb-2">
-                            More to explore
-                          </p>
-                          {experienceLinks.map((item) => (
-                            <Link
-                              key={item.href}
-                              href={item.href}
-                              onClick={() => setOpenMenu(null)}
-                              className="flex items-start gap-3 px-3 py-2.5 rounded-xl hover:bg-surface-hover transition-colors"
-                            >
-                              <span className="w-9 h-9 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0">
-                                <item.icon size={16} />
-                              </span>
-                              <span>
-                                <span className="block text-sm font-medium text-foreground">
-                                  {item.label}
-                                </span>
-                                <span className="block text-xs text-subtle">
-                                  {item.description}
-                                </span>
-                              </span>
-                            </Link>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                );
-              }
-
               const active = pathname === link.href;
+              const isExperiences = link.label === "Experiences";
               return (
                 <Link
                   key={link.href}
                   href={link.href}
                   onMouseEnter={() => setOpenMenu(null)}
-                  className={`group relative px-4 py-2.5 text-sm font-medium rounded-full transition-colors duration-200 hover:bg-surface-hover ${
+                  className={`group relative flex items-center gap-1 px-4 py-2.5 text-sm font-medium rounded-full transition-colors duration-200 hover:bg-surface-hover ${
                     active ? "text-foreground" : "text-muted hover:text-foreground"
                   }`}
                 >
-                  {link.label}
+                  {isExperiences ? "Curated Experiences" : link.label}
                   <span
                     className={`pointer-events-none absolute left-4 right-4 -bottom-0.5 h-[2px] rounded-full bg-primary origin-left transition-transform duration-300 ease-out ${
                       active ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
@@ -182,23 +107,29 @@ export default function Navbar() {
                     roles
                   </p>
                   <div className="grid grid-cols-2 gap-x-6">
-                    {dashboardGroups.map((group) => (
-                      <div key={group} className="mb-4 break-inside-avoid">
-                        <p className="text-[10px] font-semibold uppercase tracking-wider text-primary mb-1.5">
-                          {group}
-                        </p>
-                        {dashboardRoles
-                          .filter((r) => r.group === group)
-                          .map((r) => (
-                            <Link
-                              key={r.slug}
-                              href={`/${r.slug}`}
-                              onClick={() => setOpenMenu(null)}
-                              className="flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-sm text-muted hover:text-foreground hover:bg-surface-hover transition-colors"
-                            >
-                              <r.icon size={15} className="text-subtle shrink-0" />
-                              {r.title.replace(" Dashboard", "")}
-                            </Link>
+                    {[0, 1].map((col) => (
+                      <div key={col}>
+                        {dashboardGroups
+                          .filter((_, i) => i % 2 === col)
+                          .map((group) => (
+                            <div key={group} className="mb-4">
+                              <p className="text-[10px] font-semibold uppercase tracking-wider text-primary mb-1.5">
+                                {group}
+                              </p>
+                              {dashboardRoles
+                                .filter((r) => r.group === group && !r.hidden)
+                                .map((r) => (
+                                  <Link
+                                    key={r.slug}
+                                    href={`/${r.slug}`}
+                                    onClick={() => setOpenMenu(null)}
+                                    className="flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-sm text-muted hover:text-foreground hover:bg-surface-hover transition-colors"
+                                  >
+                                    <r.icon size={15} className="text-subtle shrink-0" />
+                                    {r.title.replace(" Dashboard", "")}
+                                  </Link>
+                                ))}
+                            </div>
                           ))}
                       </div>
                     ))}
@@ -300,37 +231,20 @@ export default function Navbar() {
         <div className="overflow-y-auto h-[calc(100%-72px)] px-6 py-6 space-y-1">
           {navLinks.map((link) => {
             const active = pathname === link.href;
+            const isExperiences = link.label === "Experiences";
             return (
               <div key={link.href}>
                 <Link
                   href={link.href}
-                  className={`block px-4 py-3 text-base rounded-xl transition-colors duration-200 ${
+                  className={`flex items-center gap-1.5 px-4 py-3 text-base rounded-xl transition-colors duration-200 ${
                     active
                       ? "text-foreground bg-surface-hover font-medium"
                       : "text-muted hover:text-foreground hover:bg-surface-hover"
                   }`}
                   onClick={() => setMobileOpen(false)}
                 >
-                  {link.label}
+                  {isExperiences ? "Curated Experiences" : link.label}
                 </Link>
-
-                {link.label === "Experiences" && (
-                  <div className="mt-1 mb-2 ml-3 pl-3 border-l border-border space-y-0.5">
-                    {experienceLinks
-                      .filter((item) => item.href !== "/experiences")
-                      .map((item) => (
-                        <Link
-                          key={item.href}
-                          href={item.href}
-                          onClick={() => setMobileOpen(false)}
-                          className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-muted hover:text-foreground hover:bg-surface-hover transition-colors"
-                        >
-                          <item.icon size={14} className="text-subtle shrink-0" />
-                          {item.label}
-                        </Link>
-                      ))}
-                  </div>
-                )}
               </div>
             );
           })}
@@ -341,17 +255,19 @@ export default function Navbar() {
               Dashboards
             </p>
             <div className="grid grid-cols-2 gap-1 max-h-64 overflow-y-auto">
-              {dashboardRoles.map((r) => (
-                <Link
-                  key={r.slug}
-                  href={`/${r.slug}`}
-                  onClick={() => setMobileOpen(false)}
-                  className="flex items-center gap-2 px-3 py-2 rounded-lg text-xs text-muted hover:text-foreground hover:bg-surface-hover active:scale-95 transition-all duration-200"
-                >
-                  <r.icon size={13} className="text-subtle shrink-0" />
-                  {r.title.replace(" Dashboard", "")}
-                </Link>
-              ))}
+              {dashboardRoles
+                .filter((r) => !r.hidden)
+                .map((r) => (
+                  <Link
+                    key={r.slug}
+                    href={`/${r.slug}`}
+                    onClick={() => setMobileOpen(false)}
+                    className="flex items-center gap-2 px-3 py-2 rounded-lg text-xs text-muted hover:text-foreground hover:bg-surface-hover active:scale-95 transition-all duration-200"
+                  >
+                    <r.icon size={13} className="text-subtle shrink-0" />
+                    {r.title.replace(" Dashboard", "")}
+                  </Link>
+                ))}
             </div>
           </div>
 

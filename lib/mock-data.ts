@@ -18,6 +18,8 @@ export interface Property {
     coordinates: { lat: number; lng: number };
   };
   images: string[];
+  /** Extended photo set shown in the gallery modal — always 6–8 images, distinct per stay. */
+  galleryImages: string[];
   price: number;
   originalPrice?: number;
   rating: number;
@@ -127,6 +129,15 @@ export const properties: Property[] = [
       "https://images.unsplash.com/photo-1571896349842-33c89424de2d?q=80&w=1200&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1518602164578-cd0074062767?q=80&w=1200&auto=format&fit=crop",
     ],
+    galleryImages: [
+      "https://images.unsplash.com/photo-1571896349842-33c89424de2d?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1518602164578-cd0074062767?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1521401830884-6c03c1c87ebb?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1681295692638-97ace05f56b4?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1465101162946-4377e57745c3?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1701432936092-c854d7bc0f43?q=80&w=1200&auto=format&fit=crop",
+    ],
     price: 4500,
     originalPrice: 5500,
     rating: 4.9,
@@ -158,6 +169,15 @@ export const properties: Property[] = [
       "https://images.unsplash.com/photo-1548013146-72479768bada?q=80&w=1200&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1523217582562-09d0def993a6?q=80&w=1200&auto=format&fit=crop",
     ],
+    galleryImages: [
+      "https://images.unsplash.com/photo-1548013146-72479768bada?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1523217582562-09d0def993a6?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1670494264392-8bfb0200a775?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1761839257961-4dce65b72d99?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1544787219-7f47ccb76574?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1758272960816-6126b6607596?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1699548891120-06abb3217cde?q=80&w=1200&auto=format&fit=crop",
+    ],
     price: 6800,
     rating: 4.8,
     reviewCount: 94,
@@ -188,6 +208,15 @@ export const properties: Property[] = [
       "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?q=80&w=1200&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?q=80&w=1200&auto=format&fit=crop",
     ],
+    galleryImages: [
+      "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1521401830884-6c03c1c87ebb?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1742626157111-59f3f1019a8a?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1465101162946-4377e57745c3?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1701432936092-c854d7bc0f43?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1533105079780-92b9be482077?q=80&w=1200&auto=format&fit=crop",
+    ],
     price: 8500,
     rating: 4.95,
     reviewCount: 67,
@@ -217,6 +246,15 @@ export const properties: Property[] = [
     images: [
       "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1200&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1483683804023-6ccdb62f86ef?q=80&w=1200&auto=format&fit=crop",
+    ],
+    galleryImages: [
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1483683804023-6ccdb62f86ef?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1544787219-7f47ccb76574?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1638884896143-f1b2501e9a61?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1661773031258-9bd959928118?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1649511125503-3b23dc239c96?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1491497895121-1334fc14d8c9?q=80&w=1200&auto=format&fit=crop",
     ],
     price: 18500,
     originalPrice: 22000,
@@ -249,6 +287,15 @@ export const properties: Property[] = [
       "https://images.unsplash.com/photo-1571055107559-3e67626fa8be?q=80&w=1200&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop",
     ],
+    galleryImages: [
+      "https://images.unsplash.com/photo-1571055107559-3e67626fa8be?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1444464666168-49d633b86797?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1533105079780-92b9be482077?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1742626157111-59f3f1019a8a?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1465101162946-4377e57745c3?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1593693411515-c20261bcad6e?q=80&w=1200&auto=format&fit=crop",
+    ],
     price: 3200,
     rating: 4.7,
     reviewCount: 156,
@@ -278,6 +325,15 @@ export const properties: Property[] = [
     images: [
       "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=1200&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?q=80&w=1200&auto=format&fit=crop",
+    ],
+    galleryImages: [
+      "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1596797038530-2c107229654b?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1688820661462-a44e4b2770e8?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1758272960816-6126b6607596?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1650847821830-2c24e212213f?q=80&w=1200&auto=format&fit=crop",
     ],
     price: 7200,
     rating: 4.9,
@@ -309,6 +365,15 @@ export const properties: Property[] = [
       "https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?q=80&w=1200&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1520454974749-611b7248ffdb?q=80&w=1200&auto=format&fit=crop",
     ],
+    galleryImages: [
+      "https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1520454974749-611b7248ffdb?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1455279145601-37efa82b5c95?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1593693411515-c20261bcad6e?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1650847821830-2c24e212213f?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1701432936092-c854d7bc0f43?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1491497895121-1334fc14d8c9?q=80&w=1200&auto=format&fit=crop",
+    ],
     price: 9500,
     originalPrice: 11000,
     rating: 4.75,
@@ -339,6 +404,15 @@ export const properties: Property[] = [
     images: [
       "https://images.unsplash.com/photo-1445308394109-4ec2920981b1?q=80&w=1200&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?q=80&w=1200&auto=format&fit=crop",
+    ],
+    galleryImages: [
+      "https://images.unsplash.com/photo-1445308394109-4ec2920981b1?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1533105079780-92b9be482077?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1758272960816-6126b6607596?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1611095973763-414019e72400?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1444464666168-49d633b86797?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1742626157111-59f3f1019a8a?q=80&w=1200&auto=format&fit=crop",
     ],
     price: 2200,
     rating: 4.6,
@@ -384,18 +458,7 @@ export const categories = [
 
 export const destinations = [
   { name: "Auroville", state: "Tamil Nadu", image: "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?q=80&w=1200&auto=format&fit=crop", properties: 12 },
-  { name: "Kodaikanal", state: "Tamil Nadu", image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=1200&auto=format&fit=crop", properties: 8 },
-  { name: "Wayanad", state: "Kerala", image: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?q=80&w=1200&auto=format&fit=crop", properties: 15 },
-  { name: "Munnar", state: "Kerala", image: "https://images.unsplash.com/photo-1519046904884-53103b34b206?q=80&w=1200&auto=format&fit=crop", properties: 11 },
-  { name: "Coorg", state: "Karnataka", image: "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?q=80&w=1200&auto=format&fit=crop", properties: 9 },
-  { name: "Goa", state: "Goa", image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200&auto=format&fit=crop", properties: 18 },
   { name: "Pondicherry", state: "Pondicherry", image: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?q=80&w=1200&auto=format&fit=crop", properties: 14 },
-  { name: "Ooty", state: "Tamil Nadu", image: "https://images.unsplash.com/photo-1593693411515-c20261bcad6e?q=80&w=1200&auto=format&fit=crop", properties: 7 },
-  { name: "Chikmagalur", state: "Karnataka", image: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=1200&auto=format&fit=crop", properties: 10 },
-  { name: "Alleppey", state: "Kerala", image: "https://images.unsplash.com/photo-1544194215-541c2d3561a4?q=80&w=1200&auto=format&fit=crop", properties: 13 },
-  { name: "Hampi", state: "Karnataka", image: "https://images.unsplash.com/photo-1573790387438-4da905039392?q=80&w=1200&auto=format&fit=crop", properties: 6 },
-  { name: "Yelagiri", state: "Tamil Nadu", image: "https://images.unsplash.com/photo-1591017403286-fd8493524e1e?q=80&w=1200&auto=format&fit=crop", properties: 5 },
-  { name: "Palakkad", state: "Kerala", image: "https://images.unsplash.com/photo-1616684000067-36952fde56ec?q=80&w=1200&auto=format&fit=crop", properties: 8 },
 ];
 
 // ============================================
