@@ -788,63 +788,13 @@ export default function PropertyDetailsPage() {
                 )}
               </div>
 
-              {/* Date & Guest Pickers */}
-              <div className="border border-border rounded-xl overflow-hidden mb-4">
-                <div className="flex border-b border-border">
-                  <div className="flex-1 p-3 border-r border-border hover:bg-surface-hover cursor-pointer transition-colors">
-                    <div className="text-[10px] uppercase font-bold text-muted mb-1">
-                      Check-in
-                    </div>
-                    <div className="text-sm text-foreground">Add date</div>
-                  </div>
-                  <div className="flex-1 p-3 hover:bg-surface-hover cursor-pointer transition-colors">
-                    <div className="text-[10px] uppercase font-bold text-muted mb-1">
-                      Check-out
-                    </div>
-                    <div className="text-sm text-foreground">Add date</div>
-                  </div>
-                </div>
-                <div className="p-3 hover:bg-surface-hover cursor-pointer transition-colors">
-                  <div className="text-[10px] uppercase font-bold text-muted mb-1">
-                    Guests
-                  </div>
-                  <div className="flex items-center justify-between text-sm text-foreground">
-                    {guests} {guests > 1 ? "guests" : "guest"}
-                    <ChevronRight size={14} className="text-subtle" />
-                  </div>
-                </div>
-              </div>
-
               {/* Action Button */}
               <Link
-                href={`/book/${property.id}`}
-                className="w-full py-4 bg-gradient-to-r from-primary to-primary-hover text-primary-foreground font-semibold text-sm rounded-xl hover:shadow-[0_0_30px_rgba(16,185,129,0.3)] transition-all flex items-center justify-center mb-4"
+                href={`/book/${property.id}?guests=${guests}`}
+                className="w-full py-4 bg-gradient-to-r from-primary to-primary-hover text-primary-foreground font-semibold text-sm rounded-xl hover:shadow-[0_0_30px_rgba(16,185,129,0.3)] transition-all flex items-center justify-center"
               >
                 Reserve
               </Link>
-              <p className="text-center text-xs text-muted mb-6">
-                You won't be charged yet
-              </p>
-
-              {/* Price Breakdown */}
-              <div className="space-y-3 text-sm mb-4 pb-4 border-b border-border">
-                <div className="flex justify-between text-muted">
-                  <span className="underline">₹{property.price.toLocaleString()} x 3 nights</span>
-                  <span>₹{(property.price * 3).toLocaleString()}</span>
-                </div>
-                <div className="flex justify-between text-muted">
-                  <span className="underline">Platform fee</span>
-                  <span>₹1,500</span>
-                </div>
-                <div className="flex justify-between text-muted">
-                  <span className="underline">Taxes</span>
-                  <span>₹1,200</span>
-                </div>
-              </div>
-              <div className="flex justify-between font-bold text-foreground">
-                <span>Total</span>
-                <span>₹{(property.price * 3 + 2700).toLocaleString()}</span>
-              </div>
             </div>
           </div>
         </div>

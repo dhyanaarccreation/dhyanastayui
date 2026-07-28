@@ -2,28 +2,30 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { LayoutDashboard, ChevronUp, Sparkles } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { LayoutDashboard, Sparkles } from "lucide-react";
 import { dashboardRoles, dashboardGroups } from "@/lib/dashboards";
 import { LogoMark } from "./Logo";
 import TripPlannerWidget from "./TripPlannerWidget";
 
-// Single floating launcher, bottom-right on every page — combines the
-// dashboard shortcut and the AI planner into one pill instead of two
-// separate floating buttons.
+// Single floating launcher, bottom-left on every page — a compact icon-only
+// button that opens a glass popup menu with the dashboard shortcut and the
+// AI planner, instead of an always-visible pill.
 export default function FloatingActions() {
-  const [dashOpen, setDashOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const [aiOpen, setAiOpen] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    if (!dashOpen) return;
+    if (!menuOpen) return;
     const handlePointerDown = (e: MouseEvent) => {
       if (wrapperRef.current && !wrapperRef.current.contains(e.target as Node)) {
-        setDashOpen(false);
+        setMenuOpen(false);
       }
     };
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setDashOpen(false);
+      if (e.key === "Escape") setMenuOpen(false);
     };
     document.addEventListener("mousedown", handlePointerDown);
     document.addEventListener("keydown", handleKeyDown);
@@ -31,92 +33,101 @@ export default function FloatingActions() {
       document.removeEventListener("mousedown", handlePointerDown);
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [dashOpen]);
+  }, [menuOpen]);
+
+  // Return focus to the trigger button whenever the popup closes, so
+  // keyboard users don't lose their place.
+  useEffect(() => {
+    if (!menuOpen) triggerRef.current?.focus();
+  }, [menuOpen]);
 
   return (
     <>
       <div
         ref={wrapperRef}
+        className={`fixed left-6 bottom-6 z-[60] transition-opacity ${
+          aiOpen ? "opacity-0 pointer-events-none" : "opacity-100"
+        }`}
+      >
+        <button
+          ref={triggerRef}
+          onClick={() => setMenuOpen((v) => !v)}
+          aria-expanded={menuOpen}
+          aria-haspopup="menu"
+          aria-label="Open dashboard and planner menu"
+          className="flex items-center justify-center w-12 h-12 rounded-full bg-white/80 backdrop-blur-xl border border-white/60 shadow-[0_8px_28px_rgba(0,0,0,0.18)] text-foreground hover:scale-105 active:scale-95 transition-transform duration-200"
+        >
+          <LayoutDashboard size={19} />
+        </button>
+
+        <AnimatePresence>
+          {menuOpen && (
+            <motion.div
+              role="menu"
+              aria-label="Dashboard and planner menu"
+              initial={{ opacity: 0, y: 12, scale: 0.96 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 12, scale: 0.96 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+              className="absolute bottom-full left-0 mb-4 w-[300px] max-w-[88vw] max-h-[70vh] overflow-y-auto rounded-[20px] bg-white/85 backdrop-blur-xl border border-white/50 shadow-[0_20px_60px_rgba(0,0,0,0.25)] p-4"
+            >
+              {/* Small arrow pointing down toward the trigger button */}
+              <span
+                aria-hidden="true"
+                className="absolute -bottom-2 left-5 w-4 h-4 bg-white/85 backdrop-blur-xl border-b border-r border-white/50 rotate-45"
+              />
+
+              <div>
+                <p className="text-[10px] uppercase tracking-wider text-subtle/80 mb-2 px-2.5">
+                  Choose your dashboard
+                </p>
+                {dashboardGroups.map((group) => (
+                  <div key={group} className="mb-3 last:mb-0">
+                    <p className="text-[10px] font-semibold uppercase tracking-wider text-primary mb-1 px-2.5">
+                      {group}
+                    </p>
+                    {dashboardRoles
+                      .filter((r) => r.group === group && !r.hidden)
+                      .map((r) => (
+                        <Link
+                          key={r.slug}
+                          href={`/${r.slug}`}
+                          role="menuitem"
+                          onClick={() => setMenuOpen(false)}
+                          className="flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-sm text-muted hover:text-foreground hover:bg-black/5 transition-colors"
+                        >
+                          <r.icon size={15} className="text-subtle shrink-0" />
+                          {r.title.replace(" Dashboard", "")}
+                        </Link>
+                      ))}
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
+      {/* AI Trip Planner launcher, bottom-right — standalone, matching its
+          original pill styling (spacing, shadow, radius, mobile scale). */}
+      <div
         className={`fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[60] origin-bottom-right scale-[0.82] sm:scale-100 transition-opacity ${
           aiOpen ? "opacity-0 pointer-events-none" : "opacity-100"
         }`}
       >
-        <div className="flex items-center rounded-full bg-surface border border-border shadow-[0_8px_32px_rgba(0,0,0,0.25)]">
-          {/* Dashboard segment */}
-          <button
-            onClick={() => setDashOpen((v) => !v)}
-            aria-expanded={dashOpen}
-            aria-label="Open your dashboard shortcuts"
-            className={`flex items-center gap-2 pl-2.5 pr-3.5 py-2.5 rounded-l-full transition-colors ${
-              dashOpen ? "bg-surface-hover" : "hover:bg-surface-hover"
-            }`}
-          >
-            <span className="flex items-center justify-center w-9 h-9 rounded-full bg-primary/12 text-primary shrink-0">
-              <LayoutDashboard size={17} />
-            </span>
-            <span className="text-sm font-medium text-foreground whitespace-nowrap">
-              Dashboard
-            </span>
-            <ChevronUp
-              size={13}
-              className={`text-subtle transition-transform duration-300 ${dashOpen ? "" : "rotate-180"}`}
-            />
-          </button>
-
-          <span className="w-px h-6 bg-border shrink-0" />
-
-          {/* AI Planner segment */}
-          <button
-            onClick={() => setAiOpen(true)}
-            aria-label="Open AI Trip Planner"
-            className="flex items-center gap-2 pl-3 pr-4 py-2.5 rounded-r-full hover:bg-surface-hover transition-colors"
-          >
-            <span className="flex items-center justify-center w-9 h-9 rounded-full bg-background shrink-0">
-              <LogoMark size={22} />
-            </span>
-            <span className="text-sm font-medium text-foreground whitespace-nowrap">
-              AI Planner
-            </span>
-            <Sparkles size={13} className="text-sage shrink-0" />
-          </button>
-        </div>
-
-        {/* Dashboard panel */}
-        {dashOpen && (
-          <div className="absolute bottom-full right-0 mb-3 w-[calc(100vw-2rem)] max-w-[600px] max-h-[72vh] overflow-y-auto rounded-[28px] border border-border bg-surface shadow-organic p-5 animate-fade-in">
-            <p className="text-[10px] uppercase tracking-wider text-subtle mb-3">
-              Choose your dashboard — switch anytime if you hold multiple roles
-            </p>
-            <div className="grid sm:grid-cols-2 gap-x-6">
-              {[0, 1].map((col) => (
-                <div key={col}>
-                  {dashboardGroups
-                    .filter((_, i) => i % 2 === col)
-                    .map((group) => (
-                      <div key={group} className="mb-4">
-                        <p className="text-[10px] font-semibold uppercase tracking-wider text-primary mb-1.5">
-                          {group}
-                        </p>
-                        {dashboardRoles
-                          .filter((r) => r.group === group && !r.hidden)
-                          .map((r) => (
-                            <Link
-                              key={r.slug}
-                              href={`/${r.slug}`}
-                              onClick={() => setDashOpen(false)}
-                              className="flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-sm text-muted hover:text-foreground hover:bg-surface-hover transition-colors"
-                            >
-                              <r.icon size={15} className="text-subtle shrink-0" />
-                              {r.title.replace(" Dashboard", "")}
-                            </Link>
-                          ))}
-                      </div>
-                    ))}
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
+        <button
+          onClick={() => setAiOpen(true)}
+          aria-label="Open AI Trip Planner"
+          className="flex items-center gap-2 pl-3 pr-4 py-2.5 rounded-full bg-surface border border-border shadow-[0_8px_32px_rgba(0,0,0,0.25)] hover:bg-surface-hover transition-colors"
+        >
+          <span className="flex items-center justify-center w-9 h-9 rounded-full bg-background shrink-0">
+            <LogoMark size={22} />
+          </span>
+          <span className="text-sm font-medium text-foreground whitespace-nowrap">
+            AI Planner
+          </span>
+          <Sparkles size={13} className="text-sage shrink-0" />
+        </button>
       </div>
 
       <TripPlannerWidget open={aiOpen} onClose={() => setAiOpen(false)} />
