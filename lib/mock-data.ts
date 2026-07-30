@@ -46,6 +46,10 @@ export interface Property {
   isFeatured: boolean;
   isTrending: boolean;
   sustainability: string[];
+  /** Excluded from the /stays listing grid & filter facets, but still reachable
+   *  directly by slug (e.g. a partner property's individual units, browsed via
+   *  their own landing page rather than the general catalog). */
+  hidden?: boolean;
 }
 
 export interface Review {
@@ -194,6 +198,9 @@ export const properties: Property[] = [
     isFeatured: true,
     isTrending: false,
     sustainability: ["Organic farming", "Solar water heater", "Composting"],
+    // Superseded on the /stays listing by the Vaksana Farms partner card —
+    // the individual property page still works if linked to directly.
+    hidden: true,
   },
   {
     id: "3",
@@ -431,6 +438,171 @@ export const properties: Property[] = [
     isTrending: false,
     sustainability: ["Solar lighting", "No single-use plastic", "Local guide employment"],
   },
+  // ------------------------------------------------
+  // Vaksana Farms — partner property. Four individually bookable units on
+  // one working organic farm, browsed via /vaksana-farms rather than the
+  // general catalog (each still opens the standard stay/booking flow).
+  // ------------------------------------------------
+  {
+    id: "9",
+    name: "Vaksana Farms — PICO",
+    slug: "vaksana-pico",
+    tagline: "A quiet one-room retreat at the edge of the orchard",
+    description: "PICO is the smallest and quietest stay on Vaksana Farms — a single-room cabin with just enough: a comfortable bed, a reading nook, and a private deck overlooking the orchard. Built for travelers who want to slow down completely.",
+    story: "PICO was the first cabin built on the farm, originally meant as a tool shed before the founders realised the view was too good to waste on equipment.",
+    category: "Farm Stay",
+    location: { city: "Tindivanam", state: "Tamil Nadu", country: "India", coordinates: { lat: 12.2350, lng: 79.6537 } },
+    images: [
+      "https://images.unsplash.com/photo-1761839257961-4dce65b72d99?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1699548891120-06abb3217cde?q=80&w=1200&auto=format&fit=crop",
+    ],
+    galleryImages: [
+      "https://images.unsplash.com/photo-1761839257961-4dce65b72d99?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1699548891120-06abb3217cde?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1465101162946-4377e57745c3?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1761839257961-4dce65b72d99?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1701432936092-c854d7bc0f43?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1742626157111-59f3f1019a8a?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1758272960816-6126b6607596?q=80&w=1200&auto=format&fit=crop",
+    ],
+    price: 3200,
+    rating: 4.8,
+    reviewCount: 41,
+    maxGuests: 2,
+    bedrooms: 1,
+    bathrooms: 1,
+    area: "180 sq ft",
+    amenities: ["Wi-Fi", "Organic Farm", "Campfire", "Parking"],
+    highlights: ["Orchard-edge cabin", "Private deck", "Farm-to-table meals", "Total quiet"],
+    host: { name: "Vaksana Farms Team", avatar: "https://i.pravatar.cc/150?img=68", since: "2022", responseRate: "97%", responseTime: "< 2 hours", bio: "A family-run organic farm collective hosting travelers across four uniquely designed stays on our working farmland.", verified: true, languages: ["English", "Tamil"] },
+    houseRules: ["Check-in: 2:00 PM", "Check-out: 11:00 AM", "No smoking indoors", "Quiet hours: 9 PM – 7 AM"],
+    cancellationPolicy: "Free cancellation up to 7 days before check-in.",
+    badges: ["Curated Stay", "Partner Property"],
+    isFeatured: false,
+    isTrending: false,
+    sustainability: ["Organic farming", "Solar lighting", "Composting"],
+    hidden: true,
+  },
+  {
+    id: "10",
+    name: "Vaksana Farms — COOP",
+    slug: "vaksana-coop",
+    tagline: "Wake up to the sound of the farmyard",
+    description: "Set beside Vaksana's chicken coops and grazing paddocks, COOP is a rustic two-bedroom cottage built for families who want their mornings to start with animal sounds instead of alarms. Kids can help with feeding rounds right outside the door.",
+    story: "COOP takes its name — and its neighbours — literally. It was built as a family cottage right beside the farm's original coop, so guests wake up to the same sounds the farmers do.",
+    category: "Farm Stay",
+    location: { city: "Tindivanam", state: "Tamil Nadu", country: "India", coordinates: { lat: 12.2350, lng: 79.6537 } },
+    images: [
+      "https://images.unsplash.com/photo-1670494264392-8bfb0200a775?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1699548891120-06abb3217cde?q=80&w=1200&auto=format&fit=crop",
+    ],
+    galleryImages: [
+      "https://images.unsplash.com/photo-1670494264392-8bfb0200a775?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1699548891120-06abb3217cde?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1761839257961-4dce65b72d99?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1761839257961-4dce65b72d99?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1544787219-7f47ccb76574?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1758272960816-6126b6607596?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1465101162946-4377e57745c3?q=80&w=1200&auto=format&fit=crop",
+    ],
+    price: 4800,
+    rating: 4.7,
+    reviewCount: 58,
+    maxGuests: 4,
+    bedrooms: 2,
+    bathrooms: 1,
+    area: "450 sq ft",
+    amenities: ["Wi-Fi", "Organic Farm", "Kitchen", "Campfire", "Parking", "Pet Friendly"],
+    highlights: ["Beside the animal enclosures", "Family friendly", "Farm chores for kids", "Home-cooked meals"],
+    host: { name: "Vaksana Farms Team", avatar: "https://i.pravatar.cc/150?img=68", since: "2022", responseRate: "97%", responseTime: "< 2 hours", bio: "A family-run organic farm collective hosting travelers across four uniquely designed stays on our working farmland.", verified: true, languages: ["English", "Tamil"] },
+    houseRules: ["Check-in: 2:00 PM", "Check-out: 11:00 AM", "No smoking indoors", "Supervise children near animals"],
+    cancellationPolicy: "Free cancellation up to 7 days before check-in.",
+    badges: ["Curated Stay", "Family Friendly", "Partner Property"],
+    isFeatured: false,
+    isTrending: false,
+    sustainability: ["Organic farming", "Composting", "Rainwater harvesting"],
+    hidden: true,
+  },
+  {
+    id: "11",
+    name: "Vaksana Farms — TANG",
+    slug: "vaksana-tang",
+    tagline: "A bright farmhouse ringed by citrus trees",
+    description: "Surrounded by a working citrus orchard, TANG is a bright three-bedroom farmhouse built for groups who want space, shared meals, and orchard views from every window. The wraparound veranda is where most evenings end up.",
+    story: "Named for the tangerine grove it sits inside, TANG was the farm's original homestead before Vaksana opened its doors to guests — the citrus trees are original too.",
+    category: "Farm Stay",
+    location: { city: "Tindivanam", state: "Tamil Nadu", country: "India", coordinates: { lat: 12.2350, lng: 79.6537 } },
+    images: [
+      "https://images.unsplash.com/photo-1699548891120-06abb3217cde?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1761839257961-4dce65b72d99?q=80&w=1200&auto=format&fit=crop",
+    ],
+    galleryImages: [
+      "https://images.unsplash.com/photo-1699548891120-06abb3217cde?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1761839257961-4dce65b72d99?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1596797038530-2c107229654b?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1761839257961-4dce65b72d99?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1465101162946-4377e57745c3?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1701432936092-c854d7bc0f43?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1491497895121-1334fc14d8c9?q=80&w=1200&auto=format&fit=crop",
+    ],
+    price: 7200,
+    rating: 4.85,
+    reviewCount: 37,
+    maxGuests: 6,
+    bedrooms: 3,
+    bathrooms: 2,
+    area: "1,100 sq ft",
+    amenities: ["Wi-Fi", "Kitchen", "Organic Farm", "BBQ", "Campfire", "Parking", "Pet Friendly"],
+    highlights: ["Citrus orchard views", "Wraparound veranda", "Group friendly", "Shared farm-to-table dinners"],
+    host: { name: "Vaksana Farms Team", avatar: "https://i.pravatar.cc/150?img=68", since: "2022", responseRate: "97%", responseTime: "< 2 hours", bio: "A family-run organic farm collective hosting travelers across four uniquely designed stays on our working farmland.", verified: true, languages: ["English", "Tamil"] },
+    houseRules: ["Check-in: 2:00 PM", "Check-out: 11:00 AM", "No smoking indoors", "Quiet hours: 10 PM – 7 AM"],
+    cancellationPolicy: "Free cancellation up to 10 days before check-in.",
+    badges: ["Curated Stay", "Family Friendly", "Partner Property"],
+    isFeatured: false,
+    isTrending: false,
+    sustainability: ["Organic farming", "Solar water heater", "Composting", "Rainwater harvesting"],
+    hidden: true,
+  },
+  {
+    id: "12",
+    name: "Vaksana Farms — LUMA",
+    slug: "vaksana-luma",
+    tagline: "Glass-walled farm living with a private plunge pool",
+    description: "The most private stay on Vaksana Farms — a glass-walled two-bedroom villa with its own plunge pool, built for travelers who want farm life without giving up quiet luxury. Floor-to-ceiling windows keep the orchard in view from every room.",
+    story: "LUMA — Latin for light — was designed to bring the outside in, with glass walls that turn the surrounding farmland into a living backdrop at every hour.",
+    category: "Farm Stay",
+    location: { city: "Tindivanam", state: "Tamil Nadu", country: "India", coordinates: { lat: 12.2350, lng: 79.6537 } },
+    images: [
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1761839257961-4dce65b72d99?q=80&w=1200&auto=format&fit=crop",
+    ],
+    galleryImages: [
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1761839257961-4dce65b72d99?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1491497895121-1334fc14d8c9?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1465101162946-4377e57745c3?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1742626157111-59f3f1019a8a?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1701432936092-c854d7bc0f43?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1699548891120-06abb3217cde?q=80&w=1200&auto=format&fit=crop",
+    ],
+    price: 9500,
+    rating: 4.95,
+    reviewCount: 29,
+    maxGuests: 4,
+    bedrooms: 2,
+    bathrooms: 2,
+    area: "900 sq ft",
+    amenities: ["Wi-Fi", "Private Pool", "AC", "Kitchen", "Organic Farm", "Parking"],
+    highlights: ["Private plunge pool", "Glass-walled design", "Orchard views", "Premium privacy"],
+    host: { name: "Vaksana Farms Team", avatar: "https://i.pravatar.cc/150?img=68", since: "2022", responseRate: "97%", responseTime: "< 2 hours", bio: "A family-run organic farm collective hosting travelers across four uniquely designed stays on our working farmland.", verified: true, languages: ["English", "Tamil"] },
+    houseRules: ["Check-in: 3:00 PM", "Check-out: 11:00 AM", "No smoking indoors", "Pool rules apply"],
+    cancellationPolicy: "Free cancellation up to 14 days before check-in.",
+    badges: ["Curated Stay", "Signature Stay", "Partner Property"],
+    isFeatured: false,
+    isTrending: false,
+    sustainability: ["Organic farming", "Solar panels", "Natural ventilation"],
+    hidden: true,
+  },
 ];
 
 // ============================================
@@ -471,6 +643,10 @@ export const reviews: Review[] = [
   { id: "r3", propertyId: "2", userName: "Deepika Menon", avatar: "https://i.pravatar.cc/150?img=33", rating: 5, date: "2026-06-01", comment: "Our kids loved the farm experience! Milking cows, picking cashews, and swimming in the natural pool. Priya made us feel like family.", travelType: "Family" },
   { id: "r4", propertyId: "3", userName: "Kavitha Reddy", avatar: "https://i.pravatar.cc/150?img=34", rating: 5, date: "2026-05-10", comment: "I've been to wellness retreats across the world — Bali, Thailand, Sedona. Nila rivals them all at a fraction of the cost. The Ayurvedic treatments were life-changing.", travelType: "Solo" },
   { id: "r5", propertyId: "4", userName: "Amit & Neha Joshi", avatar: "https://i.pravatar.cc/150?img=17", rating: 5, date: "2026-04-22", comment: "The infinity pool overlooking the Ghats at sunrise is a memory we'll carry forever. Worth every rupee.", travelType: "Couple" },
+  { id: "r6", propertyId: "9", userName: "Meera Iyer", avatar: "https://i.pravatar.cc/150?img=45", rating: 5, date: "2026-06-20", comment: "PICO is exactly what it promises — small, quiet, and honest. I spent three days doing almost nothing and it was perfect.", travelType: "Solo" },
+  { id: "r7", propertyId: "10", userName: "The Chandran Family", avatar: "https://i.pravatar.cc/150?img=48", rating: 5, date: "2026-05-30", comment: "Our kids fed the ducks every single morning and didn't want to leave. COOP is built for exactly this kind of family trip.", travelType: "Family" },
+  { id: "r8", propertyId: "11", userName: "Arvind & friends", avatar: "https://i.pravatar.cc/150?img=52", rating: 4.8, date: "2026-06-05", comment: "Six of us stayed at TANG and it never felt cramped. The wraparound veranda dinners were the highlight of the whole trip.", travelType: "Group" },
+  { id: "r9", propertyId: "12", userName: "Priyanka Rao", avatar: "https://i.pravatar.cc/150?img=47", rating: 5, date: "2026-06-12", comment: "LUMA is genuinely luxurious without losing the farm feeling — waking up to orchard views through glass walls, then a private plunge pool at sunset.", travelType: "Couple" },
 ];
 
 // ============================================

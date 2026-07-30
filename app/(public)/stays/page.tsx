@@ -15,6 +15,12 @@ import {
 } from "lucide-react";
 import { properties, categories, type Property } from "@/lib/mock-data";
 import PropertyCard from "@/app/components/PropertyCard";
+import VaksanaFarmsCard from "@/app/components/VaksanaFarmsCard";
+
+// Listings exclude properties superseded by a partner spotlight card (e.g.
+// Vaksana Farms' individual units) — those stay reachable by direct link,
+// just not browsable in the general catalog.
+const visibleProperties = properties.filter((p) => !p.hidden);
 
 type PriceBucket = "any" | "under-5k" | "5k-10k" | "10k-20k" | "above-20k";
 type SortKey = "recommended" | "price-low" | "price-high" | "rating";
@@ -29,8 +35,8 @@ const priceBuckets: { key: PriceBucket; label: string; test: (price: number) => 
 
 // Destinations & property types are derived straight from the live property
 // catalog, so every filter option is guaranteed to have at least one result.
-const destinationOptions = Array.from(new Set(properties.map((p) => p.location.city))).sort();
-const typeOptions = Array.from(new Set(properties.map((p) => p.category))).sort();
+const destinationOptions = Array.from(new Set(visibleProperties.map((p) => p.location.city))).sort();
+const typeOptions = Array.from(new Set(visibleProperties.map((p) => p.category))).sort();
 
 // Curated amenity facets — basics like Wi-Fi are assumed on every property
 // and left out; AC/Non-AC are a paired positive/negative test.
@@ -91,9 +97,13 @@ export default function StaysDiscoveryPage() {
   const activeCategoryName = categories.find((c) => c.slug === activeCategory)?.name;
   const priceTest = priceBuckets.find((b) => b.key === priceBucket)!.test;
 
+  // The Vaksana Farms partner card replaces individual Farm Stay listings —
+  // shown only under the Farm Stays category, not on the default All Stays view.
+  const showVaksanaCard = activeCategory === "farm-stays";
+
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase();
-    let list = properties.filter((p) => {
+    let list = visibleProperties.filter((p) => {
       const matchesCategory =
         activeCategory === "all" ||
         (activeCategoryName && activeCategoryName.toLowerCase().includes(p.category.toLowerCase()));
@@ -226,7 +236,8 @@ export default function StaysDiscoveryPage() {
           <div className={`flex-1 transition-all ${showMap ? "lg:w-3/5" : "w-full"}`}>
             <div className="mb-6 flex items-center justify-between">
               <h1 className="heading-organic text-xl text-foreground">
-                {filtered.length} curated {filtered.length === 1 ? "stay" : "stays"} found
+                {filtered.length + (showVaksanaCard ? 1 : 0)} curated{" "}
+                {filtered.length + (showVaksanaCard ? 1 : 0) === 1 ? "stay" : "stays"} found
               </h1>
               <div className="relative">
                 <button
@@ -280,7 +291,7 @@ export default function StaysDiscoveryPage() {
               </div>
             )}
 
-            {filtered.length > 0 ? (
+            {filtered.length > 0 || showVaksanaCard ? (
               <div
                 className={`grid gap-6 ${
                   showMap
@@ -288,6 +299,7 @@ export default function StaysDiscoveryPage() {
                     : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
                 }`}
               >
+                {showVaksanaCard && <VaksanaFarmsCard />}
                 {filtered.map((property) => (
                   <PropertyCard key={property.id} property={property} />
                 ))}
