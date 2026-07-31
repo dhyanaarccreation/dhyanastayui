@@ -59,7 +59,7 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden lg:flex items-center gap-1" ref={desktopNavRef}>
+          <nav className="flex items-center gap-6">
             {navLinks.map((link) => {
               const active = pathname === link.href;
               const isExperiences = link.label === "Experiences";
