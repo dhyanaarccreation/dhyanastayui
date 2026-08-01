@@ -4,6 +4,7 @@ import Footer from "./components/Footer";
 import ServicesSection, { SpotlightSection } from "./components/ServicesSection";
 import DestinationsSection from "./components/DestinationsSection";
 import TestimonialsCarousel from "./components/TestimonialsCarousel";
+import SeedBallMissionSection from "./components/SeedBallMissionSection";
 import {
   Search,
   ArrowRight,
@@ -482,6 +483,7 @@ export default function HomePage() {
         <ServicesSection />
         <DestinationsSection />
         <TestimonialsCarousel testimonials={testimonials} totalCount={totalGuestStoryCount} />
+        <SeedBallMissionSection />
         <BlogSection />
         <CTASection />
       </main>
