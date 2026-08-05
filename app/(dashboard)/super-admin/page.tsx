@@ -9,6 +9,17 @@ import {
   Activity,
   Flag,
   Clock,
+  Users,
+  Building,
+  Briefcase,
+  IndianRupee,
+  CalendarDays,
+  Crown,
+  Sprout,
+  Map,
+  Plus,
+  Landmark,
+  UserCog,
 } from "lucide-react";
 import { PageHeader, StatGrid, SectionCard, StatusPill } from "@/app/components/DashboardUI";
 
@@ -38,6 +49,42 @@ const flags = [
   { name: "membership-founders-circle", rollout: 100, status: "Live" },
   { name: "regional-admin-dashboard", rollout: 100, status: "Live" },
   { name: "razorpayx-auto-refunds", rollout: 10, status: "Testing" },
+];
+
+// ---- Employee Management (payroll, attendance, departments, leave) ----
+const employees = [
+  { id: "e1", name: "Priya Nair", dept: "Customer Support", salary: "₹58,000", attendance: "96%", leave: null as string | null },
+  { id: "e2", name: "Aditya Sharma", dept: "Marketing", salary: "₹74,000", attendance: "92%", leave: "2 days pending" },
+  { id: "e3", name: "CA Neha Gupta", dept: "Finance", salary: "₹1,10,000", attendance: "99%", leave: null },
+  { id: "e4", name: "Maj. Arjun Singh", dept: "SOS Operations", salary: "₹88,000", attendance: "98%", leave: "1 day pending" },
+];
+
+// ---- Organization Management (regions, regional admins, super hosts) ----
+const regions = [
+  { id: "r1", name: "Tamil Nadu · Pondicherry", regionalAdmin: "Meera Chandran", superHost: "Rahul Verma", performance: "+12% MoM" },
+  { id: "r2", name: "Kerala", regionalAdmin: "Thomas K.", superHost: "Divya Krishnan", performance: "+8% MoM" },
+  { id: "r3", name: "Himachal Pradesh", regionalAdmin: "Unassigned", superHost: "Ankit Thakur", performance: "+15% MoM" },
+];
+
+// ---- Membership plan control (plans, pricing, reward & coupon rules) ----
+const membershipPlans = [
+  { id: "m1", name: "Explorer", price: "Free", members: "11,830", status: "Live" },
+  { id: "m2", name: "Forest+", price: "₹4,999 / yr", members: "2,140", status: "Live" },
+  { id: "m3", name: "Founders Circle", price: "Invite only", members: "235", status: "Live" },
+];
+
+const rewardRules = [
+  { id: "rr1", rule: "₹100 spent = 1 reward point", scope: "All bookings" },
+  { id: "rr2", rule: "10 points = 1 seed ball donation", scope: "Green rewards" },
+  { id: "rr3", rule: "Referral = ₹500 both sides", scope: "After first stay" },
+];
+
+// ---- Financial controls snapshot (full detail lives in Finance dashboard) ----
+const financialControls = [
+  { id: "fc1", label: "GST payable · July", value: "₹3.4L", note: "due Aug 20", tone: "primary" as const },
+  { id: "fc2", label: "TDS deducted · July", value: "₹1.1L", note: "filed on time", tone: "sage" as const },
+  { id: "fc3", label: "Profit & Loss · MTD", value: "+₹9.8L", note: "margin 23%", tone: "sage" as const },
+  { id: "fc4", label: "Platform expenses · MTD", value: "₹11.2L", note: "within budget", tone: "muted" as const },
 ];
 
 export default function SuperAdminPage() {
@@ -77,6 +124,132 @@ export default function SuperAdminPage() {
             <p className="text-xs text-muted mt-1 leading-relaxed">{m.desc}</p>
           </a>
         ))}
+      </div>
+
+      {/* Global platform snapshot — the founder-level numbers from every module */}
+      <div>
+        <p className="text-[11px] font-semibold uppercase tracking-wider text-subtle mb-3">Platform Snapshot</p>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          {[
+            { label: "Total Users", value: "14,205", delta: "+2.4% MoM", icon: Users },
+            { label: "Total Hosts", value: "624", delta: "38 pending approval", icon: Building },
+            { label: "Total Properties", value: "182", delta: "+5 this month", icon: Building },
+            { label: "Total Investors", value: "96", delta: "₹18.6Cr deployed", icon: Briefcase },
+            { label: "Total Revenue · MTD", value: "₹42.6L", delta: "+9% MoM", icon: IndianRupee },
+            { label: "Active Bookings", value: "342", delta: "78% occupancy", icon: CalendarDays },
+            { label: "Members", value: "14,205", delta: "2,375 paid tiers", icon: Crown },
+            { label: "Seed Balls Dispersed", value: "1.28Cr", delta: "12.8% of goal", icon: Sprout },
+          ].map((s) => (
+            <div key={s.label} className="bg-surface border border-border rounded-2xl p-5">
+              <div className="flex items-center justify-between">
+                <p className="text-xs text-muted">{s.label}</p>
+                <s.icon size={15} className="text-primary" />
+              </div>
+              <p className="text-2xl font-bold text-foreground mt-1.5 tabular-nums">{s.value}</p>
+              <p className="text-[11px] text-sage mt-1">{s.delta}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Employee & organization management */}
+      <div className="grid lg:grid-cols-2 gap-6">
+        <SectionCard title="Employee Management" icon={UserCog}>
+          <ul className="divide-y divide-surface-hover">
+            {employees.map((e) => (
+              <li key={e.id} className="flex items-center justify-between gap-3 px-5 py-3.5">
+                <div className="min-w-0">
+                  <p className="text-sm font-medium text-foreground truncate">{e.name}</p>
+                  <p className="text-xs text-subtle">{e.dept} · attendance {e.attendance}</p>
+                </div>
+                <div className="flex items-center gap-2.5 shrink-0">
+                  {e.leave && <StatusPill tone="primary">{e.leave}</StatusPill>}
+                  <span className="text-sm font-semibold text-foreground tabular-nums">{e.salary}</span>
+                </div>
+              </li>
+            ))}
+          </ul>
+          <div className="flex items-center justify-between gap-3 px-5 py-3.5 border-t border-surface-hover">
+            <p className="text-xs text-muted">July payroll · 24 employees · ₹16.4L</p>
+            <button className="px-4 py-2 text-xs font-semibold bg-primary text-primary-foreground rounded-full hover:bg-primary-hover transition-colors">
+              Run Payroll
+            </button>
+          </div>
+        </SectionCard>
+
+        <SectionCard title="Organization Management" icon={Map}>
+          <ul className="divide-y divide-surface-hover">
+            {regions.map((r) => (
+              <li key={r.id} className="px-5 py-3.5">
+                <div className="flex items-center justify-between gap-3">
+                  <p className="text-sm font-medium text-foreground truncate">{r.name}</p>
+                  <StatusPill tone="sage">{r.performance}</StatusPill>
+                </div>
+                <p className="text-xs text-subtle mt-1">
+                  Regional Admin:{" "}
+                  <span className={r.regionalAdmin === "Unassigned" ? "text-terracotta font-medium" : "text-muted"}>
+                    {r.regionalAdmin}
+                  </span>{" "}
+                  · Super Host: {r.superHost}
+                </p>
+              </li>
+            ))}
+          </ul>
+          <div className="flex items-center justify-between gap-3 px-5 py-3.5 border-t border-surface-hover">
+            <p className="text-xs text-muted">Regions define approval scope &amp; reporting.</p>
+            <button className="flex items-center gap-1.5 px-4 py-2 text-xs font-semibold bg-primary text-primary-foreground rounded-full hover:bg-primary-hover transition-colors">
+              <Plus size={13} /> Create Region
+            </button>
+          </div>
+        </SectionCard>
+      </div>
+
+      {/* Membership control + financial controls */}
+      <div className="grid lg:grid-cols-2 gap-6">
+        <SectionCard title="Membership Plans & Rewards" icon={Crown}>
+          <ul className="divide-y divide-surface-hover">
+            {membershipPlans.map((m) => (
+              <li key={m.id} className="flex items-center justify-between gap-3 px-5 py-3.5">
+                <div className="min-w-0">
+                  <p className="text-sm font-medium text-foreground">{m.name}</p>
+                  <p className="text-xs text-subtle">{m.members} members</p>
+                </div>
+                <div className="flex items-center gap-2.5 shrink-0">
+                  <span className="text-sm font-semibold text-foreground">{m.price}</span>
+                  <StatusPill tone="sage">{m.status}</StatusPill>
+                </div>
+              </li>
+            ))}
+          </ul>
+          <div className="px-5 py-3.5 border-t border-surface-hover">
+            <p className="text-[11px] font-semibold uppercase tracking-wider text-subtle mb-2">Reward &amp; Coupon Rules</p>
+            <ul className="space-y-1.5">
+              {rewardRules.map((r) => (
+                <li key={r.id} className="flex items-center justify-between gap-3 text-xs">
+                  <span className="text-muted">{r.rule}</span>
+                  <span className="text-subtle shrink-0">{r.scope}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </SectionCard>
+
+        <SectionCard title="Financial Controls" icon={Landmark} action={{ label: "Finance dashboard", href: "/finance" }}>
+          <ul className="divide-y divide-surface-hover">
+            {financialControls.map((f) => (
+              <li key={f.id} className="flex items-center justify-between gap-3 px-5 py-3.5">
+                <p className="text-sm text-foreground">{f.label}</p>
+                <div className="flex items-center gap-2.5 shrink-0">
+                  <span className="text-sm font-semibold text-foreground tabular-nums">{f.value}</span>
+                  <StatusPill tone={f.tone}>{f.note}</StatusPill>
+                </div>
+              </li>
+            ))}
+          </ul>
+          <p className="px-5 py-3 text-[11px] text-subtle border-t border-surface-hover">
+            GST &amp; TDS reports, P&amp;L and payroll exports are generated from the Finance module.
+          </p>
+        </SectionCard>
       </div>
 
       <div className="grid lg:grid-cols-3 gap-6">

@@ -10,6 +10,10 @@ import {
   ArrowUpRight,
   Home,
   Building,
+  Users,
+  Receipt,
+  Briefcase,
+  FileText,
 } from "lucide-react";
 import { PageHeader, StatGrid, SectionCard, StatusPill } from "@/app/components/DashboardUI";
 
@@ -36,6 +40,33 @@ const campaignPreview = [
   { id: "c1", name: "Monsoon Wellness Week — TN & Pondi", status: "Live" },
   { id: "c2", name: "Weekend Escapes 15%", status: "Live" },
   { id: "c3", name: "Auroville Heritage Trail blog", status: "Scheduled" },
+];
+
+// Regional staff managed by this admin (payroll stays with Super Admin).
+const regionalStaff = [
+  { id: "st1", name: "Lakshmi Venkat", role: "Field Coordinator", area: "Pondicherry", status: "Active" },
+  { id: "st2", name: "Arun Prasad", role: "Quality Inspector", area: "Auroville", status: "On visit" },
+  { id: "st3", name: "Sofia D'Souza", role: "Guest Relations", area: "Chennai ECR", status: "Active" },
+];
+
+const regionalExpenses = [
+  { id: "ex1", category: "Property inspections & travel", amount: "₹42,300" },
+  { id: "ex2", category: "Regional marketing spend", amount: "₹68,500" },
+  { id: "ex3", category: "Local staff & contractors", amount: "₹1,24,000" },
+  { id: "ex4", category: "Host training workshops", amount: "₹18,200" },
+];
+
+// View-only — investor approvals stay with Super Admin.
+const regionalInvestors = [
+  { id: "in1", name: "Navin Kumar", project: "Bay Breeze Villas · Phase 2", value: "₹48L" },
+  { id: "in2", name: "Shruti Agarwal", project: "Auroville Eco Cottages", value: "₹32L" },
+  { id: "in3", name: "Mohan Reddy", project: "ECR Beach House Cluster", value: "₹75L" },
+];
+
+const localCmsContent = [
+  { id: "cm1", page: "Tamil Nadu landing page", type: "Landing Page", status: "Published" },
+  { id: "cm2", page: "Pondicherry travel guide", type: "Blog", status: "Draft" },
+  { id: "cm3", page: "Monsoon offers banner — regional", type: "Banner", status: "Published" },
 ];
 
 export default function RegionalAdminPage() {
@@ -118,6 +149,78 @@ export default function RegionalAdminPage() {
           </Link>
         </div>
       </SectionCard>
+
+      {/* Staff & expenses — scoped to this region only */}
+      <div className="grid lg:grid-cols-2 gap-6">
+        <SectionCard title="Regional Staff" icon={Users}>
+          <ul className="divide-y divide-surface-hover">
+            {regionalStaff.map((s) => (
+              <li key={s.id} className="flex items-center justify-between gap-3 px-5 py-3.5">
+                <div className="min-w-0">
+                  <p className="text-sm font-medium text-foreground truncate">{s.name}</p>
+                  <p className="text-xs text-subtle">{s.role} · {s.area}</p>
+                </div>
+                <StatusPill tone={s.status === "Active" ? "sage" : "primary"}>{s.status}</StatusPill>
+              </li>
+            ))}
+          </ul>
+          <p className="px-5 py-3 text-[11px] text-subtle border-t border-surface-hover">
+            Staff assignments only — company-wide payroll is managed by the Super Admin.
+          </p>
+        </SectionCard>
+
+        <SectionCard title="Regional Expenses" icon={Receipt}>
+          <ul className="divide-y divide-surface-hover">
+            {regionalExpenses.map((e) => (
+              <li key={e.id} className="flex items-center justify-between gap-3 px-5 py-3.5">
+                <p className="text-sm text-foreground">{e.category}</p>
+                <span className="text-sm font-semibold text-foreground tabular-nums">{e.amount}</span>
+              </li>
+            ))}
+          </ul>
+          <div className="flex items-center justify-between px-5 py-3.5 border-t border-surface-hover">
+            <p className="text-xs text-muted">MTD regional expenses</p>
+            <span className="text-sm font-bold text-foreground tabular-nums">₹2,53,000</span>
+          </div>
+        </SectionCard>
+      </div>
+
+      {/* Investors (view-only) & local CMS content */}
+      <div className="grid lg:grid-cols-2 gap-6">
+        <SectionCard title="Regional Investors" icon={Briefcase}>
+          <div className="px-5 pt-3.5">
+            <StatusPill tone="muted">View only — approvals with Super Admin</StatusPill>
+          </div>
+          <ul className="divide-y divide-surface-hover mt-1">
+            {regionalInvestors.map((i) => (
+              <li key={i.id} className="flex items-center justify-between gap-3 px-5 py-3.5">
+                <div className="min-w-0">
+                  <p className="text-sm font-medium text-foreground truncate">{i.name}</p>
+                  <p className="text-xs text-subtle truncate">{i.project}</p>
+                </div>
+                <span className="text-sm font-semibold text-foreground tabular-nums shrink-0">{i.value}</span>
+              </li>
+            ))}
+          </ul>
+        </SectionCard>
+
+        <SectionCard title="Local CMS Content" icon={FileText} action={{ label: "Manage", href: "/regional-admin/marketing" }}>
+          <ul className="divide-y divide-surface-hover">
+            {localCmsContent.map((c) => (
+              <li key={c.id} className="flex items-center justify-between gap-3 px-5 py-3.5">
+                <div className="min-w-0">
+                  <p className="text-sm text-foreground truncate">{c.page}</p>
+                  <p className="text-xs text-subtle">{c.type}</p>
+                </div>
+                <StatusPill tone={c.status === "Published" ? "sage" : "muted"}>{c.status}</StatusPill>
+              </li>
+            ))}
+          </ul>
+          <p className="px-5 py-3 text-[11px] text-subtle border-t border-surface-hover">
+            Regional pages only — global CMS remains with Super Admin.
+          </p>
+        </SectionCard>
+      </div>
     </div>
   );
 }

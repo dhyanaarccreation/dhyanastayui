@@ -71,11 +71,13 @@ export default function SeedBallMissionSection() {
 
   const stats = [
     { label: "Seed Balls Created", value: seedBallMission.created.toLocaleString("en-IN"), icon: Sprout },
+    { label: "Seed Balls Distributed", value: seedBallMission.distributed.toLocaleString("en-IN"), icon: MapPin },
     { label: "Trees Estimated", value: seedBallMission.treesEstimated.toLocaleString("en-IN"), icon: TreePine },
     { label: "CO₂ Offset (tons)", value: seedBallMission.co2OffsetTons.toLocaleString("en-IN"), icon: Wind },
     { label: "Campaign Volunteers", value: seedBallMission.volunteers.toLocaleString("en-IN"), icon: Users },
     { label: "Donations Collected", value: `₹${(seedBallMission.donationsCollected / 100000).toFixed(1)}L`, icon: HandCoins },
     { label: "Monthly Target", value: seedBallMission.monthlyTarget.toLocaleString("en-IN"), icon: Target },
+    { label: "Yearly Target", value: seedBallMission.yearlyTarget.toLocaleString("en-IN"), icon: Target },
   ];
 
   return (
@@ -120,7 +122,7 @@ export default function SeedBallMissionSection() {
         </div>
 
         {/* Campaign statistics */}
-        <div className="grid grid-cols-2 lg:grid-cols-6 gap-3 sm:gap-4 mb-6 md:mb-12">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6 md:mb-12">
           {stats.map((s) => (
             <div key={s.label} className="bg-surface border border-border rounded-2xl p-4">
               <s.icon size={16} className="text-sage" />
