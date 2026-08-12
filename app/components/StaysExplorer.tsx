@@ -17,6 +17,14 @@ import { properties, categories, type Property } from "@/lib/mock-data";
 import PropertyCard from "@/app/components/PropertyCard";
 import VaksanaFarmsCard from "@/app/components/VaksanaFarmsCard";
 
+// ============================================
+// STAYS EXPLORER — search, category filter,
+// filters drawer, sort, map toggle & results
+// grid. Embedded directly in the homepage's
+// "Explore All Stays" section — there is no
+// standalone /stays listing page.
+// ============================================
+
 // Listings exclude properties superseded by a partner spotlight card (e.g.
 // Vaksana Farms' individual units) — those stay reachable by direct link,
 // just not browsable in the general catalog.
@@ -55,7 +63,7 @@ const amenityOptions: { key: string; label: string; test: (p: Property) => boole
   { key: "pet-friendly", label: "Pet Friendly", test: (p) => p.amenities.includes("Pet Friendly") },
 ];
 
-export default function StaysDiscoveryPage() {
+export default function StaysExplorer() {
   const [showMap, setShowMap] = useState(false);
   const [activeCategory, setActiveCategory] = useState("all");
   const [search, setSearch] = useState("");
@@ -148,9 +156,9 @@ export default function StaysDiscoveryPage() {
   };
 
   return (
-    <div className="bg-background min-h-screen">
+    <div className="bg-background">
       {/* Search & Filter Header */}
-      <div className="sticky top-[72px] z-40 bg-background border-b border-border py-5">
+      <div className="relative bg-background border-b border-border py-5">
         <div className="max-w-[1400px] mx-auto px-6 lg:px-8">
           <div className="flex flex-col md:flex-row gap-3 items-center justify-between">
             {/* Search Input */}
@@ -342,7 +350,7 @@ export default function StaysDiscoveryPage() {
           {/* Map View */}
           {showMap && (
             <div className="hidden lg:block lg:w-2/5 animate-fade-in-up">
-              <div className="sticky top-[160px] h-[calc(100vh-180px)] rounded-[28px] overflow-hidden bg-surface shadow-organic flex items-center justify-center">
+              <div className="sticky top-6 h-[calc(100vh-180px)] rounded-[28px] overflow-hidden bg-surface shadow-organic flex items-center justify-center">
                 <div className="text-center p-8">
                   <span className="w-16 h-16 rounded-full bg-sage/12 text-sage flex items-center justify-center mx-auto mb-4">
                     <MapIcon size={26} />

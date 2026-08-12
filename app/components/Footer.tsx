@@ -19,18 +19,17 @@ const footerSections = [
   {
     title: "Discover",
     links: [
-      { label: "Tiny Houses", href: "/stays?category=tiny-houses" },
-      { label: "Farm Stays", href: "/stays?category=farm-stays" },
-      { label: "Wellness Retreats", href: "/stays?category=wellness-retreats" },
-      { label: "Luxury Villas", href: "/stays?category=luxury-villas" },
-      { label: "Eco Stays", href: "/stays?category=eco-stays" },
-      { label: "Heritage Homes", href: "/stays?category=heritage-homes" },
+      { label: "Tiny Houses", href: "/#explore-stays" },
+      { label: "Farm Stays", href: "/#explore-stays" },
+      { label: "Wellness Retreats", href: "/#explore-stays" },
+      { label: "Luxury Villas", href: "/#explore-stays" },
+      { label: "Eco Stays", href: "/#explore-stays" },
+      { label: "Heritage Homes", href: "/#explore-stays" },
     ],
   },
   {
     title: "Company",
     links: [
-      { label: "About Us", href: "/about" },
       { label: "Blog", href: "/blog" },
       { label: "Careers", href: "/careers" },
       { label: "Contact", href: "/contact" },
@@ -107,7 +106,7 @@ export default function Footer() {
               </h4>
               <ul className="space-y-3">
                 {section.links.map((link) => (
-                  <li key={link.href}>
+                  <li key={link.label}>
                     <Link
                       href={link.href}
                       className="text-sm text-muted hover:text-foreground transition-colors"

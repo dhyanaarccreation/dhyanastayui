@@ -956,10 +956,8 @@ export const platformStats = {
 
 export const navLinks = [
   { label: "Home", href: "/" },
-  { label: "Explore Stays", href: "/stays" },
   { label: "Experiences", href: "/experiences" },
   { label: "Business", href: "/business" },
-  { label: "About Us", href: "/about" },
 ];
 
 // ============================================

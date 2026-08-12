@@ -145,6 +145,24 @@ export const dashboardRoles: DashboardRole[] = [
         icon: Users,
         bullets: ["Host Management", "Regional Campaigns"],
       },
+      {
+        id: "bookings-guests",
+        title: "Bookings & Guests",
+        icon: CalendarDays,
+        bullets: ["Booking Calendar", "Guest List", "Arrival Readiness", "Guest Escalations"],
+      },
+      {
+        id: "ops-expenses",
+        title: "Expenses & Maintenance",
+        icon: Receipt,
+        bullets: ["Expense Tracking", "Maintenance Requests", "Cleaning Schedule", "Housekeeping Coordination"],
+      },
+      {
+        id: "local-growth",
+        title: "Local Growth",
+        icon: TrendingUp,
+        bullets: ["Experience Listings", "Local Promotions", "Local Reports"],
+      },
     ],
   },
   {

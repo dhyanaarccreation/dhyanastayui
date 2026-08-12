@@ -91,7 +91,7 @@ export default function VaksanaFarmsPage() {
               Home
             </Link>
             <ChevronRight size={12} />
-            <Link href="/stays" className="hover:text-foreground transition-colors">
+            <Link href="/#explore-stays" className="hover:text-foreground transition-colors">
               Stays
             </Link>
             <ChevronRight size={12} />

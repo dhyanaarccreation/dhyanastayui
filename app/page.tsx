@@ -5,6 +5,7 @@ import ServicesSection, { SpotlightSection } from "./components/ServicesSection"
 import DestinationsSection from "./components/DestinationsSection";
 import TestimonialsCarousel from "./components/TestimonialsCarousel";
 import SeedBallMissionSection from "./components/SeedBallMissionSection";
+import StaysExplorer from "./components/StaysExplorer";
 import {
   Search,
   ArrowRight,
@@ -13,9 +14,6 @@ import {
   Sparkles,
   Bot,
   Clock,
-  Leaf,
-  Heart,
-  ShieldCheck,
 } from "lucide-react";
 import {
   categories,
@@ -28,124 +26,67 @@ import {
 // HERO SECTION — Organic Minimalism
 // ============================================
 function HeroSection() {
-  const features = [
-    { icon: ShieldCheck, label: "Architect Curated" },
-    { icon: Heart, label: "Loved by Guests" },
-    { icon: Leaf, label: "Sustainably Built" },
-  ];
-
   return (
-    <section className="relative bg-background pt-[70px] md:pt-40 pb-6 md:pb-8 overflow-hidden">
+    <section className="relative bg-background pt-[64px] md:pt-14 pb-3 md:pb-4 overflow-hidden">
       {/* Decorative soft blobs */}
       <div className="absolute -top-24 -left-32 w-[420px] h-[420px] rounded-full bg-sage/15 blur-3xl pointer-events-none" />
       <div className="absolute top-24 -right-32 w-[380px] h-[380px] rounded-full bg-primary/10 blur-3xl pointer-events-none" />
 
-      <div className="relative max-w-[1400px] mx-auto px-6 lg:px-8 grid lg:grid-cols-2 gap-5 sm:gap-14 items-center">
+      <div className="relative max-w-[1400px] mx-auto px-6 lg:px-8 grid lg:grid-cols-2 gap-4 sm:gap-6 items-start">
         {/* Left: copy */}
         <div className="animate-fade-in-up">
-          <span className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-surface shadow-organic mb-3 sm:mb-6">
-            <Sparkles size={14} className="text-primary" />
-            <span className="text-xs font-semibold text-foreground tracking-wide uppercase">
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full bg-surface shadow-organic mb-2 sm:mb-3">
+            <Sparkles size={12} className="text-primary" />
+            <span className="text-[10px] sm:text-xs font-semibold text-foreground tracking-wide uppercase">
               India&apos;s Premier Curated Stays
             </span>
           </span>
 
-          <h1 className="heading-organic text-[1.85rem] leading-[1.15] sm:text-5xl lg:text-6xl text-foreground mb-2.5 sm:mb-6 max-w-xl">
+          <h1 className="heading-organic text-2xl leading-[1.15] sm:text-3xl lg:text-4xl text-foreground mb-1.5 sm:mb-2 max-w-xl">
             Stays You&apos;ll Fall In Love With{" "}
             <span className="text-primary">From the First Glance</span>
           </h1>
 
-          <p className="text-muted text-sm sm:text-base lg:text-lg max-w-lg mb-3 sm:mb-5 lg:mb-8 leading-relaxed">
+          <p className="text-muted text-xs sm:text-sm max-w-lg mb-2 sm:mb-3 leading-relaxed">
             Architect-inspected properties, warm local hospitality, and
             experiences designed to feel like home — curated across India&apos;s
             most beautiful destinations.
           </p>
-
-          <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-4 sm:mb-6 lg:mb-10">
-            <Link
-              href="/stays"
-              className="px-5 py-2.5 sm:px-7 sm:py-3.5 text-sm font-semibold bg-primary text-primary-foreground rounded-full shadow-organic hover:bg-primary-hover hover:-translate-y-0.5 transition-all"
-            >
-              Explore Stays
-            </Link>
-            <Link
-              href="/traveller/ai-planner"
-              className="flex items-center gap-2 px-5 py-2.5 sm:px-7 sm:py-3.5 text-sm font-semibold bg-surface border border-sage text-sage rounded-full hover:bg-sage hover:text-white transition-all"
-            >
-              <Sparkles size={16} />
-              Plan My Trip with AI
-            </Link>
-          </div>
-
-          {/* Feature highlights */}
-          <div className="grid grid-cols-3 gap-2.5 sm:gap-4 max-w-md">
-            {features.map((f) => (
-              <div key={f.label} className="flex flex-col items-start gap-1.5 sm:gap-2.5">
-                <span className="w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-sage/12 text-sage flex items-center justify-center shrink-0">
-                  <f.icon size={16} className="sm:hidden" />
-                  <f.icon size={18} className="hidden sm:block" />
-                </span>
-                <span className="text-[11px] sm:text-xs font-medium text-foreground leading-tight">
-                  {f.label}
-                </span>
-              </div>
-            ))}
-          </div>
         </div>
 
-        {/* Right: organic blob image */}
+        {/* Right: sponsored ad slider (replaces the old static image) */}
         <div className="relative animate-fade-in">
-          <div className="relative rounded-[40px] rounded-tr-[120px] overflow-hidden shadow-organic aspect-[4/5] max-w-[230px] sm:max-w-md mx-auto">
-            <img
-              src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=1400&auto=format&fit=crop"
-              alt="A curated Dhyana Stays property nestled in nature"
-              fetchPriority="high"
-              className="absolute inset-0 w-full h-full object-cover"
-            />
-          </div>
-          {/* floating badge */}
-          <div className="absolute top-3 left-3 bottom-auto sm:top-auto sm:bottom-6 sm:left-4 bg-surface rounded-[24px] shadow-organic px-3 py-2.5 sm:px-5 sm:py-4 flex items-center gap-2.5 sm:gap-3">
-            <span className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-sage/15 text-sage flex items-center justify-center shrink-0">
-              <ShieldCheck size={16} className="sm:hidden" />
-              <ShieldCheck size={18} className="hidden sm:block" />
-            </span>
-            <div>
-              <p className="text-xs sm:text-sm font-bold text-foreground leading-tight">
-                100% Curated
-              </p>
-              <p className="text-[10px] sm:text-[11px] text-muted">Every stay inspected</p>
-            </div>
-          </div>
+          <SpotlightSection embedded />
         </div>
       </div>
 
       {/* Floating search bar */}
-      <div className="relative max-w-4xl mx-auto px-6 mt-5 sm:mt-8 lg:mt-12">
-        <div className="bg-surface rounded-[28px] shadow-organic p-2 animate-fade-in-up">
-          <div className="flex flex-col md:flex-row items-stretch gap-2">
-            <div className="flex-1 flex items-center gap-3 px-4 py-2.5 md:px-5 md:py-3 rounded-[18px] bg-background">
-              <Search size={18} className="text-subtle shrink-0" />
+      <div className="relative max-w-4xl mx-auto px-6 mt-2 sm:mt-2.5">
+        <div className="bg-surface rounded-[24px] shadow-organic p-1.5 animate-fade-in-up">
+          <div className="flex flex-col md:flex-row items-stretch gap-1.5">
+            <div className="flex-1 flex items-center gap-2.5 px-3 py-2 md:px-4 md:py-2.5 rounded-[16px] bg-background">
+              <Search size={15} className="text-subtle shrink-0" />
               <input
                 type="text"
                 placeholder="Where do you want to go?"
-                className="w-full bg-transparent text-foreground placeholder-subtle text-sm focus:outline-none"
+                className="w-full bg-transparent text-foreground placeholder-subtle text-xs sm:text-sm focus:outline-none"
               />
             </div>
-            <div className="flex items-center gap-3 px-4 py-2.5 md:px-5 md:py-3 rounded-[18px] bg-background">
-              <CalendarDays size={18} className="text-subtle shrink-0" />
-              <span className="text-sm text-subtle whitespace-nowrap">
+            <div className="flex items-center gap-2.5 px-3 py-2 md:px-4 md:py-2.5 rounded-[16px] bg-background">
+              <CalendarDays size={15} className="text-subtle shrink-0" />
+              <span className="text-xs sm:text-sm text-subtle whitespace-nowrap">
                 Check-in — Check-out
               </span>
             </div>
-            <div className="flex items-center gap-3 px-4 py-2.5 md:px-5 md:py-3 rounded-[18px] bg-background">
-              <Users size={18} className="text-subtle shrink-0" />
-              <span className="text-sm text-subtle">Guests</span>
+            <div className="flex items-center gap-2.5 px-3 py-2 md:px-4 md:py-2.5 rounded-[16px] bg-background">
+              <Users size={15} className="text-subtle shrink-0" />
+              <span className="text-xs sm:text-sm text-subtle">Guests</span>
             </div>
             <Link
-              href="/stays"
-              className="flex items-center justify-center gap-2 px-8 py-2.5 md:py-3 bg-primary text-primary-foreground font-semibold text-sm rounded-[18px] hover:bg-primary-hover transition-colors whitespace-nowrap"
+              href="/#explore-stays"
+              className="flex items-center justify-center gap-1.5 px-6 py-2 md:py-2.5 bg-primary text-primary-foreground font-semibold text-xs sm:text-sm rounded-[16px] hover:bg-primary-hover transition-colors whitespace-nowrap"
             >
-              <Search size={16} />
+              <Search size={14} />
               Search
             </Link>
           </div>
@@ -307,7 +248,7 @@ function CategoriesSection() {
             </h2>
           </div>
           <Link
-            href="/stays"
+            href="/#explore-stays"
             className="hidden md:flex items-center gap-2 text-sm text-primary hover:underline"
           >
             View All <ArrowRight size={14} />
@@ -319,7 +260,7 @@ function CategoriesSection() {
             {categories.slice(0, 12).map((cat) => (
               <Link
                 key={cat.slug}
-                href={`/stays?category=${cat.slug}`}
+                href="/#explore-stays"
                 className="group shrink-0 w-[92px] snap-start sm:w-auto sm:shrink p-2.5 sm:p-6 rounded-2xl sm:rounded-[28px] bg-surface card-hover text-center"
               >
                 <div className="w-9 h-9 sm:w-16 sm:h-16 mx-auto mb-1.5 sm:mb-4 flex items-center justify-center">
@@ -342,6 +283,29 @@ function CategoriesSection() {
           <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-background to-transparent sm:hidden" />
         </div>
       </div>
+    </section>
+  );
+}
+
+// ============================================
+// EXPLORE STAYS SECTION — search, filters &
+// results grid, embedded directly on the
+// homepage. There is no standalone /stays
+// listing page — this is the only place to
+// browse stays.
+// ============================================
+function ExploreStaysSection() {
+  return (
+    <section id="explore-stays" className="py-8 md:py-14 bg-background scroll-mt-20">
+      <div className="max-w-[1400px] mx-auto px-6 lg:px-8 mb-3 sm:mb-5 lg:mb-10">
+        <span className="text-xs font-semibold text-sage uppercase tracking-widest">
+          Browse
+        </span>
+        <h2 className="heading-organic text-xl sm:text-3xl lg:text-5xl text-foreground mt-1 sm:mt-2">
+          Explore All Stays
+        </h2>
+      </div>
+      <StaysExplorer />
     </section>
   );
 }
@@ -477,7 +441,7 @@ export default function HomePage() {
       <Navbar />
       <main>
         <HeroSection />
-        <SpotlightSection />
+        <ExploreStaysSection />
         <AiPlannerSection />
         <CategoriesSection />
         <ServicesSection />

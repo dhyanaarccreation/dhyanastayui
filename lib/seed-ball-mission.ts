@@ -97,3 +97,58 @@ export const seedBallDonationOptions = [
   { amountInr: 250, seedBalls: 125 },
   { amountInr: 500, seedBalls: 250 },
 ];
+
+// ---------- Reward Points → Seed Ball conversion (Traveller Rewards) ----------
+export const rewardPointConversions = [
+  { points: 100, seedBalls: 10 },
+  { points: 500, seedBalls: 50 },
+  { points: 1000, seedBalls: 100 },
+];
+
+// ---------- Responsible dispersal guidelines (shown with Buy Seed Balls) ----------
+export const dispersalGuidelines = [
+  {
+    title: "Suitable locations",
+    tip: "Open degraded land, barren hillsides, field bunds and village commons with good sunlight and rain access.",
+  },
+  {
+    title: "Best planting season",
+    tip: "Just before or during the monsoon (June–September) so seeds germinate with natural rainfall.",
+  },
+  {
+    title: "Native species only",
+    tip: "Every pack uses region-native seeds — neem, tamarind, pongamia, banyan and other local varieties.",
+  },
+  {
+    title: "Places to avoid",
+    tip: "Private property without permission, and protected ecosystems where planting is not permitted.",
+  },
+];
+
+// ---------- Upcoming volunteer campaign events ----------
+export const upcomingCampaignEvents = [
+  {
+    name: "Seed Ball Making Marathon",
+    date: "Aug 09, 2026",
+    location: "Auroville, Tamil Nadu",
+    meetingPoint: "Matrimandir Gate 2",
+    volunteers: 120,
+    seedBallTarget: 25_000,
+  },
+  {
+    name: "Western Ghats Restoration Ride",
+    date: "Aug 23, 2026",
+    location: "Coorg, Karnataka",
+    meetingPoint: "Madikeri Fort Grounds",
+    volunteers: 85,
+    seedBallTarget: 40_000,
+  },
+  {
+    name: "School Green Week Drive",
+    date: "Sep 05, 2026",
+    location: "Dehradun, Uttarakhand",
+    meetingPoint: "Clock Tower Junction",
+    volunteers: 60,
+    seedBallTarget: 15_000,
+  },
+];

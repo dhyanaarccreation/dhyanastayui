@@ -124,7 +124,7 @@ export default function PropertyDetailsPage() {
             </Link>
             <ChevronRight size={12} />
             <Link
-              href="/stays"
+              href="/#explore-stays"
               className="hover:text-foreground transition-colors"
             >
               Stays

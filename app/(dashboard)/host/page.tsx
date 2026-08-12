@@ -165,6 +165,99 @@ export default function HostDashboardOverview() {
           </div>
         </div>
       </div>
+
+      {/* Expenses, maintenance & documents — property operations */}
+      <div className="grid lg:grid-cols-3 gap-8">
+        {/* Monthly Expenses */}
+        <div className="bg-surface border border-border rounded-2xl p-6">
+          <div className="flex justify-between items-center mb-4">
+            <h3 className="text-sm font-semibold text-foreground">Monthly Expenses</h3>
+            <button className="text-xs text-primary hover:underline font-medium">Add Expense</button>
+          </div>
+          <div className="space-y-2">
+            {[
+              { category: "Electricity", amount: "₹9,850" },
+              { category: "Water", amount: "₹2,100" },
+              { category: "Repairs", amount: "₹4,600" },
+              { category: "Cleaning", amount: "₹6,200" },
+              { category: "Labour", amount: "₹11,000" },
+              { category: "Consumables", amount: "₹3,450" },
+            ].map((e) => (
+              <div key={e.category} className="flex items-center justify-between py-1.5 border-b border-border/50 last:border-0">
+                <span className="text-sm text-muted">{e.category}</span>
+                <span className="text-sm font-semibold text-foreground">{e.amount}</span>
+              </div>
+            ))}
+            <div className="flex items-center justify-between pt-2">
+              <span className="text-sm font-medium text-foreground">Total · July</span>
+              <span className="text-sm font-bold text-foreground">₹37,200</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Maintenance */}
+        <div className="bg-surface border border-border rounded-2xl p-6">
+          <div className="flex justify-between items-center mb-4">
+            <h3 className="text-sm font-semibold text-foreground">Maintenance</h3>
+            <button className="px-3 py-1.5 bg-primary text-primary-foreground text-xs font-medium rounded-lg hover:bg-primary-hover transition-colors">
+              Raise Request
+            </button>
+          </div>
+          <div className="space-y-3">
+            {[
+              { job: "Geyser thermostat replacement", date: "Jul 28", status: "In progress" },
+              { job: "Garden irrigation line fix", date: "Jul 14", status: "Completed" },
+              { job: "Balcony railing repaint", date: "Jun 30", status: "Completed" },
+            ].map((m) => (
+              <div key={m.job} className="flex items-center justify-between p-3 bg-background border border-border rounded-xl">
+                <div className="min-w-0">
+                  <p className="text-sm font-medium text-foreground truncate">{m.job}</p>
+                  <p className="text-xs text-subtle">{m.date}</p>
+                </div>
+                <span className={`text-[10px] px-2 py-1 rounded uppercase tracking-wider font-semibold shrink-0 ${
+                  m.status === "Completed"
+                    ? "bg-sage/10 text-sage border border-sage/20"
+                    : "bg-primary/10 text-primary border border-primary/20"
+                }`}>
+                  {m.status}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Documents */}
+        <div className="bg-surface border border-border rounded-2xl p-6">
+          <div className="flex justify-between items-center mb-4">
+            <h3 className="text-sm font-semibold text-foreground">Documents</h3>
+            <button className="text-xs text-primary hover:underline font-medium">Upload</button>
+          </div>
+          <div className="space-y-3">
+            {[
+              { doc: "Trade / Homestay Licence", note: "Valid till Mar 2027", status: "Verified" },
+              { doc: "GST Certificate", note: "33AABCD1234E1Z5", status: "Verified" },
+              { doc: "Bank Details", note: "HDFC ···· 4821", status: "Update needed" },
+            ].map((d) => (
+              <div key={d.doc} className="flex items-center justify-between p-3 bg-background border border-border rounded-xl">
+                <div className="min-w-0">
+                  <p className="text-sm font-medium text-foreground truncate">{d.doc}</p>
+                  <p className="text-xs text-subtle">{d.note}</p>
+                </div>
+                <span className={`text-[10px] px-2 py-1 rounded uppercase tracking-wider font-semibold shrink-0 ${
+                  d.status === "Verified"
+                    ? "bg-sage/10 text-sage border border-sage/20"
+                    : "bg-orange-400/10 text-orange-400 border border-orange-400/20"
+                }`}>
+                  {d.status}
+                </span>
+              </div>
+            ))}
+            <p className="text-[11px] text-subtle pt-1">
+              Verified documents are required before payouts are released.
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

@@ -66,7 +66,7 @@ export default function DestinationsSection() {
                 {featured.map((dest, i) => (
                   <Link
                     key={dest.name}
-                    href={`/stays?destination=${dest.name.toLowerCase()}`}
+                    href="/#explore-stays"
                     className={`group relative shrink-0 w-[160px] snap-start sm:w-auto sm:shrink rounded-2xl sm:rounded-[28px] overflow-hidden card-hover ${
                       i === 0 && featured.length > 2
                         ? "min-h-[150px] sm:min-h-[320px] lg:row-span-2"
@@ -110,7 +110,7 @@ export default function DestinationsSection() {
                   {rest.map((dest) => (
                     <Link
                       key={dest.name}
-                      href={`/stays?destination=${dest.name.toLowerCase()}`}
+                      href="/#explore-stays"
                       className="group relative shrink-0 w-[160px] sm:w-[220px] min-h-[150px] sm:min-h-[180px] snap-start rounded-2xl sm:rounded-[28px] overflow-hidden card-hover"
                     >
                       {/* eslint-disable-next-line @next/next/no-img-element */}

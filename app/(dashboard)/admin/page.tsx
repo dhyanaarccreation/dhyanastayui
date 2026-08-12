@@ -175,6 +175,97 @@ export default function AdminDashboardOverview() {
           </div>
         </div>
       </div>
+
+      {/* Daily operations queues — refunds, document verification, review moderation */}
+      <div className="grid lg:grid-cols-3 gap-8">
+        {/* Refund Requests */}
+        <div className="bg-surface border border-border rounded-2xl p-6">
+          <div className="flex justify-between items-center mb-4">
+            <h3 className="text-sm font-semibold text-foreground">Refund Requests</h3>
+            <span className="text-xs text-muted">3 pending</span>
+          </div>
+          <div className="space-y-3">
+            {[
+              { booking: "DHY-8412", guest: "Kavya S.", amount: "₹8,400", reason: "Host cancelled — AC failure" },
+              { booking: "DHY-8397", guest: "Imran K.", amount: "₹3,200", reason: "Partial refund — late check-in" },
+              { booking: "DHY-8375", guest: "Neeta P.", amount: "₹12,750", reason: "Medical emergency, 7-day notice" },
+            ].map((r) => (
+              <div key={r.booking} className="p-3 bg-background border border-border rounded-xl">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-sm font-medium text-foreground">{r.booking} · {r.guest}</span>
+                  <span className="text-sm font-semibold text-foreground">{r.amount}</span>
+                </div>
+                <p className="text-xs text-muted mb-2">{r.reason}</p>
+                <div className="flex gap-2">
+                  <button className="px-3 py-1.5 bg-primary text-primary-foreground text-xs font-medium rounded-lg hover:bg-primary-hover transition-colors">Approve</button>
+                  <button className="px-3 py-1.5 border border-border text-xs font-medium text-foreground rounded-lg hover:bg-surface-hover transition-colors">Escalate</button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Document Verification */}
+        <div className="bg-surface border border-border rounded-2xl p-6">
+          <div className="flex justify-between items-center mb-4">
+            <h3 className="text-sm font-semibold text-foreground">Document Verification</h3>
+            <span className="text-xs text-muted">4 in queue</span>
+          </div>
+          <div className="space-y-3">
+            {[
+              { who: "Arjun Singh · Heritage Fort", doc: "Aadhaar KYC", status: "Pending" },
+              { who: "Priya Desai · Eco Villa", doc: "GST Certificate", status: "Pending" },
+              { who: "Coastal Roots Stays", doc: "Trade Licence", status: "Re-submitted" },
+              { who: "Rohan Mehta · Treehouse", doc: "Bank Details", status: "Verified" },
+            ].map((d) => (
+              <div key={d.who + d.doc} className="flex items-center justify-between p-3 bg-background border border-border rounded-xl">
+                <div className="min-w-0">
+                  <p className="text-sm font-medium text-foreground truncate">{d.who}</p>
+                  <p className="text-xs text-subtle">{d.doc}</p>
+                </div>
+                <span className={`text-[10px] px-2 py-1 rounded uppercase tracking-wider font-semibold shrink-0 ${
+                  d.status === "Verified"
+                    ? "bg-sage/10 text-sage border border-sage/20"
+                    : d.status === "Re-submitted"
+                    ? "bg-primary/10 text-primary border border-primary/20"
+                    : "bg-surface-hover text-muted border border-border"
+                }`}>
+                  {d.status}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Reviews Moderation */}
+        <div className="bg-surface border border-border rounded-2xl p-6">
+          <div className="flex justify-between items-center mb-4">
+            <h3 className="text-sm font-semibold text-foreground">Reviews Moderation</h3>
+            <span className="text-xs text-muted">2 flagged</span>
+          </div>
+          <div className="space-y-3">
+            {[
+              { property: "Stone Valley Villa", excerpt: "“Contains guest phone number in the text…”", flag: "Personal info" },
+              { property: "Old Mill Guesthouse", excerpt: "“Abusive language directed at host…”", flag: "Abusive" },
+            ].map((rv) => (
+              <div key={rv.property} className="p-3 bg-background border border-border rounded-xl">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-sm font-medium text-foreground truncate">{rv.property}</span>
+                  <span className="text-[10px] px-2 py-1 rounded bg-red-500/10 text-red-400 border border-red-500/20 uppercase tracking-wider font-semibold shrink-0">{rv.flag}</span>
+                </div>
+                <p className="text-xs text-muted italic mb-2">{rv.excerpt}</p>
+                <div className="flex gap-2">
+                  <button className="px-3 py-1.5 border border-border text-xs font-medium text-foreground rounded-lg hover:bg-surface-hover transition-colors">Publish</button>
+                  <button className="px-3 py-1.5 border border-red-500/30 text-xs font-medium text-red-400 rounded-lg hover:bg-red-500/10 transition-colors">Remove</button>
+                </div>
+              </div>
+            ))}
+            <p className="text-[11px] text-subtle pt-1">
+              Complaints &amp; CRM follow-ups are tracked with support — escalations route to the Regional Admin.
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
