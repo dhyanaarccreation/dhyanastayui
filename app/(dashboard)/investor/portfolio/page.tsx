@@ -1,11 +1,83 @@
-import { Briefcase, TrendingUp, Building, PiggyBank } from "lucide-react";
+import { Briefcase, TrendingUp, Building, PiggyBank, Layers } from "lucide-react";
 import { PageHeader, SectionCard, StatGrid, StatusPill } from "@/app/components/DashboardUI";
 
 const holdings = [
-  { project: "Nila Wellness Expansion", location: "Palakkad, Kerala", invested: "₹10.0L", value: "₹12.8L", roi: "+28.0%", share: 34, status: "Earning", tone: "sage" as const },
-  { project: "Canopy Village · Phase 2", location: "Auroville, TN", invested: "₹7.5L", value: "₹8.9L", roi: "+18.7%", share: 25, status: "Earning", tone: "sage" as const },
-  { project: "Stone Valley Cottages", location: "Kodaikanal, TN", invested: "₹6.0L", value: "₹6.6L", roi: "+10.0%", share: 21, status: "Ramp-up", tone: "primary" as const },
-  { project: "Glass Pavilion Annexe", location: "Wayanad, Kerala", invested: "₹6.0L", value: "₹6.1L", roi: "+1.7%", share: 20, status: "Under construction", tone: "muted" as const },
+  {
+    project: "Nila Wellness Expansion",
+    location: "Palakkad, Kerala",
+    propertyType: "Wellness Villa",
+    unit: "W-04",
+    invested: "₹10.0L",
+    investedLakhs: 10.0,
+    value: "₹12.8L",
+    roi: "+28.0%",
+    share: 34,
+    investmentDate: "12 Mar 2023",
+    status: "Earning",
+    tone: "sage" as const,
+    monthlyRevenue: "₹1,42,000",
+    revenueShare: "30%",
+    occupancy: "82%",
+    totalReturns: "₹3.6L",
+    model: "Land + Investment Partner",
+  },
+  {
+    project: "Canopy Village · Phase 2",
+    location: "Auroville, TN",
+    propertyType: "Tiny House",
+    unit: "C-12",
+    invested: "₹7.5L",
+    investedLakhs: 7.5,
+    value: "₹8.9L",
+    roi: "+18.7%",
+    share: 25,
+    investmentDate: "08 Jul 2023",
+    status: "Earning",
+    tone: "sage" as const,
+    monthlyRevenue: "₹96,500",
+    revenueShare: "25%",
+    occupancy: "76%",
+    totalReturns: "₹2.1L",
+    model: "Split Investment",
+  },
+  {
+    project: "Stone Valley Cottages",
+    location: "Kodaikanal, TN",
+    propertyType: "Farm Stay Cottage",
+    unit: "S-07",
+    invested: "₹6.0L",
+    investedLakhs: 6.0,
+    value: "₹6.6L",
+    roi: "+10.0%",
+    share: 21,
+    investmentDate: "22 Nov 2023",
+    status: "Ramp-up",
+    tone: "primary" as const,
+    monthlyRevenue: "₹41,200",
+    revenueShare: "20%",
+    occupancy: "58%",
+    totalReturns: "₹68,000",
+    model: "Investment Without Land",
+  },
+  {
+    project: "Glass Pavilion Annexe",
+    location: "Wayanad, Kerala",
+    propertyType: "Luxury Villa",
+    unit: "G-02",
+    invested: "₹6.0L",
+    investedLakhs: 6.0,
+    value: "₹6.1L",
+    roi: "+1.7%",
+    share: 20,
+    investmentDate: "05 Feb 2024",
+    status: "Under construction",
+    tone: "muted" as const,
+    monthlyRevenue: "Pre-launch",
+    revenueShare: "22%",
+    occupancy: "—",
+    totalReturns: "₹0",
+    model: "Land + Investment Partner",
+  },
 ];
 
 const allocation = [
@@ -14,6 +86,12 @@ const allocation = [
   { label: "Farm stays", pct: 21, cls: "bg-primary-hover" },
   { label: "Luxury villas", pct: 20, cls: "bg-terracotta" },
 ];
+
+const totalInvestedLakhs = holdings.reduce((sum, h) => sum + h.investedLakhs, 0);
+const portfolioAllocation = holdings.map((h) => ({
+  project: h.project,
+  pct: Math.round((h.investedLakhs / totalInvestedLakhs) * 100),
+}));
 
 export default function InvestorPortfolioPage() {
   return (
@@ -34,36 +112,67 @@ export default function InvestorPortfolioPage() {
       />
 
       <div className="grid lg:grid-cols-3 gap-6">
-        {/* Holdings table */}
-        <SectionCard title="Holdings" icon={Briefcase} className="lg:col-span-2">
-          <div className="overflow-x-auto">
-            <table className="w-full text-left min-w-[560px]">
-              <thead>
-                <tr className="text-[11px] uppercase tracking-wider text-subtle border-b border-surface-hover">
-                  <th className="px-5 py-3 font-semibold">Project</th>
-                  <th className="px-3 py-3 font-semibold">Invested</th>
-                  <th className="px-3 py-3 font-semibold">Value</th>
-                  <th className="px-3 py-3 font-semibold">ROI</th>
-                  <th className="px-5 py-3 font-semibold text-right">Status</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-surface-hover">
-                {holdings.map((h) => (
-                  <tr key={h.project} className="hover:bg-surface-hover/50 transition-colors">
-                    <td className="px-5 py-4">
-                      <p className="text-sm text-foreground font-medium">{h.project}</p>
-                      <p className="text-[11px] text-subtle">{h.location}</p>
-                    </td>
-                    <td className="px-3 py-4 text-sm text-muted tabular-nums">{h.invested}</td>
-                    <td className="px-3 py-4 text-sm text-foreground font-medium tabular-nums">{h.value}</td>
-                    <td className="px-3 py-4 text-sm font-semibold text-sage tabular-nums">{h.roi}</td>
-                    <td className="px-5 py-4 text-right">
-                      <StatusPill tone={h.tone}>{h.status}</StatusPill>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+        {/* Investment cards */}
+        <SectionCard title="My Investments" icon={Briefcase} className="lg:col-span-2">
+          <div className="p-5 space-y-4">
+            {holdings.map((h) => (
+              <div key={h.project} className="rounded-2xl border border-border bg-surface-hover/30 p-5">
+                <div className="flex flex-wrap items-start justify-between gap-3">
+                  <div>
+                    <p className="text-sm text-foreground font-medium">{h.project}</p>
+                    <p className="text-[11px] text-subtle mt-0.5">
+                      {h.location} · {h.propertyType} · Unit {h.unit}
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2 flex-wrap justify-end">
+                    <StatusPill tone={h.tone}>{h.status}</StatusPill>
+                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-semibold bg-primary/10 text-primary border border-primary/20 whitespace-nowrap">
+                      <Layers className="w-3 h-3" />
+                      {h.model}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-5 gap-y-4 mt-5 pt-4 border-t border-surface-hover">
+                  <div>
+                    <p className="text-[10px] uppercase tracking-wider text-subtle">Investment amount</p>
+                    <p className="text-sm text-foreground font-medium tabular-nums mt-1">{h.invested}</p>
+                  </div>
+                  <div>
+                    <p className="text-[10px] uppercase tracking-wider text-subtle">Ownership share</p>
+                    <p className="text-sm text-foreground font-medium tabular-nums mt-1">{h.share}%</p>
+                  </div>
+                  <div>
+                    <p className="text-[10px] uppercase tracking-wider text-subtle">Investment date</p>
+                    <p className="text-sm text-foreground font-medium mt-1">{h.investmentDate}</p>
+                  </div>
+                  <div>
+                    <p className="text-[10px] uppercase tracking-wider text-subtle">Current value</p>
+                    <p className="text-sm text-foreground font-medium tabular-nums mt-1">{h.value}</p>
+                  </div>
+                  <div>
+                    <p className="text-[10px] uppercase tracking-wider text-subtle">Monthly revenue</p>
+                    <p className="text-sm text-foreground font-medium tabular-nums mt-1">{h.monthlyRevenue}</p>
+                  </div>
+                  <div>
+                    <p className="text-[10px] uppercase tracking-wider text-subtle">Investor revenue share</p>
+                    <p className="text-sm text-foreground font-medium tabular-nums mt-1">{h.revenueShare}</p>
+                  </div>
+                  <div>
+                    <p className="text-[10px] uppercase tracking-wider text-subtle">ROI</p>
+                    <p className="text-sm font-semibold text-sage tabular-nums mt-1">{h.roi}</p>
+                  </div>
+                  <div>
+                    <p className="text-[10px] uppercase tracking-wider text-subtle">Occupancy</p>
+                    <p className="text-sm text-foreground font-medium tabular-nums mt-1">{h.occupancy}</p>
+                  </div>
+                  <div>
+                    <p className="text-[10px] uppercase tracking-wider text-subtle">Total returns</p>
+                    <p className="text-sm text-foreground font-medium tabular-nums mt-1">{h.totalReturns}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </SectionCard>
 
@@ -89,6 +198,22 @@ export default function InvestorPortfolioPage() {
             <p className="text-[11px] text-subtle mt-5">
               Diversified across 3 regions. Rebalancing suggestions appear when any class crosses 40%.
             </p>
+
+            {holdings.length > 1 && (
+              <div className="mt-6 pt-5 border-t border-surface-hover">
+                <p className="text-[11px] uppercase tracking-wider text-subtle font-semibold mb-3">
+                  Portfolio Allocation by Investment
+                </p>
+                <ul className="space-y-2.5">
+                  {portfolioAllocation.map((p) => (
+                    <li key={p.project} className="flex items-center justify-between gap-3 text-sm">
+                      <span className="text-muted truncate">{p.project}</span>
+                      <span className="text-foreground font-medium tabular-nums shrink-0">{p.pct}%</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
         </SectionCard>
       </div>

@@ -1,4 +1,7 @@
-import { MessageCircle, Send, Star } from "lucide-react";
+"use client";
+
+import { useState } from "react";
+import { Calendar, ChevronDown, Clock, MessageCircle, Phone, Send, Star, Users } from "lucide-react";
 import { PageHeader } from "@/app/components/DashboardUI";
 
 const threads = [
@@ -15,7 +18,60 @@ const conversation = [
   { from: "host", text: "Absolutely, it's under the canopy. Rain makes it better, honestly 🌧️", time: "10:52 AM" },
 ];
 
+// Guest information, emergency contact and arrival time — keyed by guest name.
+const guestDetails: Record<
+  string,
+  {
+    partySize: number;
+    stayDates: string;
+    checkInDate: string;
+    arrivalTime: string;
+    emergencyContact: { name: string; phone: string };
+  }
+> = {
+  "Priya Sharma": {
+    partySize: 2,
+    stayDates: "Jul 24 – 28",
+    checkInDate: "Jul 24",
+    arrivalTime: "11:00 AM",
+    emergencyContact: { name: "Anand Sharma (spouse)", phone: "+91 98765 43210" },
+  },
+  "Aditya Menon": {
+    partySize: 4,
+    stayDates: "Jul 18 – 21",
+    checkInDate: "Jul 18",
+    arrivalTime: "2:00 PM",
+    emergencyContact: { name: "Kavya Menon (sister)", phone: "+91 90000 11223" },
+  },
+  "Meera Krishnan": {
+    partySize: 2,
+    stayDates: "Jul 10 – 13",
+    checkInDate: "Jul 10",
+    arrivalTime: "1:30 PM",
+    emergencyContact: { name: "Suresh Krishnan (father)", phone: "+91 98111 22334" },
+  },
+  "Rahul Nair": {
+    partySize: 3,
+    stayDates: "Aug 2 – 5",
+    checkInDate: "Aug 2",
+    arrivalTime: "4:00 PM",
+    emergencyContact: { name: "Divya Nair (spouse)", phone: "+91 99887 66554" },
+  },
+};
+
+const activeGuestName = "Priya Sharma";
+const activeGuest = { name: activeGuestName, ...guestDetails[activeGuestName] };
+
 export default function HostGuestsPage() {
+  const [detailsOpen, setDetailsOpen] = useState(true);
+  const [copied, setCopied] = useState(false);
+
+  const handleCopyContact = () => {
+    navigator.clipboard.writeText(activeGuest.emergencyContact.phone);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   return (
     <div className="space-y-8 pb-12">
       <PageHeader
@@ -105,6 +161,61 @@ export default function HostGuestsPage() {
             </button>
           </div>
         </div>
+      </div>
+
+      {/* Guest Details */}
+      <div className="bg-surface border border-border rounded-2xl overflow-hidden">
+        <button
+          onClick={() => setDetailsOpen((v) => !v)}
+          className="w-full px-5 py-4 border-b border-surface-hover flex items-center justify-between text-left"
+        >
+          <h2 className="text-sm font-semibold text-foreground flex items-center gap-2">
+            <Users size={15} className="text-primary" /> Guest Details — {activeGuest.name}
+          </h2>
+          <ChevronDown
+            size={16}
+            className={`text-subtle transition-transform ${detailsOpen ? "rotate-180" : ""}`}
+          />
+        </button>
+
+        {detailsOpen && (
+          <div className="grid sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-surface-hover">
+            <div className="p-5 space-y-2">
+              <p className="text-[11px] font-semibold text-subtle uppercase tracking-wide">Guest Information</p>
+              <p className="text-sm font-medium text-foreground">{activeGuest.name}</p>
+              <p className="text-xs text-muted flex items-center gap-1.5">
+                <Users size={12} /> {activeGuest.partySize} guests
+              </p>
+              <p className="text-xs text-muted flex items-center gap-1.5">
+                <Calendar size={12} /> {activeGuest.stayDates}
+              </p>
+            </div>
+
+            <div className="p-5 space-y-2">
+              <p className="text-[11px] font-semibold text-subtle uppercase tracking-wide">Emergency Contact</p>
+              <p className="text-sm font-medium text-foreground">{activeGuest.emergencyContact.name}</p>
+              <div className="flex items-center justify-between gap-2">
+                <p className="text-xs text-muted flex items-center gap-1.5">
+                  <Phone size={12} /> {activeGuest.emergencyContact.phone}
+                </p>
+                <button
+                  onClick={handleCopyContact}
+                  className="text-[10px] font-semibold text-primary hover:underline shrink-0"
+                >
+                  {copied ? "Copied" : "Copy"}
+                </button>
+              </div>
+            </div>
+
+            <div className="p-5 space-y-2">
+              <p className="text-[11px] font-semibold text-subtle uppercase tracking-wide">Arrival Time</p>
+              <p className="text-sm font-medium text-foreground flex items-center gap-1.5">
+                <Clock size={13} className="text-primary" /> {activeGuest.arrivalTime}
+              </p>
+              <p className="text-xs text-muted">Expected check-in on {activeGuest.checkInDate}</p>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

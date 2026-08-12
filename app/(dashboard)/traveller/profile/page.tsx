@@ -8,6 +8,11 @@ import {
   Languages,
   Heart,
   PhoneCall,
+  FileText,
+  IdCard,
+  Plane,
+  Umbrella,
+  CircleCheck,
 } from "lucide-react";
 import { PageHeader, SectionCard, StatusPill } from "@/app/components/DashboardUI";
 
@@ -23,6 +28,30 @@ const personal = [
 const emergency = [
   { name: "Rohit Rao", relation: "Brother", phone: "+91 98407 55621" },
   { name: "Lakshmi Rao", relation: "Mother", phone: "+91 94441 08733" },
+];
+
+const documents = [
+  {
+    label: "Aadhaar Card",
+    icon: IdCard,
+    detail: "XXXX XXXX 8823",
+    status: "verified" as const,
+    action: "View",
+  },
+  {
+    label: "Passport",
+    icon: Plane,
+    detail: "Not added — required for international retreats",
+    status: "missing" as const,
+    action: "Add",
+  },
+  {
+    label: "Travel Insurance",
+    icon: Umbrella,
+    detail: "Optional — not purchased",
+    status: "optional" as const,
+    action: "Add",
+  },
 ];
 
 const stayTypes = ["Tiny Houses", "Farm Stays", "Wellness Retreats", "Eco Stays"];
@@ -146,6 +175,50 @@ export default function TravellerProfilePage() {
               </li>
             </ul>
           </div>
+        </SectionCard>
+
+        <SectionCard
+          title="Travel Documents"
+          icon={FileText}
+          action={{ label: "Manage", href: "/traveller/profile" }}
+          className="lg:col-span-2"
+        >
+          <ul className="divide-y divide-surface-hover">
+            {documents.map((d) => (
+              <li key={d.label} className="flex items-center justify-between px-5 py-4">
+                <div className="flex items-center gap-3">
+                  <span
+                    className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                      d.status === "verified" ? "bg-sage/15 text-sage" : "bg-surface-hover text-subtle"
+                    }`}
+                  >
+                    <d.icon size={14} />
+                  </span>
+                  <div>
+                    <p className="text-sm font-medium text-foreground">{d.label}</p>
+                    <p className="text-xs text-muted">{d.detail}</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  {d.status === "verified" ? (
+                    <StatusPill tone="sage">
+                      <CircleCheck size={11} /> Verified
+                    </StatusPill>
+                  ) : d.status === "missing" ? (
+                    <StatusPill tone="terracotta">Not added</StatusPill>
+                  ) : (
+                    <StatusPill tone="muted">Optional</StatusPill>
+                  )}
+                  <button className="px-3 py-1.5 text-xs font-medium border border-border rounded-full text-muted hover:text-foreground hover:border-border-light transition-colors">
+                    {d.action}
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
+          <p className="px-5 pb-4 text-[11px] text-subtle">
+            Verified ID is used for faster host check-in. Passport is only needed for retreats outside India.
+          </p>
         </SectionCard>
       </div>
     </div>

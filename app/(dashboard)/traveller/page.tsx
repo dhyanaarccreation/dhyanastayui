@@ -1,12 +1,31 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, Calendar, MapPin, Sparkles, Star, TrendingUp } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Calendar, Crown, MapPin, Sparkles, Sprout, Star, TrendingUp } from "lucide-react";
 import { properties } from "@/lib/mock-data";
+import { getGreenImpactLevel } from "@/lib/seed-ball-mission";
+import { StatusPill } from "@/app/components/DashboardUI";
+
+// Mock traveller balances for this overview page (distinct currencies).
+const travellerSeedBalls = 680; // seed balls contributed — separate from reward points below
+const travellerMembership = {
+  name: "Leaf",
+  emoji: "🍃",
+  perk: "Unlimited AI trip planning + double reward points (2x)",
+};
 
 export default function TravellerDashboardOverview() {
   const upcomingTrip = properties[0];
   const wishlistItems = properties.slice(1, 3);
+  const { current: impactTier, next: nextImpactTier } = getGreenImpactLevel(travellerSeedBalls);
+  const impactProgressPct = nextImpactTier
+    ? Math.min(
+        100,
+        Math.round(
+          ((travellerSeedBalls - impactTier.threshold) / (nextImpactTier.threshold - impactTier.threshold)) * 100
+        )
+      )
+    : 100;
 
   return (
     <div className="space-y-8 pb-12">
@@ -153,6 +172,53 @@ export default function TravellerDashboardOverview() {
                 <span className="text-sm font-medium text-primary">1,250</span>
               </div>
             </div>
+          </div>
+
+          {/* Green Impact */}
+          <div className="bg-surface border border-border rounded-2xl p-6 mt-6">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-sm font-semibold text-foreground flex items-center gap-2">
+                <Sprout size={15} className="text-sage" /> Green Impact
+              </h3>
+              <Link href="/traveller/rewards" className="text-xs text-primary hover:underline flex items-center gap-1">
+                View <ArrowUpRight size={12} />
+              </Link>
+            </div>
+            <div className="flex items-center gap-3 mb-4">
+              <span className="text-3xl leading-none">{impactTier.emoji}</span>
+              <div>
+                <p className="text-sm font-semibold text-foreground">{impactTier.label}</p>
+                <p className="text-xs text-muted">{travellerSeedBalls.toLocaleString()} seed balls contributed</p>
+              </div>
+            </div>
+            {nextImpactTier && (
+              <>
+                <div className="h-2 rounded-full bg-surface-hover overflow-hidden">
+                  <div className="h-full rounded-full bg-sage" style={{ width: `${impactProgressPct}%` }} />
+                </div>
+                <p className="text-[11px] text-muted mt-2">
+                  {nextImpactTier.threshold - travellerSeedBalls} more seed balls to{" "}
+                  <span className="text-sage font-medium">{nextImpactTier.emoji} {nextImpactTier.label}</span>
+                </p>
+              </>
+            )}
+          </div>
+
+          {/* Membership Snapshot */}
+          <div className="bg-surface border border-border rounded-2xl p-6 mt-6">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-sm font-semibold text-foreground flex items-center gap-2">
+                <Crown size={15} className="text-primary" /> Membership
+              </h3>
+              <Link href="/traveller/membership" className="text-xs text-primary hover:underline flex items-center gap-1">
+                Manage <ArrowUpRight size={12} />
+              </Link>
+            </div>
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-xl leading-none">{travellerMembership.emoji}</span>
+              <StatusPill tone="primary">{travellerMembership.name} Member</StatusPill>
+            </div>
+            <p className="text-xs text-muted leading-relaxed">{travellerMembership.perk}</p>
           </div>
         </div>
       </div>

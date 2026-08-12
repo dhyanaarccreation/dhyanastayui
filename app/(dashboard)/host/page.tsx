@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, BarChart3, Calendar, CheckCircle2, IndianRupee, MessageSquare, TrendingUp, Users } from "lucide-react";
+import { ArrowRight, BarChart3, Calendar, CheckCircle2, Home, IndianRupee, Images, MessageSquare, Star, TrendingUp, Users } from "lucide-react";
 
 export default function HostDashboardOverview() {
   const kpis = [
@@ -9,6 +9,11 @@ export default function HostDashboardOverview() {
     { label: "Occupancy Rate", value: "78%", change: "+5.2%", icon: BarChart3 },
     { label: "Upcoming Bookings", value: "12", change: "Steady", icon: Calendar },
     { label: "Average Rating", value: "4.92", change: "+0.05", icon: TrendingUp },
+  ];
+
+  const recentReviews = [
+    { guest: "Ananya Rao", property: "The Glasshouse in the Pines", rating: 5, snippet: "Breathtaking views and a spotless stay. Would come back in a heartbeat.", replied: false },
+    { guest: "Rohan Verma", property: "Heritage Courtyard", rating: 4, snippet: "Lovely property, host was responsive. Water pressure could be better.", replied: true },
   ];
 
   return (
@@ -153,6 +158,53 @@ export default function HostDashboardOverview() {
             <div className="flex justify-between text-[10px] text-subtle uppercase tracking-wider">
               <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
             </div>
+          </div>
+
+          {/* Reviews */}
+          <div className="bg-surface border border-border rounded-2xl p-6">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-sm font-semibold text-foreground flex items-center gap-2">
+                <Star className="text-primary" size={16} /> Recent Reviews
+              </h3>
+              <Link href="/host/reviews" className="text-xs text-primary hover:underline font-medium">View All</Link>
+            </div>
+            <div className="space-y-3">
+              {recentReviews.map((r) => (
+                <div key={r.guest} className="p-3 bg-background border border-border rounded-xl">
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="text-sm font-medium text-foreground">{r.guest}</span>
+                    <span className="flex items-center gap-0.5 text-xs font-semibold text-foreground">
+                      <Star size={12} className="text-primary fill-primary" /> {r.rating}.0
+                    </span>
+                  </div>
+                  <p className="text-xs text-subtle mb-2">{r.property}</p>
+                  <p className="text-xs text-muted leading-relaxed mb-2 line-clamp-2">"{r.snippet}"</p>
+                  <span className={`text-[10px] px-2 py-1 rounded uppercase tracking-wider font-semibold ${
+                    r.replied
+                      ? "bg-sage/10 text-sage border border-sage/20"
+                      : "bg-primary/10 text-primary border border-primary/20"
+                  }`}>
+                    {r.replied ? "Replied" : "Awaiting Reply"}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Manage Property */}
+          <div className="bg-surface border border-border rounded-2xl p-6">
+            <h3 className="text-sm font-semibold text-foreground mb-4 flex items-center gap-2">
+              <Home className="text-primary" size={16} /> Manage Property
+            </h3>
+            <p className="text-sm text-muted leading-relaxed mb-4">
+              Update descriptions, amenities, house rules and photo galleries for your listings.
+            </p>
+            <Link
+              href="/host/properties"
+              className="inline-flex items-center gap-2 text-sm text-primary hover:underline font-medium"
+            >
+              <Images size={14} /> Go to Properties <ArrowRight size={14} />
+            </Link>
           </div>
 
           {/* Tips */}
