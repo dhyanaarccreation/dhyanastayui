@@ -1,20 +1,13 @@
 "use client";
 
+import { dashboardGroups, dashboardRoles } from "@/lib/dashboards";
+import { navLinks } from "@/lib/mock-data";
+import { ChevronDown, Heart, Menu, Search, User, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import {
-  Menu,
-  X,
-  Search,
-  User,
-  ChevronDown,
-  Heart,
-} from "lucide-react";
-import { navLinks } from "@/lib/mock-data";
-import { dashboardRoles, dashboardGroups } from "@/lib/dashboards";
-import { ThemeToggle } from "./ThemeToggle";
 import { LogoMark } from "./Logo";
+import { ThemeToggle } from "./ThemeToggle";
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -29,7 +22,10 @@ export default function Navbar() {
   useEffect(() => {
     if (!openMenu) return;
     const handlePointerDown = (e: MouseEvent) => {
-      if (desktopNavRef.current && !desktopNavRef.current.contains(e.target as Node)) {
+      if (
+        desktopNavRef.current &&
+        !desktopNavRef.current.contains(e.target as Node)
+      ) {
         setOpenMenu(null);
       }
     };
@@ -69,13 +65,17 @@ export default function Navbar() {
                   href={link.href}
                   onMouseEnter={() => setOpenMenu(null)}
                   className={`group relative flex items-center gap-1 px-4 py-2.5 text-sm font-medium rounded-full transition-colors duration-200 hover:bg-surface-hover ${
-                    active ? "text-foreground" : "text-muted hover:text-foreground"
+                    active
+                      ? "text-foreground"
+                      : "text-muted hover:text-foreground"
                   }`}
                 >
                   {isExperiences ? "Curated Experiences" : link.label}
                   <span
                     className={`pointer-events-none absolute left-4 right-4 -bottom-0.5 h-[2px] rounded-full bg-primary origin-left transition-transform duration-300 ease-out ${
-                      active ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
+                      active
+                        ? "scale-x-100"
+                        : "scale-x-0 group-hover:scale-x-100"
                     }`}
                   />
                 </Link>
@@ -85,7 +85,9 @@ export default function Navbar() {
             {/* Dashboard role dropdown */}
             <div className="relative">
               <button
-                onClick={() => setOpenMenu((m) => (m === "dashboard" ? null : "dashboard"))}
+                onClick={() =>
+                  setOpenMenu((m) => (m === "dashboard" ? null : "dashboard"))
+                }
                 aria-expanded={dashOpen}
                 className={`flex items-center gap-1 px-4 py-2.5 text-sm font-medium rounded-full transition-all duration-200 ${
                   dashOpen
@@ -125,7 +127,10 @@ export default function Navbar() {
                                     onClick={() => setOpenMenu(null)}
                                     className="flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-sm text-muted hover:text-foreground hover:bg-surface-hover transition-colors"
                                   >
-                                    <r.icon size={15} className="text-subtle shrink-0" />
+                                    <r.icon
+                                      size={15}
+                                      className="text-subtle shrink-0"
+                                    />
                                     {r.title.replace(" Dashboard", "")}
                                   </Link>
                                 ))}
@@ -162,7 +167,10 @@ export default function Navbar() {
               href="/login"
               className="group flex items-center gap-2 px-5 py-2.5 text-sm font-semibold text-primary-foreground bg-primary rounded-full shadow-organic hover:bg-primary-hover hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 active:scale-95 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             >
-              <User size={16} className="transition-transform duration-200 group-hover:scale-110" />
+              <User
+                size={16}
+                className="transition-transform duration-200 group-hover:scale-110"
+              />
               Sign In
             </Link>
           </div>
@@ -177,13 +185,17 @@ export default function Navbar() {
             <Menu
               size={22}
               className={`absolute transition-all duration-300 ease-out ${
-                mobileOpen ? "opacity-0 rotate-90 scale-75" : "opacity-100 rotate-0 scale-100"
+                mobileOpen
+                  ? "opacity-0 rotate-90 scale-75"
+                  : "opacity-100 rotate-0 scale-100"
               }`}
             />
             <X
               size={22}
               className={`absolute transition-all duration-300 ease-out ${
-                mobileOpen ? "opacity-100 rotate-0 scale-100" : "opacity-0 -rotate-90 scale-75"
+                mobileOpen
+                  ? "opacity-100 rotate-0 scale-100"
+                  : "opacity-0 -rotate-90 scale-75"
               }`}
             />
           </button>
@@ -193,7 +205,9 @@ export default function Navbar() {
       {/* Mobile drawer backdrop */}
       <div
         className={`fixed inset-0 z-[65] bg-black/40 backdrop-blur-sm lg:hidden transition-opacity duration-300 ${
-          mobileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+          mobileOpen
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none"
         }`}
         onClick={() => setMobileOpen(false)}
         aria-hidden="true"
