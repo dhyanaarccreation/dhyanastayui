@@ -29,7 +29,7 @@ const tabs = [
 type TabKey = (typeof tabs)[number]["key"];
 
 const viewAll: Record<TabKey, { href: string; label: string }> = {
-  stays: { href: "/stays", label: "View all stays" },
+  stays: { href: "/#explore-stays", label: "View all stays" },
   experiences: { href: "/experiences", label: "All experiences" },
 };
 
@@ -187,7 +187,7 @@ const sponsoredAds: SponsoredSlot[] = [
     copy: "Fifteen percent off architect-inspected villas, tiny houses and farm stays across Tamil Nadu — this month only.",
     offer: "15% off · Fri–Sun stays",
     image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200&q=80",
-    href: "/stays",
+    href: "/#explore-stays",
   },
   {
     partner: "Meena's Kitchen · Auroville",
@@ -207,7 +207,9 @@ const sponsoredAds: SponsoredSlot[] = [
   },
 ];
 
-export function SpotlightSection() {
+/** The sliding sponsored-ad card — reused both as its own homepage section
+ * and embedded directly inside the Hero (in place of the old static image). */
+export function SpotlightSection({ embedded = false }: { embedded?: boolean }) {
   const suggestions = [...properties]
     .sort((a, b) => b.rating - a.rating)
     .slice(0, 3);
@@ -220,10 +222,11 @@ export function SpotlightSection() {
     return () => clearInterval(t);
   }, []);
 
-  return (
-    <section className="pt-10 md:pt-14 pb-4 bg-background">
-      <div className="max-w-[1400px] mx-auto px-6 lg:px-8">
-        {sponsoredAds.length > 0 ? (
+  const minHeight = embedded ? "min-h-[200px] sm:min-h-[240px] lg:min-h-[260px]" : "min-h-[220px] sm:min-h-[300px]";
+
+  const content = (
+    <>
+      {sponsoredAds.length > 0 ? (
           /* ---- Sponsored ads: right-to-left slider ---- */
           <div className="relative rounded-[32px] overflow-hidden shadow-organic">
             <div
@@ -231,7 +234,7 @@ export function SpotlightSection() {
               style={{ transform: `translateX(-${slide * 100}%)` }}
             >
               {sponsoredAds.map((ad) => (
-                <div key={ad.headline} className="relative w-full shrink-0 min-h-[220px] sm:min-h-[300px]">
+                <div key={ad.headline} className={`relative w-full shrink-0 ${minHeight}`}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img loading="lazy"
                     src={ad.image}
@@ -327,7 +330,14 @@ export function SpotlightSection() {
             </div>
           </div>
         )}
-      </div>
+    </>
+  );
+
+  if (embedded) return content;
+
+  return (
+    <section className="pt-10 md:pt-14 pb-4 bg-background">
+      <div className="max-w-[1400px] mx-auto px-6 lg:px-8">{content}</div>
     </section>
   );
 }

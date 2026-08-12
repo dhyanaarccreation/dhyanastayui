@@ -43,7 +43,7 @@ export default function TravellerWishlistPage() {
       </div>
 
       <div className="grid lg:grid-cols-2 gap-6">
-        <SectionCard title="Bucket List Destinations" icon={MapPin} action={{ label: "Add place", href: "/stays" }}>
+        <SectionCard title="Bucket List Destinations" icon={MapPin} action={{ label: "Add place", href: "/#explore-stays" }}>
           <ul className="divide-y divide-surface-hover">
             {bucketList.map((b) => (
               <li key={b.place} className="flex items-center gap-4 px-5 py-3.5">

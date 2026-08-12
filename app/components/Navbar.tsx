@@ -143,7 +143,7 @@ export default function Navbar() {
           <div className="hidden lg:flex items-center gap-1">
             <div className="flex items-center gap-1 pr-3 mr-2 border-r border-border/70">
               <Link
-                href="/stays"
+                href="/#explore-stays"
                 aria-label="Search stays"
                 className="w-10 h-10 flex items-center justify-center rounded-full text-muted hover:text-foreground hover:bg-surface-hover active:scale-90 transition-all duration-200"
               >

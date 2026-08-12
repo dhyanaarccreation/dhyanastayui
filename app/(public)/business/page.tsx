@@ -125,7 +125,7 @@ const rollingAds = [
     headline: "The benefits of being part of Dhyana Stays",
     copy: "Automated payouts, the Curated badge that converts, regional marketing muscle and 24×7 SOS cover for your guests.",
     cta: "Know the perks",
-    href: "/about",
+    href: "/become-a-host",
     image: "https://images.unsplash.com/photo-1587061949409-02df41d5e562?w=1600&q=75",
   },
   {
