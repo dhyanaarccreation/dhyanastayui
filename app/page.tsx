@@ -27,14 +27,14 @@ import {
 // ============================================
 function HeroSection() {
   return (
-    <section className="relative bg-background pt-[64px] md:pt-14 pb-3 md:pb-4 overflow-hidden">
+    <section className="relative bg-background pt-20 lg:pt-24 pb-3 md:pb-4 overflow-hidden">
       {/* Decorative soft blobs */}
       <div className="absolute -top-24 -left-32 w-[420px] h-[420px] rounded-full bg-sage/15 blur-3xl pointer-events-none" />
       <div className="absolute top-24 -right-32 w-[380px] h-[380px] rounded-full bg-primary/10 blur-3xl pointer-events-none" />
 
-      <div className="relative max-w-[1400px] mx-auto px-6 lg:px-8 grid lg:grid-cols-2 gap-4 sm:gap-6 items-start">
+      <div className="relative max-w-[1400px] mx-auto px-6 lg:px-8 grid lg:grid-cols-5 gap-4 sm:gap-6 items-start">
         {/* Left: copy */}
-        <div className="animate-fade-in-up">
+        <div className="lg:col-span-3 animate-fade-in-up">
           <span className="inline-flex items-center gap-1.5 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full bg-surface shadow-organic mb-2 sm:mb-3">
             <Sparkles size={12} className="text-primary" />
             <span className="text-[10px] sm:text-xs font-semibold text-foreground tracking-wide uppercase">
@@ -55,38 +55,38 @@ function HeroSection() {
         </div>
 
         {/* Right: sponsored ad slider (replaces the old static image) */}
-        <div className="relative animate-fade-in">
+        <div className="lg:col-span-2 relative animate-fade-in">
           <SpotlightSection embedded />
         </div>
       </div>
 
       {/* Floating search bar */}
-      <div className="relative max-w-4xl mx-auto px-6 mt-2 sm:mt-2.5">
-        <div className="bg-surface rounded-[24px] shadow-organic p-1.5 animate-fade-in-up">
-          <div className="flex flex-col md:flex-row items-stretch gap-1.5">
-            <div className="flex-1 flex items-center gap-2.5 px-3 py-2 md:px-4 md:py-2.5 rounded-[16px] bg-background">
-              <Search size={15} className="text-subtle shrink-0" />
+      <div className="relative max-w-6xl mx-auto px-6 mt-1 sm:mt-1.5">
+        <div className="bg-surface rounded-[24px] shadow-organic p-2.5 sm:p-3 animate-fade-in-up">
+          <div className="flex flex-col md:flex-row items-stretch gap-2.5 sm:gap-3">
+            <div className="flex-[1.4] flex items-center gap-3 px-5 py-3.5 md:px-6 md:py-4 rounded-[16px] bg-background">
+              <Search size={18} className="text-subtle shrink-0" />
               <input
                 type="text"
                 placeholder="Where do you want to go?"
-                className="w-full bg-transparent text-foreground placeholder-subtle text-xs sm:text-sm focus:outline-none"
+                className="w-full bg-transparent text-foreground placeholder-subtle text-base focus:outline-none"
               />
             </div>
-            <div className="flex items-center gap-2.5 px-3 py-2 md:px-4 md:py-2.5 rounded-[16px] bg-background">
-              <CalendarDays size={15} className="text-subtle shrink-0" />
-              <span className="text-xs sm:text-sm text-subtle whitespace-nowrap">
+            <div className="flex items-center gap-2.5 px-5 py-3.5 md:px-6 md:py-4 rounded-[16px] bg-background md:min-w-[200px]">
+              <CalendarDays size={17} className="text-subtle shrink-0" />
+              <span className="text-sm text-subtle whitespace-nowrap">
                 Check-in — Check-out
               </span>
             </div>
-            <div className="flex items-center gap-2.5 px-3 py-2 md:px-4 md:py-2.5 rounded-[16px] bg-background">
-              <Users size={15} className="text-subtle shrink-0" />
-              <span className="text-xs sm:text-sm text-subtle">Guests</span>
+            <div className="flex items-center gap-2.5 px-5 py-3.5 md:px-6 md:py-4 rounded-[16px] bg-background md:min-w-[140px]">
+              <Users size={17} className="text-subtle shrink-0" />
+              <span className="text-sm text-subtle">Guests</span>
             </div>
             <Link
               href="/#explore-stays"
-              className="flex items-center justify-center gap-1.5 px-6 py-2 md:py-2.5 bg-primary text-primary-foreground font-semibold text-xs sm:text-sm rounded-[16px] hover:bg-primary-hover transition-colors whitespace-nowrap"
+              className="flex items-center justify-center gap-1.5 px-8 py-3.5 md:py-4 bg-primary text-primary-foreground font-semibold text-base rounded-[16px] hover:bg-primary-hover transition-colors whitespace-nowrap"
             >
-              <Search size={14} />
+              <Search size={17} />
               Search
             </Link>
           </div>
@@ -296,12 +296,12 @@ function CategoriesSection() {
 // ============================================
 function ExploreStaysSection() {
   return (
-    <section id="explore-stays" className="py-8 md:py-14 bg-background scroll-mt-20">
-      <div className="max-w-[1400px] mx-auto px-6 lg:px-8 mb-3 sm:mb-5 lg:mb-10">
+    <section id="explore-stays" className="py-5 md:py-7 bg-background scroll-mt-20">
+      <div className="max-w-[1400px] mx-auto px-6 lg:px-8 mb-1.5 sm:mb-2 lg:mb-3">
         <span className="text-xs font-semibold text-sage uppercase tracking-widest">
           Browse
         </span>
-        <h2 className="heading-organic text-xl sm:text-3xl lg:text-5xl text-foreground mt-1 sm:mt-2">
+        <h2 className="heading-organic text-xl sm:text-2xl lg:text-4xl text-foreground mt-0.5 sm:mt-1">
           Explore All Stays
         </h2>
       </div>

@@ -11,11 +11,11 @@ export default function PropertyCard({ property }: { property: Property }) {
       className="group rounded-2xl sm:rounded-[28px] overflow-hidden bg-surface card-hover"
     >
       {/* Image */}
-      <div className="relative h-40 sm:h-64 overflow-hidden bg-surface-hover">
+      <div className="relative h-36 sm:h-52 overflow-hidden bg-surface-hover">
         <img loading="lazy"
           src={property.images[0]}
           alt={property.name}
-          className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
         />
         {/* Scrim for legible overlay text on any photo */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/0 to-black/10" />
@@ -58,9 +58,9 @@ export default function PropertyCard({ property }: { property: Property }) {
       </div>
 
       {/* Content */}
-      <div className="p-3 sm:p-5">
-        <div className="flex items-start justify-between gap-2 mb-1 sm:mb-2">
-          <h3 className="text-sm sm:text-base font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-1">
+      <div className="p-3 sm:p-4">
+        <div className="flex items-start justify-between gap-2 mb-1">
+          <h3 className="text-sm sm:text-base font-bold tracking-[-0.01em] text-foreground group-hover:text-primary transition-colors line-clamp-1">
             {property.name}
           </h3>
           <div className="flex items-center gap-1 shrink-0">
@@ -74,23 +74,23 @@ export default function PropertyCard({ property }: { property: Property }) {
           </div>
         </div>
 
-        <div className="flex items-center gap-1 text-xs text-muted mb-1.5 sm:mb-3">
+        <div className="flex items-center gap-1 text-xs text-subtle mb-1.5">
           <MapPin size={12} />
           <span>
             {property.location.city}, {property.location.state}
           </span>
         </div>
 
-        <p className="text-xs text-subtle line-clamp-2 mb-2 sm:mb-4">
+        <p className="text-xs text-subtle/90 line-clamp-1 mb-2">
           {property.tagline}
         </p>
 
         {/* Badges */}
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-nowrap gap-1.5 overflow-hidden">
           {property.badges.slice(0, 3).map((badge) => (
             <span
               key={badge}
-              className="px-2 py-0.5 text-[10px] font-medium text-sage bg-sage/10 rounded-full border border-sage/20"
+              className="shrink-0 px-1.5 py-0.5 text-[9px] font-medium text-sage/90 bg-sage/[0.07] rounded-full border border-sage/10 whitespace-nowrap"
             >
               {badge}
             </span>

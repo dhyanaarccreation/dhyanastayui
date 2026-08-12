@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
@@ -27,6 +27,7 @@ import {
 } from "lucide-react";
 import { properties, reviews } from "@/lib/mock-data";
 import { enrichProperty } from "@/lib/content-generator";
+import StayMediaExperience from "@/app/components/StayMediaExperience";
 
 // Resolves a curated-experience icon name (stored as a plain string in the
 // generator, same convention as `categories[].icon` in mock-data.ts) to its
@@ -45,21 +46,10 @@ export default function PropertyDetailsPage() {
   const enriched = enrichProperty(property);
 
   const [guests, setGuests] = useState(2);
-  const [videoFailed, setVideoFailed] = useState(false);
-  const [trackedVideoSrc, setTrackedVideoSrc] = useState(enriched.heroVideo);
   const [experiencesOpen, setExperiencesOpen] = useState(false);
   const [storyOpen, setStoryOpen] = useState(false);
   const [galleryOpen, setGalleryOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  // Reset the fallback state when a different property's video is loaded —
-  // adjusted during render (React's recommended pattern) rather than in an
-  // Effect, since this is a derived reset, not a sync with an external system.
-  if (trackedVideoSrc !== enriched.heroVideo) {
-    setTrackedVideoSrc(enriched.heroVideo);
-    setVideoFailed(false);
-  }
 
   // Gallery modal — ESC to close, lock body scroll while open.
   useEffect(() => {
@@ -81,37 +71,6 @@ export default function PropertyDetailsPage() {
       window.removeEventListener("keydown", handleKey);
     };
   }, [galleryOpen]);
-
-  // Some browsers don't reliably fire a <video> "error" event for a bad
-  // source, so also fall back to the property photo if playback never starts.
-  useEffect(() => {
-    if (videoFailed) return;
-    const watchdog = setTimeout(() => setVideoFailed(true), 8000);
-    return () => clearTimeout(watchdog);
-  }, [enriched.heroVideo, videoFailed]);
-
-  // Hover or click replays the hero video from the start if it's paused or
-  // has ended (including the case where the browser blocked autoplay
-  // outright) — and does nothing if it's already playing.
-  const replayIfIdle = useCallback(() => {
-    const video = videoRef.current;
-    if (!video || !video.paused) return;
-    video.currentTime = 0;
-    video.play().catch(() => {});
-  }, []);
-
-  // The video plays once on load and then freezes on its poster frame
-  // instead of looping — seeking back to 0 without calling play() leaves
-  // it paused there until the next hover or click.
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-    const handleEnded = () => {
-      video.currentTime = 0;
-    };
-    video.addEventListener("ended", handleEnded);
-    return () => video.removeEventListener("ended", handleEnded);
-  }, [enriched.heroVideo]);
 
   return (
     <div className="bg-background min-h-screen pb-24">
@@ -176,145 +135,63 @@ export default function PropertyDetailsPage() {
         </div>
       </div>
 
-      {/* Gallery Grid */}
-      <div className="max-w-[1200px] mx-auto px-6 lg:px-8 mb-12">
-        <div className="grid grid-cols-4 grid-rows-2 gap-2 md:gap-4 h-[300px] md:h-[500px] rounded-2xl overflow-hidden">
-          <div
-            className="col-span-4 md:col-span-2 row-span-2 bg-surface-hover relative overflow-hidden group"
-            onMouseEnter={replayIfIdle}
-            onClick={replayIfIdle}
-          >
-            {videoFailed ? (
-              <img
-                src={property.images[0]}
-                alt={property.name}
-                className="absolute inset-0 w-full h-full object-cover"
-              />
-            ) : (
-              <video
-                ref={videoRef}
-                key={enriched.heroVideo}
-                autoPlay
-                muted
-                playsInline
-                preload="metadata"
-                poster={property.images[0]}
-                onError={() => setVideoFailed(true)}
-                className="absolute inset-0 w-full h-full object-cover"
-              >
-                <source src={enriched.heroVideo} type="video/mp4" />
-              </video>
-            )}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/15 to-transparent pointer-events-none" />
-          </div>
-          {/* Top middle — gallery preview, opens the full gallery modal */}
-          <button
-            type="button"
-            onClick={() => setGalleryOpen(true)}
-            aria-label={`View more photos of ${property.name}`}
-            className="hidden md:block col-span-1 row-span-1 bg-surface-hover overflow-hidden cursor-pointer relative group"
-          >
-            <img
-              src={property.images[1] ?? property.images[0]}
-              alt={property.name}
-              className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 ease-out group-hover:scale-[1.08]"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              <span className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-white/95 text-foreground text-sm font-semibold shadow-lg">
-                View More <ArrowRight size={14} />
-              </span>
-            </div>
-          </button>
-
-          {/* Top right — "Our Story" card, opens the storytelling modal */}
-          <button
-            type="button"
-            onClick={() => setStoryOpen(true)}
-            aria-label={`Discover the story behind ${property.name}`}
-            className="hidden md:block col-span-1 row-span-1 bg-surface-hover overflow-hidden cursor-pointer relative group text-left"
-          >
-            <img
-              src={property.images[0]}
-              alt={property.name}
-              className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-black/10 group-hover:from-black/90 group-hover:via-black/40 transition-colors duration-300" />
-            <div className="absolute inset-x-0 top-0 p-4">
-              <span className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider text-white/90">
-                <Sparkles size={12} /> Our Story
-              </span>
-            </div>
-            <div className="absolute inset-x-0 bottom-0 p-4 transition-transform duration-300 group-hover:-translate-y-1">
-              <p className="text-sm font-semibold text-white mb-1 line-clamp-1">
-                {property.name}
-              </p>
-              <p className="text-[11px] text-white/75 leading-relaxed line-clamp-2 mb-2">
-                {enriched.generatedStory}
-              </p>
-              <span className="group/link inline-flex items-center gap-1 text-xs font-medium text-white underline underline-offset-2 group-hover:text-primary transition-colors">
-                Read Story
-                <ArrowRight size={12} className="transition-transform group-hover/link:translate-x-0.5" />
-              </span>
-            </div>
-          </button>
-
-          {/* Bottom middle — featured curated experience, opens the full list in a modal */}
-          <button
-            type="button"
-            onClick={() => setExperiencesOpen(true)}
-            aria-label={`View all curated experiences for ${property.name}`}
-            className="hidden md:block col-span-1 row-span-1 bg-surface-hover overflow-hidden cursor-pointer relative group text-left"
-          >
-            <img
-              src={enriched.curatedExperiences[0].image}
-              alt={enriched.curatedExperiences[0].name}
-              className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-black/10 group-hover:from-black/90 group-hover:via-black/40 transition-colors duration-300" />
-            <div className="absolute inset-x-0 top-0 p-4 flex items-center justify-between">
-              <span className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider text-white/90">
-                <Sparkles size={12} /> Curated Experiences
-              </span>
-              <span className="px-2 py-0.5 text-[9px] font-semibold uppercase tracking-wider bg-white/90 text-foreground rounded-full">
-                Featured
-              </span>
-            </div>
-            <div className="absolute inset-x-0 bottom-0 p-4">
-              <p className="text-sm font-semibold text-white mb-2 line-clamp-1">
-                {enriched.curatedExperiences[0].name}
-              </p>
-              <span className="group/link inline-flex items-center gap-1 text-xs font-medium text-white underline underline-offset-2 opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-                View All Experiences
-                <ArrowRight size={12} className="transition-transform group-hover/link:translate-x-0.5" />
-              </span>
-            </div>
-          </button>
-
-          {/* Bottom right — travel guide / blog mini cards */}
-          <div className="hidden md:flex col-span-1 row-span-1 bg-surface flex-col p-3 gap-0.5">
-            <p className="text-[10px] font-semibold uppercase tracking-wider text-primary px-1 mb-1.5">
-              Travel Guides
-            </p>
-            {enriched.blogRecommendations.slice(0, 3).map((guide) => (
-              <Link
-                key={guide.slug}
-                href={`/blog/${guide.slug}`}
-                className="group/link flex items-center justify-between gap-2 px-1 py-1.5 rounded-lg hover:bg-surface-hover transition-colors"
-              >
-                <span className="flex items-center gap-1.5 text-xs text-foreground min-w-0">
-                  <BookOpen size={11} className="text-sage shrink-0" />
-                  <span className="truncate">{guide.title}</span>
+      {/* Media Experience — looping video + Reserve card, story banner, Stay Stories tabbed reel */}
+      <StayMediaExperience
+        property={property}
+        enriched={enriched}
+        propertyReviews={propertyReviews}
+        reserveCard={
+          <div className="bg-surface border border-border rounded-2xl p-3.5 sm:p-4 shadow-xl w-full">
+            <div className="flex items-end justify-between mb-1.5">
+              <div>
+                <span className="text-xl sm:text-2xl font-bold text-foreground">
+                  ₹{property.price.toLocaleString()}
                 </span>
-                <ArrowRight
-                  size={11}
-                  className="text-subtle group-hover/link:text-primary transition-transform group-hover/link:translate-x-0.5 shrink-0"
-                />
-              </Link>
-            ))}
+                <span className="text-muted text-sm"> /night</span>
+              </div>
+              {property.originalPrice && (
+                <span className="text-sm text-subtle line-through">
+                  ₹{property.originalPrice.toLocaleString()}
+                </span>
+              )}
+            </div>
+
+            <div className="flex items-center gap-1.5 text-sm text-muted mb-2">
+              <Star size={14} className="text-primary fill-primary" />
+              <span className="font-semibold text-foreground">{property.rating}</span>
+              <span>· {property.reviewCount} reviews</span>
+            </div>
+
+            <div className="border-t border-border pt-2.5 pb-3">
+              <div className="flex flex-wrap gap-x-3 gap-y-1.5">
+                {property.badges.slice(0, 3).map((badge) => (
+                  <span key={badge} className="flex items-center gap-1.5 text-xs text-muted">
+                    <CheckCircle2 size={13} className="text-sage shrink-0" />
+                    {badge}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <Link
+              href={`/book/${property.id}?guests=${guests}`}
+              className="group/reserve w-full py-3 px-5 bg-primary text-primary-foreground font-semibold text-[15px] tracking-wide rounded-2xl shadow-md hover:shadow-lg hover:bg-primary-hover hover:-translate-y-0.5 active:translate-y-0 active:shadow-md transition-all duration-200 flex items-center justify-center gap-2"
+            >
+              Reserve
+              <ArrowRight
+                size={16}
+                className="transition-transform duration-200 group-hover/reserve:translate-x-1"
+              />
+            </Link>
+            <p className="mt-2 text-center text-[11px] text-subtle">
+              Free to explore · Secure booking
+            </p>
           </div>
-        </div>
-      </div>
+        }
+        onOpenStory={() => setStoryOpen(true)}
+        onOpenGallery={() => setGalleryOpen(true)}
+        onOpenExperiences={() => setExperiencesOpen(true)}
+      />
 
       {/* Curated Experiences Modal */}
       {experiencesOpen && (
@@ -768,33 +645,6 @@ export default function PropertyDetailsPage() {
                   <p className="text-sm text-subtle">Interactive Map Integration</p>
                 </div>
               </div>
-            </div>
-          </div>
-
-          {/* Sidebar (Right) - Booking Widget */}
-          <div className="lg:w-1/3 relative">
-            <div className="sticky top-[100px] bg-surface border border-border rounded-2xl p-6 shadow-xl">
-              <div className="flex items-end justify-between mb-6">
-                <div>
-                  <span className="text-2xl font-bold text-foreground">
-                    ₹{property.price.toLocaleString()}
-                  </span>
-                  <span className="text-muted text-sm"> /night</span>
-                </div>
-                {property.originalPrice && (
-                  <span className="text-sm text-subtle line-through">
-                    ₹{property.originalPrice.toLocaleString()}
-                  </span>
-                )}
-              </div>
-
-              {/* Action Button */}
-              <Link
-                href={`/book/${property.id}?guests=${guests}`}
-                className="w-full py-4 bg-gradient-to-r from-primary to-primary-hover text-primary-foreground font-semibold text-sm rounded-xl hover:shadow-[0_0_30px_rgba(16,185,129,0.3)] transition-all flex items-center justify-center"
-              >
-                Reserve
-              </Link>
             </div>
           </div>
         </div>

@@ -158,13 +158,13 @@ export default function StaysExplorer() {
   return (
     <div className="bg-background">
       {/* Search & Filter Header */}
-      <div className="relative bg-background border-b border-border py-5">
+      <div className="relative bg-background border-b border-border py-3 sm:py-4">
         <div className="max-w-[1400px] mx-auto px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row gap-3 items-center justify-between">
+          <div className="flex flex-col md:flex-row gap-2.5 items-center justify-between">
             {/* Search Input */}
             <div className="relative w-full md:w-auto md:flex-1 max-w-xl">
               <Search
-                size={18}
+                size={17}
                 className="absolute left-4 top-1/2 -translate-y-1/2 text-subtle"
               />
               <input
@@ -172,21 +172,21 @@ export default function StaysExplorer() {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search by destination, property name, or theme..."
-                className="w-full pl-11 pr-4 py-3 bg-surface rounded-full text-sm text-foreground placeholder-muted shadow-organic focus:outline-none focus:ring-2 focus:ring-primary/40 transition-shadow"
+                className="w-full pl-11 pr-4 py-2.5 bg-surface rounded-full text-sm text-foreground placeholder-muted shadow-organic focus:outline-none focus:ring-2 focus:ring-primary/40 transition-shadow"
               />
             </div>
 
             {/* Actions */}
-            <div className="flex items-center gap-3 w-full md:w-auto">
+            <div className="flex items-center gap-2.5 w-full md:w-auto">
               <button
                 onClick={() => setFiltersOpen(true)}
-                className={`relative flex-1 md:flex-none flex items-center justify-center gap-2 px-5 py-3 rounded-full text-sm font-semibold transition-all ${
+                className={`relative flex-1 md:flex-none flex items-center justify-center gap-2 px-4 py-2.5 rounded-full text-sm font-semibold transition-all ${
                   activeFilterCount > 0
                     ? "bg-primary text-primary-foreground shadow-organic"
                     : "bg-surface text-foreground shadow-organic hover:-translate-y-0.5"
                 }`}
               >
-                <SlidersHorizontal size={16} />
+                <SlidersHorizontal size={15} />
                 Filters
                 {activeFilterCount > 0 && (
                   <span className="w-5 h-5 rounded-full bg-white/25 text-[11px] font-bold flex items-center justify-center tabular-nums">
@@ -196,26 +196,26 @@ export default function StaysExplorer() {
               </button>
               <button
                 onClick={() => setShowMap(!showMap)}
-                className={`flex-1 md:flex-none flex items-center justify-center gap-2 px-5 py-3 rounded-full text-sm font-semibold transition-all ${
+                className={`flex-1 md:flex-none flex items-center justify-center gap-2 px-4 py-2.5 rounded-full text-sm font-semibold transition-all ${
                   showMap
                     ? "bg-primary text-primary-foreground shadow-organic"
                     : "bg-surface text-foreground shadow-organic hover:-translate-y-0.5"
                 }`}
               >
-                <MapIcon size={16} />
+                <MapIcon size={15} />
                 {showMap ? "Hide Map" : "Show Map"}
               </button>
             </div>
           </div>
 
           {/* Categories Carousel */}
-          <div className="flex items-center gap-2 mt-5 overflow-x-auto pb-1 scrollbar-hide">
+          <div className="flex items-center gap-1.5 mt-2.5 overflow-x-auto pb-1 scrollbar-hide">
             <button
               onClick={() => setActiveCategory("all")}
-              className={`shrink-0 px-4 py-2 rounded-full text-sm font-medium border transition-all ${
+              className={`shrink-0 px-3 py-1.5 rounded-full text-[13px] font-medium border transition-all ${
                 activeCategory === "all"
                   ? "bg-primary text-primary-foreground border-primary"
-                  : "bg-surface border-border text-muted hover:text-foreground"
+                  : "bg-surface border-border/60 text-subtle hover:text-foreground hover:border-border"
               }`}
             >
               All Stays
@@ -224,10 +224,10 @@ export default function StaysExplorer() {
               <button
                 key={cat.slug}
                 onClick={() => setActiveCategory(cat.slug)}
-                className={`shrink-0 px-4 py-2 rounded-full text-sm font-medium border transition-all whitespace-nowrap ${
+                className={`shrink-0 px-3 py-1.5 rounded-full text-[13px] font-medium border transition-all whitespace-nowrap ${
                   activeCategory === cat.slug
                     ? "bg-primary text-primary-foreground border-primary"
-                    : "bg-surface border-border text-muted hover:text-foreground"
+                    : "bg-surface border-border/60 text-subtle hover:text-foreground hover:border-border"
                 }`}
               >
                 {cat.name}
@@ -238,21 +238,21 @@ export default function StaysExplorer() {
       </div>
 
       {/* Main Content Area */}
-      <div className="max-w-[1400px] mx-auto px-6 lg:px-8 py-8">
+      <div className="max-w-[1400px] mx-auto px-6 lg:px-8 py-5 sm:py-6">
         <div className="flex gap-8">
           {/* Results Grid */}
           <div className={`flex-1 transition-all ${showMap ? "lg:w-3/5" : "w-full"}`}>
-            <div className="mb-6 flex items-center justify-between">
-              <h1 className="heading-organic text-xl text-foreground">
+            <div className="mb-3 sm:mb-4 flex items-center justify-between">
+              <p className="text-sm text-muted">
                 {filtered.length + (showVaksanaCard ? 1 : 0)} curated{" "}
                 {filtered.length + (showVaksanaCard ? 1 : 0) === 1 ? "stay" : "stays"} found
-              </h1>
+              </p>
               <div className="relative">
                 <button
                   onClick={() => setSortOpen((v) => !v)}
-                  className="flex items-center gap-2 text-sm text-foreground font-medium hover:text-primary"
+                  className="flex items-center gap-1.5 text-xs sm:text-sm text-foreground font-medium hover:text-primary"
                 >
-                  Sort by: {sortLabels[sortBy]} <ChevronDown size={14} className={sortOpen ? "rotate-180 transition-transform" : "transition-transform"} />
+                  Sort by: {sortLabels[sortBy]} <ChevronDown size={13} className={sortOpen ? "rotate-180 transition-transform" : "transition-transform"} />
                 </button>
                 {sortOpen && (
                   <div className="absolute right-0 top-full mt-2 w-52 rounded-2xl bg-surface shadow-organic p-1.5 z-20 animate-fade-in">
@@ -301,7 +301,7 @@ export default function StaysExplorer() {
 
             {filtered.length > 0 || showVaksanaCard ? (
               <div
-                className={`grid gap-6 ${
+                className={`grid gap-4 sm:gap-5 ${
                   showMap
                     ? "grid-cols-1 md:grid-cols-2"
                     : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"

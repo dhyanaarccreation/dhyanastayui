@@ -369,3 +369,120 @@ export function enrichProperty(property: Property): EnrichedProperty {
     storyTimeline: getStoryTimeline(property),
   };
 }
+
+// ------------------------------------------------
+// 5. MEDIA REEL — tabbed cards for the Stay Details hero.
+// There is only one real video asset per category today
+// (`heroVideo` above), so every "video" card below reuses
+// that same real file across varied real property photos
+// rather than inventing new external URLs. Swap in a real
+// per-clip video list later by setting `videoSrc` per item —
+// every consumer of `StayReelTab`/`StayReelItem` stays the same.
+// ------------------------------------------------
+
+export interface StayReelItem {
+  id: string;
+  title: string;
+  caption?: string;
+  thumbnail: string;
+  /** Present only when a real, playable video asset backs this card. */
+  videoSrc?: string;
+}
+
+export interface StayReelTab {
+  key: string;
+  label: string;
+  items: StayReelItem[];
+}
+
+const FOOD_ICONS = new Set([
+  "Coffee",
+  "CookingPot",
+  "ChefHat",
+  "Utensils",
+  "UtensilsCrossed",
+  "Fish",
+  "Croissant",
+]);
+
+/** Derives the tabbed media reel for a stay from data that already exists on
+ *  the property — real photos, the real per-category hero video, and real
+ *  curated-experience content — never hand-authored per property. */
+export function getStayReel(property: Property, enriched: EnrichedProperty): StayReelTab[] {
+  const photos = property.galleryImages.length ? property.galleryImages : property.images;
+  const video = enriched.heroVideo;
+  const pick = (i: number) => photos[i % photos.length];
+
+  const withVideo = (titles: string[]): StayReelItem[] =>
+    titles.map((title, i) => ({ id: `${title}-${i}`, title, thumbnail: pick(i), videoSrc: video }));
+
+  const houseTourTitles = property.highlights.length
+    ? property.highlights.slice(0, 5)
+    : ["Living Space", "Bedroom", "Kitchen", "Outdoor Deck"];
+
+  const aroundTitles = property.amenities.length
+    ? property.amenities.slice(0, 5)
+    : ["Garden", "Common Areas", "Nearby Trails"];
+
+  const foodExperiences = enriched.curatedExperiences.filter((e) => FOOD_ICONS.has(e.icon));
+  const foodTitles = foodExperiences.length
+    ? foodExperiences.map((e) => e.name)
+    : ["Morning Coffee", "Local Flavours", "Dining Deck"];
+
+  return [
+    { key: "overview", label: "Overview", items: withVideo(["Full Walkthrough", "First Look", "Property Overview", "Arrival"]) },
+    { key: "house-tour", label: "House Tour", items: withVideo(houseTourTitles) },
+    { key: "around-the-stay", label: "Around the Stay", items: withVideo(aroundTitles) },
+    {
+      key: "experiences",
+      label: "Experiences",
+      items: enriched.curatedExperiences.map((e, i) => ({
+        id: `exp-${i}`,
+        title: e.name,
+        caption: e.description,
+        thumbnail: e.image,
+      })),
+    },
+    { key: "food", label: "Food & Dining", items: withVideo(foodTitles) },
+    { key: "morning", label: "Morning", items: withVideo(["Sunrise", "Morning Light", "Breakfast Hour"]) },
+    { key: "evening", label: "Evening", items: withVideo(["Golden Hour", "Sunset", "Night Sky"]) },
+  ];
+}
+
+// ------------------------------------------------
+// 6. STAY ROOMS — "Choose Your Space" selector cards.
+// The platform has no per-room booking entity today (a stay is booked as a
+// single whole, one price, one Reserve action) — these are illustrative
+// space cards only, built from the property's own photos and maxGuests
+// rather than any fabricated external data or per-room pricing.
+// ------------------------------------------------
+
+export interface StayRoom {
+  id: string;
+  name: string;
+  category: "Rooms" | "Suites" | "Private Spaces";
+  guests: number;
+  bedType: string;
+  image: string;
+}
+
+const ROOM_TEMPLATES: { name: string; category: StayRoom["category"] }[] = [
+  { name: "Garden Room", category: "Rooms" },
+  { name: "Forest Room", category: "Rooms" },
+  { name: "Loft Suite", category: "Suites" },
+  { name: "Pool Suite", category: "Private Spaces" },
+];
+
+const ROOM_GUEST_STEPS = [2, 2, 3, 4];
+
+export function getStayRooms(property: Property): StayRoom[] {
+  const photos = property.galleryImages.length ? property.galleryImages : property.images;
+  return ROOM_TEMPLATES.map((template, i) => ({
+    id: `${property.id}-space-${i}`,
+    name: template.name,
+    category: template.category,
+    guests: Math.min(property.maxGuests, ROOM_GUEST_STEPS[i]),
+    bedType: "1 King Bed",
+    image: photos[i % photos.length],
+  }));
+}

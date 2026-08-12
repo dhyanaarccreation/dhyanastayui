@@ -222,7 +222,20 @@ export function SpotlightSection({ embedded = false }: { embedded?: boolean }) {
     return () => clearInterval(t);
   }, []);
 
-  const minHeight = embedded ? "min-h-[200px] sm:min-h-[240px] lg:min-h-[260px]" : "min-h-[220px] sm:min-h-[300px]";
+  // `embedded` renders inside the Hero at a fixed, capped footprint (height,
+  // not just min-height) so this in-flow text block can never grow the slide
+  // taller than the Hero's left column — the standalone (non-embedded) usage
+  // keeps its original min-height/padding/type-scale untouched.
+  const slideSize = embedded ? "h-[150px] sm:h-[175px] lg:h-[195px] overflow-hidden" : "min-h-[220px] sm:min-h-[300px]";
+  const cardPadding = embedded ? "p-3 sm:p-4 md:p-5 lg:p-6" : "p-4 sm:p-5 md:p-8 lg:p-12";
+  const badgeRowMargin = embedded ? "mb-1.5" : "mb-2 sm:mb-4";
+  const headlineSize = embedded ? "text-base sm:text-lg md:text-xl" : "text-lg sm:text-2xl md:text-4xl";
+  const copyClasses = embedded
+    ? "text-xs text-white/80 mt-1 leading-snug line-clamp-1"
+    : "text-xs sm:text-sm text-white/80 mt-1.5 sm:mt-3 leading-relaxed line-clamp-2 sm:line-clamp-none";
+  const ctaClasses = embedded
+    ? "inline-flex items-center gap-1.5 mt-2 px-3.5 py-1.5 text-xs font-medium bg-primary text-primary-foreground rounded-full hover:bg-primary-hover transition-colors"
+    : "inline-flex items-center gap-2 mt-3 sm:mt-6 px-4 sm:px-6 py-2 sm:py-3 text-sm font-medium bg-primary text-primary-foreground rounded-full hover:bg-primary-hover transition-colors";
 
   const content = (
     <>
@@ -234,7 +247,7 @@ export function SpotlightSection({ embedded = false }: { embedded?: boolean }) {
               style={{ transform: `translateX(-${slide * 100}%)` }}
             >
               {sponsoredAds.map((ad) => (
-                <div key={ad.headline} className={`relative w-full shrink-0 ${minHeight}`}>
+                <div key={ad.headline} className={`relative w-full shrink-0 ${slideSize}`}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img loading="lazy"
                     src={ad.image}
@@ -242,8 +255,8 @@ export function SpotlightSection({ embedded = false }: { embedded?: boolean }) {
                     className="absolute inset-0 w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/60 to-black/20" />
-                  <div className="relative p-4 sm:p-5 md:p-8 lg:p-12 max-w-xl">
-                    <div className="flex items-center gap-1.5 sm:gap-2 mb-2 sm:mb-4 flex-wrap">
+                  <div className={`relative ${cardPadding} max-w-xl`}>
+                    <div className={`flex items-center gap-1.5 sm:gap-2 ${badgeRowMargin} flex-wrap`}>
                       <span className="flex items-center gap-1.5 px-2.5 sm:px-3 py-0.5 sm:py-1 text-[9px] sm:text-[10px] font-semibold uppercase tracking-wider bg-white/10 backdrop-blur-sm text-white/90 rounded-full border border-white/20">
                         <Megaphone size={11} /> Spotlight · Sponsored
                       </span>
@@ -254,17 +267,17 @@ export function SpotlightSection({ embedded = false }: { embedded?: boolean }) {
                     <p className="text-xs text-white/70 uppercase tracking-widest mb-1">
                       {ad.partner}
                     </p>
-                    <h3 className="heading-organic text-lg sm:text-2xl md:text-4xl text-white">
+                    <h3 className={`heading-organic ${headlineSize} text-white`}>
                       {ad.headline}
                     </h3>
-                    <p className="text-xs sm:text-sm text-white/80 mt-1.5 sm:mt-3 leading-relaxed line-clamp-2 sm:line-clamp-none">
+                    <p className={copyClasses}>
                       {ad.copy}
                     </p>
                     <Link
                       href={ad.href}
-                      className="inline-flex items-center gap-2 mt-3 sm:mt-6 px-4 sm:px-6 py-2 sm:py-3 text-sm font-medium bg-primary text-primary-foreground rounded-full hover:bg-primary-hover transition-colors"
+                      className={ctaClasses}
                     >
-                      Explore <ArrowRight size={15} />
+                      Explore <ArrowRight size={embedded ? 13 : 15} />
                     </Link>
                   </div>
                 </div>
