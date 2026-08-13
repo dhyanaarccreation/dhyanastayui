@@ -28,10 +28,13 @@ export default function StayRoomSelector({ property }: { property: Property }) {
         <p className="text-base sm:text-lg font-semibold text-foreground">
           Pick a room that feels right for you
         </p>
+        <p className="text-xs text-muted mt-0.5">
+          Each space is thoughtfully designed for comfort and calm.
+        </p>
       </div>
 
       {/* Category tabs */}
-      <div className="flex items-center gap-1.5 overflow-x-auto pb-1 mb-3 scrollbar-hide">
+      <div className="flex items-center gap-1.5 overflow-x-auto pb-1 mb-3 scroll-smooth scrollbar-hide">
         {CATEGORIES.map((cat) => (
           <button
             key={cat}
@@ -48,8 +51,11 @@ export default function StayRoomSelector({ property }: { property: Property }) {
         ))}
       </div>
 
-      {/* Room cards — no price anywhere on these */}
-      <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
+      {/* Room cards — horizontally scrollable carousel. Each shows its own
+          informational per-room price; this never feeds the property-level
+          Reserve price, which is passed down separately and unaffected by
+          selection here. */}
+      <div className="flex gap-3 overflow-x-auto pb-2 snap-x snap-proximity scroll-smooth scrollbar-hide">
         {visibleRooms.map((room) => (
           <RoomCard
             key={room.id}
@@ -91,7 +97,7 @@ function RoomCard({
   onSelect: () => void;
 }) {
   return (
-    <div className="shrink-0 w-[170px] sm:w-[190px] bg-surface border border-border rounded-xl overflow-hidden">
+    <div className="shrink-0 snap-start w-[170px] sm:w-[190px] bg-surface border border-border rounded-xl overflow-hidden">
       <div className="relative h-20 sm:h-24 overflow-hidden bg-surface-hover">
         <img
           src={room.image}
@@ -114,8 +120,12 @@ function RoomCard({
       </div>
       <div className="p-2.5">
         <p className="text-[13px] font-semibold text-foreground mb-0.5 line-clamp-1">{room.name}</p>
-        <p className="text-[11px] text-muted mb-2">
+        <p className="text-[11px] text-muted mb-1">
           {room.guests} Guests · {room.bedType}
+        </p>
+        <p className="text-sm font-semibold text-foreground mb-2">
+          ₹{room.price.toLocaleString()}
+          <span className="text-[11px] font-normal text-subtle"> /night</span>
         </p>
         <button
           type="button"

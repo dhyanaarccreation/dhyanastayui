@@ -453,8 +453,9 @@ export function getStayReel(property: Property, enriched: EnrichedProperty): Sta
 // 6. STAY ROOMS — "Choose Your Space" selector cards.
 // The platform has no per-room booking entity today (a stay is booked as a
 // single whole, one price, one Reserve action) — these are illustrative
-// space cards only, built from the property's own photos and maxGuests
-// rather than any fabricated external data or per-room pricing.
+// space cards only, built from the property's own photos and maxGuests.
+// `price` is a fixed per-room demo figure (informational display only) —
+// it intentionally never feeds the property-level Reserve price.
 // ------------------------------------------------
 
 export interface StayRoom {
@@ -464,13 +465,14 @@ export interface StayRoom {
   guests: number;
   bedType: string;
   image: string;
+  price: number;
 }
 
-const ROOM_TEMPLATES: { name: string; category: StayRoom["category"] }[] = [
-  { name: "Garden Room", category: "Rooms" },
-  { name: "Forest Room", category: "Rooms" },
-  { name: "Loft Suite", category: "Suites" },
-  { name: "Pool Suite", category: "Private Spaces" },
+const ROOM_TEMPLATES: { name: string; category: StayRoom["category"]; price: number }[] = [
+  { name: "Garden Room", category: "Rooms", price: 3500 },
+  { name: "Forest Room", category: "Rooms", price: 4000 },
+  { name: "Loft Suite", category: "Suites", price: 5000 },
+  { name: "Pool Suite", category: "Private Spaces", price: 6500 },
 ];
 
 const ROOM_GUEST_STEPS = [2, 2, 3, 4];
@@ -484,5 +486,6 @@ export function getStayRooms(property: Property): StayRoom[] {
     guests: Math.min(property.maxGuests, ROOM_GUEST_STEPS[i]),
     bedType: "1 King Bed",
     image: photos[i % photos.length],
+    price: template.price,
   }));
 }
