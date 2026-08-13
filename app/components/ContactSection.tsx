@@ -17,7 +17,7 @@ export default function ContactSection() {
       <div className="max-w-[1200px] mx-auto px-6 lg:px-8">
         <div className="text-center mb-14">
           <span className="text-xs font-semibold text-primary uppercase tracking-widest">Get in Touch</span>
-          <h2 className="heading-display text-3xl lg:text-5xl text-foreground mt-3">
+          <h2 className="heading-display text-lg sm:text-2xl lg:text-3xl text-foreground mt-3">
             Talk to Our Team
           </h2>
           <p className="text-muted mt-4 max-w-xl mx-auto">

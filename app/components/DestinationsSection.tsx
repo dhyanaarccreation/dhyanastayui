@@ -35,7 +35,7 @@ export default function DestinationsSection() {
           <span className="text-xs font-semibold text-sage uppercase tracking-widest">
             Destinations
           </span>
-          <h2 className="heading-organic text-xl sm:text-3xl lg:text-5xl text-foreground mt-1 sm:mt-2">
+          <h2 className="heading-organic text-lg sm:text-2xl lg:text-4xl text-foreground mt-1 sm:mt-2">
             Where Will You Go?
           </h2>
 

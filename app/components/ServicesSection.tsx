@@ -48,7 +48,7 @@ export default function ServicesSection() {
             <span className="text-xs font-semibold text-sage uppercase tracking-widest">
               One platform · Every experience
             </span>
-            <h2 className="heading-organic text-xl sm:text-3xl lg:text-5xl text-foreground mt-1 sm:mt-2">
+            <h2 className="heading-organic text-xl sm:text-2xl lg:text-3xl text-foreground mt-1 sm:mt-2">
               Explore Dhyana Services
             </h2>
             <p className="text-muted text-sm sm:text-base mt-1.5 sm:mt-3 max-w-lg">
@@ -229,7 +229,7 @@ export function SpotlightSection({ embedded = false }: { embedded?: boolean }) {
   const slideSize = embedded ? "h-[150px] sm:h-[175px] lg:h-[195px] overflow-hidden" : "min-h-[220px] sm:min-h-[300px]";
   const cardPadding = embedded ? "p-3 sm:p-4 md:p-5 lg:p-6" : "p-4 sm:p-5 md:p-8 lg:p-12";
   const badgeRowMargin = embedded ? "mb-1.5" : "mb-2 sm:mb-4";
-  const headlineSize = embedded ? "text-base sm:text-lg md:text-xl" : "text-lg sm:text-2xl md:text-4xl";
+  const headlineSize = embedded ? "text-base sm:text-lg md:text-xl" : "text-lg sm:text-2xl md:text-3xl";
   const copyClasses = embedded
     ? "text-xs text-white/80 mt-1 leading-snug line-clamp-1"
     : "text-xs sm:text-sm text-white/80 mt-1.5 sm:mt-3 leading-relaxed line-clamp-2 sm:line-clamp-none";

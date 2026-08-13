@@ -462,6 +462,7 @@ export const dashboardRoles: DashboardRole[] = [
     persona: "Ar. Kavya Menon",
     icon: HardHat,
     group: "Operations",
+    hidden: true,
     stats: [
       { label: "Client Projects", value: "7", delta: "3 on site" },
       { label: "Drawings Pending", value: "12", delta: "4 in review" },
@@ -490,6 +491,7 @@ export const dashboardRoles: DashboardRole[] = [
     persona: "Rohan Das",
     icon: Hotel,
     group: "Operations",
+    hidden: true,
     nav: [
       { label: "Consultancy Dashboard", href: "/hospitality-consultancy", icon: LayoutDashboard },
       { label: "Listing Requests", href: "/hospitality-consultancy/requests", icon: ClipboardList },

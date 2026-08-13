@@ -164,7 +164,7 @@ export default function TestimonialsCarousel({ testimonials, totalCount }: Testi
       <div className="max-w-[1400px] mx-auto px-6 lg:px-8">
         <div className="text-center mb-6 sm:mb-8">
           <span className="text-xs font-semibold text-sage uppercase tracking-widest">Guest Stories</span>
-          <h2 className="heading-organic text-xl sm:text-3xl lg:text-5xl text-foreground mt-1 sm:mt-2">
+          <h2 className="heading-organic text-xl sm:text-2xl lg:text-3xl text-foreground mt-1 sm:mt-2">
             What Our Guests Say
           </h2>
         </div>
