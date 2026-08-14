@@ -29,13 +29,14 @@
 }
 
 :root {
-  /* LIGHT MODE — Organic Minimalism (Scandinavian / Japandi, nature-inspired) */
-  --color-bg-primary: #F6F1E8;   /* Cream */
-  --color-bg-secondary: #FFFFFF; /* White — floating cards */
-  --color-bg-tertiary: #EFE7D8;  /* Warm Beige — hover / alt bands */
+  /* LIGHT MODE — Premium White (clean, bright; cards separated by shadow/
+     border rather than a tinted page background) */
+  --color-bg-primary: #FFFFFF;   /* Page background — pure white */
+  --color-bg-secondary: #FFFFFF; /* Cards — same white, differentiated by border + shadow */
+  --color-bg-tertiary: #F5F4F2;  /* Hover / alt bands — barely-there neutral, no longer beige */
 
-  --color-border: #E5E5E5;
-  --color-border-subtle: #EFE7D8;
+  --color-border: #ECECEC;
+  --color-border-subtle: #F0EFED;
   --color-border-light: #DCDCDC; /* Light Gray */
 
   --color-text-primary: #2B2B2B;   /* Dark Charcoal */
@@ -191,16 +192,18 @@ body {
    ============================================ */
 
 .card-hover {
-  transition: transform 250ms ease, box-shadow 250ms ease;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+  transition: transform 250ms ease, box-shadow 250ms ease, border-color 250ms ease;
+  border: 1px solid rgba(15, 23, 42, 0.06);
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
 }
 
 .card-hover:hover {
   transform: translateY(-4px);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
 }
 
 .dark .card-hover {
+  border-color: transparent;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
 }
 
@@ -208,13 +211,26 @@ body {
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
 }
 
-/* Organic Minimalism — soft floating shadow, spec: 0 10px 30px rgba(0,0,0,0.08) */
+/* Organic Minimalism — shared floating shadow, now the "Medium" elevation tier */
 .shadow-organic {
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
 }
 
 .dark .shadow-organic {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Consistent elevation system (light mode — premium white theme) */
+.shadow-elevation-sm {
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05);
+}
+
+.shadow-elevation-md {
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+}
+
+.shadow-elevation-lg {
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
 }
 
 /* Soft blurred blob — decorative background shape */

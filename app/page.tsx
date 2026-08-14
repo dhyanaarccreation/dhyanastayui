@@ -5,14 +5,8 @@ import { SpotlightSection } from "./components/ServicesSection";
 import DestinationsSection from "./components/DestinationsSection";
 import SeedBallMissionSection from "./components/SeedBallMissionSection";
 import StaysExplorer from "./components/StaysExplorer";
-import {
-  Search,
-  ArrowRight,
-  Users,
-  CalendarDays,
-  Sparkles,
-  Bot,
-} from "lucide-react";
+import HeroSearchBar from "./components/HeroSearchBar";
+import { ArrowRight, Sparkles, Bot } from "lucide-react";
 import { categories } from "@/lib/mock-data";
 
 // ============================================
@@ -54,37 +48,7 @@ function HeroSection() {
       </div>
 
       {/* Floating search bar */}
-      <div className="relative max-w-6xl mx-auto px-6 mt-1 sm:mt-1.5">
-        <div className="bg-surface rounded-[24px] shadow-organic p-2.5 sm:p-3 animate-fade-in-up">
-          <div className="flex flex-col md:flex-row items-stretch gap-2.5 sm:gap-3">
-            <div className="flex-[1.4] flex items-center gap-3 px-5 py-3.5 md:px-6 md:py-4 rounded-[16px] bg-background">
-              <Search size={18} className="text-subtle shrink-0" />
-              <input
-                type="text"
-                placeholder="Where do you want to go?"
-                className="w-full bg-transparent text-foreground placeholder-subtle text-base focus:outline-none"
-              />
-            </div>
-            <div className="flex items-center gap-2.5 px-5 py-3.5 md:px-6 md:py-4 rounded-[16px] bg-background md:min-w-[200px]">
-              <CalendarDays size={17} className="text-subtle shrink-0" />
-              <span className="text-sm text-subtle whitespace-nowrap">
-                Check-in — Check-out
-              </span>
-            </div>
-            <div className="flex items-center gap-2.5 px-5 py-3.5 md:px-6 md:py-4 rounded-[16px] bg-background md:min-w-[140px]">
-              <Users size={17} className="text-subtle shrink-0" />
-              <span className="text-sm text-subtle">Guests</span>
-            </div>
-            <Link
-              href="/#explore-stays"
-              className="flex items-center justify-center gap-1.5 px-8 py-3.5 md:py-4 bg-primary text-primary-foreground font-semibold text-base rounded-[16px] hover:bg-primary-hover transition-colors whitespace-nowrap"
-            >
-              <Search size={17} />
-              Search
-            </Link>
-          </div>
-        </div>
-      </div>
+      <HeroSearchBar />
     </section>
   );
 }
