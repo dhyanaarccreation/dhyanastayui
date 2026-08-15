@@ -7,24 +7,19 @@ interface HeroSearchBarProps {
   searchHref?: string;
 }
 
-// Literal "premium ceramic" palette per design spec — a single, unconditional
-// treatment on the OUTER capsule only. Every child below is a plain,
-// unstyled layout box (bg-transparent/border-none/shadow-none) — there is
-// exactly one element in this component with a background, border, shadow,
-// or border-radius.
+// Soft 3D Surface treatment — a single, unconditional treatment on the
+// OUTER capsule only. Every child below is a plain, unstyled layout box
+// (bg-transparent/border-none/shadow-none) — there is exactly one element
+// in this component with a background, border, shadow, or border-radius.
 //
 // Radius: `rounded-full` on the wide single-row desktop shape gives a true
 // semicircular cap (correct — the box is short and wide). The same
 // `rounded-full` on the narrow, tall mobile stack computes a ~170px corner
 // radius that clips the first row's own text, so mobile uses a large fixed
 // radius instead — still fully rounded, just sized to the box it's on.
-// Shadow bumped slightly over the original spec (.08/.05/.04 → .11/.07/.05)
-// now that the page background is pure white — the capsule needs a touch
-// more definition to still read as "floating" without a tinted page behind it.
 const CAPSULE_TREATMENT =
-  "bg-[linear-gradient(145deg,#FFFFFF,#F7F3EC)] border border-white/85 rounded-[40px] md:rounded-full overflow-hidden " +
-  "shadow-[0_35px_60px_rgba(0,0,0,.11),0_18px_28px_rgba(0,0,0,.07),0_8px_12px_rgba(0,0,0,.05),-10px_-10px_20px_rgba(255,255,255,.95),inset_0_1px_1px_rgba(255,255,255,.9)] " +
-  "before:content-[''] before:absolute before:inset-x-0 before:top-0 before:h-[45%] before:rounded-t-[40px] md:before:rounded-t-full before:bg-gradient-to-b before:from-white/80 before:to-transparent before:pointer-events-none";
+  "bg-white border border-[var(--surface-border)] rounded-[40px] md:rounded-full overflow-hidden " +
+  "shadow-[var(--shadow-soft)]";
 
 // A thin gradient line — horizontal between stacked rows on mobile,
 // vertical between row segments at md+. Never a background/card.
@@ -86,7 +81,7 @@ export default function HeroSearchBar({ searchHref = "/#explore-stays" }: HeroSe
             pill sitting inset inside the capsule. */}
         <Link
           href={searchHref}
-          className="flex items-center justify-center gap-2 px-8 py-5 md:py-0 md:my-2.5 md:mr-2.5 rounded-[22px] bg-[linear-gradient(180deg,#F59A4A,#E78337)] text-white font-semibold text-base tracking-tight whitespace-nowrap shadow-[0_18px_30px_rgba(231,131,55,.35),0_8px_12px_rgba(0,0,0,.08),inset_0_1px_rgba(255,255,255,.35)] transition-transform duration-300 ease-[cubic-bezier(0.22,0.61,0.36,1)] hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2"
+          className="flex items-center justify-center gap-2 px-8 py-5 md:py-0 md:my-2.5 md:mr-2.5 rounded-[22px] bg-primary text-primary-foreground font-semibold text-base tracking-tight whitespace-nowrap shadow-[0_4px_10px_rgba(230,126,34,0.18)] hover:bg-primary-hover hover:shadow-[0_6px_16px_rgba(230,126,34,0.24)] transition-all duration-300 ease-[cubic-bezier(0.22,0.61,0.36,1)] hover:-translate-y-px focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2"
         >
           <Search size={17} />
           Search

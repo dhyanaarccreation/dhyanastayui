@@ -171,14 +171,8 @@ function CategoriesSection() {
 function ExploreStaysSection() {
   return (
     <section id="explore-stays" className="py-5 md:py-7 bg-background scroll-mt-20">
-      <div className="max-w-[1400px] mx-auto px-6 lg:px-8 mb-1.5 sm:mb-2 lg:mb-3">
-        <span className="text-xs font-semibold text-sage uppercase tracking-widest">
-          Browse
-        </span>
-        <h2 className="heading-organic text-xl sm:text-2xl lg:text-4xl text-foreground mt-0.5 sm:mt-1">
-          Explore All Stays
-        </h2>
-      </div>
+      {/* Heading is owned by StaysExplorer itself now — it toggles between
+          "Choose a Destination" and "{Destination} Stays" based on selection. */}
       <StaysExplorer />
     </section>
   );

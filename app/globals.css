@@ -26,6 +26,11 @@
 
   --font-sans: var(--font-inter);
   --font-serif: var(--font-playfair);
+
+  /* Soft 3D Surface system — see tokens below (also exposed as
+     rounded-card / rounded-panel Tailwind utilities) */
+  --radius-card: var(--radius-card);
+  --radius-panel: var(--radius-panel);
 }
 
 :root {
@@ -51,6 +56,51 @@
   /* Forest Green accent + warm rust alert tone */
   --color-sage-base: #4E6E58;
   --color-terracotta-base: #C0503A;
+
+  /* ---- Soft 3D Surface system ----
+     One shared depth language for every card/pill/panel on the site:
+     clean white surfaces, a barely-there border, and a soft, realistic
+     multi-layer shadow instead of a single flat one. Components should
+     reach for --shadow-soft/--shadow-hover (or the .soft-3d-surface /
+     .soft-3d-pill classes) rather than inventing their own shadow values. */
+  --surface: var(--color-bg-secondary);
+  --surface-border: rgba(30, 30, 30, 0.07);
+
+  --shadow-soft:
+    0 2px 5px rgba(0, 0, 0, 0.04),
+    0 8px 20px rgba(0, 0, 0, 0.06),
+    0 18px 35px rgba(0, 0, 0, 0.04);
+  --shadow-hover:
+    0 4px 8px rgba(0, 0, 0, 0.05),
+    0 12px 26px rgba(0, 0, 0, 0.08),
+    0 22px 40px rgba(0, 0, 0, 0.05);
+
+  /* Lighter variant for small pills/buttons */
+  --shadow-soft-pill:
+    0 2px 5px rgba(0, 0, 0, 0.04),
+    0 6px 14px rgba(0, 0, 0, 0.05);
+  --shadow-hover-pill:
+    0 4px 8px rgba(0, 0, 0, 0.05),
+    0 8px 18px rgba(0, 0, 0, 0.07);
+
+  --radius-card: 18px;
+  --radius-panel: 20px;
+
+  /* Property cards specifically want more visible depth than the general
+     --shadow-soft/--shadow-hover pair used for navbar/search/pills — a
+     tighter dark core directly under the card plus a wider soft falloff,
+     not just one layer. Scoped to its own tokens so nothing else that
+     already uses --shadow-soft/--shadow-hover changes. */
+  --shadow-card:
+    0 2px 3px rgba(0, 0, 0, 0.04),
+    0 6px 10px rgba(0, 0, 0, 0.06),
+    0 14px 24px rgba(0, 0, 0, 0.08),
+    0 24px 40px rgba(0, 0, 0, 0.05);
+  --shadow-card-hover:
+    0 3px 5px rgba(0, 0, 0, 0.05),
+    0 9px 15px rgba(0, 0, 0, 0.07),
+    0 18px 30px rgba(0, 0, 0, 0.10),
+    0 28px 45px rgba(0, 0, 0, 0.06);
 }
 
 .dark {
@@ -75,6 +125,17 @@
   /* Forest Green accent + warm rust alert tone */
   --color-sage-base: #6E9478;
   --color-terracotta-base: #D97057;
+
+  /* Soft 3D Surface system — dark mode: borders recede to transparent,
+     depth comes entirely from a larger, darker ambient shadow instead
+     (matches the existing .card-hover/.shadow-organic dark treatment). */
+  --surface-border: transparent;
+  --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.3);
+  --shadow-hover: 0 16px 40px rgba(0, 0, 0, 0.35);
+  --shadow-soft-pill: 0 8px 20px rgba(0, 0, 0, 0.28);
+  --shadow-hover-pill: 0 12px 28px rgba(0, 0, 0, 0.32);
+  --shadow-card: 0 14px 36px rgba(0, 0, 0, 0.35);
+  --shadow-card-hover: 0 20px 48px rgba(0, 0, 0, 0.4);
 }
 
 
@@ -188,49 +249,90 @@ body {
 .stagger-children > *:nth-child(3) { animation-delay: 0.15s; }
 
 /* ============================================
+   Soft 3D Surface system
+   One reusable depth treatment for cards, pills and
+   panels site-wide — clean white surface, a barely-there
+   border, and a soft, layered, realistic shadow. Built
+   entirely on the tokens above so nothing here duplicates
+   a one-off shadow value.
+   ============================================ */
+
+.soft-3d-surface {
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-panel);
+  box-shadow: var(--shadow-soft);
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.soft-3d-surface:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+}
+
+.soft-3d-pill {
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
+  border-radius: 999px;
+  box-shadow: var(--shadow-soft-pill);
+  transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease, border-color 160ms ease;
+}
+
+.soft-3d-pill:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-hover-pill);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .soft-3d-surface,
+  .soft-3d-pill,
+  .card-hover {
+    transition: none;
+  }
+
+  .soft-3d-surface:hover,
+  .soft-3d-pill:hover,
+  .card-hover:hover {
+    transform: none;
+  }
+}
+
+/* ============================================
    Card Hover Effects
+   Existing site-wide card treatment — now sourced from the
+   same Soft 3D Surface tokens above, so every component
+   already using .card-hover / .shadow-organic / .shadow-elevation-*
+   (PropertyCard, the Navbar dropdown, experience cards, dashboard
+   panels, etc.) picks up the new depth treatment automatically.
    ============================================ */
 
 .card-hover {
   transition: transform 250ms ease, box-shadow 250ms ease, border-color 250ms ease;
-  border: 1px solid rgba(15, 23, 42, 0.06);
-  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+  border: 1px solid var(--surface-border);
+  box-shadow: var(--shadow-soft);
 }
 
 .card-hover:hover {
   transform: translateY(-4px);
-  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
-}
-
-.dark .card-hover {
-  border-color: transparent;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-}
-
-.dark .card-hover:hover {
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+  box-shadow: var(--shadow-hover);
 }
 
 /* Organic Minimalism — shared floating shadow, now the "Medium" elevation tier */
 .shadow-organic {
-  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+  box-shadow: var(--shadow-soft);
 }
 
-.dark .shadow-organic {
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-}
-
-/* Consistent elevation system (light mode — premium white theme) */
+/* Consistent elevation system */
 .shadow-elevation-sm {
-  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05);
+  box-shadow: var(--shadow-soft-pill);
 }
 
 .shadow-elevation-md {
-  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+  box-shadow: var(--shadow-soft);
 }
 
 .shadow-elevation-lg {
-  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
+  box-shadow: var(--shadow-hover);
 }
 
 /* Soft blurred blob — decorative background shape */
