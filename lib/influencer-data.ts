@@ -258,3 +258,327 @@ export const topProperties = [
   { id: "tp2", name: "Auroville Eco Cottages", views: 9_600, clicks: 1_540, saves: 410, bookings: 12, revenue: "₹3.8L", conversionRate: "0.8%" },
   { id: "tp3", name: "Stone Valley Villa", views: 6_200, clicks: 900, saves: 260, bookings: 6, revenue: "₹2.1L", conversionRate: "0.6%" },
 ];
+
+// ============================================
+// DHYANA TRAVEL CURATOR — business model
+// Curated stay collections, day-by-day itineraries,
+// itinerary-copy commissions and performance tiers.
+// Powers /influencer/collection (dashboard) and the
+// public /travel-with/[handle] storefront page.
+// ============================================
+
+// ---------- Curator identity ----------
+export const curatorIdentity = {
+  title: "Dhyana Travel Curator",
+  handle: "riyatravels", // used in the public /travel-with/[handle] URL
+  region: "Pondicherry & Auroville",
+  tagline: "Slow-travel curator for the Pondicherry–Auroville belt",
+  minimumStaysRequired: 10,
+  roles: ["Creator", "Local Guide", "Stay Curator", "Itinerary Creator", "Demand Partner"],
+};
+
+// ---------- Curated stays (the influencer's own collection) ----------
+export type StayCategory = "Boutique" | "Luxury" | "Farm Stay" | "Nature" | "Couple" | "Family" | "Unique";
+
+export const curatedStays: {
+  id: string;
+  propertySlug: string;
+  name: string;
+  location: string;
+  image: string;
+  categories: StayCategory[];
+  note: string;
+  addedOn: string;
+  price: number;
+  featured: boolean;
+  order: number;
+}[] = [
+  {
+    id: "cs1",
+    propertySlug: "nila-wellness-retreat",
+    name: "Nila Wellness Retreat",
+    location: "Palakkad, Kerala",
+    image: "https://images.unsplash.com/photo-1600334129128-685c5582fd35?w=600&q=75",
+    categories: ["Luxury", "Couple"],
+    note: "My go-to for a proper reset — the Ayurveda program alone is worth the trip.",
+    addedOn: "Jun 12",
+    price: 8_500,
+    featured: true,
+    order: 1,
+  },
+  {
+    id: "cs2",
+    propertySlug: "auroville-eco-cottages",
+    name: "Auroville Eco Cottages",
+    location: "Auroville, Tamil Nadu",
+    image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&q=75",
+    categories: ["Nature", "Unique"],
+    note: "Off-grid, quiet, and five minutes from the Matrimandir on a bicycle.",
+    addedOn: "Jun 12",
+    price: 5_200,
+    featured: true,
+    order: 2,
+  },
+  {
+    id: "cs3",
+    propertySlug: "the-canopy-tiny-house",
+    name: "The Canopy Tiny House",
+    location: "Kodaikanal, Tamil Nadu",
+    image: "https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?w=600&q=75",
+    categories: ["Unique", "Couple"],
+    note: "Fits two, has the best sunrise view I've shot all year.",
+    addedOn: "Jun 18",
+    price: 4_500,
+    featured: false,
+    order: 3,
+  },
+  {
+    id: "cs4",
+    propertySlug: "stone-valley-villa",
+    name: "Stone Valley Villa",
+    location: "Yelagiri, Tamil Nadu",
+    image: "https://images.unsplash.com/photo-1613977257363-707ba9348227?w=600&q=75",
+    categories: ["Family", "Boutique"],
+    note: "Big groups, big kitchen, the host cooks a mean Chettinad breakfast.",
+    addedOn: "Jun 20",
+    price: 6_800,
+    featured: false,
+    order: 4,
+  },
+  {
+    id: "cs5",
+    propertySlug: "whistling-pines-homestead",
+    name: "Whistling Pines Homestead",
+    location: "Coorg, Karnataka",
+    image: "https://images.unsplash.com/photo-1595274459742-4dee436c0e0a?w=600&q=75",
+    categories: ["Farm Stay", "Family"],
+    note: "Coffee estate walks + the homestead's own filter coffee. Non-negotiable stop.",
+    addedOn: "Jul 02",
+    price: 5_900,
+    featured: false,
+    order: 5,
+  },
+  {
+    id: "cs6",
+    propertySlug: "old-mill-guesthouse",
+    name: "Old Mill Guesthouse",
+    location: "Wayanad, Kerala",
+    image: "https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=600&q=75",
+    categories: ["Boutique", "Nature"],
+    note: "Converted mill, river-facing rooms — book the corner suite if you can.",
+    addedOn: "Jul 08",
+    price: 4_200,
+    featured: false,
+    order: 6,
+  },
+  {
+    id: "cs7",
+    propertySlug: "bamboo-nest-eco-stay",
+    name: "Bamboo Nest Eco Stay",
+    location: "Munnar, Kerala",
+    image: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=600&q=75",
+    categories: ["Nature", "Unique"],
+    note: "Treehouse living for real — my kids still talk about this one.",
+    addedOn: "Jul 15",
+    price: 3_800,
+    featured: false,
+    order: 7,
+  },
+];
+
+// ---------- Itineraries (day-by-day, copyable by travellers) ----------
+export type ItineraryStatus = "Published" | "Draft";
+export type StopType = "Stay" | "Experience" | "Food" | "Activity" | "Transport";
+
+export interface ItineraryStop {
+  type: StopType;
+  label: string;
+  notes?: string;
+}
+
+export interface ItineraryDay {
+  day: number;
+  title: string;
+  stops: ItineraryStop[];
+}
+
+export const itineraries: {
+  id: string;
+  title: string;
+  region: string;
+  durationLabel: string;
+  coverImage: string;
+  status: ItineraryStatus;
+  days: ItineraryDay[];
+  estimatedCost: string;
+  saves: number;
+  copies: number;
+  bookingsFromCopies: number;
+  commissionEarned: string;
+}[] = [
+  {
+    id: "it1",
+    title: "3-Day Pondicherry Couple Trip",
+    region: "Pondicherry & Auroville",
+    durationLabel: "3 days",
+    coverImage: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=800&q=75",
+    status: "Published",
+    days: [
+      {
+        day: 1,
+        title: "Arrival & French Quarter",
+        stops: [
+          { type: "Stay", label: "Check in — Auroville Eco Cottages", notes: "Request the garden-facing cottage." },
+          { type: "Food", label: "Café des Arts", notes: "Try the filter coffee and the tart of the day." },
+          { type: "Experience", label: "Beach sunset at Promenade" },
+        ],
+      },
+      {
+        day: 2,
+        title: "Auroville Deep Dive",
+        stops: [
+          { type: "Experience", label: "Matrimandir viewing", notes: "Book a viewing pass a day in advance." },
+          { type: "Activity", label: "Heritage walk" },
+          { type: "Food", label: "Local Tamil thali lunch" },
+        ],
+      },
+      {
+        day: 3,
+        title: "Farm & Departure",
+        stops: [
+          { type: "Experience", label: "Organic farm experience" },
+          { type: "Activity", label: "Vaithikuppam local market" },
+          { type: "Transport", label: "Depart to Chennai / Pondicherry airport" },
+        ],
+      },
+    ],
+    estimatedCost: "₹9,500 for two",
+    saves: 1_040,
+    copies: 118,
+    bookingsFromCopies: 34,
+    commissionEarned: "₹41,200",
+  },
+  {
+    id: "it2",
+    title: "My 3-Day Goa Wellness Reset",
+    region: "Goa",
+    durationLabel: "3 days",
+    coverImage: "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=800&q=75",
+    status: "Published",
+    days: [
+      {
+        day: 1,
+        title: "Settle In",
+        stops: [
+          { type: "Stay", label: "Check in — beachfront villa" },
+          { type: "Activity", label: "Sunset yoga session" },
+          { type: "Food", label: "Beach shack dinner" },
+        ],
+      },
+      {
+        day: 2,
+        title: "Slow Day",
+        stops: [
+          { type: "Experience", label: "Ayurveda massage", notes: "Book the 90-minute abhyanga." },
+          { type: "Activity", label: "Flea market" },
+          { type: "Experience", label: "Sunset cruise" },
+        ],
+      },
+      {
+        day: 3,
+        title: "Wind Down",
+        stops: [
+          { type: "Activity", label: "Morning swim" },
+          { type: "Food", label: "Local café breakfast" },
+          { type: "Transport", label: "Depart to Goa airport" },
+        ],
+      },
+    ],
+    estimatedCost: "₹12,000 for two",
+    saves: 1_820,
+    copies: 96,
+    bookingsFromCopies: 27,
+    commissionEarned: "₹36,400",
+  },
+  {
+    id: "it3",
+    title: "Weekend Farm Reset — Coorg",
+    region: "Coorg, Karnataka",
+    durationLabel: "2 days",
+    coverImage: "https://images.unsplash.com/photo-1595274459742-4dee436c0e0a?w=800&q=75",
+    status: "Draft",
+    days: [
+      {
+        day: 1,
+        title: "Coffee Country",
+        stops: [
+          { type: "Stay", label: "Check in — Whistling Pines Homestead" },
+          { type: "Activity", label: "Estate walk" },
+          { type: "Food", label: "Filter coffee tasting" },
+        ],
+      },
+      {
+        day: 2,
+        title: "Waterfalls & Home",
+        stops: [
+          { type: "Experience", label: "Abbey Falls" },
+          { type: "Food", label: "Homestead breakfast" },
+          { type: "Transport", label: "Depart" },
+        ],
+      },
+    ],
+    estimatedCost: "₹6,200 for two",
+    saves: 0,
+    copies: 0,
+    bookingsFromCopies: 0,
+    commissionEarned: "₹0",
+  },
+];
+
+// ---------- Itinerary-driven commission (copy → customise → book) ----------
+export const itineraryBookings = [
+  { id: "ib1", itinerary: "3-Day Pondicherry Couple Trip", travellerNote: "Copied & customised · booked Auroville Eco Cottages", bookingValue: "₹14,200", commission: "₹1,420", date: "Jul 22" },
+  { id: "ib2", itinerary: "My 3-Day Goa Wellness Reset", travellerNote: "Copied & customised · booked a beachfront villa", bookingValue: "₹22,000", commission: "₹2,200", date: "Jul 19" },
+  { id: "ib3", itinerary: "3-Day Pondicherry Couple Trip", travellerNote: "Copied & customised · booked Nila Wellness Retreat", bookingValue: "₹28,500", commission: "₹2,850", date: "Jul 11" },
+];
+
+// ---------- Performance tiers (curated stays + booking volume → benefits) ----------
+export const performanceTiers = [
+  {
+    key: "starter",
+    label: "Starter Curator",
+    requirement: "10 curated stays",
+    benefits: ["Curator profile activated", "Earn booking commissions", "Public Travel Curator page"],
+  },
+  {
+    key: "growing",
+    label: "Growing Curator",
+    requirement: "Higher booking volume",
+    benefits: ["Discounted stays", "Free stay opportunities", "Priority campaign invites"],
+  },
+  {
+    key: "top",
+    label: "Top Curator",
+    requirement: "High booking performance",
+    benefits: ["Free stays", "Exclusive experiences", "Higher commission tier", "Early access to new properties"],
+  },
+] as const;
+
+// Where this curator currently sits — used to highlight the active tier.
+export const currentTierKey: (typeof performanceTiers)[number]["key"] = "growing";
+
+// ---------- Minimum-10-stays progress (profile activation gate) ----------
+export const curatedStaysProgress = {
+  current: curatedStays.length,
+  required: curatorIdentity.minimumStaysRequired,
+};
+
+// ---------- Curator page & content performance ----------
+export const curatorAnalytics = {
+  profileViews: 22_600,
+  stayCollectionViews: 14_800,
+  itineraryViews: itineraries.reduce((sum, it) => sum + it.saves + it.copies * 3, 0),
+  itinerarySaves: itineraries.reduce((sum, it) => sum + it.saves, 0),
+  itineraryCopies: itineraries.reduce((sum, it) => sum + it.copies, 0),
+  travellerCommunitySize: 248_000, // mirrors audienceSize, framed for the curator storefront
+};

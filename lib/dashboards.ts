@@ -51,6 +51,9 @@ import {
   TrendingUp,
   Ticket,
   LogOut,
+  Bookmark,
+  Share2,
+  Wand2,
 } from "lucide-react";
 
 export interface DashSection {
@@ -362,11 +365,15 @@ export const dashboardRoles: DashboardRole[] = [
       { label: "Dashboard", href: "/influencer", icon: LayoutDashboard },
       { label: "Campaigns", href: "/influencer/campaigns", icon: Megaphone },
       { label: "Content", href: "/influencer/content", icon: Video },
+      { label: "My Collection", href: "/influencer/collection", icon: Bookmark },
+      { label: "Create Itinerary", href: "/influencer/itinerary-builder", icon: Wand2 },
       { label: "Promo & Links", href: "/influencer/promo", icon: Ticket },
       { label: "Bookings", href: "/influencer/bookings", icon: CalendarDays },
       { label: "Analytics", href: "/influencer/analytics", icon: BarChart3 },
       { label: "Earnings", href: "/influencer/earnings", icon: Wallet },
+      { label: "Benefits", href: "/influencer/benefits", icon: Gift },
       { label: "Marketing Assets", href: "/influencer/assets", icon: Image },
+      { label: "Share & Promote", href: "/influencer/share", icon: Share2 },
       { label: "Messages", href: "/influencer/messages", icon: MessageSquare },
       { label: "Profile", href: "/influencer/profile", icon: User },
     ],

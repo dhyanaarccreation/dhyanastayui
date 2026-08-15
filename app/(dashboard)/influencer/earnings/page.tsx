@@ -9,6 +9,8 @@ import {
   Send,
   FileText,
   Building2,
+  Copy,
+  Ticket,
 } from "lucide-react";
 import { PageHeader, SectionCard, StatGrid, StatusPill } from "@/app/components/DashboardUI";
 import {
@@ -18,6 +20,7 @@ import {
   payoutHistory,
   minimumPayoutThreshold,
   influencerProfile,
+  itineraryBookings,
 } from "@/lib/influencer-data";
 
 // ============================================
@@ -88,6 +91,43 @@ export default function InfluencerEarningsPage() {
             </li>
           ))}
         </ul>
+      </SectionCard>
+
+      {/* Two earning paths: direct promo-code clicks vs. copied itineraries */}
+      <SectionCard title="How You're Earning" icon={Copy}>
+        <div className="px-5 pt-4 grid sm:grid-cols-2 gap-4">
+          <div className="rounded-xl border border-border bg-background p-4">
+            <p className="text-xs font-semibold text-foreground flex items-center gap-1.5"><Ticket size={13} className="text-sage" /> Direct promo code</p>
+            <p className="text-[11px] text-muted mt-1">Traveller clicks your code or link and books directly.</p>
+            <p className="text-lg font-bold text-foreground mt-2 tabular-nums">
+              ₹{(coreMetrics.commissionEarned - itineraryBookings.reduce((s, b) => s + Number(b.commission.replace(/[₹,]/g, "")), 0)).toLocaleString("en-IN")}
+            </p>
+          </div>
+          <div className="rounded-xl border border-border bg-background p-4">
+            <p className="text-xs font-semibold text-foreground flex items-center gap-1.5"><Copy size={13} className="text-primary" /> Copied itinerary</p>
+            <p className="text-[11px] text-muted mt-1">Traveller copies, customises and books your itinerary.</p>
+            <p className="text-lg font-bold text-foreground mt-2 tabular-nums">
+              ₹{itineraryBookings.reduce((s, b) => s + Number(b.commission.replace(/[₹,]/g, "")), 0).toLocaleString("en-IN")}
+            </p>
+          </div>
+        </div>
+        <ul className="divide-y divide-surface-hover mt-4">
+          {itineraryBookings.map((b) => (
+            <li key={b.id} className="flex items-center justify-between gap-3 px-5 py-3.5">
+              <div className="min-w-0">
+                <p className="text-sm text-foreground truncate">{b.itinerary}</p>
+                <p className="text-xs text-subtle mt-0.5">{b.travellerNote} · {b.date}</p>
+              </div>
+              <div className="flex items-center gap-2.5 shrink-0">
+                <span className="text-xs text-muted">{b.bookingValue}</span>
+                <span className="text-sm font-semibold text-sage tabular-nums">{b.commission}</span>
+              </div>
+            </li>
+          ))}
+        </ul>
+        <p className="px-5 py-3 text-[11px] text-subtle border-t border-surface-hover">
+          Your itineraries keep earning long after you publish them — manage them from My Collection.
+        </p>
       </SectionCard>
 
       <div className="grid lg:grid-cols-2 gap-6">

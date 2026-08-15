@@ -20,7 +20,18 @@ import {
   ArrowUpRight,
 } from "lucide-react";
 import { PageHeader, SectionCard, StatusPill } from "@/app/components/DashboardUI";
-import { coreMetrics, promoCode, referralLinks, topContent, campaigns } from "@/lib/influencer-data";
+import {
+  coreMetrics,
+  promoCode,
+  referralLinks,
+  topContent,
+  campaigns,
+  curatorIdentity,
+  curatedStaysProgress,
+  performanceTiers,
+  currentTierKey,
+} from "@/lib/influencer-data";
+import { Sparkles, MapPin, Bookmark, ExternalLink } from "lucide-react";
 
 // ============================================
 // INFLUENCER — Dashboard (performance overview)
@@ -77,6 +88,39 @@ export default function InfluencerDashboardPage() {
             <p className="text-[11px] text-subtle mt-0.5">{s.label}</p>
           </div>
         ))}
+      </div>
+
+      {/* Dhyana Travel Curator identity + tier */}
+      <div className="bg-gradient-to-r from-sage/15 via-surface to-surface border border-sage/25 rounded-2xl p-6 md:p-8">
+        <div className="flex flex-col md:flex-row md:items-center gap-6">
+          <div className="flex-1">
+            <p className="text-xs font-semibold uppercase tracking-wider text-sage flex items-center gap-1.5">
+              <Sparkles size={12} /> {curatorIdentity.title}
+            </p>
+            <p className="text-xl font-bold text-foreground mt-2 flex items-center gap-2">
+              <MapPin size={16} className="text-sage" /> {curatorIdentity.region}
+            </p>
+            <p className="text-sm text-muted mt-1 flex items-center gap-1.5">
+              <Bookmark size={13} className="text-subtle" />
+              {curatedStaysProgress.current} of {curatedStaysProgress.required} curated stays ·{" "}
+              {performanceTiers.find((t) => t.key === currentTierKey)?.label}
+            </p>
+          </div>
+          <div className="flex items-center gap-2 shrink-0">
+            <Link
+              href="/influencer/collection"
+              className="px-4 py-2 text-xs font-semibold bg-primary text-primary-foreground rounded-full hover:bg-primary-hover transition-colors"
+            >
+              Manage Collection
+            </Link>
+            <Link
+              href={`/travel-with/${curatorIdentity.handle}`}
+              className="flex items-center gap-1.5 px-4 py-2 text-xs font-semibold bg-surface border border-sage text-sage rounded-full hover:bg-sage hover:text-white transition-colors whitespace-nowrap"
+            >
+              <ExternalLink size={12} /> Public Page
+            </Link>
+          </div>
+        </div>
       </div>
 
       {/* Quick actions */}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import {
   User,
   BadgeCheck,
@@ -12,9 +13,18 @@ import {
   Building2,
   ShieldCheck,
   Smartphone,
+  Sparkles,
+  Bookmark,
+  ExternalLink,
 } from "lucide-react";
 import { PageHeader, SectionCard, StatusPill, Toggle } from "@/app/components/DashboardUI";
-import { influencerProfile } from "@/lib/influencer-data";
+import {
+  influencerProfile,
+  curatorIdentity,
+  curatedStaysProgress,
+  performanceTiers,
+  currentTierKey,
+} from "@/lib/influencer-data";
 
 // ============================================
 // INFLUENCER — Profile
@@ -73,6 +83,63 @@ export default function InfluencerProfilePage() {
               <span key={c} className="px-3 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-medium">{c}</span>
             ))}
           </div>
+        </div>
+      </SectionCard>
+
+      <SectionCard title="Curator Status" icon={Sparkles}>
+        <div className="px-5 pt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-wider text-sage flex items-center gap-1.5">
+              <Sparkles size={12} /> {curatorIdentity.title}
+            </p>
+            <p className="text-sm text-foreground mt-1.5 flex items-center gap-1.5">
+              <MapPin size={13} className="text-sage" /> {curatorIdentity.region}
+            </p>
+          </div>
+          <Link
+            href={`/travel-with/${curatorIdentity.handle}`}
+            className="flex items-center gap-1.5 px-4 py-2 text-xs font-semibold bg-surface border border-sage text-sage rounded-full hover:bg-sage hover:text-white transition-colors whitespace-nowrap shrink-0"
+          >
+            <ExternalLink size={12} /> View public page
+          </Link>
+        </div>
+
+        <div className="px-5 pt-4">
+          <div className="flex justify-between text-xs text-muted mb-1.5">
+            <span className="flex items-center gap-1"><Bookmark size={11} /> {curatedStaysProgress.current} of {curatedStaysProgress.required} curated stays</span>
+            <span>{curatedStaysProgress.current >= curatedStaysProgress.required ? "Activated" : `${curatedStaysProgress.required - curatedStaysProgress.current} to go`}</span>
+          </div>
+          <div className="h-2 rounded-full bg-surface-hover overflow-hidden">
+            <div
+              className="h-full rounded-full bg-gradient-to-r from-sage to-primary"
+              style={{ width: `${Math.min(100, Math.round((curatedStaysProgress.current / curatedStaysProgress.required) * 100))}%` }}
+            />
+          </div>
+        </div>
+
+        <div className="flex items-center gap-2 mt-5 mb-1 px-5 flex-wrap">
+          {performanceTiers.map((t) => (
+            <span
+              key={t.key}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border transition-colors ${
+                t.key === currentTierKey ? "bg-sage text-white border-sage" : "bg-background text-subtle border-border"
+              }`}
+            >
+              {t.label}
+            </span>
+          ))}
+        </div>
+        <div className="px-5 py-4">
+          <p className="text-[11px] font-semibold uppercase tracking-wider text-subtle mb-2">
+            {performanceTiers.find((t) => t.key === currentTierKey)?.label} benefits
+          </p>
+          <ul className="space-y-1.5">
+            {performanceTiers.find((t) => t.key === currentTierKey)?.benefits.map((b) => (
+              <li key={b} className="text-xs text-muted flex items-center gap-1.5">
+                <BadgeCheck size={12} className="text-sage shrink-0" /> {b}
+              </li>
+            ))}
+          </ul>
         </div>
       </SectionCard>
 
