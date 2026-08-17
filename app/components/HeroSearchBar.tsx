@@ -7,11 +7,6 @@ interface HeroSearchBarProps {
   searchHref?: string;
 }
 
-// Soft 3D Surface treatment — a single, unconditional treatment on the
-// OUTER capsule only. Every child below is a plain, unstyled layout box
-// (bg-transparent/border-none/shadow-none) — there is exactly one element
-// in this component with a background, border, shadow, or border-radius.
-//
 // Radius: `rounded-full` on the wide single-row desktop shape gives a true
 // semicircular cap (correct — the box is short and wide). The same
 // `rounded-full` on the narrow, tall mobile stack computes a ~170px corner

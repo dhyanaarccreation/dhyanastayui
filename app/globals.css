@@ -101,6 +101,20 @@
     0 9px 15px rgba(0, 0, 0, 0.07),
     0 18px 30px rgba(0, 0, 0, 0.10),
     0 28px 45px rgba(0, 0, 0, 0.06);
+
+  /* Double-layer 3D — a visible second physical edge behind the main
+     surface (not just a shadow). Scoped to its own tokens; only used by
+     .soft-3d-double, applied to the 4 hero-area surfaces (spotlight card,
+     main search bar, explore-stays search/location controls, AI Planner
+     button) — not property cards or anything else. */
+  --shadow-double:
+    0 2px 4px rgba(0, 0, 0, 0.05),
+    0 8px 16px rgba(0, 0, 0, 0.08),
+    0 18px 28px rgba(0, 0, 0, 0.08);
+  --soft-3d-double-border: rgba(35, 35, 35, 0.10);
+  --soft-3d-double-layer-border: rgba(35, 35, 35, 0.07);
+  --soft-3d-double-layer-bg: rgba(255, 255, 255, 0.75);
+  --soft-3d-double-cast: rgba(0, 0, 0, 0.10);
 }
 
 .dark {
@@ -136,6 +150,15 @@
   --shadow-hover-pill: 0 12px 28px rgba(0, 0, 0, 0.32);
   --shadow-card: 0 14px 36px rgba(0, 0, 0, 0.35);
   --shadow-card-hover: 0 20px 48px rgba(0, 0, 0, 0.4);
+
+  /* Double-layer 3D — dark mode: the second edge becomes a faint light
+     hairline instead of a white layer, cast shadow deepens instead of
+     relying on a border to read as physical thickness. */
+  --shadow-double: 0 14px 34px rgba(0, 0, 0, 0.32);
+  --soft-3d-double-border: transparent;
+  --soft-3d-double-layer-border: rgba(255, 255, 255, 0.08);
+  --soft-3d-double-layer-bg: rgba(255, 255, 255, 0.04);
+  --soft-3d-double-cast: rgba(0, 0, 0, 0.45);
 }
 
 
@@ -281,6 +304,67 @@ body {
 .soft-3d-pill:hover {
   transform: translateY(-1px);
   box-shadow: var(--shadow-hover-pill);
+}
+
+/* ============================================
+   Soft 3D Double-Layer
+   A visible SECOND physical edge behind the main surface —
+   not just a shadow. Reserved for the hero-area "featured"
+   surfaces (spotlight card, main search bar, explore-stays
+   search/location controls, AI Planner button); property
+   cards and everything else keep their existing treatment.
+
+   Border-radius is deliberately NOT set here — apply the
+   component's own rounded-* utility alongside this class,
+   and ::after's `border-radius: inherit` picks it up.
+   ============================================ */
+
+.soft-3d-double {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--soft-3d-double-border);
+  box-shadow: var(--shadow-double);
+  isolation: isolate;
+}
+
+/* The second physical layer — offset down/inward, sits behind the main surface */
+.soft-3d-double::after {
+  content: "";
+  position: absolute;
+  left: 7px;
+  right: 7px;
+  bottom: -7px;
+  height: 100%;
+  border-radius: inherit;
+  border: 1px solid var(--soft-3d-double-layer-border);
+  background: var(--soft-3d-double-layer-bg);
+  z-index: -1;
+}
+
+/* Soft cast shadow beneath the second layer */
+.soft-3d-double::before {
+  content: "";
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  bottom: -12px;
+  height: 10px;
+  background: var(--soft-3d-double-cast);
+  filter: blur(9px);
+  border-radius: 50%;
+  z-index: -2;
+}
+
+/* Small-pill variant (AI Planner) — tighter offsets, same mechanics */
+.soft-3d-double-sm::after {
+  left: 5px;
+  right: 5px;
+  bottom: -4px;
+}
+
+.soft-3d-double-sm::before {
+  bottom: -8px;
+  height: 6px;
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -7,13 +7,25 @@ import {
   ChevronDown,
   X,
   Home,
+  Sprout,
+  Heart,
+  Crown,
+  Leaf,
+  Landmark,
+  Laptop,
+  HeartHandshake,
   Users,
+  PawPrint,
+  Mountain,
+  Castle,
   Sparkles,
   Check,
+  type LucideIcon,
 } from "lucide-react";
 import { properties, categories, type Property } from "@/lib/mock-data";
 import { useUserLocation } from "@/lib/useUserLocation";
 import LocationIndicator from "@/app/components/LocationIndicator";
+import CategoryTile from "@/app/components/CategoryTile";
 import PropertyGrid from "@/app/components/PropertyGrid";
 import VaksanaFarmsCard from "@/app/components/VaksanaFarmsCard";
 
@@ -41,6 +53,24 @@ const visibleProperties = properties.filter((p) => !p.hidden);
 // from the live property catalog (not a curated/editorial list), so every
 // option is guaranteed to have at least one result.
 const CITY_OPTIONS = Array.from(new Set(visibleProperties.map((p) => p.location.city))).sort();
+
+// Maps each category's existing `icon` field (a lucide-react component
+// name) to the actual component — the carousel shows a small icon instead
+// of a photo, reusing the icon names already present in the category data.
+const CATEGORY_ICONS: Record<string, LucideIcon> = {
+  Home,
+  Sprout,
+  Heart,
+  Crown,
+  Leaf,
+  Landmark,
+  Laptop,
+  HeartHandshake,
+  Users,
+  PawPrint,
+  Mountain,
+  Castle,
+};
 
 type PriceBucket = "any" | "under-5k" | "5k-10k" | "10k-20k" | "above-20k";
 type SortKey = "recommended" | "price-low" | "price-high" | "rating";
@@ -215,35 +245,26 @@ export default function StaysExplorer() {
           </p>
         )}
 
-        {/* Category chips — visually secondary, below the search/location row */}
-        <div className="mt-4 flex items-center gap-2 overflow-x-auto pb-1 scrollbar-hide">
-          <button
-            onClick={() => setActiveCategory("all")}
-            className={`shrink-0 px-3.5 py-2 rounded-full text-xs font-medium border transition-all hover:-translate-y-px ${
-              activeCategory === "all"
-                ? "bg-primary text-primary-foreground border-primary shadow-[var(--shadow-soft-pill)]"
-                : "bg-surface border-border/60 text-subtle shadow-[var(--shadow-soft-pill)] hover:text-foreground hover:border-border hover:shadow-[var(--shadow-hover-pill)]"
-            }`}
-          >
-            All Stays
-          </button>
-          {categories.map((cat) => (
-            <button
-              key={cat.slug}
-              onClick={() => setActiveCategory(cat.slug)}
-              className={`shrink-0 px-3.5 py-2 rounded-full text-xs font-medium border transition-all whitespace-nowrap hover:-translate-y-px ${
-                activeCategory === cat.slug
-                  ? "bg-primary text-primary-foreground border-primary shadow-[var(--shadow-soft-pill)]"
-                  : "bg-surface border-border/60 text-subtle shadow-[var(--shadow-soft-pill)] hover:text-foreground hover:border-border hover:shadow-[var(--shadow-hover-pill)]"
-              }`}
-            >
-              {cat.name}
-            </button>
-          ))}
+        {/* Category carousel — small icon + name pills (no photos), replacing
+            the old standalone "Find Your Perfect Escape" section. Clicking
+            the active tile again resets to "all". */}
+        <div className="relative mt-3">
+          <div className="flex items-center gap-3 overflow-x-auto overflow-y-hidden scroll-smooth scrollbar-hide px-0.5 pt-1.5 pb-3">
+            {categories.map((cat) => (
+              <CategoryTile
+                key={cat.slug}
+                name={cat.name}
+                icon={CATEGORY_ICONS[cat.icon]}
+                active={activeCategory === cat.slug}
+                onClick={() => setActiveCategory(activeCategory === cat.slug ? "all" : cat.slug)}
+              />
+            ))}
+          </div>
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-background to-transparent" />
         </div>
 
         {/* Result count + Filters + Sort */}
-        <div className="mt-6 sm:mt-8 mb-4 sm:mb-5 flex items-center justify-between gap-3">
+        <div className="mt-3 sm:mt-4 mb-4 sm:mb-5 flex items-center justify-between gap-3">
           <p className="text-sm text-muted">
             {filtered.length + (showVaksanaCard ? 1 : 0)} curated{" "}
             {filtered.length + (showVaksanaCard ? 1 : 0) === 1 ? "stay" : "stays"} found
