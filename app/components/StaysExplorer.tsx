@@ -72,6 +72,23 @@ const CATEGORY_ICONS: Record<string, LucideIcon> = {
   Castle,
 };
 
+// A distinct, always-on icon color per category (independent of the
+// active/selected state, which is shown via the chip's border instead).
+const CATEGORY_ICON_COLORS: Record<string, string> = {
+  "tiny-houses": "text-orange-500",
+  "farm-stays": "text-green-600",
+  "wellness-retreats": "text-pink-500",
+  "luxury-villas": "text-amber-500",
+  "eco-stays": "text-emerald-600",
+  "heritage-homes": "text-amber-800",
+  workations: "text-blue-500",
+  "couple-escapes": "text-rose-500",
+  "family-holidays": "text-violet-500",
+  "pet-friendly": "text-teal-500",
+  "adventure-camps": "text-lime-600",
+  "boutique-resorts": "text-indigo-500",
+};
+
 type PriceBucket = "any" | "under-5k" | "5k-10k" | "10k-20k" | "above-20k";
 type SortKey = "recommended" | "price-low" | "price-high" | "rating";
 
@@ -255,6 +272,7 @@ export default function StaysExplorer() {
                 key={cat.slug}
                 name={cat.name}
                 icon={CATEGORY_ICONS[cat.icon]}
+                iconColorClass={CATEGORY_ICON_COLORS[cat.slug] ?? "text-primary"}
                 active={activeCategory === cat.slug}
                 onClick={() => setActiveCategory(activeCategory === cat.slug ? "all" : cat.slug)}
               />
