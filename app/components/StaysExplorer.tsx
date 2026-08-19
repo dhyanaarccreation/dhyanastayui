@@ -4,31 +4,90 @@ import { useMemo, useState } from "react";
 import {
   Search,
   SlidersHorizontal,
-  Map as MapIcon,
   ChevronDown,
   X,
-  MapPin,
   Home,
+  Sprout,
+  Heart,
+  Crown,
+  Leaf,
+  Landmark,
+  Laptop,
+  HeartHandshake,
   Users,
+  PawPrint,
+  Mountain,
+  Castle,
   Sparkles,
   Check,
+  type LucideIcon,
 } from "lucide-react";
 import { properties, categories, type Property } from "@/lib/mock-data";
-import PropertyCard from "@/app/components/PropertyCard";
+import { useUserLocation } from "@/lib/useUserLocation";
+import LocationIndicator from "@/app/components/LocationIndicator";
+import CategoryTile from "@/app/components/CategoryTile";
+import PropertyGrid from "@/app/components/PropertyGrid";
 import VaksanaFarmsCard from "@/app/components/VaksanaFarmsCard";
 
 // ============================================
-// STAYS EXPLORER — search, category filter,
-// filters drawer, sort, map toggle & results
-// grid. Embedded directly in the homepage's
-// "Explore All Stays" section — there is no
-// standalone /stays listing page.
+// STAYS EXPLORER — a static "Explore All Stays" heading
+// (never toggles with the picked destination) sits above
+// search + a single geolocation-detected location indicator
+// and category chips, each their own row, above the
+// always-visible property grid. Filters/Sort live next to
+// the result count instead. The active destination now comes
+// from the visitor's detected city (see lib/useUserLocation.ts)
+// rather than a hardcoded pill list — falling back to "no
+// destination" (full catalog) when that city has no curated
+// stays, or to a manual pick if geolocation is denied/fails.
+// Embedded directly in the homepage's Explore section —
+// there is no standalone /stays page.
 // ============================================
 
 // Listings exclude properties superseded by a partner spotlight card (e.g.
 // Vaksana Farms' individual units) — those stay reachable by direct link,
 // just not browsable in the general catalog.
 const visibleProperties = properties.filter((p) => !p.hidden);
+
+// Cities the manual "Set location" fallback can offer — derived straight
+// from the live property catalog (not a curated/editorial list), so every
+// option is guaranteed to have at least one result.
+const CITY_OPTIONS = Array.from(new Set(visibleProperties.map((p) => p.location.city))).sort();
+
+// Maps each category's existing `icon` field (a lucide-react component
+// name) to the actual component — the carousel shows a small icon instead
+// of a photo, reusing the icon names already present in the category data.
+const CATEGORY_ICONS: Record<string, LucideIcon> = {
+  Home,
+  Sprout,
+  Heart,
+  Crown,
+  Leaf,
+  Landmark,
+  Laptop,
+  HeartHandshake,
+  Users,
+  PawPrint,
+  Mountain,
+  Castle,
+};
+
+// A distinct, always-on icon color per category (independent of the
+// active/selected state, which is shown via the chip's border instead).
+const CATEGORY_ICON_COLORS: Record<string, string> = {
+  "tiny-houses": "text-orange-500",
+  "farm-stays": "text-green-600",
+  "wellness-retreats": "text-pink-500",
+  "luxury-villas": "text-amber-500",
+  "eco-stays": "text-emerald-600",
+  "heritage-homes": "text-amber-800",
+  workations: "text-blue-500",
+  "couple-escapes": "text-rose-500",
+  "family-holidays": "text-violet-500",
+  "pet-friendly": "text-teal-500",
+  "adventure-camps": "text-lime-600",
+  "boutique-resorts": "text-indigo-500",
+};
 
 type PriceBucket = "any" | "under-5k" | "5k-10k" | "10k-20k" | "above-20k";
 type SortKey = "recommended" | "price-low" | "price-high" | "rating";
@@ -41,9 +100,8 @@ const priceBuckets: { key: PriceBucket; label: string; test: (price: number) => 
   { key: "above-20k", label: "Above ₹20,000", test: (p) => p > 20000 },
 ];
 
-// Destinations & property types are derived straight from the live property
-// catalog, so every filter option is guaranteed to have at least one result.
-const destinationOptions = Array.from(new Set(visibleProperties.map((p) => p.location.city))).sort();
+// Property types are derived straight from the live property catalog, so
+// every filter option is guaranteed to have at least one result.
 const typeOptions = Array.from(new Set(visibleProperties.map((p) => p.category))).sort();
 
 // Curated amenity facets — basics like Wi-Fi are assumed on every property
@@ -64,7 +122,16 @@ const amenityOptions: { key: string; label: string; test: (p: Property) => boole
 ];
 
 export default function StaysExplorer() {
-  const [showMap, setShowMap] = useState(false);
+  const userLocation = useUserLocation();
+  const detectedCity = userLocation.city;
+  const cityHasStays =
+    !!detectedCity && visibleProperties.some((p) => p.location.city.toLowerCase() === detectedCity.toLowerCase());
+  // The active destination filter: the detected/manually-picked city, but
+  // only when it actually matches a curated stay — otherwise fall through
+  // to "no destination" (full catalog) rather than an empty grid.
+  const selectedDestination = cityHasStays ? detectedCity : null;
+  const showLocationFallbackNotice = userLocation.status !== "detecting" && !!detectedCity && !cityHasStays;
+
   const [activeCategory, setActiveCategory] = useState("all");
   const [search, setSearch] = useState("");
   const [sortBy, setSortBy] = useState<SortKey>("recommended");
@@ -73,13 +140,10 @@ export default function StaysExplorer() {
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [priceBucket, setPriceBucket] = useState<PriceBucket>("any");
   const [minGuests, setMinGuests] = useState(1);
-  const [selectedDestinations, setSelectedDestinations] = useState<string[]>([]);
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
   const [selectedAmenityKeys, setSelectedAmenityKeys] = useState<string[]>([]);
   const [trendingOnly, setTrendingOnly] = useState(false);
 
-  const toggleDestination = (d: string) =>
-    setSelectedDestinations((prev) => (prev.includes(d) ? prev.filter((x) => x !== d) : [...prev, d]));
   const toggleType = (t: string) =>
     setSelectedTypes((prev) => (prev.includes(t) ? prev.filter((x) => x !== t) : [...prev, t]));
   const toggleAmenity = (key: string) =>
@@ -88,7 +152,6 @@ export default function StaysExplorer() {
   const clearFilters = () => {
     setPriceBucket("any");
     setMinGuests(1);
-    setSelectedDestinations([]);
     setSelectedTypes([]);
     setSelectedAmenityKeys([]);
     setTrendingOnly(false);
@@ -97,7 +160,6 @@ export default function StaysExplorer() {
   const activeFilterCount =
     (priceBucket !== "any" ? 1 : 0) +
     (minGuests > 1 ? 1 : 0) +
-    selectedDestinations.length +
     selectedTypes.length +
     selectedAmenityKeys.length +
     (trendingOnly ? 1 : 0);
@@ -106,12 +168,15 @@ export default function StaysExplorer() {
   const priceTest = priceBuckets.find((b) => b.key === priceBucket)!.test;
 
   // The Vaksana Farms partner card replaces individual Farm Stay listings —
-  // shown only under the Farm Stays category, not on the default All Stays view.
+  // shown only under the Farm Stays category, not on the default view.
   const showVaksanaCard = activeCategory === "farm-stays";
 
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase();
     let list = visibleProperties.filter((p) => {
+      // Destination filtering is simply skipped when nothing is selected.
+      const matchesDestination =
+        !selectedDestination || p.location.city.toLowerCase() === selectedDestination.toLowerCase();
       const matchesCategory =
         activeCategory === "all" ||
         (activeCategoryName && activeCategoryName.toLowerCase().includes(p.category.toLowerCase()));
@@ -123,18 +188,17 @@ export default function StaysExplorer() {
         p.tagline.toLowerCase().includes(q);
       const matchesPrice = priceTest(p.price);
       const matchesGuests = p.maxGuests >= minGuests;
-      const matchesDestination = selectedDestinations.length === 0 || selectedDestinations.includes(p.location.city);
       const matchesType = selectedTypes.length === 0 || selectedTypes.includes(p.category);
       const matchesAmenities =
         selectedAmenityKeys.length === 0 ||
         selectedAmenityKeys.every((key) => amenityOptions.find((o) => o.key === key)!.test(p));
       const matchesTrending = !trendingOnly || p.isTrending;
       return (
+        matchesDestination &&
         matchesCategory &&
         matchesSearch &&
         matchesPrice &&
         matchesGuests &&
-        matchesDestination &&
         matchesType &&
         matchesAmenities &&
         matchesTrending
@@ -146,7 +210,7 @@ export default function StaysExplorer() {
     else if (sortBy === "rating") list = [...list].sort((a, b) => b.rating - a.rating);
 
     return list;
-  }, [search, activeCategory, activeCategoryName, priceTest, minGuests, selectedDestinations, selectedTypes, selectedAmenityKeys, trendingOnly, sortBy]);
+  }, [selectedDestination, search, activeCategory, activeCategoryName, priceTest, minGuests, selectedTypes, selectedAmenityKeys, trendingOnly, sortBy]);
 
   const sortLabels: Record<SortKey, string> = {
     recommended: "Recommended",
@@ -157,213 +221,173 @@ export default function StaysExplorer() {
 
   return (
     <div className="bg-background">
-      {/* Search & Filter Header */}
-      <div className="relative bg-background border-b border-border py-3 sm:py-4">
-        <div className="max-w-[1400px] mx-auto px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row gap-2.5 items-center justify-between">
-            {/* Search Input */}
-            <div className="relative w-full md:w-auto md:flex-1 max-w-xl">
-              <Search
-                size={17}
-                className="absolute left-4 top-1/2 -translate-y-1/2 text-subtle"
-              />
-              <input
-                type="text"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search by destination, property name, or theme..."
-                className="w-full pl-11 pr-4 py-2.5 bg-surface rounded-full text-sm text-foreground placeholder-muted shadow-organic focus:outline-none focus:ring-2 focus:ring-primary/40 transition-shadow"
-              />
-            </div>
+      <div className="max-w-[1400px] mx-auto px-6 lg:px-8">
+        {/* Section heading — static, never toggles with the picked destination */}
+        <div className="mb-5 sm:mb-6">
+          <span className="text-[13px] font-semibold text-sage uppercase tracking-widest">
+            Browse
+          </span>
+          <h2 className="heading-organic text-3xl sm:text-4xl lg:text-[44px] leading-[1.05] text-foreground mt-1.5">
+            Explore All Stays
+          </h2>
+        </div>
 
-            {/* Actions */}
-            <div className="flex items-center gap-2.5 w-full md:w-auto">
-              <button
-                onClick={() => setFiltersOpen(true)}
-                className={`relative flex-1 md:flex-none flex items-center justify-center gap-2 px-4 py-2.5 rounded-full text-sm font-semibold transition-all ${
-                  activeFilterCount > 0
-                    ? "bg-primary text-primary-foreground shadow-organic"
-                    : "bg-surface text-foreground shadow-organic hover:-translate-y-0.5"
-                }`}
-              >
-                <SlidersHorizontal size={15} />
-                Filters
-                {activeFilterCount > 0 && (
-                  <span className="w-5 h-5 rounded-full bg-white/25 text-[11px] font-bold flex items-center justify-center tabular-nums">
-                    {activeFilterCount}
-                  </span>
-                )}
-              </button>
-              <button
-                onClick={() => setShowMap(!showMap)}
-                className={`flex-1 md:flex-none flex items-center justify-center gap-2 px-4 py-2.5 rounded-full text-sm font-semibold transition-all ${
-                  showMap
-                    ? "bg-primary text-primary-foreground shadow-organic"
-                    : "bg-surface text-foreground shadow-organic hover:-translate-y-0.5"
-                }`}
-              >
-                <MapIcon size={15} />
-                {showMap ? "Hide Map" : "Show Map"}
-              </button>
-            </div>
+        {/* Search + detected-location indicator — search always visible,
+            independent of location/permission/destination state */}
+        <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+          <div className="relative w-full max-w-[680px]">
+            <Search size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-subtle" />
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search by property name or theme..."
+              className="w-full h-[54px] pl-12 pr-5 bg-surface border border-border rounded-full text-sm text-foreground placeholder-muted shadow-organic focus:outline-none focus:ring-1 focus:ring-primary/30 transition-shadow"
+            />
           </div>
 
-          {/* Categories Carousel */}
-          <div className="flex items-center gap-1.5 mt-2.5 overflow-x-auto pb-1 scrollbar-hide">
-            <button
-              onClick={() => setActiveCategory("all")}
-              className={`shrink-0 px-3 py-1.5 rounded-full text-[13px] font-medium border transition-all ${
-                activeCategory === "all"
-                  ? "bg-primary text-primary-foreground border-primary"
-                  : "bg-surface border-border/60 text-subtle hover:text-foreground hover:border-border"
-              }`}
-            >
-              All Stays
-            </button>
+          <LocationIndicator
+            status={userLocation.status}
+            city={userLocation.city}
+            cityOptions={CITY_OPTIONS}
+            onSelectCity={userLocation.setManualCity}
+            onClear={userLocation.clearCity}
+            onRetryDetection={userLocation.retryDetection}
+          />
+        </div>
+
+        {showLocationFallbackNotice && (
+          <p className="mt-2.5 text-xs text-subtle">
+            No curated stays found near {detectedCity} yet. Showing all curated stays.
+          </p>
+        )}
+
+        {/* Category carousel — small icon + name pills (no photos), replacing
+            the old standalone "Find Your Perfect Escape" section. Clicking
+            the active tile again resets to "all". */}
+        <div className="relative mt-3">
+          <div className="flex items-center gap-3 overflow-x-auto overflow-y-hidden scroll-smooth scrollbar-hide px-0.5 pt-1.5 pb-3">
             {categories.map((cat) => (
-              <button
+              <CategoryTile
                 key={cat.slug}
-                onClick={() => setActiveCategory(cat.slug)}
-                className={`shrink-0 px-3 py-1.5 rounded-full text-[13px] font-medium border transition-all whitespace-nowrap ${
-                  activeCategory === cat.slug
-                    ? "bg-primary text-primary-foreground border-primary"
-                    : "bg-surface border-border/60 text-subtle hover:text-foreground hover:border-border"
-                }`}
-              >
-                {cat.name}
-              </button>
+                name={cat.name}
+                icon={CATEGORY_ICONS[cat.icon]}
+                iconColorClass={CATEGORY_ICON_COLORS[cat.slug] ?? "text-primary"}
+                active={activeCategory === cat.slug}
+                onClick={() => setActiveCategory(activeCategory === cat.slug ? "all" : cat.slug)}
+              />
             ))}
           </div>
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-background to-transparent" />
         </div>
-      </div>
 
-      {/* Main Content Area */}
-      <div className="max-w-[1400px] mx-auto px-6 lg:px-8 py-5 sm:py-6">
-        <div className="flex gap-8">
-          {/* Results Grid */}
-          <div className={`flex-1 transition-all ${showMap ? "lg:w-3/5" : "w-full"}`}>
-            <div className="mb-3 sm:mb-4 flex items-center justify-between">
-              <p className="text-sm text-muted">
-                {filtered.length + (showVaksanaCard ? 1 : 0)} curated{" "}
-                {filtered.length + (showVaksanaCard ? 1 : 0) === 1 ? "stay" : "stays"} found
-              </p>
-              <div className="relative">
-                <button
-                  onClick={() => setSortOpen((v) => !v)}
-                  className="flex items-center gap-1.5 text-xs sm:text-sm text-foreground font-medium hover:text-primary"
-                >
-                  Sort by: {sortLabels[sortBy]} <ChevronDown size={13} className={sortOpen ? "rotate-180 transition-transform" : "transition-transform"} />
-                </button>
-                {sortOpen && (
-                  <div className="absolute right-0 top-full mt-2 w-52 rounded-2xl bg-surface shadow-organic p-1.5 z-20 animate-fade-in">
-                    {(Object.keys(sortLabels) as SortKey[]).map((key) => (
-                      <button
-                        key={key}
-                        onClick={() => {
-                          setSortBy(key);
-                          setSortOpen(false);
-                        }}
-                        className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-sm text-left transition-colors ${
-                          sortBy === key ? "bg-primary/10 text-primary font-medium" : "text-muted hover:bg-surface-hover hover:text-foreground"
-                        }`}
-                      >
-                        {sortLabels[key]}
-                        {sortBy === key && <Check size={14} />}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </div>
+        {/* Result count + Filters + Sort */}
+        <div className="mt-3 sm:mt-4 mb-4 sm:mb-5 flex items-center justify-between gap-3">
+          <p className="text-sm text-muted">
+            {filtered.length + (showVaksanaCard ? 1 : 0)} curated{" "}
+            {filtered.length + (showVaksanaCard ? 1 : 0) === 1 ? "stay" : "stays"} found
+          </p>
+          <div className="flex items-center gap-2.5 shrink-0">
+            <button
+              onClick={() => setFiltersOpen(true)}
+              className={`relative flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all hover:-translate-y-px ${
+                activeFilterCount > 0
+                  ? "bg-primary text-primary-foreground shadow-[var(--shadow-soft-pill)] hover:shadow-[var(--shadow-hover-pill)]"
+                  : "bg-surface border border-border text-foreground shadow-[var(--shadow-soft-pill)] hover:shadow-[var(--shadow-hover-pill)]"
+              }`}
+            >
+              <SlidersHorizontal size={14} />
+              Filters
+              {activeFilterCount > 0 && (
+                <span className="w-4 h-4 rounded-full bg-white/25 text-[10px] font-bold flex items-center justify-center tabular-nums">
+                  {activeFilterCount}
+                </span>
+              )}
+            </button>
 
-            {/* Active filter chips */}
-            {activeFilterCount > 0 && (
-              <div className="flex flex-wrap items-center gap-2 mb-6">
-                {selectedDestinations.map((d) => (
-                  <FilterChip key={d} label={d} onClear={() => toggleDestination(d)} />
-                ))}
-                {selectedTypes.map((t) => (
-                  <FilterChip key={t} label={t} onClear={() => toggleType(t)} />
-                ))}
-                {selectedAmenityKeys.map((key) => (
-                  <FilterChip key={key} label={amenityOptions.find((o) => o.key === key)!.label} onClear={() => toggleAmenity(key)} />
-                ))}
-                {priceBucket !== "any" && (
-                  <FilterChip label={priceBuckets.find((b) => b.key === priceBucket)!.label} onClear={() => setPriceBucket("any")} />
-                )}
-                {minGuests > 1 && <FilterChip label={`${minGuests}+ guests`} onClear={() => setMinGuests(1)} />}
-                {trendingOnly && <FilterChip label="Trending only" onClear={() => setTrendingOnly(false)} />}
-                <button onClick={clearFilters} className="text-xs text-primary hover:underline ml-1">
-                  Clear all
-                </button>
-              </div>
-            )}
-
-            {filtered.length > 0 || showVaksanaCard ? (
-              <div
-                className={`grid gap-4 sm:gap-5 ${
-                  showMap
-                    ? "grid-cols-1 md:grid-cols-2"
-                    : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
-                }`}
+            <div className="relative">
+              <button
+                onClick={() => setSortOpen((v) => !v)}
+                className="flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-surface border border-border text-xs sm:text-sm text-foreground font-medium shadow-[var(--shadow-soft-pill)] hover:text-primary hover:shadow-[var(--shadow-hover-pill)] hover:-translate-y-px transition-all"
               >
-                {showVaksanaCard && <VaksanaFarmsCard />}
-                {filtered.map((property) => (
-                  <PropertyCard key={property.id} property={property} />
-                ))}
-              </div>
-            ) : (
-              <div className="text-center py-20">
-                <Sparkles size={28} className="text-subtle mx-auto mb-3" />
-                <p className="text-sm text-subtle">No stays match your filters yet.</p>
-                <button onClick={clearFilters} className="text-sm text-primary hover:underline mt-2">
-                  Clear filters
-                </button>
-              </div>
-            )}
-
-            {/* Pagination Placeholder */}
-            {filtered.length > 0 && (
-              <div className="mt-12 flex justify-center">
-                <div className="flex items-center gap-2">
-                  <button className="w-10 h-10 flex items-center justify-center rounded-full bg-surface text-muted shadow-organic hover:text-foreground transition-colors disabled:opacity-50">
-                    {"<"}
-                  </button>
-                  <button className="w-10 h-10 flex items-center justify-center rounded-full bg-primary text-primary-foreground font-semibold shadow-organic">
-                    1
-                  </button>
-                  <button className="w-10 h-10 flex items-center justify-center rounded-full bg-surface text-muted shadow-organic hover:text-foreground transition-colors">
-                    2
-                  </button>
-                  <button className="w-10 h-10 flex items-center justify-center rounded-full bg-surface text-muted shadow-organic hover:text-foreground transition-colors">
-                    3
-                  </button>
-                  <span className="text-subtle">...</span>
-                  <button className="w-10 h-10 flex items-center justify-center rounded-full bg-surface text-muted shadow-organic hover:text-foreground transition-colors">
-                    {">"}
-                  </button>
+                Sort: {sortLabels[sortBy]} <ChevronDown size={13} className={sortOpen ? "rotate-180 transition-transform" : "transition-transform"} />
+              </button>
+              {sortOpen && (
+                <div className="absolute right-0 top-full mt-2 w-52 rounded-2xl bg-surface shadow-organic p-1.5 z-20 animate-fade-in">
+                  {(Object.keys(sortLabels) as SortKey[]).map((key) => (
+                    <button
+                      key={key}
+                      onClick={() => {
+                        setSortBy(key);
+                        setSortOpen(false);
+                      }}
+                      className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-sm text-left transition-colors ${
+                        sortBy === key ? "bg-primary/10 text-primary font-medium" : "text-muted hover:bg-surface-hover hover:text-foreground"
+                      }`}
+                    >
+                      {sortLabels[key]}
+                      {sortBy === key && <Check size={14} />}
+                    </button>
+                  ))}
                 </div>
-              </div>
-            )}
-          </div>
-
-          {/* Map View */}
-          {showMap && (
-            <div className="hidden lg:block lg:w-2/5 animate-fade-in-up">
-              <div className="sticky top-6 h-[calc(100vh-180px)] rounded-[28px] overflow-hidden bg-surface shadow-organic flex items-center justify-center">
-                <div className="text-center p-8">
-                  <span className="w-16 h-16 rounded-full bg-sage/12 text-sage flex items-center justify-center mx-auto mb-4">
-                    <MapIcon size={26} />
-                  </span>
-                  <h3 className="text-lg font-medium text-foreground mb-2">Interactive Map</h3>
-                  <p className="text-sm text-muted">
-                    Map integration (Google Maps / Mapbox) placeholder.
-                  </p>
-                </div>
-              </div>
+              )}
             </div>
-          )}
+          </div>
         </div>
+
+        {/* Active filter chips */}
+        {activeFilterCount > 0 && (
+          <div className="flex flex-wrap items-center gap-2 mb-5">
+            {selectedTypes.map((t) => (
+              <FilterChip key={t} label={t} onClear={() => toggleType(t)} />
+            ))}
+            {selectedAmenityKeys.map((key) => (
+              <FilterChip key={key} label={amenityOptions.find((o) => o.key === key)!.label} onClear={() => toggleAmenity(key)} />
+            ))}
+            {priceBucket !== "any" && (
+              <FilterChip label={priceBuckets.find((b) => b.key === priceBucket)!.label} onClear={() => setPriceBucket("any")} />
+            )}
+            {minGuests > 1 && <FilterChip label={`${minGuests}+ guests`} onClear={() => setMinGuests(1)} />}
+            {trendingOnly && <FilterChip label="Trending only" onClear={() => setTrendingOnly(false)} />}
+            <button onClick={clearFilters} className="text-xs text-primary hover:underline ml-1">
+              Clear all
+            </button>
+          </div>
+        )}
+
+        <PropertyGrid
+          properties={filtered}
+          leading={showVaksanaCard ? <VaksanaFarmsCard /> : undefined}
+          emptyMessage={
+            selectedDestination
+              ? `No curated stays found in ${selectedDestination} yet.`
+              : "No curated stays match your search yet."
+          }
+        />
+
+        {/* Pagination Placeholder */}
+        {filtered.length > 0 && (
+          <div className="mt-12 flex justify-center">
+            <div className="flex items-center gap-2">
+              <button className="w-10 h-10 flex items-center justify-center rounded-full bg-surface text-muted shadow-organic hover:text-foreground transition-colors disabled:opacity-50">
+                {"<"}
+              </button>
+              <button className="w-10 h-10 flex items-center justify-center rounded-full bg-primary text-primary-foreground font-semibold shadow-organic">
+                1
+              </button>
+              <button className="w-10 h-10 flex items-center justify-center rounded-full bg-surface text-muted shadow-organic hover:text-foreground transition-colors">
+                2
+              </button>
+              <button className="w-10 h-10 flex items-center justify-center rounded-full bg-surface text-muted shadow-organic hover:text-foreground transition-colors">
+                3
+              </button>
+              <span className="text-subtle">...</span>
+              <button className="w-10 h-10 flex items-center justify-center rounded-full bg-surface text-muted shadow-organic hover:text-foreground transition-colors">
+                {">"}
+              </button>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* ================= FILTERS DRAWER ================= */}
@@ -381,26 +405,6 @@ export default function StaysExplorer() {
             </div>
 
             <div className="flex-1 overflow-y-auto px-5 py-5 space-y-7">
-              {/* Destination */}
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-wider text-subtle mb-3 flex items-center gap-1.5">
-                  <MapPin size={12} /> Destination
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {destinationOptions.map((d) => (
-                    <button
-                      key={d}
-                      onClick={() => toggleDestination(d)}
-                      className={`px-3.5 py-2 rounded-full text-xs font-medium border transition-colors ${
-                        selectedDestinations.includes(d) ? "bg-sage text-white border-sage" : "bg-surface border-border text-muted hover:text-foreground"
-                      }`}
-                    >
-                      {d}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
               {/* Property Type */}
               <div>
                 <p className="text-xs font-semibold uppercase tracking-wider text-subtle mb-3 flex items-center gap-1.5">

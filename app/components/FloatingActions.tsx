@@ -55,7 +55,7 @@ export default function FloatingActions() {
           aria-expanded={menuOpen}
           aria-haspopup="menu"
           aria-label="Open dashboard and planner menu"
-          className="flex items-center justify-center w-12 h-12 rounded-full bg-white/80 backdrop-blur-xl border border-white/60 shadow-[0_8px_28px_rgba(0,0,0,0.18)] text-foreground hover:scale-105 active:scale-95 transition-transform duration-200"
+          className="flex items-center justify-center w-12 h-12 rounded-full bg-white border border-[var(--surface-border)] shadow-[var(--shadow-soft)] text-foreground hover:shadow-[var(--shadow-hover)] hover:-translate-y-px active:scale-95 transition-all duration-200"
         >
           <LayoutDashboard size={19} />
         </button>
@@ -69,12 +69,12 @@ export default function FloatingActions() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 12, scale: 0.96 }}
               transition={{ duration: 0.2, ease: "easeOut" }}
-              className="absolute bottom-full left-0 mb-4 w-[300px] max-w-[88vw] max-h-[70vh] overflow-y-auto rounded-[20px] bg-white/85 backdrop-blur-xl border border-white/50 shadow-[0_20px_60px_rgba(0,0,0,0.25)] p-4"
+              className="absolute bottom-full left-0 mb-4 w-[300px] max-w-[88vw] max-h-[70vh] overflow-y-auto rounded-panel bg-white border border-[var(--surface-border)] shadow-[var(--shadow-hover)] p-4"
             >
               {/* Small arrow pointing down toward the trigger button */}
               <span
                 aria-hidden="true"
-                className="absolute -bottom-2 left-5 w-4 h-4 bg-white/85 backdrop-blur-xl border-b border-r border-white/50 rotate-45"
+                className="absolute -bottom-2 left-5 w-4 h-4 bg-white border-b border-r border-[var(--surface-border)] rotate-45"
               />
 
               <div>
@@ -118,7 +118,7 @@ export default function FloatingActions() {
         <button
           onClick={() => setAiOpen(true)}
           aria-label="Open AI Trip Planner"
-          className="flex items-center gap-2 pl-3 pr-4 py-2.5 rounded-full bg-surface border border-border shadow-[0_8px_32px_rgba(0,0,0,0.25)] hover:bg-surface-hover transition-colors"
+          className="soft-3d-double soft-3d-double-sm flex items-center gap-2 pl-3 pr-4 py-2.5 rounded-full hover:-translate-y-px transition-transform"
         >
           <span className="flex items-center justify-center w-9 h-9 rounded-full bg-background shrink-0">
             <LogoMark size={22} />

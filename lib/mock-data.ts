@@ -610,18 +610,18 @@ export const properties: Property[] = [
 // ============================================
 
 export const categories = [
-  { name: "Tiny Houses", icon: "Home", count: 24, slug: "tiny-houses", description: "Minimalist living, maximum experience" },
-  { name: "Farm Stays", icon: "Sprout", count: 38, slug: "farm-stays", description: "Connect with the land" },
-  { name: "Wellness Retreats", icon: "Heart", count: 15, slug: "wellness-retreats", description: "Heal body and soul" },
-  { name: "Luxury Villas", icon: "Crown", count: 12, slug: "luxury-villas", description: "Uncompromising elegance" },
-  { name: "Eco Stays", icon: "Leaf", count: 29, slug: "eco-stays", description: "Sustainable luxury" },
-  { name: "Heritage Homes", icon: "Landmark", count: 18, slug: "heritage-homes", description: "Stories in stone" },
-  { name: "Workations", icon: "Laptop", count: 21, slug: "workations", description: "Work from paradise" },
-  { name: "Couple Escapes", icon: "HeartHandshake", count: 27, slug: "couple-escapes", description: "Romance redefined" },
-  { name: "Family Holidays", icon: "Users", count: 33, slug: "family-holidays", description: "Memories for generations" },
-  { name: "Pet Friendly", icon: "PawPrint", count: 16, slug: "pet-friendly", description: "Bring your fur baby" },
-  { name: "Adventure Camps", icon: "Mountain", count: 11, slug: "adventure-camps", description: "Thrill seekers welcome" },
-  { name: "Boutique Resorts", icon: "Castle", count: 8, slug: "boutique-resorts", description: "Intimate grandeur" },
+  { name: "Tiny Houses", icon: "Home", count: 24, slug: "tiny-houses", description: "Minimalist living, maximum experience", image: "https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?q=80&w=400&auto=format&fit=crop" },
+  { name: "Farm Stays", icon: "Sprout", count: 38, slug: "farm-stays", description: "Connect with the land", image: "https://images.unsplash.com/photo-1500076656116-558758c991c1?q=80&w=400&auto=format&fit=crop" },
+  { name: "Wellness Retreats", icon: "Heart", count: 15, slug: "wellness-retreats", description: "Heal body and soul", image: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?q=80&w=400&auto=format&fit=crop" },
+  { name: "Luxury Villas", icon: "Crown", count: 12, slug: "luxury-villas", description: "Uncompromising elegance", image: "https://images.unsplash.com/photo-1613977257363-707ba9348227?q=80&w=400&auto=format&fit=crop" },
+  { name: "Eco Stays", icon: "Leaf", count: 29, slug: "eco-stays", description: "Sustainable luxury", image: "https://images.unsplash.com/photo-1587061949409-02df41d5e562?q=80&w=400&auto=format&fit=crop" },
+  { name: "Heritage Homes", icon: "Landmark", count: 18, slug: "heritage-homes", description: "Stories in stone", image: "https://images.unsplash.com/photo-1477587458883-47145ed94245?q=80&w=400&auto=format&fit=crop" },
+  { name: "Workations", icon: "Laptop", count: 21, slug: "workations", description: "Work from paradise", image: "https://images.unsplash.com/photo-1499750310107-5fef28a66643?q=80&w=400&auto=format&fit=crop" },
+  { name: "Couple Escapes", icon: "HeartHandshake", count: 27, slug: "couple-escapes", description: "Romance redefined", image: "https://images.unsplash.com/photo-1602002418082-a4443e081dd1?q=80&w=400&auto=format&fit=crop" },
+  { name: "Family Holidays", icon: "Users", count: 33, slug: "family-holidays", description: "Memories for generations", image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=400&auto=format&fit=crop" },
+  { name: "Pet Friendly", icon: "PawPrint", count: 16, slug: "pet-friendly", description: "Bring your fur baby", image: "https://images.unsplash.com/photo-1450778869180-41d0601e046e?q=80&w=400&auto=format&fit=crop" },
+  { name: "Adventure Camps", icon: "Mountain", count: 11, slug: "adventure-camps", description: "Thrill seekers welcome", image: "https://images.unsplash.com/photo-1533873984035-25970ab07461?q=80&w=400&auto=format&fit=crop" },
+  { name: "Boutique Resorts", icon: "Castle", count: 8, slug: "boutique-resorts", description: "Intimate grandeur", image: "https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?q=80&w=400&auto=format&fit=crop" },
 ];
 
 // ============================================

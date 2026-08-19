@@ -7,6 +7,7 @@ import SeedBallMissionSection from "./components/SeedBallMissionSection";
 import StaysExplorer from "./components/StaysExplorer";
 import HeroSearchBar from "./components/HeroSearchBar";
 import TravelGuidesSection from "./components/TravelGuidesSection";
+
 import { ArrowRight, Sparkles, Bot } from "lucide-react";
 import { categories } from "@/lib/mock-data";
 

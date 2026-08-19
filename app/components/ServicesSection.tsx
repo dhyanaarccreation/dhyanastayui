@@ -240,8 +240,11 @@ export function SpotlightSection({ embedded = false }: { embedded?: boolean }) {
   const content = (
     <>
       {sponsoredAds.length > 0 ? (
-          /* ---- Sponsored ads: right-to-left slider ---- */
-          <div className="relative rounded-[32px] overflow-hidden shadow-organic">
+          /* ---- Sponsored ads: right-to-left slider ----
+             Outer carries the double-layer 3D treatment (must not clip its
+             own overflow); inner keeps overflow-hidden to clip the slider. */
+          <div className="relative soft-3d-double rounded-[32px]">
+          <div className="relative rounded-[32px] overflow-hidden">
             <div
               className="flex transition-transform duration-700 ease-in-out"
               style={{ transform: `translateX(-${slide * 100}%)` }}
@@ -301,9 +304,10 @@ export function SpotlightSection({ embedded = false }: { embedded?: boolean }) {
               Ad {slide + 1}/{sponsoredAds.length}
             </span>
           </div>
+          </div>
         ) : (
           /* ---- Fallback: AI suggestions fill the slot ---- */
-          <div className="rounded-[32px] bg-surface-hover shadow-organic p-6 md:p-8">
+          <div className="relative soft-3d-double rounded-[32px] bg-surface-hover p-6 md:p-8">
             <div className="flex items-center gap-2 mb-5">
               <Sparkles size={15} className="text-sage" />
               <p className="text-sm font-semibold text-foreground">

@@ -41,7 +41,7 @@ export default function Navbar() {
   }, [openMenu]);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-[80] bg-white border-b border-border shadow-sm lg:bg-surface/70 lg:backdrop-blur-[20px] lg:border lg:shadow-[0_10px_30px_rgba(0,0,0,0.08)] dark:lg:shadow-[0_10px_30px_rgba(0,0,0,0.3)] lg:rounded-b-[28px]">
+    <header className="fixed top-0 left-0 right-0 z-[80] bg-white border-b border-border shadow-sm lg:bg-surface lg:border lg:shadow-[var(--shadow-soft)] lg:rounded-b-[28px]">
       <div className="max-w-[1400px] mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between h-[58px] lg:h-[72px]">
           {/* Logo */}
@@ -165,7 +165,7 @@ export default function Navbar() {
             </div>
             <Link
               href="/login"
-              className="group flex items-center gap-2 px-5 py-2.5 text-sm font-semibold text-primary-foreground bg-primary rounded-full shadow-organic hover:bg-primary-hover hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 active:scale-95 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              className="group flex items-center gap-2 px-5 py-2.5 text-sm font-semibold text-primary-foreground bg-primary rounded-full shadow-[0_4px_10px_rgba(230,126,34,0.18)] hover:bg-primary-hover hover:shadow-[0_6px_16px_rgba(230,126,34,0.24)] hover:-translate-y-px active:translate-y-0 active:scale-95 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             >
               <User
                 size={16}
@@ -288,7 +288,7 @@ export default function Navbar() {
           <div className="pt-4 pb-2 border-t border-border flex items-center gap-2">
             <Link
               href="/login"
-              className="flex-1 text-center px-4 py-3 text-sm font-semibold text-primary-foreground bg-primary rounded-full shadow-organic hover:bg-primary-hover active:scale-95 transition-all duration-200"
+              className="flex-1 text-center px-4 py-3 text-sm font-semibold text-primary-foreground bg-primary rounded-full shadow-[0_4px_10px_rgba(230,126,34,0.18)] hover:bg-primary-hover hover:-translate-y-px active:scale-95 transition-all duration-200"
               onClick={() => setMobileOpen(false)}
             >
               Sign In
