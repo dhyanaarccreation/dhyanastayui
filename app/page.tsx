@@ -6,6 +6,7 @@ import DestinationsSection from "./components/DestinationsSection";
 import SeedBallMissionSection from "./components/SeedBallMissionSection";
 import StaysExplorer from "./components/StaysExplorer";
 import HeroSearchBar from "./components/HeroSearchBar";
+import TravelGuidesSection from "./components/TravelGuidesSection";
 import { ArrowRight, Sparkles, Bot } from "lucide-react";
 import { categories } from "@/lib/mock-data";
 
@@ -194,6 +195,7 @@ export default function HomePage() {
       <main>
         <HeroSection />
         <ExploreStaysSection />
+        <TravelGuidesSection />
         <AiPlannerSection />
         <CategoriesSection />
         <DestinationsSection />

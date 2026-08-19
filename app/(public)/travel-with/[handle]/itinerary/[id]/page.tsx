@@ -25,13 +25,44 @@ import {
   itineraries,
   curatedStays,
   type StopType,
+  type ItineraryDay,
 } from "@/lib/influencer-data";
+import {
+  vjSiddhuProfile,
+  vjSiddhuItineraries,
+  vjSiddhuCuratedStays,
+} from "@/lib/travel-guides-data";
+
+interface RecommendedStay {
+  id: string;
+  propertySlug: string;
+  name: string;
+  location: string;
+  image: string;
+  price: number;
+}
+
+interface PublicItinerary {
+  id: string;
+  title: string;
+  region: string;
+  durationLabel: string;
+  coverImage: string;
+  days: ItineraryDay[];
+  estimatedCost: string;
+  saves: number;
+}
 
 // ============================================
 // PUBLIC — single itinerary detail page
 // The traveller-facing view of one curated
 // itinerary: day-by-day plan, recommended stays,
 // a map placeholder, and Copy/Book/Save CTAs.
+//
+// Resolves both the curator and the itinerary from
+// the URL (handle + id) instead of always showing
+// Riya Malhotra's itinerary — each curator has their
+// own itineraries + curated-stays list.
 // ============================================
 
 const stopIcon: Record<StopType, typeof Home> = {
@@ -42,18 +73,50 @@ const stopIcon: Record<StopType, typeof Home> = {
   Transport: Car,
 };
 
+// Per-curator context: display identity + the itinerary/stays lists to
+// resolve `[id]` against. Riya's context reuses her existing exports
+// as-is; VJ's uses his own data — nothing here is duplicated, just wired.
+const curatorContexts: Record<
+  string,
+  {
+    displayName: string;
+    handle: string;
+    avatar?: string;
+    itineraries: PublicItinerary[];
+    curatedStays: RecommendedStay[];
+  }
+> = {
+  [curatorIdentity.handle]: {
+    displayName: influencerProfile.name,
+    handle: curatorIdentity.handle,
+    avatar: influencerProfile.avatar,
+    itineraries,
+    curatedStays,
+  },
+  [vjSiddhuProfile.handle]: {
+    displayName: vjSiddhuProfile.name,
+    handle: vjSiddhuProfile.handle,
+    avatar: vjSiddhuProfile.avatar,
+    itineraries: vjSiddhuItineraries,
+    curatedStays: vjSiddhuCuratedStays,
+  },
+};
+
 export default function PublicItineraryPage() {
   const params = useParams();
+  const handleParam = params?.handle as string;
   const itineraryId = params?.id as string;
-  const itinerary = itineraries.find((it) => it.id === itineraryId) || itineraries[0];
+
+  const ctx = curatorContexts[handleParam] ?? curatorContexts[curatorIdentity.handle];
+  const itinerary = ctx.itineraries.find((it) => it.id === itineraryId) || ctx.itineraries[0];
 
   const [copied, setCopied] = useState(false);
   const [saved, setSaved] = useState(false);
 
-  const recommendedStays = curatedStays.filter((s) =>
+  const recommendedStays = ctx.curatedStays.filter((s) =>
     itinerary.days.some((d) => d.stops.some((stop) => stop.type === "Stay" && stop.label.includes(s.name)))
   );
-  const fallbackStays = recommendedStays.length > 0 ? recommendedStays : curatedStays.slice(0, 3);
+  const fallbackStays = recommendedStays.length > 0 ? recommendedStays : ctx.curatedStays.slice(0, 3);
 
   const copyItinerary = () => {
     setCopied(true);
@@ -65,8 +128,8 @@ export default function PublicItineraryPage() {
       {/* Breadcrumb */}
       <div className="max-w-[1000px] mx-auto px-6 lg:px-8 pt-6">
         <div className="flex items-center gap-2 text-xs text-subtle">
-          <Link href={`/travel-with/${curatorIdentity.handle}`} className="hover:text-foreground transition-colors">
-            Travel with {influencerProfile.name}
+          <Link href={`/travel-with/${ctx.handle}`} className="hover:text-foreground transition-colors">
+            Travel with {ctx.displayName}
           </Link>
           <ChevronRight size={12} />
           <span className="text-muted truncate">{itinerary.title}</span>
@@ -81,12 +144,18 @@ export default function PublicItineraryPage() {
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
           <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-8">
             <Link
-              href={`/travel-with/${curatorIdentity.handle}`}
+              href={`/travel-with/${ctx.handle}`}
               className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-white/15 backdrop-blur-sm text-white text-[11px] font-medium mb-2.5"
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={influencerProfile.avatar} alt="" className="w-4 h-4 rounded-full object-cover" />
-              Curated by {influencerProfile.name} <BadgeCheck size={11} className="text-sage" />
+              {ctx.avatar ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={ctx.avatar} alt="" className="w-4 h-4 rounded-full object-cover" />
+              ) : (
+                <span className="w-4 h-4 rounded-full bg-sage flex items-center justify-center text-[8px] font-bold">
+                  {ctx.displayName.split(" ").map((p) => p[0]).slice(0, 2).join("")}
+                </span>
+              )}
+              Curated by {ctx.displayName} <BadgeCheck size={11} className="text-sage" />
             </Link>
             <h1 className="heading-organic text-xl sm:text-3xl text-white">{itinerary.title}</h1>
             <p className="text-white/80 text-sm mt-1.5 flex items-center gap-3 flex-wrap">
@@ -104,7 +173,7 @@ export default function PublicItineraryPage() {
             className="flex items-center gap-1.5 px-5 py-2.5 text-sm font-semibold bg-primary text-primary-foreground rounded-full shadow-organic hover:bg-primary-hover transition-colors"
           >
             {copied ? <Check size={15} /> : <Copy size={15} />}
-            {copied ? "Copied to your trips" : "Copy This Itinerary"}
+            {copied ? "Copied to your trips" : `Copy ${ctx.displayName}'s Trip`}
           </button>
           <Link
             href="/#explore-stays"
@@ -191,7 +260,7 @@ export default function PublicItineraryPage() {
 
           <div className="rounded-2xl bg-sage/10 border border-sage/25 p-4 mt-5">
             <p className="text-xs text-foreground leading-relaxed">
-              Copy this itinerary to your own trip planner, customise the dates and stays, then book directly — {influencerProfile.name} earns a small commission that keeps their curated content going.
+              Copy this itinerary to your own trip planner, customise the dates and stays, then book directly — {ctx.displayName} earns a small commission that keeps their curated content going.
             </p>
           </div>
         </aside>
