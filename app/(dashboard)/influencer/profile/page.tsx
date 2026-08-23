@@ -37,7 +37,7 @@ export default function InfluencerProfilePage() {
   const [twoFactor, setTwoFactor] = useState(true);
 
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="Profile"
         subtitle="Your public creator information, verification status, and account details."

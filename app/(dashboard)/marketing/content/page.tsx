@@ -81,7 +81,7 @@ export default function ContentStudioPage() {
   const TypeIcon = types.find((t) => t.key === type)!.icon;
 
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="Content Studio"
         subtitle="Post posters, videos and blogs straight into the web app — pick the region, pick the placement, publish."

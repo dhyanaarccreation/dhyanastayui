@@ -16,7 +16,7 @@ import { PageHeader, SectionCard, SettingRow, Toggle, StatusPill } from "@/app/c
 
 export default function RentalSettingsPage() {
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="Settings"
         subtitle="Business details, rental terms, payouts and notifications for Auro Wheels."

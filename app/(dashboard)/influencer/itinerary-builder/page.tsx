@@ -100,14 +100,14 @@ export default function ItineraryBuilderPage() {
   const canSave = title.trim().length > 0 && days.some((d) => d.stops.length > 0);
 
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="Itinerary Builder"
         subtitle="Arrange stays, experiences, food and activities into a day-by-day trip travellers can copy."
       />
 
       <div className="grid lg:grid-cols-[1fr_280px] gap-6">
-        <div className="space-y-6">
+        <div className="space-y-4">
           {/* Trip basics */}
           <SectionCard title="Trip Details" icon={Sparkles}>
             <div className="p-5 space-y-3">
@@ -254,7 +254,7 @@ export default function ItineraryBuilderPage() {
         </div>
 
         {/* Sidebar: cover image + save actions */}
-        <div className="space-y-6">
+        <div className="space-y-4">
           <SectionCard title="Cover Image" icon={ImageIcon}>
             <div className="p-5">
               <div className="relative h-32 rounded-xl overflow-hidden mb-3">

@@ -68,7 +68,7 @@ export default function SuperAdminBookingsPage() {
     s === "Confirmed" || s === "Completed" ? "sage" : s === "Pending" ? "primary" : s === "Disputed" ? "terracotta" : "muted";
 
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="Bookings & Experiences"
         subtitle="Platform-wide booking oversight, dispute resolution, and the curated experience marketplace."

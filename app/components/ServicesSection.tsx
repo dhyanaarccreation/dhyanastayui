@@ -7,13 +7,13 @@ import {
   Compass,
   ArrowRight,
   Star,
-  MapPin,
   Sparkles,
   BadgePercent,
   Megaphone,
 } from "lucide-react";
 import { properties, experiences } from "@/lib/mock-data";
 import PropertyCard from "./PropertyCard";
+import ImageCard from "./cards/ImageCard";
 
 // ============================================
 // HOMEPAGE SERVICES HUB
@@ -99,41 +99,28 @@ export default function ServicesSection() {
         {tab === "experiences" && (
           <div className="relative flex overflow-x-auto overscroll-x-contain snap-x snap-mandatory scroll-smooth scrollbar-hide gap-3 sm:gap-6 -mx-6 px-6 pb-1 sm:grid sm:grid-cols-2 sm:mx-0 sm:px-0 sm:pb-0 sm:overflow-visible sm:snap-none lg:grid-cols-4 stagger-children">
             {experiences.map((exp) => (
-              <Link
+              <ImageCard
                 key={exp.id}
                 href={`/experiences/${exp.id}`}
-                className="group shrink-0 w-[175px] snap-start sm:w-auto sm:shrink rounded-2xl sm:rounded-[28px] overflow-hidden bg-surface card-hover"
-              >
-                <div className="relative h-28 sm:h-40 overflow-hidden bg-surface-hover">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img loading="lazy"
-                    src={exp.image}
-                    alt={exp.name}
-                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <span className="absolute top-2 left-2 sm:top-3 sm:left-3 px-2 sm:px-2.5 py-0.5 text-[9px] sm:text-[10px] font-medium uppercase tracking-wider bg-white/85 backdrop-blur-sm text-sage rounded-full">
-                    {exp.category}
-                  </span>
-                </div>
-                <div className="p-3 sm:p-4">
-                  <h3 className="text-sm sm:text-base font-semibold text-foreground group-hover:text-primary transition-colors mb-0.5 sm:mb-1 line-clamp-1">
-                    {exp.name}
-                  </h3>
-                  <div className="flex items-center gap-1.5 text-xs text-muted mb-1.5 sm:mb-2">
-                    <MapPin size={11} className="shrink-0" />
-                    <span className="truncate">{exp.location} · {exp.duration}</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-1">
-                      <Star size={12} className="text-primary fill-primary" />
-                      <span className="text-xs font-medium text-foreground">{exp.rating}</span>
-                    </div>
-                    <span className="text-sm font-semibold text-foreground">
+                image={exp.image}
+                alt={exp.name}
+                badge={exp.category}
+                title={exp.name}
+                subtitle={`${exp.location} · ${exp.duration}`}
+                meta={
+                  <span className="inline-flex items-center gap-1">
+                    <Star size={12} className="fill-primary text-primary" />
+                    {exp.rating}
+                    <span className="mx-1 text-white/40">·</span>
+                    <span className="font-semibold text-white">
                       ₹{exp.price.toLocaleString("en-IN")}
                     </span>
-                  </div>
-                </div>
-              </Link>
+                  </span>
+                }
+                actionLabel="Explore"
+                actionIcon={ArrowRight}
+                className="shrink-0 w-[175px] snap-start sm:w-auto sm:shrink"
+              />
             ))}
             <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-surface-hover to-transparent sm:hidden" />
           </div>

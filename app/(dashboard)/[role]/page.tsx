@@ -32,7 +32,7 @@ export default async function RoleDashboardPage({
   if (!role || role.nav) notFound();
 
   return (
-    <div className="space-y-8 animate-fade-in">
+    <div className="space-y-4 animate-fade-in">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-3">
         <div>

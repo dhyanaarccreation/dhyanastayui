@@ -49,7 +49,7 @@ export default function SosLiveResponsePage() {
   const [locationShared, setLocationShared] = useState(false);
 
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="Live Response"
         subtitle="Active incidents with live guest GPS — location sharing starts the moment a guest raises SOS."
@@ -168,7 +168,7 @@ export default function SosLiveResponsePage() {
         </div>
 
         {/* Timeline + directory */}
-        <div className="space-y-6">
+        <div className="space-y-4">
           <SectionCard title="Response Timeline" icon={Clock}>
             <div className="px-5 py-4">
               {timeline.map((t, i) => (

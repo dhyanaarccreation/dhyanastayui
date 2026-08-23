@@ -97,7 +97,7 @@ export default function InvestorFinancialsPage() {
   const pl = plData[period];
 
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="Financials"
         subtitle="Revenue, expenses, profit & loss and ROI across your portfolio — consolidated in one place."

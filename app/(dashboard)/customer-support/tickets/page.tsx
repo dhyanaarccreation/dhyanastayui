@@ -49,7 +49,7 @@ export default function TicketsEscalationsPage() {
   const pendingCalls = calls.filter((c) => !c.done).length;
 
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="Tickets & Escalations"
         subtitle="AI files and closes most tickets itself — this is the audit trail plus the short call-center queue."

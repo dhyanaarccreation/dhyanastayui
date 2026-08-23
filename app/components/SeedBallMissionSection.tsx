@@ -2,16 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import {
-  Sprout,
-  TreePine,
-  Wind,
-  Users,
-  HandCoins,
-  Target,
-  MapPin,
-  Heart,
-} from "lucide-react";
+import { Sprout, Heart } from "lucide-react";
 import { seedBallMission } from "@/lib/seed-ball-mission";
 
 // ============================================
@@ -64,47 +55,36 @@ export default function SeedBallMissionSection() {
   const distributed = useCountUp(seedBallMission.distributed, inView);
   const progressPct = Math.min(100, (seedBallMission.distributed / seedBallMission.goal) * 100);
 
-  const stats = [
-    { label: "Seed Balls Created", value: seedBallMission.created.toLocaleString("en-IN"), icon: Sprout },
-    { label: "Seed Balls Distributed", value: seedBallMission.distributed.toLocaleString("en-IN"), icon: MapPin },
-    { label: "Trees Estimated", value: seedBallMission.treesEstimated.toLocaleString("en-IN"), icon: TreePine },
-    { label: "CO₂ Offset (tons)", value: seedBallMission.co2OffsetTons.toLocaleString("en-IN"), icon: Wind },
-    { label: "Campaign Volunteers", value: seedBallMission.volunteers.toLocaleString("en-IN"), icon: Users },
-    { label: "Donations Collected", value: `₹${(seedBallMission.donationsCollected / 100000).toFixed(1)}L`, icon: HandCoins },
-    { label: "Monthly Target", value: seedBallMission.monthlyTarget.toLocaleString("en-IN"), icon: Target },
-    { label: "Yearly Target", value: seedBallMission.yearlyTarget.toLocaleString("en-IN"), icon: Target },
-  ];
-
   return (
-    <section ref={sectionRef} className="py-8 md:py-14 bg-background">
+    <section ref={sectionRef} className="py-6 md:py-10 bg-background">
       <div className="max-w-[1400px] mx-auto px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center max-w-2xl mx-auto mb-8 md:mb-12">
+        <div className="text-center max-w-2xl mx-auto mb-6 md:mb-8">
           <span className="text-xs font-semibold text-sage uppercase tracking-widest">
             Our Mission
           </span>
-          <h2 className="heading-organic text-lg sm:text-2xl lg:text-4xl text-foreground mt-2">
+          <h2 className="heading-organic text-base sm:text-lg lg:text-[22px] text-foreground mt-2">
             🌱 100 Million Seed Ball Mission
           </h2>
-          <p className="text-muted text-sm sm:text-base mt-3 leading-relaxed">
+          <p className="text-muted text-xs sm:text-sm mt-3 leading-relaxed">
             Every stay you book helps restore India&apos;s green cover. We&apos;re dispersing 100 million
             seed balls across the country — every traveller, host and partner is part of the journey.
           </p>
         </div>
 
         {/* Live progress counter */}
-        <div className="rounded-2xl sm:rounded-[32px] bg-sage overflow-hidden shadow-organic p-6 sm:p-10 lg:p-14 mb-6 md:mb-8">
+        <div className="rounded-2xl sm:rounded-[32px] bg-sage overflow-hidden shadow-organic p-4 sm:p-7 lg:p-10 mb-6 md:mb-8">
           <div className="text-center">
             <p className="text-xs font-semibold text-white/80 uppercase tracking-widest">Live Progress</p>
-            <p className="heading-organic text-4xl sm:text-6xl lg:text-7xl text-white mt-2 tabular-nums">
+            <p className="heading-organic text-2xl sm:text-4xl lg:text-5xl text-white mt-2 tabular-nums">
               {distributed.toLocaleString("en-IN")}
             </p>
-            <p className="text-white/80 text-sm sm:text-base mt-1">
+            <p className="text-white/80 text-xs sm:text-sm mt-1">
               of {seedBallMission.goal.toLocaleString("en-IN")} Seed Balls Dispersed
             </p>
           </div>
           <div className="max-w-2xl mx-auto mt-6">
-            <div className="h-3 rounded-full bg-white/20 overflow-hidden">
+            <div className="h-2 rounded-full bg-white/20 overflow-hidden">
               <div
                 className="h-full rounded-full bg-white transition-all duration-1000 ease-out"
                 style={{ width: `${inView ? progressPct : 0}%` }}
@@ -114,17 +94,6 @@ export default function SeedBallMissionSection() {
               {progressPct.toFixed(1)}% toward the 100 Million goal
             </p>
           </div>
-        </div>
-
-        {/* Campaign statistics */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6 md:mb-12">
-          {stats.map((s) => (
-            <div key={s.label} className="bg-surface border border-border rounded-2xl p-4">
-              <s.icon size={16} className="text-sage" />
-              <p className="text-lg font-bold text-foreground mt-2 tabular-nums">{s.value}</p>
-              <p className="text-[11px] text-muted mt-0.5">{s.label}</p>
-            </div>
-          ))}
         </div>
 
         {/* CTAs */}

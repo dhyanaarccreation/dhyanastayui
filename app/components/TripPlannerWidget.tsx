@@ -25,29 +25,21 @@ import {
   LocateFixed,
   BadgeCheck,
   MessageCircle,
-  Sliders,
   Mic,
   MicOff,
   Volume2,
-  IndianRupee,
   Navigation,
   SkipForward,
   Loader2,
   ChevronDown,
   Route,
-  Fuel,
   Map as MapIcon,
   Sunset,
   CalendarClock,
   CloudRain,
   LogOut,
-  Wind,
-  Gauge,
   Ticket,
   Timer,
-  TrendingUp,
-  Thermometer,
-  Sun,
   CheckCircle2,
   Clock,
   Ban,
@@ -135,6 +127,40 @@ const fmt = (min: number) => {
   return `${h}:${m.toString().padStart(2, "0")} ${h24 < 12 ? "AM" : "PM"}`;
 };
 
+// ---------- Mock QR code — deterministic pseudo-random pattern with real
+// QR-style finder squares, seeded per booking id. Visual only, encodes no
+// data (there's no real ticketing backend behind this UI yet). ----------
+function MockQRCode({ seed, size = 44 }: { seed: number; size?: number }) {
+  const grid = 7;
+  const cell = size / grid;
+  const isFinder = (r: number, c: number) =>
+    (r < 3 && c < 3) || (r < 3 && c >= grid - 3) || (r >= grid - 3 && c < 3);
+  const isFinderRing = (r: number, c: number) => {
+    const inTL = r < 3 && c < 3;
+    const inTR = r < 3 && c >= grid - 3;
+    const lr = inTL || inTR ? r : r - (grid - 3);
+    const lc = inTL ? c : inTR ? c - (grid - 3) : c;
+    return lr === 1 && lc === 1;
+  };
+  const cells = Array.from({ length: grid * grid }, (_, i) => {
+    const n = Math.sin(seed * 12.9898 + i * 78.233) * 43758.5453;
+    return n - Math.floor(n) > 0.5;
+  });
+  return (
+    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className="shrink-0" aria-hidden="true">
+      <rect width={size} height={size} fill="white" rx={4} />
+      {Array.from({ length: grid }).map((_, r) =>
+        Array.from({ length: grid }).map((__, c) => {
+          const finder = isFinder(r, c);
+          const filled = finder ? !isFinderRing(r, c) : cells[r * grid + c];
+          if (!filled) return null;
+          return <rect key={`${r}-${c}`} x={c * cell} y={r * cell} width={cell} height={cell} fill="#1f2a1f" />;
+        })
+      )}
+    </svg>
+  );
+}
+
 // Synced from the traveller dashboard (Module 2) — mock
 const preferences = ["Wellness", "Farm Stays", "Under ₹8,000", "Nature"];
 
@@ -201,49 +227,14 @@ const NOTIFICATION_PRIORITY_STYLE: Record<PlannerNotification["priority"], strin
   low: "text-sage bg-sage/10",
 };
 
-// ---------- Route & Time optimization, live tracking, weather/traffic (mock) ----------
-const routeOptimization = {
-  totalDistance: "18.4 km",
-  totalTravelTime: "52 min",
-  timeSaved: "14 min",
-  fuelSaved: "₹65",
-  optimizedStops: initialPlan.length,
-};
-
-const timeOptimization = {
-  sunrise: "6:02 AM",
-  sunset: "6:34 PM",
-  peakTraffic: "5:30 – 7:00 PM",
-  weather: "31°C · Sunny",
-  bestDeparture: "3:45 PM",
-  recommendedDeparture: "4:10 PM",
-};
-
+// ---------- Live tracking (mock) ----------
 const liveTrackingInfo = {
   currentLocation: "Near Matrimandir, Auroville",
   nextDestination: "Serenity Beach",
   eta: "4:52 PM",
   remainingDistance: "6.2 km",
   travelTime: "20 min",
-  currentSpeed: "34 km/h",
   lastUpdated: "Just now",
-};
-
-const weatherDetail = {
-  temp: "31°C",
-  condition: "Sunny",
-  rainChance: "10%",
-  wind: "12 km/h",
-  uv: "High (8)",
-  recommendation: "Great day outdoors — carry water & sunscreen.",
-};
-
-const trafficDetail = {
-  status: "Moderate",
-  delay: "+8 min",
-  roadConditions: "Good, minor works near Auroville junction",
-  bestDeparture: "4:10 PM",
-  alternativeRoute: true,
 };
 
 const STATUS_BADGE: Record<ActivityBadge, { label: string; className: string }> = {
@@ -363,13 +354,8 @@ export default function TripPlannerWidget({
 
   // ---------- Notification kill switch ----------
   const [notificationsOn, setNotificationsOn] = useState(true);
+  const [notifPanelOpen, setNotifPanelOpen] = useState(false);
 
-  // ---------- Advanced mode (Planner tab) ----------
-  const [advanced, setAdvanced] = useState(false);
-  const [spentToday] = useState(5200);
-  const [dayBudget] = useState(8000);
-  const [regenerating, setRegenerating] = useState(false);
-  const [regenerated, setRegenerated] = useState(false);
 
   // ---------- Expanded activity cards & UI-only per-activity actions ----------
   // Additive local UI state only — none of this touches `plan`, `markDone`,
@@ -516,17 +502,6 @@ export default function TripPlannerWidget({
   // ---------- Route/Map & Bookings modals (UI-only) ----------
   const [routeModalOpen, setRouteModalOpen] = useState(false);
   const [bookingsModalOpen, setBookingsModalOpen] = useState(false);
-  const [recalculating, setRecalculating] = useState(false);
-  const [recalculated, setRecalculated] = useState(false);
-  const recalculateRoute = () => {
-    setRecalculating(true);
-    setRecalculated(false);
-    window.setTimeout(() => {
-      setRecalculating(false);
-      setRecalculated(true);
-      window.setTimeout(() => setRecalculated(false), 2200);
-    }, 1200);
-  };
 
   // ---------- Voice assistance (Assistant tab) ----------
   // useSyncExternalStore reads browser capability without an effect+setState
@@ -610,25 +585,6 @@ export default function TripPlannerWidget({
   const markDone = (id: number) =>
     setPlan((prev) => prev.map((it) => (it.id === id ? { ...it, status: "done" } : it)));
 
-  const skipItem = (id: number) =>
-    setPlan((prev) => prev.filter((it) => it.id !== id));
-
-  const regenerateRemaining = () => {
-    setRegenerating(true);
-    setRegenerated(false);
-    setTimeout(() => {
-      setPlan((prev) =>
-        prev.map((it) =>
-          it.status === "later"
-            ? { ...it, sub: "Re-optimised · Naturellement (4.5★, 1.2 km)" }
-            : it
-        )
-      );
-      setRegenerating(false);
-      setRegenerated(true);
-    }, 1600);
-  };
-
   const send = (text: string) => {
     const q = text.trim();
     if (!q) return;
@@ -645,13 +601,31 @@ export default function TripPlannerWidget({
 
   const panelStyle = { "--planner-width": `${panelWidth}px` } as React.CSSProperties;
 
-  // ---------- Derived stats for the header, Today's Summary & Live Tracking (real, from existing `plan` state) ----------
+  // ---------- Derived stats for the header & Live Tracking (real, from existing `plan` state) ----------
   const completedCount = plan.filter((p) => p.status === "done").length;
-  const remainingCount = plan.length - completedCount;
   const completionPct = plan.length ? Math.round((completedCount / plan.length) * 100) : 0;
-  const remainingBudget = dayBudget - spentToday;
-  const totalTravelDistanceKm = plan.reduce((sum, p) => sum + p.distanceKm, 0);
-  const totalTravelTimeMin = plan.reduce((sum, p) => sum + p.travelTimeMin, 0);
+
+  // ---------- Mock live-tracking map geometry (Zomato-style dashed route + moving
+  // location dot) — zigzag points generated from `plan`, no real map tiles/API. ----------
+  const MAP_WIDTH = 300;
+  const MAP_HEIGHT = 150;
+  const routePoints = plan.map((_, i) => ({
+    x: plan.length > 1 ? (i / (plan.length - 1)) * (MAP_WIDTH - 60) + 30 : MAP_WIDTH / 2,
+    y: i % 2 === 0 ? MAP_HEIGHT - 35 : 40,
+  }));
+  const routePathD = routePoints.length
+    ? `M ${routePoints.map((p) => `${p.x} ${p.y}`).join(" L ")}`
+    : "";
+  const nowIdx = plan.findIndex((p) => p.status === "now");
+  const liveMarker =
+    nowIdx >= 0 && nowIdx < routePoints.length - 1
+      ? {
+          x: routePoints[nowIdx].x + (routePoints[nowIdx + 1].x - routePoints[nowIdx].x) * 0.5,
+          y: routePoints[nowIdx].y + (routePoints[nowIdx + 1].y - routePoints[nowIdx].y) * 0.5,
+        }
+      : nowIdx >= 0
+      ? routePoints[nowIdx]
+      : null;
 
   return (
     <>
@@ -700,16 +674,86 @@ export default function TripPlannerWidget({
                 Live · tracking your Auroville trip
               </p>
             </div>
-            <button
-              onClick={() => setNotificationsOn((v) => !v)}
-              aria-label={notificationsOn ? "Mute notifications" : "Unmute notifications"}
-              title={notificationsOn ? "Notifications on — tap to mute" : "Notifications muted — tap to unmute"}
-              className={`p-2 rounded-lg transition-colors ${
-                notificationsOn ? "text-muted hover:text-foreground hover:bg-surface-hover" : "text-terracotta bg-terracotta/10"
-              }`}
-            >
-              {notificationsOn ? <Bell size={17} /> : <BellOff size={17} />}
-            </button>
+            <div className="relative">
+              <button
+                onClick={() => setNotifPanelOpen((v) => !v)}
+                aria-label="Notifications"
+                aria-expanded={notifPanelOpen}
+                className="relative p-2 rounded-lg text-muted hover:text-foreground hover:bg-surface-hover transition-colors"
+              >
+                <Bell size={17} />
+                {notifications.length > 0 && (
+                  <span className="absolute -top-0.5 -right-0.5 min-w-[16px] h-4 px-1 rounded-full bg-terracotta text-white text-[9px] font-bold flex items-center justify-center">
+                    {notifications.length}
+                  </span>
+                )}
+              </button>
+
+              {notifPanelOpen && (
+                <>
+                  <div className="fixed inset-0 z-[89]" onClick={() => setNotifPanelOpen(false)} />
+                  <div className="absolute right-0 top-full mt-2 w-[320px] max-h-[70vh] overflow-y-auto rounded-2xl bg-background border border-border shadow-2xl z-[90] animate-fade-in">
+                    <div className="flex items-center justify-between px-4 py-3 border-b border-border sticky top-0 bg-background">
+                      <div>
+                        <p className="text-xs font-semibold uppercase tracking-wider text-subtle">Notification center</p>
+                        <p className="text-[10px] text-subtle mt-0.5">{notifications.length} active</p>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <button
+                          onClick={() => setNotificationsOn((v) => !v)}
+                          aria-label={notificationsOn ? "Mute notifications" : "Unmute notifications"}
+                          title={notificationsOn ? "Notifications on — tap to mute" : "Notifications muted — tap to unmute"}
+                          className={`p-1.5 rounded-lg transition-colors ${
+                            notificationsOn ? "text-muted hover:text-foreground hover:bg-surface-hover" : "text-terracotta bg-terracotta/10"
+                          }`}
+                        >
+                          {notificationsOn ? <Bell size={14} /> : <BellOff size={14} />}
+                        </button>
+                        <button
+                          onClick={() => setNotifPanelOpen(false)}
+                          aria-label="Close notifications"
+                          className="p-1.5 rounded-lg text-muted hover:text-foreground hover:bg-surface-hover transition-colors"
+                        >
+                          <X size={14} />
+                        </button>
+                      </div>
+                    </div>
+                    <div className="p-3">
+                      {notifications.length === 0 ? (
+                        <p className="text-xs text-subtle text-center py-6">You&apos;re all caught up.</p>
+                      ) : (
+                        <div className="space-y-2">
+                          {notifications.map((n) => (
+                            <div
+                              key={n.id}
+                              className="flex items-start gap-2.5 rounded-xl bg-surface border border-border p-2.5"
+                            >
+                              <span className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 ${NOTIFICATION_PRIORITY_STYLE[n.priority]}`}>
+                                {n.icon}
+                              </span>
+                              <div className="flex-1 min-w-0">
+                                <div className="flex items-center justify-between gap-2">
+                                  <p className="text-xs font-medium text-foreground truncate">{n.title}</p>
+                                  <span className="text-[9px] text-subtle shrink-0">{n.timestamp}</span>
+                                </div>
+                                <p className="text-[11px] text-muted mt-0.5">{n.message}</p>
+                              </div>
+                              <button
+                                onClick={() => dismissNotification(n.id)}
+                                aria-label={`Dismiss: ${n.title}`}
+                                className="shrink-0 p-1 rounded-full text-subtle hover:text-foreground hover:bg-surface-hover transition-colors"
+                              >
+                                <X size={12} />
+                              </button>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
             <button
               onClick={onClose}
               aria-label="Close planner"
@@ -717,22 +761,6 @@ export default function TripPlannerWidget({
             >
               <X size={18} />
             </button>
-          </div>
-          {/* Trip stats strip */}
-          <div className="flex items-center flex-wrap gap-x-3 gap-y-1.5 px-5 pb-3 text-[11px] text-muted">
-            <span className="font-semibold text-foreground">Auroville Escape</span>
-            <span className="text-subtle">·</span>
-            <span>Day 2 of 3</span>
-            <span className="text-subtle">·</span>
-            <span className="flex items-center gap-1"><MapPin size={10} /> Auroville, TN</span>
-            <span className="text-subtle">·</span>
-            <span>{plan.length} activities</span>
-            <span className="text-subtle">·</span>
-            <span className="text-sage font-medium">{completionPct}% complete</span>
-            <span className="text-subtle">·</span>
-            <span className="flex items-center gap-1"><CloudSun size={10} /> 31°C Sunny</span>
-            <span className="text-subtle">·</span>
-            <span className="flex items-center gap-1"><IndianRupee size={10} /> {remainingBudget.toLocaleString("en-IN")} left</span>
           </div>
         </div>
 
@@ -828,44 +856,6 @@ export default function TripPlannerWidget({
               </div>
             </div>
 
-            {/* Today's Summary */}
-            <div className="rounded-2xl bg-surface border border-border p-4">
-              <p className="text-[11px] font-semibold uppercase tracking-wider text-subtle mb-3">
-                Today&apos;s summary
-              </p>
-              <div className="grid grid-cols-3 gap-2.5">
-                {(
-                  [
-                    ["Completed", `${completedCount}`, Check],
-                    ["Remaining", `${remainingCount}`, Clock],
-                    ["Complete", `${completionPct}%`, TrendingUp],
-                    ["Distance", `${totalTravelDistanceKm.toFixed(1)} km`, Route],
-                    ["Travel time", `${totalTravelTimeMin} min`, Timer],
-                    ["Spent", `₹${spentToday.toLocaleString("en-IN")}`, IndianRupee],
-                  ] as [string, string, LucideIcon][]
-                ).map(([label, value, Icon]) => (
-                  <div key={label} className="rounded-xl bg-background border border-border p-2.5">
-                    <p className="text-[9px] uppercase tracking-wider text-subtle flex items-center gap-1">
-                      <Icon size={10} /> {label}
-                    </p>
-                    <p className="text-sm font-semibold text-foreground mt-1">{value}</p>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-3">
-                <div className="flex items-center justify-between text-[10px] text-subtle mb-1">
-                  <span>Budget remaining</span>
-                  <span className="text-foreground font-medium">₹{remainingBudget.toLocaleString("en-IN")} / ₹{dayBudget.toLocaleString("en-IN")}</span>
-                </div>
-                <div className="h-1.5 rounded-full bg-surface-hover overflow-hidden">
-                  <div
-                    className={`h-full rounded-full ${spentToday > dayBudget ? "bg-terracotta" : "bg-sage"}`}
-                    style={{ width: `${Math.min(100, (spentToday / dayBudget) * 100)}%` }}
-                  />
-                </div>
-              </div>
-            </div>
-
             {/* Live Tracking */}
             <div className="rounded-2xl bg-surface border border-border p-4">
               <div className="flex items-center justify-between mb-3">
@@ -891,7 +881,6 @@ export default function TripPlannerWidget({
                   ["ETA", liveTrackingInfo.eta],
                   ["Remaining", liveTrackingInfo.remainingDistance],
                   ["Travel time", liveTrackingInfo.travelTime],
-                  ["Speed", liveTrackingInfo.currentSpeed],
                 ].map(([label, value]) => (
                   <div key={label} className="rounded-xl bg-background border border-border p-2">
                     <p className="text-[9px] uppercase tracking-wider text-subtle">{label}</p>
@@ -909,149 +898,6 @@ export default function TripPlannerWidget({
                 </div>
               </div>
             </div>
-
-            {/* Weather + Traffic (compact) */}
-            <div className="grid grid-cols-2 gap-3">
-              <div className="rounded-xl bg-surface border border-border p-3">
-                <p className="text-[10px] uppercase tracking-wider text-subtle flex items-center gap-1"><Thermometer size={11} /> Weather</p>
-                <p className="text-sm font-semibold text-foreground mt-1">{weatherDetail.temp} · {weatherDetail.condition}</p>
-                <div className="flex items-center gap-2.5 mt-1.5 text-[10px] text-muted">
-                  <span className="flex items-center gap-0.5"><CloudRain size={9} /> {weatherDetail.rainChance}</span>
-                  <span className="flex items-center gap-0.5"><Wind size={9} /> {weatherDetail.wind}</span>
-                  <span className="flex items-center gap-0.5"><Sun size={9} /> {weatherDetail.uv}</span>
-                </div>
-                <p className="text-[10px] text-subtle mt-1.5 leading-relaxed">{weatherDetail.recommendation}</p>
-              </div>
-              <div className="rounded-xl bg-surface border border-border p-3">
-                <p className="text-[10px] uppercase tracking-wider text-subtle flex items-center gap-1"><Gauge size={11} /> Traffic</p>
-                <p className="text-sm font-semibold text-foreground mt-1">{trafficDetail.status}</p>
-                <p className="text-[10px] text-muted mt-1.5">Delay: <span className="text-foreground">{trafficDetail.delay}</span></p>
-                <p className="text-[10px] text-subtle mt-1 leading-relaxed">{trafficDetail.roadConditions}</p>
-                <p className="text-[10px] text-muted mt-1">Best departure: <span className="text-foreground font-medium">{trafficDetail.bestDeparture}</span></p>
-                {trafficDetail.alternativeRoute && (
-                  <p className="text-[10px] text-sage mt-1">Alternative route available</p>
-                )}
-              </div>
-            </div>
-
-            {/* Route Optimization */}
-            <div className="rounded-2xl bg-surface border border-border p-4">
-              <p className="text-[11px] font-semibold uppercase tracking-wider text-subtle mb-3 flex items-center gap-1.5">
-                <Route size={12} /> Route optimization
-              </p>
-              <div className="grid grid-cols-2 gap-2.5">
-                {[
-                  ["Total distance", routeOptimization.totalDistance],
-                  ["Total travel time", routeOptimization.totalTravelTime],
-                  ["Time saved", routeOptimization.timeSaved],
-                  ["Fuel saved", routeOptimization.fuelSaved],
-                ].map(([label, value]) => (
-                  <div key={label} className="rounded-xl bg-background border border-border p-2.5">
-                    <p className="text-[9px] uppercase tracking-wider text-subtle">{label}</p>
-                    <p className="text-sm font-semibold text-foreground mt-1">{value}</p>
-                  </div>
-                ))}
-              </div>
-              <p className="text-[10px] text-subtle mt-2.5">{routeOptimization.optimizedStops} stops optimized for today&apos;s route.</p>
-              {recalculated && (
-                <p className="text-[11px] text-sage mt-2 flex items-center gap-1.5 animate-fade-in">
-                  <Check size={11} /> Route recalculated for current traffic.
-                </p>
-              )}
-              <div className="flex gap-2 mt-3">
-                <button
-                  onClick={() => setRouteModalOpen(true)}
-                  className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-medium rounded-lg border border-border text-foreground hover:border-sage/50 transition-colors"
-                >
-                  <Eye size={12} /> View Route
-                </button>
-                <button
-                  onClick={() => setRouteModalOpen(true)}
-                  className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-medium rounded-lg border border-border text-foreground hover:border-sage/50 transition-colors"
-                >
-                  <MapIcon size={12} /> Open Map
-                </button>
-                <button
-                  onClick={recalculateRoute}
-                  disabled={recalculating}
-                  className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-medium rounded-lg bg-sage text-white hover:opacity-90 transition-opacity disabled:opacity-60"
-                >
-                  {recalculating ? <Loader2 size={12} className="animate-spin" /> : <RefreshCw size={12} />}
-                  Recalculate
-                </button>
-              </div>
-            </div>
-
-            {/* Time Optimization */}
-            <div className="rounded-2xl bg-surface border border-border p-4">
-              <p className="text-[11px] font-semibold uppercase tracking-wider text-subtle mb-3 flex items-center gap-1.5">
-                <Timer size={12} /> Time optimization
-              </p>
-              <div className="grid grid-cols-2 gap-2.5">
-                {(
-                  [
-                    ["Sunrise", timeOptimization.sunrise, Sunrise],
-                    ["Sunset", timeOptimization.sunset, Sunset],
-                    ["Peak traffic", timeOptimization.peakTraffic, Gauge],
-                    ["Weather", timeOptimization.weather, CloudSun],
-                    ["Best departure", timeOptimization.bestDeparture, Clock],
-                    ["Recommended", timeOptimization.recommendedDeparture, CheckCircle2],
-                  ] as [string, string, LucideIcon][]
-                ).map(([label, value, Icon]) => (
-                  <div key={label} className="rounded-xl bg-background border border-border p-2.5">
-                    <p className="text-[9px] uppercase tracking-wider text-subtle flex items-center gap-1">
-                      <Icon size={10} /> {label}
-                    </p>
-                    <p className="text-xs font-semibold text-foreground mt-1">{value}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Advanced mode toggle */}
-            <button
-              onClick={() => setAdvanced((v) => !v)}
-              className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl border transition-colors ${
-                advanced ? "border-sage/50 bg-sage/10" : "border-border bg-surface hover:border-sage/30"
-              }`}
-            >
-              <span className="flex items-center gap-2 text-xs font-semibold text-foreground">
-                <Sliders size={13} className={advanced ? "text-sage" : "text-subtle"} />
-                Advanced mode
-              </span>
-              <span
-                className={`relative inline-flex w-9 h-5 rounded-full transition-colors shrink-0 ${
-                  advanced ? "bg-sage" : "bg-surface-hover border border-border"
-                }`}
-              >
-                <span
-                  className={`absolute top-[3px] w-3.5 h-3.5 rounded-full bg-white shadow transition-all ${
-                    advanced ? "left-[19px]" : "left-[3px]"
-                  }`}
-                />
-              </span>
-            </button>
-
-            {/* Advanced widgets: weather + budget */}
-            {advanced && (
-              <div className="grid grid-cols-2 gap-3 animate-fade-in">
-                <div className="rounded-xl bg-surface border border-border p-3">
-                  <p className="text-[10px] uppercase tracking-wider text-subtle flex items-center gap-1"><CloudSun size={11} /> Today</p>
-                  <p className="text-sm font-semibold text-foreground mt-1">31°C · Sunny</p>
-                  <p className="text-[11px] text-subtle">Auroville, TN</p>
-                </div>
-                <div className="rounded-xl bg-surface border border-border p-3">
-                  <p className="text-[10px] uppercase tracking-wider text-subtle flex items-center gap-1"><IndianRupee size={11} /> Spent today</p>
-                  <p className="text-sm font-semibold text-foreground mt-1">₹{spentToday.toLocaleString("en-IN")} <span className="text-subtle font-normal">/ ₹{dayBudget.toLocaleString("en-IN")}</span></p>
-                  <div className="h-1.5 rounded-full bg-surface-hover overflow-hidden mt-1.5">
-                    <div
-                      className={`h-full rounded-full ${spentToday > dayBudget ? "bg-terracotta" : "bg-sage"}`}
-                      style={{ width: `${Math.min(100, (spentToday / dayBudget) * 100)}%` }}
-                    />
-                  </div>
-                </div>
-              </div>
-            )}
 
             {/* Notification muted micro-affordance */}
             {mutedNotice && (
@@ -1152,22 +998,7 @@ export default function TripPlannerWidget({
                 <p className="text-[11px] font-semibold uppercase tracking-wider text-subtle">
                   Today&apos;s plan
                 </p>
-                {advanced && (
-                  <button
-                    onClick={regenerateRemaining}
-                    disabled={regenerating}
-                    className="flex items-center gap-1.5 text-[11px] font-semibold text-sage hover:underline disabled:opacity-60"
-                  >
-                    {regenerating ? <Loader2 size={11} className="animate-spin" /> : <Sparkles size={11} />}
-                    {regenerating ? "Regenerating…" : "Regenerate remaining"}
-                  </button>
-                )}
               </div>
-              {regenerated && (
-                <p className="text-[11px] text-sage mb-3 flex items-center gap-1.5 animate-fade-in">
-                  <Check size={11} /> Remaining stops re-optimised for today&apos;s traffic.
-                </p>
-              )}
               <div className="space-y-1">
                 {plan.map((item, i) => {
                   const badge = getBadge(item);
@@ -1260,27 +1091,6 @@ export default function TripPlannerWidget({
                             <Check size={10} /> Mark Complete
                           </button>
                         </div>
-
-                        {/* Existing Advanced-mode actions — unchanged */}
-                        {advanced && item.status !== "done" && (
-                          <div className="flex items-center gap-3 mt-1.5">
-                            <button
-                              onClick={() => markDone(item.id)}
-                              className="flex items-center gap-1 text-[10px] font-medium text-sage hover:underline"
-                            >
-                              <Check size={10} /> Mark done
-                            </button>
-                            <button className="flex items-center gap-1 text-[10px] font-medium text-muted hover:text-foreground">
-                              <Navigation size={10} /> Directions
-                            </button>
-                            <button
-                              onClick={() => skipItem(item.id)}
-                              className="flex items-center gap-1 text-[10px] font-medium text-subtle hover:text-terracotta"
-                            >
-                              <SkipForward size={10} /> Skip
-                            </button>
-                          </div>
-                        )}
 
                         {/* Expanded details */}
                         {isExpanded && (
@@ -1399,46 +1209,6 @@ export default function TripPlannerWidget({
                 </p>
               </div>
             )}
-
-            {/* Notification Center */}
-            <div>
-              <div className="flex items-center justify-between mb-3">
-                <p className="text-[11px] font-semibold uppercase tracking-wider text-subtle">
-                  Notification center
-                </p>
-                <span className="text-[10px] text-subtle">{notifications.length} active</span>
-              </div>
-              {notifications.length === 0 ? (
-                <p className="text-xs text-subtle">You&apos;re all caught up.</p>
-              ) : (
-                <div className="space-y-2">
-                  {notifications.map((n) => (
-                    <div
-                      key={n.id}
-                      className="flex items-start gap-2.5 rounded-xl bg-surface border border-border p-2.5"
-                    >
-                      <span className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 ${NOTIFICATION_PRIORITY_STYLE[n.priority]}`}>
-                        {n.icon}
-                      </span>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center justify-between gap-2">
-                          <p className="text-xs font-medium text-foreground truncate">{n.title}</p>
-                          <span className="text-[9px] text-subtle shrink-0">{n.timestamp}</span>
-                        </div>
-                        <p className="text-[11px] text-muted mt-0.5">{n.message}</p>
-                      </div>
-                      <button
-                        onClick={() => dismissNotification(n.id)}
-                        aria-label={`Dismiss: ${n.title}`}
-                        className="shrink-0 p-1 rounded-full text-subtle hover:text-foreground hover:bg-surface-hover transition-colors"
-                      >
-                        <X size={12} />
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
 
             {/* Preference-matched shortlist */}
             <div>
@@ -1717,7 +1487,7 @@ export default function TripPlannerWidget({
             [
               ["Today", CalendarClock, () => setTab("planner")],
               ["Map", MapIcon, () => setRouteModalOpen(true)],
-              ["Notifications", Bell, () => setTab("planner")],
+              ["Notifications", Bell, () => setNotifPanelOpen(true)],
               ["Bookings", Ticket, () => setBookingsModalOpen(true)],
               ["AI Assistant", MessageCircle, () => setTab("assistant")],
             ] as [string, LucideIcon, () => void][]
@@ -1757,18 +1527,63 @@ export default function TripPlannerWidget({
               </button>
             </div>
             <div className="p-5 space-y-4">
-              {/* Placeholder map visual */}
-              <div className="relative h-40 rounded-xl bg-gradient-to-br from-sage/15 to-primary/10 border border-border overflow-hidden">
-                <div className="absolute inset-0 opacity-40" style={{ backgroundImage: "radial-gradient(circle, var(--color-border) 1px, transparent 1px)", backgroundSize: "14px 14px" }} />
-                <div className="absolute inset-0 flex items-center justify-around px-6">
-                  {plan.map((item, i) => (
-                    <span key={item.id} className="flex flex-col items-center gap-1">
-                      <span className="w-6 h-6 rounded-full bg-sage text-white text-[10px] font-bold flex items-center justify-center shadow">
-                        {i + 1}
-                      </span>
-                    </span>
-                  ))}
-                </div>
+              {/* Live-tracking map mock — Zomato-style dashed route + moving location dot,
+                  built entirely from mock plan data (no real map tiles/API). */}
+              <div className="relative h-40 rounded-xl bg-gradient-to-br from-sage/10 to-primary/5 border border-border overflow-hidden">
+                <div
+                  className="absolute inset-0 opacity-25"
+                  style={{
+                    backgroundImage:
+                      "linear-gradient(var(--color-border) 1px, transparent 1px), linear-gradient(90deg, var(--color-border) 1px, transparent 1px)",
+                    backgroundSize: "22px 22px",
+                  }}
+                />
+                <svg viewBox={`0 0 ${MAP_WIDTH} ${MAP_HEIGHT}`} className="absolute inset-0 w-full h-full">
+                  <path
+                    d={routePathD}
+                    fill="none"
+                    stroke="var(--color-sage)"
+                    strokeWidth={2.5}
+                    strokeDasharray="1 7"
+                    strokeLinecap="round"
+                  />
+                  {liveMarker && (
+                    <g transform={`translate(${liveMarker.x}, ${liveMarker.y})`}>
+                      <circle r={9} className="fill-primary/25 animate-ping" />
+                      <circle r={5} className="fill-primary stroke-white" strokeWidth={1.5} />
+                    </g>
+                  )}
+                </svg>
+                {plan.map((item, i) => (
+                  <span
+                    key={item.id}
+                    className={`absolute w-6 h-6 -translate-x-1/2 -translate-y-1/2 rounded-full text-[10px] font-bold flex items-center justify-center shadow ${
+                      item.status === "done"
+                        ? "bg-surface border border-border text-subtle"
+                        : item.status === "now"
+                        ? "bg-sage text-white"
+                        : "bg-white border border-sage/40 text-sage"
+                    }`}
+                    style={{
+                      left: `${(routePoints[i].x / MAP_WIDTH) * 100}%`,
+                      top: `${(routePoints[i].y / MAP_HEIGHT) * 100}%`,
+                    }}
+                  >
+                    {i + 1}
+                  </span>
+                ))}
+                {liveMarker && (
+                  <span
+                    className="absolute -translate-x-1/2 text-[9px] font-semibold text-primary bg-white/90 px-1.5 py-0.5 rounded-full shadow whitespace-nowrap"
+                    style={{
+                      left: `${(liveMarker.x / MAP_WIDTH) * 100}%`,
+                      top: `${(liveMarker.y / MAP_HEIGHT) * 100}%`,
+                      transform: "translate(-50%, 10px)",
+                    }}
+                  >
+                    You are here
+                  </span>
+                )}
               </div>
               <div>
                 <p className="text-[11px] font-semibold uppercase tracking-wider text-subtle mb-2">Stops</p>
@@ -1784,16 +1599,6 @@ export default function TripPlannerWidget({
                       </div>
                     </div>
                   ))}
-                </div>
-              </div>
-              <div className="grid grid-cols-2 gap-2.5 pt-1">
-                <div className="rounded-xl bg-surface border border-border p-2.5">
-                  <p className="text-[9px] uppercase tracking-wider text-subtle flex items-center gap-1"><Route size={10} /> Distance</p>
-                  <p className="text-sm font-semibold text-foreground mt-1">{routeOptimization.totalDistance}</p>
-                </div>
-                <div className="rounded-xl bg-surface border border-border p-2.5">
-                  <p className="text-[9px] uppercase tracking-wider text-subtle flex items-center gap-1"><Fuel size={10} /> Fuel saved</p>
-                  <p className="text-sm font-semibold text-foreground mt-1">{routeOptimization.fuelSaved}</p>
                 </div>
               </div>
             </div>
@@ -1823,23 +1628,42 @@ export default function TripPlannerWidget({
                 <X size={16} />
               </button>
             </div>
-            <div className="p-5 space-y-2.5">
+            <div className="p-5 space-y-3">
               {plan.map((item) => {
                 const booking = bookingOverrides[item.id] ?? item.bookingStatus;
                 return (
-                  <div key={item.id} className="flex items-center justify-between gap-2.5 rounded-xl bg-surface border border-border p-3">
-                    <div className="min-w-0">
-                      <p className="text-xs font-medium text-foreground truncate">{item.title}</p>
-                      <p className="text-[11px] text-muted">{fmt(item.min)} · {item.estCost > 0 ? `₹${item.estCost.toLocaleString("en-IN")}` : "Included"}</p>
+                  <div key={item.id} className="flex items-stretch rounded-2xl bg-surface border border-border overflow-hidden">
+                    {/* Main stub */}
+                    <div className="flex-1 min-w-0 p-3.5 flex items-center gap-3">
+                      <span className="w-9 h-9 rounded-full bg-sage/10 text-sage flex items-center justify-center shrink-0">
+                        {item.icon}
+                      </span>
+                      <div className="min-w-0">
+                        <p className="text-[9px] font-semibold uppercase tracking-wider text-sage">Dhyana Pass</p>
+                        <p className="text-sm font-semibold text-foreground truncate">{item.title}</p>
+                        <p className="text-[11px] text-muted mt-0.5">
+                          {fmt(item.min)} · {item.estCost > 0 ? `₹${item.estCost.toLocaleString("en-IN")}` : "Included"}
+                        </p>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-2 shrink-0">
-                      <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${BOOKING_BADGE[booking]}`}>
+
+                    {/* Perforated tear divider */}
+                    <div className="relative shrink-0 w-0">
+                      <span className="absolute inset-y-2.5 left-0 border-l-2 border-dashed border-border/70" />
+                      <span className="absolute z-10 -top-[7px] -left-[7px] w-3.5 h-3.5 rounded-full bg-background" />
+                      <span className="absolute z-10 -bottom-[7px] -left-[7px] w-3.5 h-3.5 rounded-full bg-background" />
+                    </div>
+
+                    {/* QR stub */}
+                    <div className="w-[92px] shrink-0 flex flex-col items-center justify-center gap-1.5 bg-sage/5 py-3 px-2">
+                      <MockQRCode seed={item.id} size={44} />
+                      <span className={`text-[9px] font-semibold px-1.5 py-0.5 rounded-full text-center leading-tight ${BOOKING_BADGE[booking]}`}>
                         {booking}
                       </span>
                       {booking !== "Confirmed" && booking !== "Not Required" && (
                         <button
                           onClick={() => confirmBooking(item.id)}
-                          className="text-[10px] font-semibold text-sage hover:underline"
+                          className="text-[9px] font-semibold text-sage hover:underline"
                         >
                           Confirm
                         </button>

@@ -47,7 +47,7 @@ export default function EventPlannerContactsPage() {
   const visible = enquiries.filter((e) => filter === "All" || e.state === filter);
 
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="Contact Management"
         subtitle="Client enquiries, consultation requests and your contact directory."

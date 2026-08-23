@@ -86,7 +86,7 @@ export default function HostRevenuePage() {
   );
 
   return (
-    <div className="space-y-8 pb-12">
+    <div className="space-y-4 pb-12">
       <PageHeader
         title="Revenue & Earnings"
         subtitle="Income, occupancy and running costs across your properties."

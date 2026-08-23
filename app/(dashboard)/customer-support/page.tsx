@@ -37,7 +37,7 @@ const topics = ["Refund status", "Change dates", "Pre-book food", "Late check-in
 
 export default function CustomerSupportDashboardPage() {
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="Customer Support Dashboard"
         subtitle="Welcome back, Priya — the AI is handling the floor. 8 chats have humans in the loop, 4 went to the call center."

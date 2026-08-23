@@ -38,7 +38,7 @@ export default function InfluencerEarningsPage() {
   const canRequest = coreMetrics.pendingPayout >= minimumPayoutThreshold;
 
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="Earnings"
         subtitle="Your commission funnel, payout history, and the rule that decides your rate."

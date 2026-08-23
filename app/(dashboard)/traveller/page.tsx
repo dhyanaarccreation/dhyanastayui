@@ -28,7 +28,7 @@ export default function TravellerDashboardOverview() {
     : 100;
 
   return (
-    <div className="space-y-8 pb-12">
+    <div className="space-y-4 pb-12">
       {/* Header */}
       <div>
         <h1 className="heading-display text-3xl text-foreground mb-2">
@@ -73,9 +73,9 @@ export default function TravellerDashboardOverview() {
         </div>
       </div>
 
-      <div className="grid lg:grid-cols-3 gap-8">
+      <div className="grid lg:grid-cols-3 gap-5">
         {/* Left Column - Upcoming Trip */}
-        <div className="lg:col-span-2 space-y-6">
+        <div className="lg:col-span-2 space-y-4">
           <div className="flex justify-between items-end">
             <h2 className="text-xl font-semibold text-foreground">Upcoming Trip</h2>
             <Link href="/traveller/bookings" className="text-sm text-primary hover:underline">
@@ -126,7 +126,7 @@ export default function TravellerDashboardOverview() {
         </div>
 
         {/* Right Column - Wishlist */}
-        <div className="space-y-6">
+        <div className="space-y-4">
           <div className="flex justify-between items-end">
             <h2 className="text-xl font-semibold text-foreground">Wishlist</h2>
             <Link href="/traveller/wishlist" className="text-sm text-primary hover:underline">

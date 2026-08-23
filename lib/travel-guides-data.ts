@@ -18,13 +18,7 @@
 // `isRealPerson` flag and `DEMO_DATA_NOTICE` below.
 // ============================================
 
-import {
-  influencerProfile,
-  curatorIdentity,
-  curatedStays as riyaCuratedStays,
-  itineraries as riyaItineraries,
-  type ItineraryDay,
-} from "./influencer-data";
+import { type ItineraryDay, type CuratorTravelStory } from "./influencer-data";
 
 export const DEMO_DATA_NOTICE =
   "Curator stats shown are demo data for product development — not verified performance figures.";
@@ -49,33 +43,11 @@ export interface TravelCuratorSummary {
   stats: TravelCuratorStats;
   /** false = directory-only card; profile page shows a "guide coming soon" state instead of fabricated content. */
   hasFullGuide: boolean;
+  /** Short first-person bio, shown on the "guide coming soon" page for curators who have one. */
+  bio?: string;
 }
-
-function countExperienceStops(days: ItineraryDay[]) {
-  return days.reduce((sum, d) => sum + d.stops.filter((s) => s.type === "Experience").length, 0);
-}
-
-const riyaPublished = riyaItineraries.filter((it) => it.status === "Published");
 
 export const travelCurators: TravelCuratorSummary[] = [
-  {
-    handle: curatorIdentity.handle,
-    name: influencerProfile.name,
-    creatorName: influencerProfile.creatorName,
-    avatar: influencerProfile.avatar,
-    region: curatorIdentity.region,
-    travelStyle: influencerProfile.contentCategories.slice(0, 3),
-    isRealPerson: false,
-    stats: {
-      staysCount: riyaCuratedStays.length,
-      experiencesCount: riyaPublished.reduce((sum, it) => sum + countExperienceStops(it.days), 0),
-      itinerariesCount: riyaPublished.length,
-      followers: influencerProfile.audienceSize,
-      itineraryCopies: riyaItineraries.reduce((sum, it) => sum + it.copies, 0),
-      bookings: riyaItineraries.reduce((sum, it) => sum + it.bookingsFromCopies, 0),
-    },
-    hasFullGuide: true,
-  },
   {
     handle: "vjsiddhu_vlogs",
     name: "VJ Siddhu",
@@ -95,48 +67,53 @@ export const travelCurators: TravelCuratorSummary[] = [
     hasFullGuide: true,
   },
   {
-    handle: "arjuntrails",
-    name: "Arjun Trails",
-    creatorName: "@arjuntrails",
-    avatar: "https://i.pravatar.cc/150?img=13",
-    region: "Tamil Nadu",
-    travelStyle: ["Nature", "Adventure", "Road Trips"],
-    isRealPerson: false,
-    stats: { staysCount: 12, experiencesCount: 18, itinerariesCount: 6, followers: "842K", itineraryCopies: 2_480, bookings: 286 },
+    handle: "drbro",
+    name: "Dr Bro",
+    creatorName: "@Dr_Bro",
+    avatar: "/curators/dr-bro-logo.jpg",
+    region: "India",
+    travelStyle: ["Travel Storytelling", "Entrepreneurship", "Culture"],
+    isRealPerson: true,
+    stats: { staysCount: 9, experiencesCount: 14, itinerariesCount: 4, followers: "—", itineraryCopies: 0, bookings: 0 },
     hasFullGuide: false,
+    bio: "I'm Gagan Srinivas, popularly known as Dr Bro — a travel storyteller and entrepreneur shaped by real-world experiences across cultures and countries. My journey from curiosity-driven travel to building a business has been defined by learning, responsibility, and perspective.",
   },
   {
-    handle: "mayawanders",
-    name: "Maya Wanders",
-    creatorName: "@mayawanders",
-    avatar: "https://i.pravatar.cc/150?img=45",
-    region: "South India",
-    travelStyle: ["Slow Travel", "Luxury", "Wellness"],
-    isRealPerson: false,
-    stats: { staysCount: 16, experiencesCount: 21, itinerariesCount: 7, followers: "1.2M", itineraryCopies: 3_120, bookings: 342 },
+    handle: "naaanveshana",
+    name: "Anvesh Chinni",
+    creatorName: "@NaaAnveshana",
+    avatar: "/curators/anvesh-chinni-naa-anveshana.jpg",
+    region: "Global",
+    travelStyle: ["Global Travel", "Culture", "Lifestyle"],
+    isRealPerson: true,
+    stats: { staysCount: 10, experiencesCount: 15, itinerariesCount: 4, followers: "—", itineraryCopies: 0, bookings: 0 },
     hasFullGuide: false,
+    bio: "Naa Anveshana is a popular Telugu travel YouTube channel run by global vlogger Anvesh Chinni. He shares global travel experiences, cultural explorations, and international lifestyle vlogs.",
+  },
+  // ---- Fictional demo personas (no real person represented) — round out
+  // the directory to 5 cards with different regions/styles. No avatar
+  // path: CuratorAvatar renders its initials-placeholder fallback.
+  {
+    handle: "wanderwithmeher",
+    name: "Meher Kapoor",
+    creatorName: "@wanderwithmeher",
+    region: "Himachal Pradesh",
+    travelStyle: ["Trekking", "Mountains", "Solo Travel", "Photography"],
+    isRealPerson: false,
+    stats: { staysCount: 6, experiencesCount: 9, itinerariesCount: 3, followers: "—", itineraryCopies: 0, bookings: 0 },
+    hasFullGuide: false,
+    bio: "I trade city weekends for mountain trailheads — Himachal's homestays, high-altitude treks and the tea-stall conversations in between.",
   },
   {
-    handle: "karthikonroute",
-    name: "Karthik On Route",
-    creatorName: "@karthikonroute",
-    avatar: "https://i.pravatar.cc/150?img=51",
-    region: "Tamil Nadu / Kerala",
-    travelStyle: ["Adventure", "Road Trips", "Nature"],
+    handle: "saltandsandtravels",
+    name: "Ananya Fernandes",
+    creatorName: "@saltandsandtravels",
+    region: "Goa",
+    travelStyle: ["Beaches", "Backpacking", "Nightlife", "Food"],
     isRealPerson: false,
-    stats: { staysCount: 14, experiencesCount: 19, itinerariesCount: 6, followers: "674K", itineraryCopies: 1_840, bookings: 198 },
+    stats: { staysCount: 7, experiencesCount: 11, itinerariesCount: 3, followers: "—", itineraryCopies: 0, bookings: 0 },
     hasFullGuide: false,
-  },
-  {
-    handle: "nilaeatsandtravels",
-    name: "Nila Eats & Travels",
-    creatorName: "@nilaeatsandtravels",
-    avatar: "https://i.pravatar.cc/150?img=44",
-    region: "Tamil Nadu",
-    travelStyle: ["Food", "Culture", "Travel"],
-    isRealPerson: false,
-    stats: { staysCount: 11, experiencesCount: 17, itinerariesCount: 5, followers: "512K", itineraryCopies: 1_420, bookings: 176 },
-    hasFullGuide: false,
+    bio: "Goa beyond the beach clubs — I map out the quiet coves, the family-run beach shacks and the sunset spots the tour buses skip.",
   },
 ];
 
@@ -227,6 +204,8 @@ export const vjSiddhuItineraries: {
       {
         day: 1,
         title: "White Town & the Coast",
+        summary:
+          "We checked into a heritage stay in White Town, walked the old French Quarter with the crew, ate our way through the local food trail, and watched the sunset from the coast.",
         stops: [
           { type: "Stay", label: "Check in — heritage stay in White Town" },
           { type: "Activity", label: "White Town heritage walk" },
@@ -237,6 +216,8 @@ export const vjSiddhuItineraries: {
       {
         day: 2,
         title: "Auroville & Cafés",
+        summary:
+          "Spent the morning exploring Auroville, hopped between our favourite cafés, squeezed in a quick nature activity, then ended with a proper dinner with friends.",
         stops: [
           { type: "Experience", label: "Auroville experience" },
           { type: "Food", label: "Café hopping" },
@@ -247,6 +228,8 @@ export const vjSiddhuItineraries: {
       {
         day: 3,
         title: "Beach & Departure",
+        summary:
+          "Started the day at the beach, picked up a few things from the local shops, soaked in one last property experience, then checked out.",
         stops: [
           { type: "Activity", label: "Beach morning" },
           { type: "Activity", label: "Local shopping" },
@@ -262,3 +245,19 @@ export const vjSiddhuItineraries: {
     commissionEarned: "₹2.1L (demo)",
   },
 ];
+
+// ---------- Travel story — "How I Experienced…" section on the Travel Guide Experience Page ----------
+// Demo copy, not verified quotes — see DEMO_DATA_NOTICE above.
+export const vjSiddhuTravelStory: CuratorTravelStory = {
+  whyThisDestination:
+    "Pondicherry is the trip I keep sending my friends on — it's close enough for a weekend and different enough to feel like a proper break.",
+  favouriteStay: "The heritage stay in White Town. Chettinad-style architecture and a five-minute walk to everything.",
+  favouriteExperience: "Cycling through Auroville with the crew — no fixed plan, just following whichever road looked interesting.",
+  favouriteFood: "Whatever's on the local food trail in White Town — the roadside stalls beat the sit-down places every time.",
+  whatSurprisedThem: "How different Auroville feels from the rest of Pondicherry — like driving into a completely different pace of life.",
+  travelTips: [
+    "Go with a group if you can — White Town's cafés are made for it.",
+    "Keep Day 2 loose. Auroville rewards wandering more than a fixed schedule.",
+    "Save the beach for the last morning, not the first — it's the better way to end the trip.",
+  ],
+};

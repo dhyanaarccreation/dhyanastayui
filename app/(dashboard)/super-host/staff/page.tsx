@@ -43,7 +43,7 @@ export default function SuperHostStaffPage() {
     setChecks((prev) => prev.map((c) => (c.id === id ? { ...c, on: !c.on } : c)));
 
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="Staff & Quality"
         subtitle="Team performance across the cluster and the systematic checks every property must pass."

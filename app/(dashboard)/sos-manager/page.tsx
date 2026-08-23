@@ -29,7 +29,7 @@ const recent = [
 
 export default function SosCommandCenterPage() {
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="SOS Command Center"
         subtitle="Welcome, Maj. Arjun Singh — 1 live alert in progress, response team en route."

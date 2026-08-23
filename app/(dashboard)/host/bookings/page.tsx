@@ -57,7 +57,7 @@ export default function HostBookingsPage() {
     .filter((b) => historyFilter === "All" || b.status === historyFilter);
 
   return (
-    <div className="space-y-8 pb-12">
+    <div className="space-y-4 pb-12">
       <PageHeader
         title="Bookings"
         subtitle="Current, upcoming and past reservations across your properties."

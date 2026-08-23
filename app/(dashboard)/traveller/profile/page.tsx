@@ -60,7 +60,7 @@ const languages = ["English", "Tamil", "Hindi"];
 
 export default function TravellerProfilePage() {
   return (
-    <div className="space-y-8 pb-12">
+    <div className="space-y-4 pb-12">
       <PageHeader
         title="My Profile"
         subtitle="Your personal information, travel preferences and emergency contacts."

@@ -45,7 +45,7 @@ export default function SuperAdminSystemsPage() {
   };
 
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="Systems & AI"
         subtitle="Integrations, live system health, AI behaviour and backups — the platform's plumbing."

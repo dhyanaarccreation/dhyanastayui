@@ -64,7 +64,7 @@ export default function RentalBookingsPage() {
   const outNow = rentals.filter((r) => r.status === "Active" || r.status === "Overdue").length;
 
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="Bookings & Revenue"
         subtitle="Every rental — live, upcoming and returned — with your earnings."

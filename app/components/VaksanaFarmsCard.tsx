@@ -9,7 +9,7 @@ export default function VaksanaFarmsCard() {
   return (
     <Link
       href="/vaksana-farms"
-      className="group col-span-full flex flex-col md:flex-row rounded-2xl sm:rounded-[28px] overflow-hidden bg-surface card-hover"
+      className="group col-span-full flex flex-col md:flex-row rounded-card-lg border-[5px] border-surface overflow-hidden bg-surface shadow-[var(--shadow-card)] transition-all duration-300 hover:shadow-[var(--shadow-card-hover)] hover:-translate-y-1"
     >
       {/* Hero image */}
       <div className="relative h-56 md:h-auto md:w-[42%] shrink-0 overflow-hidden bg-surface-hover">
@@ -67,7 +67,7 @@ export default function VaksanaFarmsCard() {
           ))}
         </div>
 
-        <span className="inline-flex items-center gap-2 text-sm font-semibold text-primary group-hover:gap-3 transition-all w-fit">
+        <span className="inline-flex items-center gap-2 w-fit rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-all duration-300 group-hover:gap-3 group-hover:scale-105">
           Explore Property <ArrowRight size={16} />
         </span>
       </div>

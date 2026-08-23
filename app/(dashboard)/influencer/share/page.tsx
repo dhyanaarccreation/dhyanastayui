@@ -51,7 +51,7 @@ export default function InfluencerSharePage() {
   const publishedItineraries = itineraries.filter((it) => it.status === "Published");
 
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="Share & Promote"
         subtitle="Copy links to your profile, itineraries and promo code — or grab a ready-made card for social."

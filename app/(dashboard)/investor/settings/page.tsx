@@ -3,7 +3,7 @@ import { PageHeader, SectionCard, SettingRow, Toggle } from "@/app/components/Da
 
 export default function InvestorSettingsPage() {
   return (
-    <div className="space-y-8 pb-12">
+    <div className="space-y-4 pb-12">
       <PageHeader
         title="Investor Settings"
         subtitle="KYC, payout preferences, nominee and notifications."

@@ -102,7 +102,7 @@ export default function SuperAdminPlatformPage() {
   const removeSpecies = (name: string) => setSpecies((p) => p.filter((s) => s !== name));
 
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="Platform Control"
         subtitle="Every dashboard module, feature flag, listing and ad slot — live across the whole platform."

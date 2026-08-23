@@ -36,7 +36,7 @@ export default function LocationIndicator({
         disabled={isDetecting}
         aria-haspopup="listbox"
         aria-expanded={open}
-        className={`flex items-center gap-1.5 w-full sm:w-auto h-[54px] px-4 rounded-full border text-sm font-medium bg-surface shadow-organic transition-colors whitespace-nowrap ${
+        className={`flex items-center gap-1.5 w-full sm:w-auto h-10 px-3.5 rounded-full text-sm font-medium bg-surface-hover transition-colors whitespace-nowrap ${
           isDetecting
             ? "text-subtle cursor-default border-border"
             : "text-foreground border-border hover:border-border-light"

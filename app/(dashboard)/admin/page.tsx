@@ -12,7 +12,7 @@ export default function AdminDashboardOverview() {
   ];
 
   return (
-    <div className="space-y-8 pb-12">
+    <div className="space-y-4 pb-12">
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
         <div>
@@ -57,9 +57,9 @@ export default function AdminDashboardOverview() {
         ))}
       </div>
 
-      <div className="grid lg:grid-cols-3 gap-8">
+      <div className="grid lg:grid-cols-3 gap-5">
         {/* Main Content Area */}
-        <div className="lg:col-span-2 space-y-8">
+        <div className="lg:col-span-2 space-y-4">
           
           {/* Revenue Chart Placeholder */}
           <div className="bg-surface border border-border rounded-2xl p-6">
@@ -139,7 +139,7 @@ export default function AdminDashboardOverview() {
         </div>
 
         {/* Sidebar */}
-        <div className="space-y-8">
+        <div className="space-y-4">
           {/* System Alerts */}
           <div className="bg-surface border border-red-500/20 rounded-2xl p-6">
             <h3 className="text-sm font-semibold text-foreground mb-4 flex items-center gap-2">
@@ -177,7 +177,7 @@ export default function AdminDashboardOverview() {
       </div>
 
       {/* Daily operations queues — refunds, document verification, review moderation */}
-      <div className="grid lg:grid-cols-3 gap-8">
+      <div className="grid lg:grid-cols-3 gap-5">
         {/* Refund Requests */}
         <div className="bg-surface border border-border rounded-2xl p-6">
           <div className="flex justify-between items-center mb-4">

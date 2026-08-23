@@ -133,7 +133,7 @@ export default function InvestorExitPage() {
     const currentLabel = EXIT_STAGES[exitRequest.stageIndex].label;
 
     return (
-      <div className="space-y-8 pb-12 animate-fade-in">
+      <div className="space-y-4 pb-12 animate-fade-in">
         <PageHeader
           title="Exit Request"
           subtitle="Track your exit request as it moves through eligibility, review, valuation and payment."
@@ -228,7 +228,7 @@ export default function InvestorExitPage() {
   // View: no request yet — show the form.
   // ---------------------------------------------
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="Exit Request"
         subtitle="Request to exit an investment. Review your lock-in status and estimated settlement before submitting."

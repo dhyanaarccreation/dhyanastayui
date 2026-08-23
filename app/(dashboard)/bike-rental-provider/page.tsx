@@ -31,7 +31,7 @@ const alerts = [
 
 export default function BikeRentalDashboardPage() {
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="Bike Rental Provider Dashboard"
         subtitle="Welcome back, Suresh — 9 vehicles are out, 3 return today, and 1 is overdue."

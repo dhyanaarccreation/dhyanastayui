@@ -21,7 +21,7 @@ export default function TravellerWishlistPage() {
   const saved = properties.slice(0, 3);
 
   return (
-    <div className="space-y-8 pb-12">
+    <div className="space-y-4 pb-12">
       <PageHeader
         title="Wishlist & Bucket List"
         subtitle="Stays you've saved, places you dream about, and plans for the future."

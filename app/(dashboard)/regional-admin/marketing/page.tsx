@@ -56,7 +56,7 @@ export default function RegionalAdminMarketingPage() {
   };
 
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="Regional Marketing"
         subtitle="Campaigns, offers, banners, blogs and notifications for Tamil Nadu & Pondicherry — publishes instantly, no national review needed."

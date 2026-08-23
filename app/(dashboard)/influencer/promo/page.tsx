@@ -41,7 +41,7 @@ function CopyButton({ value }: { value: string }) {
 
 export default function InfluencerPromoPage() {
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="Promo & Links"
         subtitle="Your unique promo code, tracking links and QR — every click and booking is attributed automatically."

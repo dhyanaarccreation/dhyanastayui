@@ -10,8 +10,7 @@ import {
   Star,
   Camera,
   PlayCircle,
-  Copy,
-  Check,
+  Heart,
   ChevronDown,
   ChevronUp,
   Bookmark,
@@ -31,6 +30,7 @@ import {
   vjSiddhuItineraries,
   DEMO_DATA_NOTICE,
 } from "@/lib/travel-guides-data";
+import { buildAIPlannerHref } from "@/lib/planner-link";
 import CuratorAvatar from "@/app/components/CuratorAvatar";
 
 // ============================================
@@ -68,15 +68,18 @@ export default function TravelWithCuratorPage() {
 // handle instead of always rendering her data).
 // ============================================
 function RiyaCuratorPage() {
-  const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [savedIds, setSavedIds] = useState<Set<string>>(new Set());
   const [expandedId, setExpandedId] = useState<string | null>(itineraries[0]?.id ?? null);
 
   const publishedItineraries = itineraries.filter((it) => it.status === "Published");
 
-  const copyItinerary = (id: string) => {
-    setCopiedId(id);
-    setTimeout(() => setCopiedId(null), 2000);
-  };
+  const toggleSaved = (id: string) =>
+    setSavedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
 
   return (
     <div className="bg-background min-h-screen pb-20">
@@ -163,18 +166,26 @@ function RiyaCuratorPage() {
           <div className="space-y-4">
             {publishedItineraries.map((it) => {
               const expanded = expandedId === it.id;
-              const justCopied = copiedId === it.id;
+              const isSaved = savedIds.has(it.id);
               return (
                 <div key={it.id} className="rounded-2xl border border-border bg-surface overflow-hidden">
                   <div className="flex flex-col sm:flex-row">
-                    <div className="relative w-full sm:w-48 h-36 sm:h-auto shrink-0">
+                    <Link
+                      href={`/travel-with/${curatorIdentity.handle}/itinerary/${it.id}`}
+                      className="group relative w-full sm:w-48 h-36 sm:h-auto shrink-0"
+                    >
                       {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={it.coverImage} alt={it.title} className="absolute inset-0 w-full h-full object-cover" />
-                    </div>
+                      <img src={it.coverImage} alt={it.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                    </Link>
                     <div className="flex-1 p-5">
                       <div className="flex items-start justify-between gap-3 flex-wrap">
                         <div>
-                          <p className="text-base font-semibold text-foreground">{it.title}</p>
+                          <Link
+                            href={`/travel-with/${curatorIdentity.handle}/itinerary/${it.id}`}
+                            className="text-base font-semibold text-foreground hover:text-primary transition-colors"
+                          >
+                            {it.title}
+                          </Link>
                           <p className="text-xs text-subtle mt-0.5 flex items-center gap-1.5">
                             <MapPin size={11} /> {it.region} · {it.durationLabel}
                           </p>
@@ -184,13 +195,20 @@ function RiyaCuratorPage() {
                         </span>
                       </div>
 
-                      <div className="flex items-center gap-2.5 mt-4">
-                        <button
-                          onClick={() => copyItinerary(it.id)}
+                      <div className="flex flex-wrap items-center gap-2.5 mt-4">
+                        <Link
+                          href={buildAIPlannerHref(influencerProfile.name, curatorIdentity.handle, it)}
                           className="flex items-center gap-1.5 px-4 py-2 text-xs font-semibold bg-primary text-primary-foreground rounded-full hover:bg-primary-hover transition-colors"
                         >
-                          {justCopied ? <Check size={13} /> : <Copy size={13} />}
-                          {justCopied ? "Copied to your trips" : "Copy This Itinerary"}
+                          <Sparkles size={13} /> Open in AI Planner
+                        </Link>
+                        <button
+                          onClick={() => toggleSaved(it.id)}
+                          className={`flex items-center gap-1.5 px-4 py-2 text-xs font-medium rounded-full border transition-colors ${
+                            isSaved ? "bg-terracotta/10 border-terracotta/40 text-terracotta" : "border-border text-muted hover:text-foreground"
+                          }`}
+                        >
+                          <Heart size={13} className={isSaved ? "fill-current" : ""} /> {isSaved ? "Saved" : "Save Guide"}
                         </button>
                         <button
                           onClick={() => setExpandedId(expanded ? null : it.id)}
@@ -259,13 +277,16 @@ function RiyaCuratorPage() {
 // needs.
 // ============================================
 function VjSiddhuCuratorPage() {
-  const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [savedIds, setSavedIds] = useState<Set<string>>(new Set());
   const [expandedId, setExpandedId] = useState<string | null>(vjSiddhuItineraries[0]?.id ?? null);
 
-  const copyItinerary = (id: string) => {
-    setCopiedId(id);
-    setTimeout(() => setCopiedId(null), 2000);
-  };
+  const toggleSaved = (id: string) =>
+    setSavedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
 
   const p = vjSiddhuProfile;
 
@@ -361,18 +382,26 @@ function VjSiddhuCuratorPage() {
           <div className="space-y-4">
             {vjSiddhuItineraries.map((it) => {
               const expanded = expandedId === it.id;
-              const justCopied = copiedId === it.id;
+              const isSaved = savedIds.has(it.id);
               return (
                 <div key={it.id} className="rounded-2xl border border-border bg-surface overflow-hidden">
                   <div className="flex flex-col sm:flex-row">
-                    <div className="relative w-full sm:w-48 h-36 sm:h-auto shrink-0">
+                    <Link
+                      href={`/travel-with/${p.handle}/itinerary/${it.id}`}
+                      className="group relative w-full sm:w-48 h-36 sm:h-auto shrink-0"
+                    >
                       {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={it.coverImage} alt={it.title} className="absolute inset-0 w-full h-full object-cover" />
-                    </div>
+                      <img src={it.coverImage} alt={it.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                    </Link>
                     <div className="flex-1 p-5">
                       <div className="flex items-start justify-between gap-3 flex-wrap">
                         <div>
-                          <p className="text-base font-semibold text-foreground">{it.title}</p>
+                          <Link
+                            href={`/travel-with/${p.handle}/itinerary/${it.id}`}
+                            className="text-base font-semibold text-foreground hover:text-primary transition-colors"
+                          >
+                            {it.title}
+                          </Link>
                           <p className="text-xs text-subtle mt-0.5 flex items-center gap-1.5">
                             <MapPin size={11} /> {it.region} · {it.durationLabel}
                           </p>
@@ -382,13 +411,20 @@ function VjSiddhuCuratorPage() {
                         </span>
                       </div>
 
-                      <div className="flex items-center gap-2.5 mt-4">
-                        <button
-                          onClick={() => copyItinerary(it.id)}
+                      <div className="flex flex-wrap items-center gap-2.5 mt-4">
+                        <Link
+                          href={buildAIPlannerHref(p.name, p.handle, it)}
                           className="flex items-center gap-1.5 px-4 py-2 text-xs font-semibold bg-primary text-primary-foreground rounded-full hover:bg-primary-hover transition-colors"
                         >
-                          {justCopied ? <Check size={13} /> : <Copy size={13} />}
-                          {justCopied ? "Copied to your trips" : `Copy ${p.name}'s Trip`}
+                          <Sparkles size={13} /> Open in AI Planner
+                        </Link>
+                        <button
+                          onClick={() => toggleSaved(it.id)}
+                          className={`flex items-center gap-1.5 px-4 py-2 text-xs font-medium rounded-full border transition-colors ${
+                            isSaved ? "bg-terracotta/10 border-terracotta/40 text-terracotta" : "border-border text-muted hover:text-foreground"
+                          }`}
+                        >
+                          <Heart size={13} className={isSaved ? "fill-current" : ""} /> {isSaved ? "Saved" : "Save Guide"}
                         </button>
                         <button
                           onClick={() => setExpandedId(expanded ? null : it.id)}
@@ -472,6 +508,9 @@ function GuideComingSoonPage({ curator }: { curator: NonNullable<ReturnType<type
               <p className="text-sm text-muted mt-1.5 flex items-center gap-1.5">
                 <MapPin size={13} /> {curator.region} · {curator.creatorName}
               </p>
+              {curator.bio && (
+                <p className="text-sm text-muted mt-2 max-w-xl leading-relaxed">{curator.bio}</p>
+              )}
               <div className="flex flex-wrap gap-1.5 mt-3">
                 {curator.travelStyle.map((s) => (
                   <span key={s} className="text-[10px] px-2.5 py-1 rounded-full bg-surface border border-border text-muted font-medium">{s}</span>

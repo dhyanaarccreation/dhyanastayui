@@ -174,7 +174,7 @@ export default function InvestorReportsPage() {
   );
 
   return (
-    <div className="space-y-8 pb-12">
+    <div className="space-y-4 pb-12">
       <PageHeader
         title="Reports"
         subtitle="Download performance, revenue, and distribution reports for your Dhyana investments."

@@ -78,7 +78,7 @@ export default function HostCalendarPage() {
   }
 
   return (
-    <div className="space-y-8 pb-12">
+    <div className="space-y-4 pb-12">
       <PageHeader
         title="Calendar & Pricing"
         subtitle="Availability for The Canopy Tiny House — manage bookings, blocks and rates."
@@ -159,7 +159,7 @@ export default function HostCalendarPage() {
         </SectionCard>
 
         {/* Pricing rules */}
-        <div className="space-y-6">
+        <div className="space-y-4">
           <SectionCard title="Pricing Rules" icon={IndianRupee} action={{ label: "Edit", href: "/host/calendar" }}>
             <ul className="divide-y divide-surface-hover">
               {pricingRules.map((r) => (

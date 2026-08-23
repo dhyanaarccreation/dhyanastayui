@@ -89,7 +89,7 @@ const financialControls = [
 
 export default function SuperAdminPage() {
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <div className="flex items-center justify-between flex-wrap gap-3">
         <PageHeader
           title="Super Admin"

@@ -63,7 +63,7 @@ function StoryGrid({ stories }: { stories: typeof chefStories }) {
 
 export default function FoodPartnerStoriesPage() {
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="Stories"
         subtitle="Chef stories and local cuisine stories — they appear on your dishes and the Curated Food pages."

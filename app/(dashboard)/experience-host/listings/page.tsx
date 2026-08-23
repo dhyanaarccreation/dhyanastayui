@@ -28,7 +28,7 @@ export default function ExperienceListingsPage() {
   const visible = experiences.filter((e) => cat === "All" || e.category === cat);
 
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="Experience Listings"
         subtitle="Your workshops, adventure activities, photography tours and wellness programs."

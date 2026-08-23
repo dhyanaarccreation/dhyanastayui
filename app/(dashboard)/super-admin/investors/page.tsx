@@ -51,7 +51,7 @@ export default function SuperAdminInvestorsPage() {
   const decideExit = (id: string) => setExits((p) => p.filter((e) => e.id !== id));
 
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="Investors & Analytics"
         subtitle="Investment approvals, capital allocation and payouts — plus the platform's core business-intelligence view."

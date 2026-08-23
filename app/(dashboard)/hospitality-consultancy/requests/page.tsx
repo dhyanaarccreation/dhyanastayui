@@ -144,7 +144,7 @@ export default function ListingRequestsPage() {
   const readyCount = requests.filter((r) => stateOf(r) === "Checks passed").length;
 
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="Listing Requests"
         subtitle="Owners apply with full property information — the systematic pass screens every file before it reaches you."

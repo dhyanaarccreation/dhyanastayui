@@ -12,7 +12,7 @@ export default function AdminUsersPage() {
   ];
 
   return (
-    <div className="space-y-8 pb-12">
+    <div className="space-y-4 pb-12">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
           <h1 className="heading-display text-3xl text-foreground mb-2">

@@ -22,7 +22,7 @@ import { coreMetrics, audienceAnalytics, topProperties } from "@/lib/influencer-
 
 export default function InfluencerAnalyticsPage() {
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="Analytics"
         subtitle="Reach, clicks, conversion and audience insight — aggregate data only, nothing personally identifiable."

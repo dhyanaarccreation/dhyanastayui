@@ -20,7 +20,7 @@ export default function InfluencerBookingsPage() {
     .reduce((sum, b) => sum + Number(b.commission.replace(/[₹,]/g, "")), 0);
 
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="Bookings"
         subtitle="Every booking attributed to your promo code or tracking links — traveller details stay private."

@@ -54,7 +54,7 @@ export default function InfluencerContentPage() {
   };
 
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="Content"
         subtitle="Submit a link to your published content — no raw uploads. Track approval status through to Published."

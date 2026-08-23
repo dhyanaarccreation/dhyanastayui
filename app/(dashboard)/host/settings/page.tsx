@@ -3,7 +3,7 @@ import { PageHeader, SectionCard, SettingRow, Toggle } from "@/app/components/Da
 
 export default function HostSettingsPage() {
   return (
-    <div className="space-y-8 pb-12">
+    <div className="space-y-4 pb-12">
       <PageHeader
         title="Host Settings"
         subtitle="Payouts, notifications and default policies for your listings."

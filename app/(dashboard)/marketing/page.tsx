@@ -36,7 +36,7 @@ const regions = [
 
 export default function MarketingDashboardPage() {
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="Marketing Dashboard"
         subtitle="Welcome back, Aditya — 4 placements are live across 5 regions, and one slot in Kerala is running on AI fallback."

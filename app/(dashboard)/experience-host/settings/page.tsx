@@ -18,7 +18,7 @@ const areas = ["Auroville", "Pondicherry", "Kodaikanal", "Munnar", "Wayanad", "C
 
 export default function ExperienceHostSettingsPage() {
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="Settings"
         subtitle="Profile, payouts, availability and notifications for your experiences."

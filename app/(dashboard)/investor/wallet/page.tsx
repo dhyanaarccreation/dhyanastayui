@@ -100,7 +100,7 @@ export default function InvestorWalletPage() {
   const [statementRequested, setStatementRequested] = useState(false);
 
   return (
-    <div className="space-y-8 pb-12">
+    <div className="space-y-4 pb-12">
       <PageHeader
         title="Distributions"
         subtitle="Every payout is calculated and released by Dhyana Stays. Track what's landed, what's pending, and pull statements below."
@@ -235,7 +235,7 @@ export default function InvestorWalletPage() {
         </SectionCard>
 
         {/* Linked account */}
-        <div className="space-y-6">
+        <div className="space-y-4">
           <SectionCard title="Linked Account" icon={Landmark}>
             <div className="px-5 py-4">
               <div className="rounded-xl bg-background border border-border p-4">

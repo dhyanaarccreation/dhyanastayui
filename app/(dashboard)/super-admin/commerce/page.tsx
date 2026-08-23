@@ -73,7 +73,7 @@ export default function SuperAdminCommercePage() {
   const toggleHold = (id: string) => setPayouts((prev) => prev.map((p) => (p.id === id ? { ...p, held: !p.held } : p)));
 
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="Commerce Rules"
         subtitle="Commission floors, pricing automation and platform-wide revenue levers."

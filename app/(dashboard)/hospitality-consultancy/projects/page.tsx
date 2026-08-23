@@ -30,7 +30,7 @@ const playbooks = [
 
 export default function ConsultancyProjectsPage() {
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="Projects & Strategy"
         subtitle="Consulting engagements for property owners — plans, models, branding and playbooks."

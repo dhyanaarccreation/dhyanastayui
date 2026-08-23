@@ -60,7 +60,7 @@ export default function SuperAdminContentPage() {
   const clearItem = (id: string) => setItems((p) => p.filter((i) => i.id !== id));
 
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="CMS & Operations"
         subtitle="Global content oversight and day-to-day operations — staffing, assignments, tasks and incidents."

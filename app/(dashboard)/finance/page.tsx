@@ -67,7 +67,7 @@ export default function FinanceDashboardPage() {
   }
 
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <div className="flex items-center justify-between flex-wrap gap-3">
         <PageHeader
           title="Finance Dashboard"
@@ -106,7 +106,7 @@ export default function FinanceDashboardPage() {
         </SectionCard>
 
         {/* Razorpay status */}
-        <div className="space-y-6">
+        <div className="space-y-4">
           <div className="bg-gradient-to-br from-sage/15 to-surface border border-sage/25 rounded-2xl p-5">
             <div className="flex items-center justify-between">
               <p className="text-sm font-semibold text-foreground flex items-center gap-2">

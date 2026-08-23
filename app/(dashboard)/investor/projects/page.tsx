@@ -34,7 +34,7 @@ export default function SplitInvestmentProjectsPage() {
   ];
 
   return (
-    <div className="space-y-8 pb-12">
+    <div className="space-y-4 pb-12">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
           <h1 className="heading-display text-3xl text-foreground mb-2">
@@ -62,7 +62,7 @@ export default function SplitInvestmentProjectsPage() {
         </button>
       </div>
 
-      <div className="grid lg:grid-cols-2 gap-8">
+      <div className="grid lg:grid-cols-2 gap-5">
         {projects.map((proj) => {
           const progressPercentage = (proj.fundRaised / proj.fundTarget) * 100;
           

@@ -54,7 +54,7 @@ export default function AiChatInboxPage() {
   const visible = threads.filter((t) => filter === "All" || t.state === filter);
 
   return (
-    <div className="space-y-6 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="AI Chat Inbox"
         subtitle="The chatbot answers first, everything is recorded — you step in only when needed."
@@ -112,7 +112,7 @@ export default function AiChatInboxPage() {
         </div>
 
         {/* Transcript + process log */}
-        <div className="lg:col-span-2 space-y-6">
+        <div className="lg:col-span-2 space-y-4">
           <div className="bg-surface border border-border rounded-2xl overflow-hidden">
             <div className="px-5 py-3.5 border-b border-surface-hover flex items-center gap-3">
               {/* eslint-disable-next-line @next/next/no-img-element */}

@@ -13,7 +13,7 @@ import { PageHeader, SectionCard, SettingRow, Toggle } from "@/app/components/Da
 
 export default function TravellerSettingsPage() {
   return (
-    <div className="space-y-8 pb-12">
+    <div className="space-y-4 pb-12">
       <PageHeader
         title="Settings"
         subtitle="Account, notifications, privacy and payment preferences."

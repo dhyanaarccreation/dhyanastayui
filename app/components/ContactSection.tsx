@@ -37,8 +37,8 @@ export default function ContactSection() {
                 <div>
                   <h3 className="text-sm font-medium text-foreground mb-1">Email Us</h3>
                   <p className="text-sm text-muted mb-2">Our friendly team is here to help.</p>
-                  <a href="mailto:hello@dhyanastays.com" className="text-sm text-primary hover:underline">
-                    hello@dhyanastays.com
+                  <a href="mailto:dhyanaarccreation@gmail.com" className="text-sm text-primary hover:underline">
+                    dhyanaarccreation@gmail.com
                   </a>
                 </div>
               </div>
@@ -50,8 +50,11 @@ export default function ContactSection() {
                 <div>
                   <h3 className="text-sm font-medium text-foreground mb-1">Call Us</h3>
                   <p className="text-sm text-muted mb-2">Mon-Fri from 9am to 6pm.</p>
-                  <a href="tel:+919876543210" className="text-sm text-primary hover:underline">
-                    +91 98765 43210
+                  <a href="tel:+919626689316" className="text-sm text-primary hover:underline block">
+                    +91 96266 89316
+                  </a>
+                  <a href="tel:+919003107819" className="text-sm text-primary hover:underline block">
+                    +91 90031 07819
                   </a>
                 </div>
               </div>
@@ -63,9 +66,11 @@ export default function ContactSection() {
                 <div>
                   <h3 className="text-sm font-medium text-foreground mb-1">HQ Office</h3>
                   <p className="text-sm text-muted leading-relaxed">
-                    123 Design Avenue,<br />
-                    Indiranagar, Bangalore,<br />
-                    Karnataka, India 560038
+                    Free Land Book Shop, Next to Green Guest House,<br />
+                    Near Auroville, Tamil Nadu – 605101
+                  </p>
+                  <p className="text-xs text-subtle mt-2">
+                    Dhyana Arc Creation LLP · Brand: Dhyana Architects
                   </p>
                 </div>
               </div>
@@ -76,20 +81,12 @@ export default function ContactSection() {
               <h3 className="text-sm font-medium text-foreground mb-4">Specific Inquiries</h3>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <div className="text-xs text-subtle uppercase tracking-wider mb-1">Host Support</div>
-                  <a href="mailto:hosts@dhyanastays.com" className="text-sm text-muted hover:text-primary">hosts@dhyanastays.com</a>
-                </div>
-                <div>
-                  <div className="text-xs text-subtle uppercase tracking-wider mb-1">Press</div>
-                  <a href="mailto:press@dhyanastays.com" className="text-sm text-muted hover:text-primary">press@dhyanastays.com</a>
-                </div>
-                <div>
-                  <div className="text-xs text-subtle uppercase tracking-wider mb-1">Investors</div>
-                  <a href="mailto:invest@dhyanastays.com" className="text-sm text-muted hover:text-primary">invest@dhyanastays.com</a>
+                  <div className="text-xs text-subtle uppercase tracking-wider mb-1">Company</div>
+                  <a href="mailto:dhyanaarccreation@gmail.com" className="text-sm text-muted hover:text-primary">dhyanaarccreation@gmail.com</a>
                 </div>
                 <div>
                   <div className="text-xs text-subtle uppercase tracking-wider mb-1">Architecture</div>
-                  <a href="mailto:design@dhyanastays.com" className="text-sm text-muted hover:text-primary">design@dhyanastays.com</a>
+                  <a href="mailto:dhyanaarchitects@gmail.com" className="text-sm text-muted hover:text-primary">dhyanaarchitects@gmail.com</a>
                 </div>
               </div>
             </div>

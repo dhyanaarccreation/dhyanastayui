@@ -42,7 +42,7 @@ const reports = [
 
 export default function SupportQualityPage() {
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="Quality & Reports"
         subtitle="How well the AI is doing — customer feedback, audits and resolution reports."

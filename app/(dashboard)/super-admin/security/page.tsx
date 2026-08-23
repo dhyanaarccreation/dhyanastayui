@@ -64,7 +64,7 @@ export default function SuperAdminSecurityPage() {
   );
 
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="Security & Access"
         subtitle="Add or remove admins, super hosts, hosts, investors and partners — and read every action on record."

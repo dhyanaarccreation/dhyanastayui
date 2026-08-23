@@ -336,7 +336,7 @@ export default function InvestorProjectDetailPage() {
     project.devStages[0];
 
   return (
-    <div className="space-y-8 pb-12 max-w-[1000px] mx-auto">
+    <div className="space-y-4 pb-12 max-w-[1000px] mx-auto">
       <Link
         href="/investor/projects"
         className="inline-flex items-center gap-2 text-xs text-muted hover:text-foreground transition-colors"
@@ -384,15 +384,15 @@ export default function InvestorProjectDetailPage() {
         ]}
       />
 
-      <div className="grid md:grid-cols-2 gap-8">
+      <div className="grid md:grid-cols-2 gap-5">
         {/* Left Column - Investment Calculator */}
-        <div className="space-y-6">
+        <div className="space-y-4">
           <div className="bg-surface border border-border rounded-2xl p-6 md:p-8">
             <h2 className="text-xl font-semibold text-foreground mb-6 flex items-center gap-2">
               <Calculator size={20} className="text-primary" /> Investment Calculator
             </h2>
 
-            <div className="space-y-8">
+            <div className="space-y-4">
               <div>
                 <div className="flex justify-between mb-4">
                   <label className="text-sm font-medium text-muted">Your Investment</label>
@@ -468,7 +468,7 @@ export default function InvestorProjectDetailPage() {
         </div>
 
         {/* Right Column - Project Details */}
-        <div className="space-y-6">
+        <div className="space-y-4">
           <div className="bg-surface border border-border rounded-2xl p-6 md:p-8">
             <h3 className="text-lg font-semibold text-foreground mb-4">Project Overview</h3>
             <p className="text-sm text-muted leading-relaxed mb-6">{project.story}</p>
@@ -576,7 +576,7 @@ export default function InvestorProjectDetailPage() {
       {/* Construction Progress specifics — only while the project is still in development */}
       {project.inDevelopment && project.construction && (
         <SectionCard title="Construction Progress" icon={HardHat}>
-          <div className="p-5 md:p-6 space-y-6">
+          <div className="p-5 md:p-6 space-y-4">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div>
                 <p className="text-[11px] uppercase tracking-wider text-subtle mb-1">Current Phase</p>

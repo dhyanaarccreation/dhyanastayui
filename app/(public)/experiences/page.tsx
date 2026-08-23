@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { Search, MapPin, Clock, Star, Quote, ArrowRight, PlayCircle } from "lucide-react";
+import { Search, Quote, ArrowRight, PlayCircle } from "lucide-react";
 import { experiences } from "@/lib/mock-data";
+import ImageCard from "@/app/components/cards/ImageCard";
 
 const categories = ["All", ...Array.from(new Set(experiences.map((e) => e.category)))];
 
@@ -51,7 +52,7 @@ export default function ExperiencesPage() {
   return (
     <div className="pb-24">
       {/* ================= HERO ================= */}
-      <section className="relative h-[56vh] flex items-center">
+      <section className="relative flex items-start pt-10 sm:pt-14 pb-6 sm:pb-8">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="https://images.unsplash.com/photo-1530789253388-582c481c54b0?q=80&w=2000&auto=format&fit=crop"
@@ -60,14 +61,10 @@ export default function ExperiencesPage() {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
 
-        <div className="relative z-10 max-w-[1200px] mx-auto px-6 lg:px-8 w-full mt-16">
-          <h1 className="heading-display text-4xl md:text-6xl text-foreground mb-6">
+        <div className="relative z-10 max-w-[1200px] mx-auto px-6 lg:px-8 w-full">
+          <h1 className="heading-display text-2xl md:text-3xl text-foreground mb-4">
             Curated Local Experiences.
           </h1>
-          <p className="text-lg text-muted max-w-xl mb-8">
-            Yoga at dawn, pottery on a riverside wheel, treks with a naturalist — watch the promo,
-            meet the host, then book in a few taps.
-          </p>
 
           <div className="max-w-2xl bg-surface/80 backdrop-blur-md p-2 rounded-2xl border border-border flex flex-col sm:flex-row gap-2">
             <div className="flex-1 relative">
@@ -91,7 +88,7 @@ export default function ExperiencesPage() {
       </section>
 
       {/* ================= CATEGORIES ================= */}
-      <section className="py-8 border-b border-border">
+      <section className="py-4 sm:py-5 border-b border-border">
         <div className="max-w-[1200px] mx-auto px-6 lg:px-8 flex gap-3 overflow-x-auto scrollbar-hide">
           {categories.map((cat) => (
             <button
@@ -108,8 +105,8 @@ export default function ExperiencesPage() {
       </section>
 
       {/* ================= GRID ================= */}
-      <section id="grid" className="py-16 max-w-[1200px] mx-auto px-6 lg:px-8 scroll-mt-20">
-        <div className="flex justify-between items-end mb-8">
+      <section id="grid" className="py-5 md:py-7 max-w-[1200px] mx-auto px-6 lg:px-8 scroll-mt-20">
+        <div className="flex justify-between items-end mb-5 sm:mb-6">
           <h2 className="text-2xl font-semibold text-foreground">
             {category === "All" ? "Trending Experiences" : category}
           </h2>
@@ -118,36 +115,24 @@ export default function ExperiencesPage() {
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {visible.map((exp) => (
-            <Link href={`/experiences/${exp.id}`} key={exp.id} className="group flex flex-col">
-              <div className="relative aspect-[4/3] rounded-2xl overflow-hidden mb-4 bg-surface">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={exp.image} alt={exp.name} className="w-full h-full object-cover opacity-90 group-hover:scale-105 group-hover:opacity-100 transition-all duration-700" />
-                <div className="absolute top-4 left-4">
-                  <span className="px-3 py-1 bg-background/80 backdrop-blur-md text-foreground text-[10px] uppercase tracking-wider rounded-full border border-border font-semibold">
-                    {exp.category}
+            <ImageCard
+              key={exp.id}
+              href={`/experiences/${exp.id}`}
+              image={exp.image}
+              alt={exp.name}
+              badge={exp.category}
+              title={exp.name.split(" ").slice(0, 2).join(" ")}
+              actionLabel={`₹${exp.price.toLocaleString("en-IN")}`}
+              actionIcon={ArrowRight}
+              titleLayout="row"
+              topRight={
+                exp.video && (
+                  <span className="flex items-center justify-center w-9 h-9 rounded-full bg-black/45 backdrop-blur-md text-white">
+                    <PlayCircle size={18} />
                   </span>
-                </div>
-                {exp.video && (
-                  <span className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/20 transition-colors">
-                    <PlayCircle size={40} className="text-white opacity-0 group-hover:opacity-100 scale-90 group-hover:scale-100 transition-all drop-shadow-lg" />
-                  </span>
-                )}
-              </div>
-              <div className="flex justify-between items-start mb-2">
-                <div className="flex items-center gap-1 text-sm text-muted">
-                  <MapPin size={14} className="text-primary" /> {exp.location}
-                </div>
-                <div className="flex items-center gap-1 text-sm font-medium text-foreground">
-                  <Star size={14} className="text-primary fill-primary" /> {exp.rating} <span className="text-subtle font-normal">({exp.reviewCount})</span>
-                </div>
-              </div>
-              <h3 className="text-lg font-semibold text-foreground mb-1 line-clamp-2 group-hover:text-primary transition-colors">{exp.name}</h3>
-              <p className="text-xs text-subtle line-clamp-2 mb-3">{exp.description}</p>
-              <div className="flex items-center gap-4 text-sm text-muted mt-auto">
-                <div className="flex items-center gap-1"><Clock size={14} /> {exp.duration}</div>
-                <div className="font-semibold text-foreground">From ₹{exp.price}</div>
-              </div>
-            </Link>
+                )
+              }
+            />
           ))}
           {visible.length === 0 && (
             <p className="col-span-full text-center text-sm text-subtle py-12">No experiences match that search — try another category.</p>

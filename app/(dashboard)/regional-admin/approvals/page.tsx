@@ -60,7 +60,7 @@ export default function RegionalAdminApprovalsPage() {
   const visible = approvals.filter((a) => filter === "All" || a.status === filter);
 
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="Approvals & Assignments"
         subtitle="Approve hosts and properties in your region, then assign a Super Host to manage them."

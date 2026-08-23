@@ -162,7 +162,7 @@ export default function HostPropertiesPage() {
   };
 
   return (
-    <div className="space-y-8 pb-12">
+    <div className="space-y-4 pb-12">
       <PageHeader
         title="My Properties"
         subtitle="Listing control, availability and status for every property you host."

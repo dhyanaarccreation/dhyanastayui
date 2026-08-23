@@ -2,12 +2,15 @@
 
 import { dashboardGroups, dashboardRoles } from "@/lib/dashboards";
 import { navLinks } from "@/lib/mock-data";
-import { ChevronDown, Heart, Menu, Search, User, X } from "lucide-react";
+import { ChevronDown, Heart, Menu, User, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { LogoMark } from "./Logo";
 import { ThemeToggle } from "./ThemeToggle";
+import LocationIndicator from "./LocationIndicator";
+import { CITY_OPTIONS } from "./StaysExplorer";
+import { useUserLocationContext } from "@/lib/UserLocationContext";
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -15,6 +18,7 @@ export default function Navbar() {
   const pathname = usePathname();
   const dashOpen = openMenu === "dashboard";
   const desktopNavRef = useRef<HTMLElement>(null);
+  const userLocation = useUserLocationContext();
 
   // Close whichever dropdown is open on outside click or Escape —
   // previously only closed via the trigger itself, so it stayed open
@@ -145,15 +149,17 @@ export default function Navbar() {
           </nav>
 
           {/* Desktop Actions */}
-          <div className="hidden lg:flex items-center gap-1">
-            <div className="flex items-center gap-1 pr-3 mr-2 border-r border-border/70">
-              <Link
-                href="/#explore-stays"
-                aria-label="Search stays"
-                className="w-10 h-10 flex items-center justify-center rounded-full text-muted hover:text-foreground hover:bg-surface-hover active:scale-90 transition-all duration-200"
-              >
-                <Search size={18} />
-              </Link>
+          <div className="hidden lg:flex items-center gap-2">
+            <LocationIndicator
+              status={userLocation.status}
+              city={userLocation.city}
+              cityOptions={CITY_OPTIONS}
+              onSelectCity={userLocation.setManualCity}
+              onClear={userLocation.clearCity}
+              onRetryDetection={userLocation.retryDetection}
+            />
+
+            <div className="flex items-center gap-1 pl-2 pr-3 mr-2 border-r border-border/70">
               <Link
                 href="/traveller/wishlist"
                 aria-label="View wishlist"

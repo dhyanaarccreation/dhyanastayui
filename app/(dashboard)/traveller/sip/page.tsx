@@ -76,7 +76,7 @@ export default function TravellerSipPage() {
   const bonus = Math.round(corpus * 0.05);
 
   return (
-    <div className="space-y-8 pb-12">
+    <div className="space-y-4 pb-12">
       <PageHeader
         title="Travel SIP"
         subtitle="Save a little every month, travel without the lump-sum pinch — your monthly travel fund with bonus credit."

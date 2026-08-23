@@ -33,7 +33,7 @@ export default function FoodPartnerDashboardPage() {
   const topDish = foodMenu[0];
 
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="Food Partner Dashboard"
         subtitle="Welcome back, Meena — 3 live orders in the kitchen and 2 pre-bookings coming up."

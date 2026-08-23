@@ -17,7 +17,7 @@ export default function HostDashboardOverview() {
   ];
 
   return (
-    <div className="space-y-8 pb-12">
+    <div className="space-y-4 pb-12">
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
         <div>
@@ -59,9 +59,9 @@ export default function HostDashboardOverview() {
         ))}
       </div>
 
-      <div className="grid lg:grid-cols-3 gap-8">
+      <div className="grid lg:grid-cols-3 gap-5">
         {/* Main Content Area */}
-        <div className="lg:col-span-2 space-y-8">
+        <div className="lg:col-span-2 space-y-4">
           
           {/* Action Required */}
           <div className="bg-gradient-to-r from-surface to-surface-hover border border-primary/30 rounded-2xl p-6">
@@ -146,7 +146,7 @@ export default function HostDashboardOverview() {
         </div>
 
         {/* Sidebar */}
-        <div className="space-y-8">
+        <div className="space-y-4">
           {/* Revenue Chart Placeholder */}
           <div className="bg-surface border border-border rounded-2xl p-6">
             <h3 className="text-sm font-semibold text-foreground mb-4">Revenue this month</h3>
@@ -219,7 +219,7 @@ export default function HostDashboardOverview() {
       </div>
 
       {/* Expenses, maintenance & documents — property operations */}
-      <div className="grid lg:grid-cols-3 gap-8">
+      <div className="grid lg:grid-cols-3 gap-5">
         {/* Monthly Expenses */}
         <div className="bg-surface border border-border rounded-2xl p-6">
           <div className="flex justify-between items-center mb-4">

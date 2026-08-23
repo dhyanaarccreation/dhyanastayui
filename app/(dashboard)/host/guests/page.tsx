@@ -73,7 +73,7 @@ export default function HostGuestsPage() {
   };
 
   return (
-    <div className="space-y-8 pb-12">
+    <div className="space-y-4 pb-12">
       <PageHeader
         title="Guest Messages"
         subtitle="Conversations with current and upcoming guests across your properties."

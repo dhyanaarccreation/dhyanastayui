@@ -50,7 +50,7 @@ export default function BlogListingPage() {
         <div className="max-w-[1200px] mx-auto px-6 lg:px-8 py-16">
           <Link
             href={`/blog/${blogPosts[0].slug}`}
-            className="group block rounded-2xl overflow-hidden bg-surface border border-surface-hover hover:border-border transition-colors"
+            className="group block rounded-card-lg overflow-hidden bg-surface border-[5px] border-surface shadow-[var(--shadow-card)] transition-all duration-300 hover:shadow-[var(--shadow-card-hover)] hover:-translate-y-1"
           >
             <div className="flex flex-col md:flex-row h-full">
               <div className="w-full md:w-3/5 h-64 md:h-[400px] bg-surface-hover relative overflow-hidden">
@@ -90,7 +90,7 @@ export default function BlogListingPage() {
             <Link
               key={post.id}
               href={`/blog/${post.slug}`}
-              className="group flex flex-col rounded-2xl overflow-hidden bg-surface border border-surface-hover hover:border-border transition-colors h-full"
+              className="group flex flex-col rounded-card-lg overflow-hidden bg-surface border-[5px] border-surface shadow-[var(--shadow-card)] transition-all duration-300 hover:shadow-[var(--shadow-card-hover)] hover:-translate-y-1 h-full"
             >
               <div className="h-56 bg-surface-hover relative shrink-0 overflow-hidden">
                 <img

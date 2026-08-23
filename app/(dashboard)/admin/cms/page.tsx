@@ -11,7 +11,7 @@ export default function AdminCMSPage() {
   ];
 
   return (
-    <div className="space-y-8 pb-12">
+    <div className="space-y-4 pb-12">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
           <h1 className="heading-display text-3xl text-foreground mb-2">
@@ -92,7 +92,7 @@ export default function AdminCMSPage() {
         </div>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-8">
+      <div className="grid md:grid-cols-2 gap-5">
         <div className="bg-surface border border-border rounded-2xl p-6">
           <h2 className="text-lg font-semibold text-foreground mb-4">Quick Email Campaign</h2>
           <div className="space-y-4">

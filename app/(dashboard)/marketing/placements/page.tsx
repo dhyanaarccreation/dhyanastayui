@@ -75,7 +75,7 @@ export default function PlacementsRegionsPage() {
   const fallbackCount = rows.filter((r) => r.status === "AI fallback").length;
 
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="Placements & Regions"
         subtitle="Every ad slot in the app, region by region — feed a slot or let AI suggestions hold it."

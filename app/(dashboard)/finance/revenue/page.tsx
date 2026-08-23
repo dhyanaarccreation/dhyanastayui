@@ -42,7 +42,7 @@ const commissions = [
 
 export default function FinanceRevenuePage() {
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <div className="flex items-start justify-between flex-wrap gap-3">
         <PageHeader
           title="Revenue & Regions"

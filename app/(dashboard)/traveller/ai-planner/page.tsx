@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import {
   ArrowLeft,
   Sparkles,
@@ -24,6 +25,7 @@ import {
   Bot,
   ArrowRight,
   Pencil,
+  Wand2,
 } from "lucide-react";
 import { properties } from "@/lib/mock-data";
 
@@ -213,8 +215,16 @@ const examplePrompts = [
 
 const inr = (n: number) => `₹${n.toLocaleString("en-IN")}`;
 
-export default function AITripPlannerPage() {
-  const [prompt, setPrompt] = useState("");
+function AITripPlannerContent() {
+  const searchParams = useSearchParams();
+  // Seeded from a curator's "Open in AI Planner" card — the influencer's
+  // guide becomes the traveller's starting point instead of a plain copy.
+  const seedCurator = searchParams.get("curator");
+  const seedTrip = searchParams.get("trip");
+  const seedPrompt = searchParams.get("prompt");
+  const hasSeed = Boolean(seedCurator && seedTrip);
+
+  const [prompt, setPrompt] = useState(() => seedPrompt ?? "");
   const [guests, setGuests] = useState("2");
   const [phase, setPhase] = useState<"form" | "loading" | "result">("form");
   const [stage, setStage] = useState(0);
@@ -269,7 +279,7 @@ export default function AITripPlannerPage() {
     <div className="max-w-[860px] mx-auto pb-12">
       <Link
         href="/traveller"
-        className="inline-flex items-center gap-2 text-xs text-muted hover:text-foreground mb-8 transition-colors"
+        className="inline-flex items-center gap-2 text-xs text-muted hover:text-foreground mb-4 transition-colors"
       >
         <ArrowLeft size={14} /> Back to Dashboard
       </Link>
@@ -277,7 +287,23 @@ export default function AITripPlannerPage() {
       {/* ================= FORM ================= */}
       {phase === "form" && (
         <div className="animate-fade-in">
-          <div className="text-center mb-10">
+          {hasSeed && (
+            <div className="flex items-start gap-3 bg-sage/10 border border-sage/30 rounded-2xl p-4 sm:p-5 mb-6">
+              <span className="w-9 h-9 rounded-xl bg-sage/20 text-sage flex items-center justify-center shrink-0">
+                <Wand2 size={16} />
+              </span>
+              <div className="min-w-0">
+                <p className="text-sm text-foreground">
+                  <span className="font-semibold">{seedCurator}&rsquo;s</span> &ldquo;{seedTrip}&rdquo; has been added as your starting point.
+                </p>
+                <p className="text-xs text-muted mt-1 leading-relaxed">
+                  Make it yours — edit the prompt below with your dates, budget and who&rsquo;s coming, and the AI will personalise {seedCurator}&rsquo;s guide instead of just copying it.
+                </p>
+              </div>
+            </div>
+          )}
+
+          <div className="text-center mb-5">
             <div className="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br from-primary/20 to-primary-dark/10 border border-primary/30 flex items-center justify-center mb-6">
               <Sparkles size={32} className="text-primary" />
             </div>
@@ -288,7 +314,7 @@ export default function AITripPlannerPage() {
             </p>
           </div>
 
-          <div className="bg-surface border border-border rounded-2xl p-6 md:p-8 space-y-6">
+          <div className="bg-surface border border-border rounded-2xl p-6 md:p-8 space-y-4">
             <div>
               <label className="block text-sm font-medium text-foreground mb-2">
                 What kind of trip are you dreaming of?
@@ -380,7 +406,7 @@ export default function AITripPlannerPage() {
 
       {/* ================= RESULT ================= */}
       {phase === "result" && plan && stay && (
-        <div className="animate-fade-in-up space-y-6">
+        <div className="animate-fade-in-up space-y-4">
           {/* Plan header */}
           <div className="bg-surface border border-primary/30 rounded-2xl p-6 md:p-8">
             <div className="flex items-start justify-between gap-3 flex-wrap">
@@ -403,6 +429,11 @@ export default function AITripPlannerPage() {
             <p className="text-[11px] text-subtle mt-4 flex items-center gap-1.5">
               <Bot size={11} className="text-sage" /> Built from: &ldquo;{prompt}&rdquo;
             </p>
+            {hasSeed && (
+              <p className="text-[11px] text-sage mt-1.5 flex items-center gap-1.5">
+                <Sparkles size={11} /> Inspired by {seedCurator}&rsquo;s &ldquo;{seedTrip}&rdquo; guide
+              </p>
+            )}
           </div>
 
           {/* Matched stay */}
@@ -560,5 +591,13 @@ export default function AITripPlannerPage() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function AITripPlannerPage() {
+  return (
+    <Suspense fallback={null}>
+      <AITripPlannerContent />
+    </Suspense>
   );
 }

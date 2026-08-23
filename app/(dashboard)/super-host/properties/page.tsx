@@ -49,7 +49,7 @@ export default function SuperHostPropertiesPage() {
   const visible = properties.filter((p) => p.name.toLowerCase().includes(search.toLowerCase()));
 
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="Properties & Pricing"
         subtitle="32 properties across your cluster — track performance and approve pricing or promotion requests."

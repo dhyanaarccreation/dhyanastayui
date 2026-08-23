@@ -56,7 +56,7 @@ export default function SosTeamsPage() {
   const onDutyCount = team.filter((m) => m.onDuty).length;
 
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="Teams & Escalation"
         subtitle="Your response roster with contact numbers, the escalation matrix and past escalations."

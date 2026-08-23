@@ -253,7 +253,7 @@ export default function MembershipPage() {
   const staysNeeded = 10;
 
   return (
-    <div className="space-y-8 pb-16 animate-fade-in">
+    <div className="space-y-4 pb-16 animate-fade-in">
       <PageHeader
         title="Membership"
         subtitle="Travel Smarter. Stay Better. Experience More. Unlock AI-powered planning, curated access, and rewards built for how you actually travel."
@@ -473,7 +473,7 @@ export default function MembershipPage() {
             </div>
           </div>
 
-          <div className="space-y-6">
+          <div className="space-y-4">
             {/* Status row */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {[

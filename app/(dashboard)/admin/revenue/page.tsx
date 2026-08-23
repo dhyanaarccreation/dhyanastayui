@@ -27,7 +27,7 @@ const topProperties = [
 
 export default function AdminRevenuePage() {
   return (
-    <div className="space-y-8 pb-12">
+    <div className="space-y-4 pb-12">
       <PageHeader
         title="Global Revenue"
         subtitle="Platform-wide earnings across stays, food, events, rentals and consultancy."

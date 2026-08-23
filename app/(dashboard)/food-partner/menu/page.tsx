@@ -37,7 +37,7 @@ export default function FoodPartnerMenuPage() {
   const toggle = (id: string) => setStock((p) => ({ ...p, [id]: !inStock(id) }));
 
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="Restaurant & Menu"
         subtitle="Your profile, dishes, availability and meal packages."

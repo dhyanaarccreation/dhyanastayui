@@ -116,7 +116,7 @@ export default function HostReviewsPage() {
   };
 
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="Reviews"
         subtitle="See what guests are saying about your properties and reply directly from here."

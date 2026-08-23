@@ -77,7 +77,7 @@ export default function FoodPartnerOrdersPage() {
     );
 
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="Orders & Revenue"
         subtitle="Run the kitchen queue, track pre-bookings and watch earnings."

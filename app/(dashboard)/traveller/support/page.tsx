@@ -25,7 +25,7 @@ const tickets = [
 
 export default function TravellerSupportPage() {
   return (
-    <div className="space-y-8 pb-12">
+    <div className="space-y-4 pb-12">
       <PageHeader
         title="Support"
         subtitle="We're here 24×7 — search help articles or talk to a human."

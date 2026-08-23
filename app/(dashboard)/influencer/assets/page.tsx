@@ -13,7 +13,7 @@ import { marketingAssets } from "@/lib/influencer-data";
 
 export default function InfluencerAssetsPage() {
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="Marketing Assets"
         subtitle="Property photos, brand guidelines, campaign posters and content templates — ready to use, one click away."

@@ -22,7 +22,7 @@ const team = [
 
 export default function RegionalAdminSettingsPage() {
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="Settings"
         subtitle="Region scope, escalation routing and notification preferences."

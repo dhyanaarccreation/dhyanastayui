@@ -115,7 +115,7 @@ export default function BookingsPage() {
 
   return (
     <div className="pb-12">
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-4">
         <div>
           <h1 className="heading-display text-3xl text-foreground mb-2">My Bookings</h1>
           <p className="text-sm text-muted">Manage your upcoming stays and review past trips.</p>
@@ -146,7 +146,7 @@ export default function BookingsPage() {
         </div>
       </div>
 
-      <div className="flex gap-6 border-b border-border mb-8">
+      <div className="flex gap-6 border-b border-border mb-4">
         {["upcoming", "past", "cancelled"].map((tab) => (
           <button
             key={tab}
@@ -163,7 +163,7 @@ export default function BookingsPage() {
         ))}
       </div>
 
-      <div className="space-y-6">
+      <div className="space-y-4">
         {activeTab === "upcoming" && (
           filteredUpcoming.length > 0 ? (
             filteredUpcoming.map((booking) => {

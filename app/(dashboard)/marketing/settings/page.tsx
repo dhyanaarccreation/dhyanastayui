@@ -15,7 +15,7 @@ import { PageHeader, SectionCard, SettingRow, Toggle, StatusPill } from "@/app/c
 
 export default function MarketingSettingsPage() {
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="Settings"
         subtitle="Approval rules, brand assets and tracking defaults for everything you publish."

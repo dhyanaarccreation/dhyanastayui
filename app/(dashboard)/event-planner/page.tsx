@@ -74,7 +74,7 @@ export default function EventPlannerDashboardPage() {
   const visible = bookings.filter((b) => filter === "All" || b.type === filter);
 
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="Event Planner Dashboard"
         subtitle="Welcome back, Sana — 3 events go live in the next 14 days, and 2 new enquiries are waiting."

@@ -39,7 +39,7 @@ const cases = [
 
 export default function SosReportsPage() {
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="Reports"
         subtitle="Resolution reports and emergency analytics across all incidents."

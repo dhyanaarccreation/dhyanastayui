@@ -2,7 +2,7 @@ import Link from "next/link";
 import {
   MapPin,
   Phone,
-  Clock,
+  Mail,
   // Instagram,
   // Youtube,
   // Linkedin,
@@ -10,9 +10,9 @@ import {
 import { LogoMark } from "./Logo";
 
 const contactInfo = [
-  { icon: MapPin, label: "ECR Road, Auroville, Tamil Nadu" },
-  { icon: Clock, label: "Support available every day, 24×7" },
-  { icon: Phone, label: "+91 98400 36900" },
+  { icon: MapPin, label: "Near Auroville, Tamil Nadu – 605101" },
+  { icon: Phone, label: "+91 96266 89316" },
+  { icon: Mail, label: "dhyanaarccreation@gmail.com" },
 ];
 
 const footerSections = [
@@ -125,7 +125,7 @@ export default function Footer() {
           <div className="flex items-center gap-3">
             <LogoMark size={32} />
             <span className="text-sm text-subtle">
-              © 2026 Dhyana Stays. All rights reserved.
+              © 2026 Dhyana Arc Creation LLP. All rights reserved.
             </span>
           </div>
 

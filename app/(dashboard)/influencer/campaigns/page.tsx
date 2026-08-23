@@ -42,7 +42,7 @@ export default function InfluencerCampaignsPage() {
   const visible = tab === "All" ? campaigns : campaigns.filter((c) => c.status === tab);
 
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="Campaigns"
         subtitle="Browse invitations, apply for open campaigns, and track everything through to completion."

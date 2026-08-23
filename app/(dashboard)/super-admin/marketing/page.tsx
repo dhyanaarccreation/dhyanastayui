@@ -63,7 +63,7 @@ export default function SuperAdminMarketingPage() {
   const toggleChannel = (id: string) => setChannels((p) => p.map((c) => (c.id === id ? { ...c, on: !c.on } : c)));
 
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="Marketing & Notifications"
         subtitle="Campaigns, banners, coupons, affiliates and every outbound channel — one control room."

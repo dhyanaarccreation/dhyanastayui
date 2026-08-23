@@ -131,7 +131,7 @@ export default function InfluencerCollectionPage() {
   const totalItineraryBookings = itineraries.reduce((sum, it) => sum + it.bookingsFromCopies, 0);
 
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="My Collection"
         subtitle="Your curated stay collection and shareable itineraries — the foundation of your Dhyana Travel Curator page."

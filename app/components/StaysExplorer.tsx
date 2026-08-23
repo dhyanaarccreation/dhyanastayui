@@ -2,7 +2,6 @@
 
 import { useMemo, useState } from "react";
 import {
-  Search,
   SlidersHorizontal,
   ChevronDown,
   X,
@@ -23,8 +22,8 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { properties, categories, type Property } from "@/lib/mock-data";
-import { useUserLocation } from "@/lib/useUserLocation";
-import LocationIndicator from "@/app/components/LocationIndicator";
+import { useUserLocationContext } from "@/lib/UserLocationContext";
+import { useSearchQuery } from "@/lib/useSearchQuery";
 import CategoryTile from "@/app/components/CategoryTile";
 import PropertyGrid from "@/app/components/PropertyGrid";
 import VaksanaFarmsCard from "@/app/components/VaksanaFarmsCard";
@@ -52,7 +51,7 @@ const visibleProperties = properties.filter((p) => !p.hidden);
 // Cities the manual "Set location" fallback can offer — derived straight
 // from the live property catalog (not a curated/editorial list), so every
 // option is guaranteed to have at least one result.
-const CITY_OPTIONS = Array.from(new Set(visibleProperties.map((p) => p.location.city))).sort();
+export const CITY_OPTIONS = Array.from(new Set(visibleProperties.map((p) => p.location.city))).sort();
 
 // Maps each category's existing `icon` field (a lucide-react component
 // name) to the actual component — the carousel shows a small icon instead
@@ -122,7 +121,7 @@ const amenityOptions: { key: string; label: string; test: (p: Property) => boole
 ];
 
 export default function StaysExplorer() {
-  const userLocation = useUserLocation();
+  const userLocation = useUserLocationContext();
   const detectedCity = userLocation.city;
   const cityHasStays =
     !!detectedCity && visibleProperties.some((p) => p.location.city.toLowerCase() === detectedCity.toLowerCase());
@@ -132,8 +131,11 @@ export default function StaysExplorer() {
   const selectedDestination = cityHasStays ? detectedCity : null;
   const showLocationFallbackNotice = userLocation.status !== "detecting" && !!detectedCity && !cityHasStays;
 
+  // Search box lives in the Navbar now — shared here via context so typing
+  // there filters this grid live.
+  const { query: search } = useSearchQuery();
+
   const [activeCategory, setActiveCategory] = useState("all");
-  const [search, setSearch] = useState("");
   const [sortBy, setSortBy] = useState<SortKey>("recommended");
   const [sortOpen, setSortOpen] = useState(false);
 
@@ -224,37 +226,13 @@ export default function StaysExplorer() {
       <div className="max-w-[1400px] mx-auto px-6 lg:px-8">
         {/* Section heading — static, never toggles with the picked destination */}
         <div className="mb-5 sm:mb-6">
-          <span className="text-[13px] font-semibold text-sage uppercase tracking-widest">
-            Browse
-          </span>
-          <h2 className="heading-organic text-3xl sm:text-4xl lg:text-[44px] leading-[1.05] text-foreground mt-1.5">
+          <h2 className="heading-organic text-base sm:text-lg lg:text-[22px] leading-[1.05] text-foreground">
             Explore All Stays
           </h2>
         </div>
 
-        {/* Search + detected-location indicator — search always visible,
-            independent of location/permission/destination state */}
-        <div className="flex flex-col sm:flex-row sm:items-center gap-3">
-          <div className="relative w-full max-w-[680px]">
-            <Search size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-subtle" />
-            <input
-              type="text"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search by property name or theme..."
-              className="w-full h-[54px] pl-12 pr-5 bg-surface border border-border rounded-full text-sm text-foreground placeholder-muted shadow-organic focus:outline-none focus:ring-1 focus:ring-primary/30 transition-shadow"
-            />
-          </div>
-
-          <LocationIndicator
-            status={userLocation.status}
-            city={userLocation.city}
-            cityOptions={CITY_OPTIONS}
-            onSelectCity={userLocation.setManualCity}
-            onClear={userLocation.clearCity}
-            onRetryDetection={userLocation.retryDetection}
-          />
-        </div>
+        {/* Search box + location picker now live in the Navbar (shared via
+            context — see lib/useSearchQuery.tsx and lib/UserLocationContext.tsx) */}
 
         {showLocationFallbackNotice && (
           <p className="mt-2.5 text-xs text-subtle">
@@ -262,11 +240,12 @@ export default function StaysExplorer() {
           </p>
         )}
 
-        {/* Category carousel — small icon + name pills (no photos), replacing
+        {/* Category row — small icon + name pills (no photos), replacing
             the old standalone "Find Your Perfect Escape" section. Clicking
-            the active tile again resets to "all". */}
-        <div className="relative mt-3">
-          <div className="flex items-center gap-3 overflow-x-auto overflow-y-hidden scroll-smooth scrollbar-hide px-0.5 pt-1.5 pb-3">
+            the active tile again resets to "all". Wraps instead of scrolling
+            so every category stays visible at once. */}
+        <div className="mt-3">
+          <div className="flex flex-wrap items-center gap-3 px-0.5 pt-1.5 pb-3">
             {categories.map((cat) => (
               <CategoryTile
                 key={cat.slug}
@@ -278,7 +257,6 @@ export default function StaysExplorer() {
               />
             ))}
           </div>
-          <div className="pointer-events-none absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-background to-transparent" />
         </div>
 
         {/* Result count + Filters + Sort */}

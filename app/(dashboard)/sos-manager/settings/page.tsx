@@ -41,7 +41,7 @@ export default function SosSettingsPage() {
   const remove = (id: string) => setDirectory((prev) => prev.filter((d) => d.id !== id));
 
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="Settings"
         subtitle="Emergency number directory, SLA targets and alert routing."

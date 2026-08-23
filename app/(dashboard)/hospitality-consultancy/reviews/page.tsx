@@ -60,7 +60,7 @@ export default function ReviewsCallsPage() {
   const pending = reviews.filter((r) => r.status === "Call scheduled").length;
 
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="Reviews & Calls"
         subtitle="Files that cleared the systematic pass — review, call the owner, and approve the unit for listing."

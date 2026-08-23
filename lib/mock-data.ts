@@ -50,6 +50,9 @@ export interface Property {
    *  directly by slug (e.g. a partner property's individual units, browsed via
    *  their own landing page rather than the general catalog). */
   hidden?: boolean;
+  /** Handle of the Dhyana Travel Curator (see travel-guides-data.ts) who stayed
+   *  here and filmed it — shows their logo as a badge on the stay card. */
+  curatedBy?: string;
 }
 
 export interface Review {
@@ -159,6 +162,7 @@ export const properties: Property[] = [
     isFeatured: true,
     isTrending: true,
     sustainability: ["Solar powered", "Rainwater harvesting", "Organic farm", "Zero single-use plastic"],
+    curatedBy: "vjsiddhu_vlogs",
   },
   {
     id: "2",
@@ -240,6 +244,7 @@ export const properties: Property[] = [
     isFeatured: true,
     isTrending: true,
     sustainability: ["Bamboo construction", "Solar energy", "Rainwater harvesting", "Zero waste kitchen", "Native landscaping"],
+    curatedBy: "drbro",
   },
   {
     id: "4",
@@ -280,6 +285,7 @@ export const properties: Property[] = [
     isFeatured: true,
     isTrending: true,
     sustainability: ["Solar panels", "Natural ventilation"],
+    curatedBy: "naaanveshana",
   },
   {
     id: "5",
@@ -319,6 +325,7 @@ export const properties: Property[] = [
     isFeatured: false,
     isTrending: true,
     sustainability: ["100% off-grid", "Bamboo construction", "No plastic", "Community built", "Native landscaping"],
+    curatedBy: "naaanveshana",
   },
   {
     id: "6",
@@ -358,6 +365,7 @@ export const properties: Property[] = [
     isFeatured: true,
     isTrending: false,
     sustainability: ["Restored heritage", "Natural ventilation", "Rainwater harvesting"],
+    curatedBy: "vjsiddhu_vlogs",
   },
   {
     id: "7",
@@ -398,6 +406,7 @@ export const properties: Property[] = [
     isFeatured: false,
     isTrending: true,
     sustainability: ["Reclaimed wood construction", "Solar water heater", "Dune conservation"],
+    curatedBy: "drbro",
   },
   {
     id: "8",

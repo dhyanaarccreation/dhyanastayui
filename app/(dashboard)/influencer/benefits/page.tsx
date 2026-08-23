@@ -32,7 +32,7 @@ export default function InfluencerBenefitsPage() {
   const staysMet = curatedStaysProgress.current >= curatedStaysProgress.required;
 
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="Benefits & Tier Progress"
         subtitle="What you unlock as a Dhyana Travel Curator — from activation to your top tier."

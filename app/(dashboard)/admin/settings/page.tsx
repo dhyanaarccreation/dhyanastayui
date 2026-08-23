@@ -13,7 +13,7 @@ import { PageHeader, SectionCard, SettingRow, Toggle, StatusPill } from "@/app/c
 
 export default function AdminSettingsPage() {
   return (
-    <div className="space-y-8 pb-12">
+    <div className="space-y-4 pb-12">
       <PageHeader
         title="System Settings"
         subtitle="Platform-level configuration — commissions, features and integrations."

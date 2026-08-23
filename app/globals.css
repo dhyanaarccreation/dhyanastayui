@@ -19,7 +19,7 @@
   --color-primary: var(--color-gold);
   --color-primary-hover: var(--color-gold-dark);
   --color-primary-dark: var(--color-gold-dark);
-  --color-primary-foreground: #FFFFFF; /* Organic Minimalism: white text on the orange CTA */
+  --color-primary-foreground: #FFFFFF; /* Organic Minimalism: white text on the creamy-green CTA */
 
   --color-sage: var(--color-sage-base);
   --color-terracotta: var(--color-terracotta-base);
@@ -31,13 +31,17 @@
      rounded-card / rounded-panel Tailwind utilities) */
   --radius-card: var(--radius-card);
   --radius-panel: var(--radius-panel);
+
+  /* Premium immersive-image card radius (destination/property/experience/
+     curator cards) — see .ImageCard system, app/components/cards/ImageCard.tsx */
+  --radius-card-lg: var(--radius-card-lg);
 }
 
 :root {
-  /* LIGHT MODE — Premium White (clean, bright; cards separated by shadow/
-     border rather than a tinted page background) */
-  --color-bg-primary: #FFFFFF;   /* Page background — pure white */
-  --color-bg-secondary: #FFFFFF; /* Cards — same white, differentiated by border + shadow */
+  /* LIGHT MODE — soft neutral gray page canvas; white cards float on top,
+     separated by their own border + shadow (see .ImageCard etc.) */
+  --color-bg-primary: #F0F0F0;   /* Page background */
+  --color-bg-secondary: #FFFFFF; /* Cards — pure white, pops against the page */
   --color-bg-tertiary: #F5F4F2;  /* Hover / alt bands — barely-there neutral, no longer beige */
 
   --color-border: #ECECEC;
@@ -48,10 +52,10 @@
   --color-text-secondary: #686868; /* Soft Gray — darkened from #777777 for WCAG AA contrast (4.5:1+) */
   --color-text-tertiary: #6D685D;  /* darkened from #9A958A for WCAG AA contrast (4.5:1+) */
 
-  /* Warm Orange — primary CTA (token keeps its legacy "gold" name) */
-  --color-gold: #E48A4A;
-  --color-gold-light: #F0A868;
-  --color-gold-dark: #C96F32; /* hover — a shade darker, per spec */
+  /* Forest Green — primary CTA (token keeps its legacy "gold" name) */
+  --color-gold: #2E6F40;
+  --color-gold-light: #DDEDE2;
+  --color-gold-dark: #235430; /* hover — a shade darker, per spec */
 
   /* Forest Green accent + warm rust alert tone */
   --color-sage-base: #4E6E58;
@@ -85,6 +89,7 @@
 
   --radius-card: 18px;
   --radius-panel: 20px;
+  --radius-card-lg: 34px;
 
   /* Property cards specifically want more visible depth than the general
      --shadow-soft/--shadow-hover pair used for navbar/search/pills — a
@@ -131,10 +136,10 @@
   --color-text-secondary: #B7AFA0; /* Warm muted gray */
   --color-text-tertiary: #999084;  /* lightened from #8A8175 for WCAG AA contrast (4.5:1+) */
 
-  /* Warm Orange — primary CTA, brightened for dark surfaces */
-  --color-gold: #E9995C;
-  --color-gold-light: #F3B384;
-  --color-gold-dark: #C97A3E;
+  /* Forest Green — primary CTA, same tone reads well on dark surfaces too */
+  --color-gold: #2E6F40;
+  --color-gold-light: #DDEDE2;
+  --color-gold-dark: #235430;
 
   /* Forest Green accent + warm rust alert tone */
   --color-sage-base: #6E9478;

@@ -37,7 +37,7 @@ const recentlyApproved = [
 
 export default function HospitalityConsultancyPage() {
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="Hospitality Consultancy Dashboard"
         subtitle="Welcome back, Rohan — 3 listing requests cleared the systematic pass and await your review call."

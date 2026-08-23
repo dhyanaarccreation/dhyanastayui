@@ -33,7 +33,7 @@ export default function ExperienceHostDashboardPage() {
   const top = experiences[0];
 
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="Experience Host Dashboard"
         subtitle="Welcome back, Karthik — 3 sessions today and 2 booking requests waiting for you."

@@ -55,7 +55,7 @@ export default function FleetManagementPage() {
   const visible = fleet.filter((v) => type === "All" || v.type === type);
 
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="Fleet Management"
         subtitle="Inventory, availability, service records and insurance documents."

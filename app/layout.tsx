@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
 import { ThemeProvider } from "@/app/components/ThemeProvider";
 import FloatingActions from "@/app/components/FloatingActions";
+import { UserLocationProvider } from "@/lib/UserLocationContext";
+import { SearchQueryProvider } from "@/lib/useSearchQuery";
 import "./globals.css";
 
 const inter = Inter({
@@ -44,8 +46,12 @@ export default function RootLayout({
     >
       <body className="min-h-screen flex flex-col" suppressHydrationWarning>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
-          {children}
-          <FloatingActions />
+          <UserLocationProvider>
+            <SearchQueryProvider>
+              {children}
+              <FloatingActions />
+            </SearchQueryProvider>
+          </UserLocationProvider>
         </ThemeProvider>
       </body>
     </html>

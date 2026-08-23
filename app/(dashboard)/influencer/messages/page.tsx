@@ -28,7 +28,7 @@ export default function InfluencerMessagesPage() {
   const markRead = (id: string) => setMessages((prev) => prev.map((m) => (m.id === id ? { ...m, unread: false } : m)));
 
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="Messages"
         subtitle="Talk to the Dhyana Stays marketing team — campaign updates, content feedback, and support."

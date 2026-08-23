@@ -95,7 +95,7 @@ const portfolioAllocation = holdings.map((h) => ({
 
 export default function InvestorPortfolioPage() {
   return (
-    <div className="space-y-8 pb-12">
+    <div className="space-y-4 pb-12">
       <PageHeader
         title="My Portfolio"
         subtitle="Your holdings across Dhyana curated hospitality projects."

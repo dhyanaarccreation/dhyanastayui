@@ -400,6 +400,18 @@ export interface ItineraryDay {
   day: number;
   title: string;
   stops: ItineraryStop[];
+  /** First-person narrative shown under that day's video on the Travel Guide Experience Page. */
+  summary?: string;
+}
+
+/** A curator's personal trip narrative — shown in the "How I Experienced…" section. */
+export interface CuratorTravelStory {
+  whyThisDestination: string;
+  favouriteStay: string;
+  favouriteExperience: string;
+  favouriteFood: string;
+  whatSurprisedThem: string;
+  travelTips: string[];
 }
 
 export const itineraries: {
@@ -427,6 +439,8 @@ export const itineraries: {
       {
         day: 1,
         title: "Arrival & French Quarter",
+        summary:
+          "We landed, checked into a garden-facing cottage, wandered the French Quarter's mustard-yellow walls, and closed the day with filter coffee and a beach sunset at the Promenade.",
         stops: [
           { type: "Stay", label: "Check in — Auroville Eco Cottages", notes: "Request the garden-facing cottage." },
           { type: "Food", label: "Café des Arts", notes: "Try the filter coffee and the tart of the day." },
@@ -436,6 +450,8 @@ export const itineraries: {
       {
         day: 2,
         title: "Auroville Deep Dive",
+        summary:
+          "A full day inside Auroville — the Matrimandir, a quiet heritage walk, and a Tamil thali lunch we're still thinking about.",
         stops: [
           { type: "Experience", label: "Matrimandir viewing", notes: "Book a viewing pass a day in advance." },
           { type: "Activity", label: "Heritage walk" },
@@ -445,6 +461,8 @@ export const itineraries: {
       {
         day: 3,
         title: "Farm & Departure",
+        summary:
+          "One last organic-farm breakfast, a stroll through Vaithikuppam's local market, then the drive back to the airport.",
         stops: [
           { type: "Experience", label: "Organic farm experience" },
           { type: "Activity", label: "Vaithikuppam local market" },
@@ -469,6 +487,8 @@ export const itineraries: {
       {
         day: 1,
         title: "Settle In",
+        summary:
+          "Checked into a beachfront villa, unwound with a sunset yoga session, and ended the day at a beach shack over fresh seafood.",
         stops: [
           { type: "Stay", label: "Check in — beachfront villa" },
           { type: "Activity", label: "Sunset yoga session" },
@@ -478,6 +498,8 @@ export const itineraries: {
       {
         day: 2,
         title: "Slow Day",
+        summary:
+          "The whole day was built around doing less — a 90-minute abhyanga massage, a lazy flea-market browse, and a sunset cruise to close it out.",
         stops: [
           { type: "Experience", label: "Ayurveda massage", notes: "Book the 90-minute abhyanga." },
           { type: "Activity", label: "Flea market" },
@@ -487,6 +509,7 @@ export const itineraries: {
       {
         day: 3,
         title: "Wind Down",
+        summary: "A morning swim, café breakfast, then the flight home — no alarms, no itinerary stress.",
         stops: [
           { type: "Activity", label: "Morning swim" },
           { type: "Food", label: "Local café breakfast" },
@@ -534,6 +557,23 @@ export const itineraries: {
     commissionEarned: "₹0",
   },
 ];
+
+// ---------- Travel story — "How I Experienced…" section on the Travel Guide Experience Page ----------
+export const riyaTravelStory: CuratorTravelStory = {
+  whyThisDestination:
+    "Pondicherry keeps pulling me back — it's the one place where a slow morning and a full day out don't feel like opposites.",
+  favouriteStay:
+    "The garden-facing cottage at Auroville Eco Cottages. Waking up to birdsong instead of traffic changes the whole trip.",
+  favouriteExperience: "The Matrimandir viewing at Auroville — book the pass a day ahead, it's worth the planning.",
+  favouriteFood:
+    "The tart of the day at Café des Arts, eaten slow, with filter coffee that actually tastes like filter coffee.",
+  whatSurprisedThem: "How much of Auroville is just… quiet. No one's trying to sell you anything.",
+  travelTips: [
+    "Book your Matrimandir pass the day before — walk-ins rarely get in.",
+    "Rent a bicycle for White Town; the streets are too narrow to enjoy from a car.",
+    "Go to the Promenade for sunset, not sunrise — the light hits the sea wall better.",
+  ],
+};
 
 // ---------- Itinerary-driven commission (copy → customise → book) ----------
 export const itineraryBookings = [

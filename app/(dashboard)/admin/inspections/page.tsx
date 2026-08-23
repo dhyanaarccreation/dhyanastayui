@@ -12,7 +12,7 @@ export default function AdminInspectionsPage() {
   ];
 
   return (
-    <div className="space-y-8 pb-12">
+    <div className="space-y-4 pb-12">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
           <h1 className="heading-display text-3xl text-foreground mb-2">
@@ -83,8 +83,8 @@ export default function AdminInspectionsPage() {
       </div>
 
       {/* Demo View for Inspection Detail */}
-      <div className="mt-12 pt-12 border-t border-border">
-        <h2 className="text-xl font-semibold text-foreground mb-6 flex items-center gap-2">
+      <div className="mt-4 pt-4 border-t border-border">
+        <h2 className="text-xl font-semibold text-foreground mb-3 flex items-center gap-2">
           <FileText className="text-primary" size={20} /> Scorecard Preview (INS-104)
         </h2>
         
@@ -92,7 +92,7 @@ export default function AdminInspectionsPage() {
           <div className="grid md:grid-cols-2 gap-12">
             <div>
               <h3 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-6">The 7 Dimensions</h3>
-              <div className="space-y-6">
+              <div className="space-y-4">
                 {[
                   { label: "Architectural Integrity", score: 8 },
                   { label: "Interior Design & Aesthetics", score: 9 },

@@ -58,7 +58,7 @@ const tierProgressPct = next
 
 export default function TravellerRewardsPage() {
   return (
-    <div className="space-y-8 pb-12">
+    <div className="space-y-4 pb-12">
       <PageHeader
         title="My Green Impact"
         subtitle="Every seed ball you fund, buy or earn — tracked here as your contribution to India's 100 Million Seed Ball Mission."

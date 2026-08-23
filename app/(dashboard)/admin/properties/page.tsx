@@ -15,7 +15,7 @@ export default function AdminPropertiesPage() {
   const rows = properties.slice(0, 5).map((p, i) => ({ p, ...statuses[i % statuses.length] }));
 
   return (
-    <div className="space-y-8 pb-12">
+    <div className="space-y-4 pb-12">
       <PageHeader
         title="All Properties"
         subtitle="Every listing on the platform — approve, suspend or inspect."

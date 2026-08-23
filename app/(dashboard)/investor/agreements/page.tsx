@@ -119,7 +119,7 @@ export default function InvestorAgreementsPage() {
   const pending = agreements.filter((d) => !d.signed && d.status === "Awaiting e-sign");
 
   return (
-    <div className="space-y-8 pb-12">
+    <div className="space-y-4 pb-12">
       <PageHeader
         title="Documents"
         subtitle="Agreements, financial statements, and project documents shared with you."

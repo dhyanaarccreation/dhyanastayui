@@ -65,7 +65,7 @@ export default function ExperienceBookingsPage() {
   const pendingCount = requests.filter((r) => r.status === "Pending").length;
 
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="Bookings & Revenue"
         subtitle="Approve requests, track sessions and watch your earnings grow."

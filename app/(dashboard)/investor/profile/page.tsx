@@ -106,7 +106,7 @@ export default function InvestorProfilePage() {
   const verificationStatus = "Investment Enabled";
 
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="Profile"
         subtitle="Your identity, KYC, bank and nominee details, tax information, and communication preferences."

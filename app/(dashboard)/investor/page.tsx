@@ -70,7 +70,7 @@ export default function InvestorDashboardOverview() {
   ];
 
   return (
-    <div className="space-y-8 pb-12">
+    <div className="space-y-4 pb-12">
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
         <div>
@@ -195,9 +195,9 @@ export default function InvestorDashboardOverview() {
         </div>
       </div>
 
-      <div className="grid lg:grid-cols-3 gap-8">
+      <div className="grid lg:grid-cols-3 gap-5">
         {/* Main Content Area */}
-        <div className="lg:col-span-2 space-y-8">
+        <div className="lg:col-span-2 space-y-4">
           
           {/* Portfolio Table */}
           <div className="bg-surface border border-border rounded-2xl p-6">
@@ -268,7 +268,7 @@ export default function InvestorDashboardOverview() {
         </div>
 
         {/* Sidebar */}
-        <div className="space-y-8">
+        <div className="space-y-4">
           {/* Wallet / Payout */}
           <div className="bg-gradient-to-r from-surface to-surface-hover border border-primary/30 rounded-2xl p-6">
             <div className="text-sm font-medium text-muted mb-2 uppercase tracking-wider">Next Payout</div>

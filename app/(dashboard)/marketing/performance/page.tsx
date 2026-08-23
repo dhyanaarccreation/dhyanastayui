@@ -44,7 +44,7 @@ const promos = [
 
 export default function MarketingPerformancePage() {
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="Performance"
         subtitle="Leads, conversions and promo redemptions across campaigns and regions."

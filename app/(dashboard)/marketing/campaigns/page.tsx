@@ -55,7 +55,7 @@ export default function MarketingCampaignsPage() {
   const liveCount = campaigns.filter((c) => c.live).length;
 
   return (
-    <div className="space-y-8 pb-12 animate-fade-in">
+    <div className="space-y-4 pb-12 animate-fade-in">
       <PageHeader
         title="Campaigns"
         subtitle="Region-targeted campaigns feeding the app's placements — pause or resume any time."
