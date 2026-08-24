@@ -4,7 +4,7 @@ import { useState } from "react";
 import {
   CalendarDays,
   BarChart3,
-  Star,
+  MessageSquare,
   Check,
   X,
   Users,
@@ -166,8 +166,8 @@ export default function ExperienceBookingsPage() {
         </SectionCard>
       </div>
 
-      {/* Ratings & reviews */}
-      <SectionCard title="Ratings & Reviews" icon={Star}>
+      {/* Reviews */}
+      <SectionCard title="Reviews" icon={MessageSquare}>
         <ul className="divide-y divide-surface-hover">
           {reviews.map((rv) => (
             <li key={rv.name} className="flex items-start gap-3 px-5 py-4">
@@ -177,11 +177,6 @@ export default function ExperienceBookingsPage() {
                 <div className="flex items-center gap-2 flex-wrap">
                   <p className="text-sm font-medium text-foreground">{rv.name}</p>
                   <span className="text-[10px] px-2 py-0.5 rounded-full bg-surface-hover text-muted">{rv.exp}</span>
-                  <span className="flex items-center gap-0.5">
-                    {Array.from({ length: rv.rating }).map((_, i) => (
-                      <Star key={i} size={10} className="text-primary fill-primary" />
-                    ))}
-                  </span>
                 </div>
                 <p className="text-xs text-muted mt-1 leading-relaxed">{rv.text}</p>
               </div>

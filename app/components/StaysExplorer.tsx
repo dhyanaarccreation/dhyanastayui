@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   SlidersHorizontal,
   ChevronDown,
@@ -137,6 +137,23 @@ export default function StaysExplorer() {
 
   const [activeCategory, setActiveCategory] = useState("all");
   const [sortBy, setSortBy] = useState<SortKey>("recommended");
+
+  // Category row scrolls horizontally; a plain mouse wheel only reports
+  // vertical delta, so redirect it into horizontal scroll on that axis.
+  // Wired up as a native listener (not JSX onWheel) so preventDefault
+  // actually takes effect — React's synthetic wheel handler is passive.
+  const categoryScrollerRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = categoryScrollerRef.current;
+    if (!el) return;
+    const onWheel = (e: WheelEvent) => {
+      if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return;
+      el.scrollLeft += e.deltaY;
+      e.preventDefault();
+    };
+    el.addEventListener("wheel", onWheel, { passive: false });
+    return () => el.removeEventListener("wheel", onWheel);
+  }, []);
   const [sortOpen, setSortOpen] = useState(false);
 
   const [filtersOpen, setFiltersOpen] = useState(false);
@@ -242,10 +259,13 @@ export default function StaysExplorer() {
 
         {/* Category row — small icon + name pills (no photos), replacing
             the old standalone "Find Your Perfect Escape" section. Clicking
-            the active tile again resets to "all". Wraps instead of scrolling
-            so every category stays visible at once. */}
+            the active tile again resets to "all". Single line, horizontally
+            scrollable instead of wrapping to a second row. */}
         <div className="mt-3">
-          <div className="flex flex-wrap items-center gap-3 px-0.5 pt-1.5 pb-3">
+          <div
+            ref={categoryScrollerRef}
+            className="flex items-center gap-3 px-0.5 pt-1.5 pb-3 overflow-x-auto scrollbar-hide"
+          >
             {categories.map((cat) => (
               <CategoryTile
                 key={cat.slug}

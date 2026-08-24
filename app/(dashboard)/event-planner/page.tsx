@@ -9,7 +9,6 @@ import {
   Video,
   Users,
   MessageSquare,
-  Star,
   TrendingUp,
   Plus,
   Pencil,
@@ -86,7 +85,7 @@ export default function EventPlannerDashboardPage() {
           { label: "Bookings This Month", value: "9", delta: "2 weddings · 1 festival", icon: CalendarDays },
           { label: "Event Revenue · Jul", value: "₹6.8L", delta: "+18% MoM", icon: TrendingUp },
           { label: "Lead Conversion", value: "34%", delta: "41 leads → 9 booked", icon: Users },
-          { label: "Client Rating", value: "4.9", delta: "320+ events done", icon: Star },
+          { label: "Events Completed", value: "320+", delta: "since launch", icon: MessageSquare },
         ]}
       />
 

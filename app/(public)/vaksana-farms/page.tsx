@@ -5,7 +5,6 @@ import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   MapPin,
-  Star,
   Share,
   Heart,
   ChevronRight,
@@ -114,8 +113,6 @@ export default function VaksanaFarmsPage() {
         <h1 className="heading-display text-3xl md:text-5xl text-foreground mb-3">Vaksana Farms</h1>
         <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted">
           <div className="flex items-center gap-1">
-            <Star size={14} className="text-primary fill-primary" />
-            <span className="font-semibold text-foreground">{vaksanaFarms.rating}</span>
             <a href="#reviews" className="underline hover:text-foreground">
               {vaksanaFarms.reviewCount} reviews
             </a>
@@ -632,9 +629,8 @@ export default function VaksanaFarmsPage() {
         {/* Reviews (farm-level, pooled across all four stays) */}
         <div className="py-8 border-b border-surface-hover" id="reviews">
           <div className="flex items-center gap-2 mb-6">
-            <Star size={20} className="text-primary fill-primary" />
             <h2 className="heading-display text-2xl text-foreground">
-              {vaksanaFarms.rating} · {vaksanaFarms.reviewCount} reviews
+              {vaksanaFarms.reviewCount} reviews
             </h2>
           </div>
 

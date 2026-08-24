@@ -1,16 +1,23 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { ArrowRight, Camera, Pause, Play, Sparkles, Star, Volume2, VolumeX } from "lucide-react";
+import { ArrowRight, Camera, Maximize2, Pause, Play, Sparkles, Star, Volume2, VolumeX } from "lucide-react";
 import type { Property, Review } from "@/lib/mock-data";
-import { getStayReel, type EnrichedProperty, type StayReelItem, type StayReelTab } from "@/lib/content-generator";
+import {
+  getStayReel,
+  getStayRooms,
+  type EnrichedProperty,
+  type StayReelItem,
+  type StayReelTab,
+  type StayRoom,
+} from "@/lib/content-generator";
 import StayRoomSelector from "@/app/components/StayRoomSelector";
 
 interface StayMediaExperienceProps {
   property: Property;
   enriched: EnrichedProperty;
   propertyReviews: Review[];
-  reserveCard: React.ReactNode;
+  reserveCard: (selectedRoom: StayRoom) => React.ReactNode;
   onOpenStory: () => void;
   onOpenGallery: () => void;
   onOpenExperiences: () => void;
@@ -43,12 +50,15 @@ export default function StayMediaExperience({
     return guestStoryItems.length ? [...base, { key: "guest-stories", label: "Guest Stories", items: guestStoryItems }] : base;
   }, [property, enriched, propertyReviews]);
 
+  const rooms = useMemo(() => getStayRooms(property), [property]);
+
   const [trackedPropertyId, setTrackedPropertyId] = useState(property.id);
   const [activeTabKey, setActiveTabKey] = useState(tabs[0].key);
   const [nowPlaying, setNowPlaying] = useState<StayReelItem>(tabs[0].items[0]);
   const [playing, setPlaying] = useState(false);
   const [muted, setMuted] = useState(true);
   const [videoFailed, setVideoFailed] = useState(false);
+  const [selectedRoomId, setSelectedRoomId] = useState(rooms[1]?.id ?? rooms[0].id);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   // Navigating client-side between two different stay pages reuses this
@@ -59,7 +69,10 @@ export default function StayMediaExperience({
     setActiveTabKey(tabs[0].key);
     setNowPlaying(tabs[0].items[0]);
     setVideoFailed(false);
+    setSelectedRoomId(rooms[1]?.id ?? rooms[0].id);
   }
+
+  const selectedRoom = rooms.find((r) => r.id === selectedRoomId) ?? rooms[0];
 
   const activeTab = tabs.find((t) => t.key === activeTabKey) ?? tabs[0];
   const hasVideo = Boolean(nowPlaying.videoSrc) && !videoFailed;
@@ -96,6 +109,30 @@ export default function StayMediaExperience({
     video.muted = !video.muted;
     setMuted(video.muted);
   }, []);
+
+  // Fullscreens the <video> element itself via the native Fullscreen API —
+  // stays on this page and this exact clip, no navigation to an external
+  // video platform.
+  const toggleFullscreen = useCallback(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    if (document.fullscreenElement) {
+      document.exitFullscreen().catch(() => {});
+    } else {
+      video.requestFullscreen().catch(() => {});
+    }
+  }, []);
+
+  // Selecting a room swaps the hero media to that room's own photo — rooms
+  // don't have their own video (only one real clip exists per category), so
+  // this clears videoSrc and the hero falls back to the plain <img> path.
+  const handleSelectRoom = (roomId: string) => {
+    setSelectedRoomId(roomId);
+    const room = rooms.find((r) => r.id === roomId);
+    if (!room) return;
+    setNowPlaying({ id: `room-${room.id}`, title: room.name, thumbnail: room.image });
+    setVideoFailed(false);
+  };
 
   const handleReelItemClick = (tab: StayReelTab, item: StayReelItem) => {
     if (tab.key === "experiences") {
@@ -179,6 +216,14 @@ export default function StayMediaExperience({
               >
                 {muted ? <VolumeX size={16} /> : <Volume2 size={16} />}
               </button>
+              <button
+                type="button"
+                onClick={toggleFullscreen}
+                aria-label="Expand video to fullscreen"
+                className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-black/40 hover:bg-black/60 backdrop-blur-md flex items-center justify-center text-white transition-colors"
+              >
+                <Maximize2 size={15} />
+              </button>
             </div>
           )}
         </div>
@@ -224,16 +269,17 @@ export default function StayMediaExperience({
             </div>
           </button>
 
-          {/* Reserve card — existing booking widget, sized to its own content */}
+          {/* Reserve card — existing booking widget, sized to its own content.
+              Price reflects whichever room is selected below. */}
           <div className="w-full shrink-0">
-            {reserveCard}
+            {reserveCard(selectedRoom)}
           </div>
         </div>
       </div>
 
-      {/* Choose Your Space — room selector (no price, no Reserve CTA; both
-          live solely in the single Reserve card above) */}
-      <StayRoomSelector property={property} />
+      {/* Choose Your Space — room selector; the pick here drives the
+          Reserve card's price above via the shared selectedRoomId state. */}
+      <StayRoomSelector rooms={rooms} selectedRoomId={selectedRoomId} onSelectRoom={handleSelectRoom} />
 
       {/* Media tabs + horizontal reel */}
       <div className="mt-6 md:mt-8">
@@ -258,45 +304,56 @@ export default function StayMediaExperience({
           ))}
         </div>
 
-        <div className="flex gap-3 md:gap-4 overflow-x-auto pb-2 mt-4 scrollbar-hide">
+        <div className="flex gap-4 md:gap-5 overflow-x-auto pb-2 mt-4 scrollbar-hide">
           {activeTab.items.map((item) => (
             <button
               key={item.id}
               type="button"
               onClick={() => handleReelItemClick(activeTab, item)}
-              className="group/card shrink-0 w-[160px] sm:w-[200px] text-left"
+              className="group/card shrink-0 w-55 sm:w-65 text-left"
             >
-              <div className="relative w-full aspect-[4/5] rounded-2xl overflow-hidden bg-surface-hover">
+              {/* Widescreen thumbnail, hover-only play control — matches a
+                  YouTube video-card layout rather than a portrait poster. */}
+              <div className="relative w-full aspect-video rounded-xl overflow-hidden bg-surface-hover">
                 <img
                   src={item.thumbnail}
                   alt={item.title}
                   loading="lazy"
                   className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-out group-hover/card:scale-[1.04]"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/5 to-transparent" />
+                <div className="absolute inset-0 bg-black/0 group-hover/card:bg-black/20 transition-colors duration-300" />
 
                 {activeTab.key === "experiences" ? (
-                  <span className="absolute bottom-3 right-3 w-8 h-8 rounded-full bg-white/90 flex items-center justify-center text-foreground">
+                  <span className="absolute bottom-2.5 right-2.5 w-8 h-8 rounded-full bg-white/90 flex items-center justify-center text-foreground opacity-0 group-hover/card:opacity-100 transition-opacity duration-200">
                     <ArrowRight size={14} />
                   </span>
                 ) : item.videoSrc ? (
-                  <span className="absolute inset-0 flex items-center justify-center">
-                    <span className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white/90 flex items-center justify-center text-foreground shadow-lg transition-transform duration-300 group-hover/card:scale-110">
-                      <Play size={15} className="ml-0.5" />
+                  <span className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/card:opacity-100 transition-opacity duration-200">
+                    <span className="w-11 h-11 rounded-full bg-black/70 flex items-center justify-center text-white">
+                      <Play size={16} className="ml-0.5 fill-white" />
                     </span>
                   </span>
                 ) : null}
 
                 {activeTab.key === "guest-stories" && (
-                  <span className="absolute top-2.5 left-2.5 flex items-center gap-1 px-2 py-0.5 rounded-full bg-black/35 backdrop-blur-sm text-[10px] font-medium text-white">
+                  <span className="absolute top-2 left-2 flex items-center gap-1 px-2 py-0.5 rounded bg-black/70 text-[10px] font-medium text-white">
                     <Star size={10} className="fill-white" /> Guest
                   </span>
                 )}
               </div>
-              <p className="mt-2 text-sm font-medium text-foreground line-clamp-1">{item.title}</p>
-              {item.caption && (
-                <p className="text-xs text-subtle line-clamp-1 mt-0.5">{item.caption}</p>
-              )}
+
+              {/* Title + meta row, channel-card style */}
+              <div className="flex gap-2.5 mt-2.5">
+                <div className="w-9 h-9 rounded-full overflow-hidden shrink-0 bg-surface-hover">
+                  <img src={item.thumbnail} alt="" className="w-full h-full object-cover" />
+                </div>
+                <div className="min-w-0">
+                  <p className="text-sm font-semibold text-foreground line-clamp-2 leading-snug">{item.title}</p>
+                  <p className="text-xs text-subtle mt-0.5 line-clamp-1">
+                    {item.caption ?? activeTab.label}
+                  </p>
+                </div>
+              </div>
             </button>
           ))}
         </div>

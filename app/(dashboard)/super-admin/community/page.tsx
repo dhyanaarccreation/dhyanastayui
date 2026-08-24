@@ -4,7 +4,6 @@ import { useState } from "react";
 import {
   Headphones,
   Siren,
-  Star,
   ShieldAlert,
   MessageCircle,
   Sparkles,
@@ -62,7 +61,7 @@ export default function SuperAdminCommunityPage() {
           { label: "Open Tickets", value: "14", delta: "3 urgent", icon: Headphones },
           { label: "Live SOS Alerts", value: String(sosIncidents.length), delta: "response en route", icon: Siren },
           { label: "Flagged Reviews", value: String(reviews.length), delta: "awaiting moderation", icon: ShieldAlert },
-          { label: "CSAT Score", value: "4.6/5", delta: "+0.2 MoM", icon: Star },
+          { label: "Reviews Collected", value: "1,340", delta: "+6% MoM", icon: MessageCircle },
         ]}
       />
 
@@ -150,7 +149,7 @@ export default function SuperAdminCommunityPage() {
             {pendingTestimonials.map((t) => (
               <li key={t.id} className="flex items-center justify-between gap-3 px-5 py-3.5">
                 <div className="min-w-0">
-                  <p className="text-sm font-medium text-foreground truncate">{t.guest} · {t.rating}★</p>
+                  <p className="text-sm font-medium text-foreground truncate">{t.guest}</p>
                   <p className="text-xs text-muted italic mt-0.5 line-clamp-2">&ldquo;{t.quote}&rdquo;</p>
                 </div>
                 <div className="flex items-center gap-2 shrink-0">

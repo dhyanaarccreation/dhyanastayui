@@ -3,7 +3,6 @@ import {
   Bot,
   MessageSquare,
   PhoneCall,
-  Star,
   Sparkles,
   Clock,
   ArrowRight,
@@ -49,7 +48,7 @@ export default function CustomerSupportDashboardPage() {
           { label: "AI Resolution Rate", value: "86%", delta: "target ≥ 80%", icon: Bot },
           { label: "Conversations Today", value: "86", delta: "all recorded", icon: MessageSquare },
           { label: "Call Center Redirects", value: "4", delta: "5% of volume", icon: PhoneCall },
-          { label: "CSAT Score", value: "4.6/5", delta: "+0.2 MoM", icon: Star },
+          { label: "Feedback Received", value: "312", delta: "+18 this week", icon: MessageSquare },
         ]}
       />
 

@@ -2,7 +2,7 @@ import Link from "next/link";
 import {
   Camera,
   CalendarDays,
-  Star,
+  MessageSquare,
   TrendingUp,
   Users,
   Clock,
@@ -45,7 +45,7 @@ export default function ExperienceHostDashboardPage() {
           { label: "Live Experiences", value: "6", delta: "2 seasonal", icon: Camera },
           { label: "Booking Requests", value: "17", delta: "2 pending approval", icon: CalendarDays },
           { label: "Monthly Revenue", value: "₹1.9L", delta: "+7% MoM", icon: TrendingUp },
-          { label: "Average Rating", value: "4.8", delta: "212 reviews", icon: Star },
+          { label: "Total Reviews", value: "212", delta: "this season", icon: MessageSquare },
         ]}
       />
 
@@ -114,9 +114,7 @@ export default function ExperienceHostDashboardPage() {
           </p>
           <p className="text-sm text-muted mt-3 leading-relaxed max-w-lg">{top.description}</p>
           <div className="flex items-center gap-5 mt-4 text-xs text-muted">
-            <span className="flex items-center gap-1">
-              <Star size={12} className="text-primary fill-primary" /> {top.rating} ({top.reviewCount})
-            </span>
+            <span>{top.reviewCount} reviews</span>
             <span>68 bookings this month</span>
             <span className="text-sage font-medium">₹54,400 earned</span>
           </div>

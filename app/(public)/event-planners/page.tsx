@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { Search, Star, PartyPopper, ArrowRight, ShieldCheck } from "lucide-react";
+import { Search, PartyPopper, ArrowRight, ShieldCheck } from "lucide-react";
 import { eventPlanners } from "@/lib/mock-data";
 
 const types = ["All", ...Array.from(new Set(eventPlanners.map((p) => p.type)))];
@@ -105,9 +105,6 @@ export default function EventPlannersPage() {
                 <img src={p.image} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                 <span className="absolute top-3 left-3 px-2.5 py-1 text-[10px] font-medium uppercase tracking-wider bg-background/80 backdrop-blur-sm text-primary rounded-full">
                   {p.type}
-                </span>
-                <span className="absolute top-3 right-3 flex items-center gap-1 px-2 py-1 text-xs bg-background/80 backdrop-blur-sm text-foreground rounded-full">
-                  <Star size={11} className="text-primary fill-primary" /> {p.rating}
                 </span>
               </div>
               <div className="p-5">

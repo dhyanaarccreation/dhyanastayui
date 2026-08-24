@@ -4,7 +4,6 @@ import { useState } from "react";
 import {
   Users,
   ShieldCheck,
-  Star,
   ClipboardList,
 } from "lucide-react";
 import { PageHeader, SectionCard, StatusPill, Toggle } from "@/app/components/DashboardUI";
@@ -57,7 +56,6 @@ export default function SuperHostStaffPage() {
                 <th className="text-left px-5 py-2.5 text-xs font-semibold text-subtle uppercase tracking-wider">Name</th>
                 <th className="text-left px-4 py-2.5 text-xs font-semibold text-subtle uppercase tracking-wider">Region</th>
                 <th className="text-center px-4 py-2.5 text-xs font-semibold text-subtle uppercase tracking-wider">Properties</th>
-                <th className="text-center px-4 py-2.5 text-xs font-semibold text-subtle uppercase tracking-wider">Rating</th>
                 <th className="text-center px-4 py-2.5 text-xs font-semibold text-subtle uppercase tracking-wider">Status</th>
               </tr>
             </thead>
@@ -70,15 +68,6 @@ export default function SuperHostStaffPage() {
                   </td>
                   <td className="px-4 py-3 text-muted text-xs">{s.region}</td>
                   <td className="px-4 py-3 text-center tabular-nums text-foreground text-xs">{s.properties}</td>
-                  <td className="px-4 py-3 text-center text-xs">
-                    {s.rating === "—" ? (
-                      <span className="text-subtle">—</span>
-                    ) : (
-                      <span className="flex items-center justify-center gap-1 text-foreground font-medium">
-                        <Star size={11} className="text-primary fill-primary" /> {s.rating}
-                      </span>
-                    )}
-                  </td>
                   <td className="px-4 py-3 text-center">
                     <StatusPill tone={s.status === "Active" ? "sage" : "primary"}>{s.status}</StatusPill>
                   </td>

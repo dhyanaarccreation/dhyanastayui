@@ -2,7 +2,7 @@ import Link from "next/link";
 import {
   UtensilsCrossed,
   Receipt,
-  Star,
+  MessageSquare,
   TrendingUp,
   Clock,
   ArrowRight,
@@ -45,7 +45,7 @@ export default function FoodPartnerDashboardPage() {
           { label: "Orders Today", value: "31", delta: "6 pre-booked", icon: Receipt },
           { label: "Revenue Today", value: "₹11,240", delta: "+₹1,800 vs avg", icon: TrendingUp },
           { label: "Menu Items Live", value: "26", delta: "2 out of stock", icon: UtensilsCrossed },
-          { label: "Customer Rating", value: "4.7", delta: "480 reviews", icon: Star },
+          { label: "Total Reviews", value: "480", delta: "across all orders", icon: MessageSquare },
         ]}
       />
 
@@ -105,9 +105,6 @@ export default function FoodPartnerDashboardPage() {
             412 plates served this month. Guests love it with Meena Akka as the chosen cook — 92% pick her for this dish.
           </p>
           <div className="flex items-center gap-5 mt-4 text-xs text-muted">
-            <span className="flex items-center gap-1">
-              <Star size={12} className="text-primary fill-primary" /> 4.9 for this dish
-            </span>
             <span className="text-sage font-medium">₹1,44,200 earned</span>
             <Link href="/food-partner/menu" className="text-primary hover:underline flex items-center gap-1">
               Edit dish <ArrowRight size={12} />

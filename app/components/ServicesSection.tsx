@@ -6,7 +6,6 @@ import {
   Home,
   Compass,
   ArrowRight,
-  Star,
   Sparkles,
   BadgePercent,
   Megaphone,
@@ -109,9 +108,6 @@ export default function ServicesSection() {
                 subtitle={`${exp.location} · ${exp.duration}`}
                 meta={
                   <span className="inline-flex items-center gap-1">
-                    <Star size={12} className="fill-primary text-primary" />
-                    {exp.rating}
-                    <span className="mx-1 text-white/40">·</span>
                     <span className="font-semibold text-white">
                       ₹{exp.price.toLocaleString("en-IN")}
                     </span>
@@ -322,8 +318,7 @@ export function SpotlightSection({ embedded = false }: { embedded?: boolean }) {
                       {p.name}
                     </p>
                     <p className="text-xs text-muted flex items-center gap-1">
-                      <Star size={10} className="text-primary fill-primary" />
-                      {p.rating} · {p.location.city}
+                      {p.location.city}
                     </p>
                     <p className="text-xs text-foreground font-semibold mt-1">
                       ₹{p.price.toLocaleString("en-IN")}/night

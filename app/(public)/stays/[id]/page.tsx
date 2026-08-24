@@ -11,9 +11,6 @@ import {
   Share,
   Heart,
   ChevronRight,
-  Users,
-  BedDouble,
-  Bath,
   Wifi,
   Coffee,
   Car,
@@ -107,25 +104,21 @@ export default function PropertyDetailsPage() {
       <div className="max-w-[1200px] mx-auto px-6 lg:px-8 mb-6">
         <div className="flex flex-col md:flex-row justify-between items-start gap-4">
           <div>
-            <h1 className="heading-display text-3xl md:text-5xl text-foreground mb-3">
+            <h1 className="heading-display text-2xl md:text-4xl text-foreground mb-3">
               {property.name}
             </h1>
             <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted">
               <div className="flex items-center gap-1">
-                <Star size={14} className="text-primary fill-primary" />
-                <span className="font-semibold text-foreground">
-                  {property.rating}
-                </span>
                 <a href="#reviews" className="underline hover:text-foreground">
                   {property.reviewCount} reviews
                 </a>
               </div>
               <div className="flex items-center gap-1">
                 <MapPin size={14} />
-                <a href="#location" className="underline hover:text-foreground">
+                <span>
                   {property.location.city}, {property.location.state},{" "}
                   {property.location.country}
-                </a>
+                </span>
               </div>
               <span className="px-2 py-0.5 text-[10px] uppercase tracking-wider bg-primary/10 text-primary border border-primary/20 rounded-full">
                 {property.category}
@@ -140,26 +133,25 @@ export default function PropertyDetailsPage() {
         property={property}
         enriched={enriched}
         propertyReviews={propertyReviews}
-        reserveCard={
+        reserveCard={(selectedRoom) => (
           <div className="bg-surface border border-border rounded-2xl p-3.5 sm:p-4 shadow-xl w-full">
             <div className="flex items-end justify-between mb-1.5">
               <div>
                 <span className="text-xl sm:text-2xl font-bold text-foreground">
-                  ₹{property.price.toLocaleString()}
+                  ₹{selectedRoom.price.toLocaleString()}
                 </span>
                 <span className="text-muted text-sm"> /night</span>
               </div>
-              {property.originalPrice && (
+              {property.originalPrice && property.originalPrice > selectedRoom.price && (
                 <span className="text-sm text-subtle line-through">
                   ₹{property.originalPrice.toLocaleString()}
                 </span>
               )}
             </div>
+            <p className="text-xs text-muted mb-1.5">{selectedRoom.name}</p>
 
             <div className="flex items-center gap-1.5 text-sm text-muted mb-2">
-              <Star size={14} className="text-primary fill-primary" />
-              <span className="font-semibold text-foreground">{property.rating}</span>
-              <span>· {property.reviewCount} reviews</span>
+              <span>{property.reviewCount} reviews</span>
             </div>
 
             <div className="border-t border-border pt-2.5 pb-3">
@@ -187,7 +179,7 @@ export default function PropertyDetailsPage() {
               Free to explore · Secure booking
             </p>
           </div>
-        }
+        )}
         onOpenStory={() => setStoryOpen(true)}
         onOpenGallery={() => setGalleryOpen(true)}
         onOpenExperiences={() => setExperiencesOpen(true)}
@@ -431,27 +423,32 @@ export default function PropertyDetailsPage() {
         <div className="flex flex-col lg:flex-row gap-12">
           {/* Main Content (Left) */}
           <div className="lg:w-2/3">
-            {/* Quick Details */}
-            <div className="flex items-center gap-6 pb-8 border-b border-surface-hover">
-              <div className="flex flex-col gap-1">
-                <div className="flex items-center gap-2 text-foreground">
-                  <Users size={18} className="text-primary" />
-                  <span className="font-medium">{property.maxGuests} Guests</span>
-                </div>
-              </div>
-              <div className="flex flex-col gap-1">
-                <div className="flex items-center gap-2 text-foreground">
-                  <BedDouble size={18} className="text-primary" />
-                  <span className="font-medium">{property.bedrooms} Bedrooms</span>
-                </div>
-              </div>
-              <div className="flex flex-col gap-1">
-                <div className="flex items-center gap-2 text-foreground">
-                  <Bath size={18} className="text-primary" />
-                  <span className="font-medium">
-                    {property.bathrooms} Bathrooms
-                  </span>
-                </div>
+            {/* Curated Experiences — auto-assigned by stay category. Clicking
+                one opens the same Curated Experiences modal used by the Stay
+                Stories reel, showing what the experience actually involves. */}
+            <div className="py-8 border-b border-surface-hover">
+              <h2 className="heading-display text-2xl text-foreground mb-6">
+                Curated Experiences Near You
+              </h2>
+              <div className="grid sm:grid-cols-3 gap-4">
+                {enriched.curatedExperiences.map((exp) => {
+                  const Icon = resolveIcon(exp.icon);
+                  return (
+                    <button
+                      key={exp.name}
+                      type="button"
+                      onClick={() => setExperiencesOpen(true)}
+                      className="flex items-center gap-3 bg-surface border border-border rounded-2xl p-4 text-left hover:border-primary/40 hover:-translate-y-0.5 transition-all"
+                    >
+                      <div className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0">
+                        <Icon size={18} />
+                      </div>
+                      <span className="text-sm font-medium text-foreground">
+                        {exp.name}
+                      </span>
+                    </button>
+                  );
+                })}
               </div>
             </div>
 
@@ -474,33 +471,6 @@ export default function PropertyDetailsPage() {
               </div>
             </div>
 
-            {/* Badges / Highlights */}
-            <div className="py-8 border-b border-surface-hover">
-              <div className="grid sm:grid-cols-2 gap-6">
-                <div className="flex gap-4">
-                  <Star size={24} className="text-primary" />
-                  <div>
-                    <h4 className="font-semibold text-foreground">
-                      Highly Rated
-                    </h4>
-                    <p className="text-sm text-muted mt-1">
-                      Recent guests rated this {property.rating} out of 5 stars.
-                    </p>
-                  </div>
-                </div>
-                <div className="flex gap-4">
-                  <MapPin size={24} className="text-primary" />
-                  <div>
-                    <h4 className="font-semibold text-foreground">
-                      Great Location
-                    </h4>
-                    <p className="text-sm text-muted mt-1">
-                      95% of recent guests gave the location a 5-star rating.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
 
             {/* Description & Story */}
             <div className="py-8 border-b border-surface-hover" id="story">
@@ -542,37 +512,11 @@ export default function PropertyDetailsPage() {
               </button>
             </div>
 
-            {/* Curated Experiences — auto-assigned by stay category */}
-            <div className="py-8 border-b border-surface-hover">
-              <h2 className="heading-display text-2xl text-foreground mb-6">
-                Curated experiences near you
-              </h2>
-              <div className="grid sm:grid-cols-3 gap-4">
-                {enriched.curatedExperiences.map((exp) => {
-                  const Icon = resolveIcon(exp.icon);
-                  return (
-                    <div
-                      key={exp.name}
-                      className="flex items-center gap-3 bg-surface border border-border rounded-2xl p-4"
-                    >
-                      <div className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0">
-                        <Icon size={18} />
-                      </div>
-                      <span className="text-sm font-medium text-foreground">
-                        {exp.name}
-                      </span>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-
             {/* Reviews (Preview) */}
             <div className="py-8 border-b border-surface-hover" id="reviews">
               <div className="flex items-center gap-2 mb-6">
-                <Star size={20} className="text-primary fill-primary" />
                 <h2 className="heading-display text-2xl text-foreground">
-                  {property.rating} · {property.reviewCount} reviews
+                  {property.reviewCount} reviews
                 </h2>
               </div>
               
@@ -631,21 +575,6 @@ export default function PropertyDetailsPage() {
               </div>
             </div>
 
-            {/* Map (Placeholder) */}
-            <div className="py-8" id="location">
-              <h2 className="heading-display text-2xl text-foreground mb-2">
-                Where you'll be
-              </h2>
-              <p className="text-sm text-muted mb-6">
-                {property.location.city}, {property.location.state}, {property.location.country}
-              </p>
-              <div className="w-full h-[400px] bg-surface border border-border rounded-2xl flex items-center justify-center">
-                <div className="text-center">
-                  <MapPin size={32} className="mx-auto text-subtle mb-2" />
-                  <p className="text-sm text-subtle">Interactive Map Integration</p>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>

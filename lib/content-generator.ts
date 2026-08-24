@@ -173,7 +173,7 @@ export function generateStory(
 /**
  * A short 3-step story timeline for the "About This Stay" modal — composed
  * from the category theme already used above plus the property's own real
- * host/rating/review fields, so it's never hand-authored per property and
+ * host/review fields, so it's never hand-authored per property and
  * is naturally different for every stay.
  */
 export function getStoryTimeline(property: Property): StoryTimelineEntry[] {
@@ -186,7 +186,7 @@ export function getStoryTimeline(property: Property): StoryTimelineEntry[] {
     },
     {
       label: "Today",
-      text: `${property.rating} rating from ${property.reviewCount}+ guests who've stayed.`,
+      text: `${property.reviewCount}+ guests have stayed here.`,
     },
   ];
 }
@@ -454,8 +454,9 @@ export function getStayReel(property: Property, enriched: EnrichedProperty): Sta
 // The platform has no per-room booking entity today (a stay is booked as a
 // single whole, one price, one Reserve action) — these are illustrative
 // space cards only, built from the property's own photos and maxGuests.
-// `price` is a fixed per-room demo figure (informational display only) —
-// it intentionally never feeds the property-level Reserve price.
+// `price` is a fixed per-room demo figure that DOES drive the Reserve
+// card's displayed price (see StayMediaExperience's selectedRoom state) —
+// booking itself still proceeds as a single whole-property reservation.
 // ------------------------------------------------
 
 export interface StayRoom {

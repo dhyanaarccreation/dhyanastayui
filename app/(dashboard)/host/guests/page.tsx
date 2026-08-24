@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Calendar, ChevronDown, Clock, MessageCircle, Phone, Send, Star, Users } from "lucide-react";
+import { Calendar, ChevronDown, Clock, MessageCircle, Phone, Send, Users } from "lucide-react";
 import { PageHeader } from "@/app/components/DashboardUI";
 
 const threads = [
@@ -124,9 +124,6 @@ export default function HostGuestsPage() {
               <p className="text-sm font-semibold text-foreground">Priya Sharma</p>
               <p className="text-[11px] text-muted">Canopy Tiny House · Jul 24 – 28 · 2 guests</p>
             </div>
-            <span className="flex items-center gap-1 text-xs text-muted">
-              <Star size={11} className="text-primary fill-primary" /> 5.0 guest rating
-            </span>
           </div>
 
           <div className="flex-1 p-5 space-y-4 overflow-y-auto">

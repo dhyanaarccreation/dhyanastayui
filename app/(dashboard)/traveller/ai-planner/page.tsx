@@ -9,7 +9,6 @@ import {
   MapPin,
   Users,
   Send,
-  Star,
   Check,
   X,
   RefreshCw,
@@ -448,8 +447,7 @@ function AITripPlannerContent() {
                   <p className="text-[10px] uppercase tracking-wider text-subtle">Your matched stay</p>
                   <h3 className="text-base font-semibold text-foreground mt-0.5">{stay.name}</h3>
                   <p className="text-xs text-muted mt-0.5 flex items-center gap-1">
-                    <MapPin size={10} /> {stay.location.city} ·
-                    <Star size={10} className="text-primary fill-primary" /> {stay.rating} ({stay.reviewCount})
+                    <MapPin size={10} /> {stay.location.city} · {stay.reviewCount} reviews
                   </p>
                 </div>
                 <p className="text-sm font-bold text-foreground tabular-nums">

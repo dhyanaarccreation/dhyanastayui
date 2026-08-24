@@ -4,7 +4,7 @@ import { useState } from "react";
 import {
   CalendarDays,
   BarChart3,
-  Star,
+  MessageSquare,
   TrendingUp,
   Check,
   Clock,
@@ -75,7 +75,7 @@ export default function RentalBookingsPage() {
           { label: "Out Right Now", value: String(outNow), delta: "1 overdue", icon: Clock },
           { label: "Bookings · July", value: "64", delta: "+11 vs June", icon: CalendarDays },
           { label: "Revenue · July", value: "₹1.2L", delta: "+5% MoM", icon: TrendingUp },
-          { label: "Avg Rating", value: "4.8", delta: "196 reviews", icon: Star },
+          { label: "Total Reviews", value: "196", delta: "across all vehicles", icon: MessageSquare },
         ]}
       />
 
@@ -157,7 +157,7 @@ export default function RentalBookingsPage() {
       </div>
 
       {/* Reviews */}
-      <SectionCard title="Customer Reviews" icon={Star}>
+      <SectionCard title="Customer Reviews" icon={MessageSquare}>
         <ul className="divide-y divide-surface-hover">
           {reviews.map((rv) => (
             <li key={rv.name} className="flex items-start gap-3 px-5 py-4">
@@ -167,11 +167,6 @@ export default function RentalBookingsPage() {
                 <div className="flex items-center gap-2 flex-wrap">
                   <p className="text-sm font-medium text-foreground">{rv.name}</p>
                   <span className="text-[10px] px-2 py-0.5 rounded-full bg-surface-hover text-muted">{rv.vehicle}</span>
-                  <span className="flex items-center gap-0.5">
-                    {Array.from({ length: rv.rating }).map((_, i) => (
-                      <Star key={i} size={10} className="text-primary fill-primary" />
-                    ))}
-                  </span>
                 </div>
                 <p className="text-xs text-muted mt-1 leading-relaxed">{rv.text}</p>
               </div>

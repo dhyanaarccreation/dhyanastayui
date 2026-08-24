@@ -12,7 +12,6 @@ import {
   PhoneCall,
   RefreshCw,
   Check,
-  Star,
   Sparkles,
   Bell,
   BellOff,
@@ -260,7 +259,7 @@ const cannedReplies: ChatMsg[] = [
   },
   {
     role: "ai",
-    text: "I found 3 curated food spots within 2 km of your stay — Tanto Pizzeria (4.7★), Marc's Café (4.6★) and Naturellement (4.5★). Want me to add one to today's plan?",
+    text: "I found 3 curated food spots within 2 km of your stay — Tanto Pizzeria, Marc's Café and Naturellement. Want me to add one to today's plan?",
     sources: ["Live web", "Curated Food (M18)"],
   },
   {
@@ -424,7 +423,7 @@ export default function TripPlannerWidget({
       timeSaved: "12 min",
       newArrivalTime: lastRow ? lastRow.after : fmt(item.min + 40),
       shiftedCount: rows.length,
-      alternativeSuggested: "Naturellement (4.5★, 1.2 km)",
+      alternativeSuggested: "Naturellement (1.2 km)",
     });
     setLateModalItem(null);
   };
@@ -439,7 +438,7 @@ export default function TripPlannerWidget({
       timeSaved: `${item.travelTimeMin + 30} min`,
       newArrivalTime: remaining[0] ? fmt(Math.max(remaining[0].min - 30, item.min)) : fmt(item.min),
       shiftedCount: remaining.length,
-      alternativeSuggested: "Sadhana Forest community walk (4.6★, nearby)",
+      alternativeSuggested: "Sadhana Forest community walk (nearby)",
     });
     setSkipModalItem(null);
   };
@@ -1235,9 +1234,7 @@ export default function TripPlannerWidget({
                         {p.name}
                       </p>
                       <p className="text-xs text-muted flex items-center gap-1">
-                        <MapPin size={10} /> {p.location.city} ·{" "}
-                        <Star size={10} className="text-primary fill-primary" />{" "}
-                        {p.rating}
+                        <MapPin size={10} /> {p.location.city}
                       </p>
                       <div className="flex items-center justify-between mt-1.5">
                         <span className="text-[10px] font-semibold text-sage bg-sage/15 px-1.5 py-0.5 rounded-full">

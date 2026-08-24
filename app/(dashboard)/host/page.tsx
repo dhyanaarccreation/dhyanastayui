@@ -1,14 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, BarChart3, Calendar, CheckCircle2, Home, IndianRupee, Images, MessageSquare, Star, TrendingUp, Users } from "lucide-react";
+import { ArrowRight, BarChart3, Calendar, CheckCircle2, Home, IndianRupee, Images, MessageSquare, Users } from "lucide-react";
 
 export default function HostDashboardOverview() {
   const kpis = [
     { label: "Monthly Revenue", value: "₹4,25,000", change: "+12.5%", icon: IndianRupee },
     { label: "Occupancy Rate", value: "78%", change: "+5.2%", icon: BarChart3 },
     { label: "Upcoming Bookings", value: "12", change: "Steady", icon: Calendar },
-    { label: "Average Rating", value: "4.92", change: "+0.05", icon: TrendingUp },
+    { label: "Total Reviews", value: "186", change: "+9 this month", icon: MessageSquare },
   ];
 
   const recentReviews = [
@@ -164,7 +164,7 @@ export default function HostDashboardOverview() {
           <div className="bg-surface border border-border rounded-2xl p-6">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-sm font-semibold text-foreground flex items-center gap-2">
-                <Star className="text-primary" size={16} /> Recent Reviews
+                <MessageSquare className="text-primary" size={16} /> Recent Reviews
               </h3>
               <Link href="/host/reviews" className="text-xs text-primary hover:underline font-medium">View All</Link>
             </div>
@@ -173,9 +173,6 @@ export default function HostDashboardOverview() {
                 <div key={r.guest} className="p-3 bg-background border border-border rounded-xl">
                   <div className="flex items-center justify-between mb-1">
                     <span className="text-sm font-medium text-foreground">{r.guest}</span>
-                    <span className="flex items-center gap-0.5 text-xs font-semibold text-foreground">
-                      <Star size={12} className="text-primary fill-primary" /> {r.rating}.0
-                    </span>
                   </div>
                   <p className="text-xs text-subtle mb-2">{r.property}</p>
                   <p className="text-xs text-muted leading-relaxed mb-2 line-clamp-2">"{r.snippet}"</p>

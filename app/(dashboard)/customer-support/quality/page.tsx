@@ -1,5 +1,5 @@
 import {
-  Star,
+  MessageSquare,
   Bot,
   BarChart3,
   Download,
@@ -10,7 +10,7 @@ import { PageHeader, SectionCard, StatGrid, StatusPill } from "@/app/components/
 
 // ============================================
 // CUSTOMER SUPPORT — Quality & Reports
-// CSAT, AI accuracy, feedback, resolution reports
+// AI accuracy, feedback, resolution reports
 // ============================================
 
 const months = [
@@ -35,7 +35,7 @@ const feedback = [
 ];
 
 const reports = [
-  { name: "July resolution report", detail: "86% AI-resolved · CSAT 4.6 · full transcript index", date: "auto-generated monthly" },
+  { name: "July resolution report", detail: "86% AI-resolved · 1,240 conversations · full transcript index", date: "auto-generated monthly" },
   { name: "AI quality audit · week 29", detail: "50 sampled chats · 94% correct · 3 KB fixes shipped", date: "Jul 17" },
   { name: "Call center handoff log · July", detail: "16 redirects · reasons & outcomes", date: "live document" },
 ];
@@ -50,7 +50,7 @@ export default function SupportQualityPage() {
 
       <StatGrid
         stats={[
-          { label: "CSAT · July", value: "4.6/5", delta: "+0.2 MoM", icon: Star },
+          { label: "Feedback Volume · July", value: "1,240", delta: "+8% MoM", icon: MessageSquare },
           { label: "AI Resolution Rate", value: "86%", delta: "goal ≥ 80%", icon: Bot },
           { label: "Reopened Chats", value: "2.1%", delta: "-0.6 vs June", icon: TrendingUp },
           { label: "Audit Result", value: "94%", delta: "correct resolutions", icon: ShieldCheck },
@@ -98,7 +98,7 @@ export default function SupportQualityPage() {
       </div>
 
       {/* Customer feedback */}
-      <SectionCard title="Customer Feedback" icon={Star}>
+      <SectionCard title="Customer Feedback" icon={MessageSquare}>
         <ul className="divide-y divide-surface-hover">
           {feedback.map((f) => (
             <li key={f.name} className="flex items-start gap-3 px-5 py-4">
@@ -108,11 +108,6 @@ export default function SupportQualityPage() {
                 <div className="flex items-center gap-2 flex-wrap">
                   <p className="text-sm font-medium text-foreground">{f.name}</p>
                   <StatusPill tone={f.channel === "AI chat" ? "sage" : "primary"}>{f.channel}</StatusPill>
-                  <span className="flex items-center gap-0.5">
-                    {Array.from({ length: f.rating }).map((_, i) => (
-                      <Star key={i} size={10} className="text-primary fill-primary" />
-                    ))}
-                  </span>
                 </div>
                 <p className="text-xs text-muted mt-1 leading-relaxed">{f.text}</p>
               </div>

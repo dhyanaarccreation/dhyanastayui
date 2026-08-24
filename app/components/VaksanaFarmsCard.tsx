@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Star, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { vaksanaFarms } from "@/lib/vaksana-farms";
 
 // Large partner-property spotlight card shown in place of individual listings
@@ -23,12 +23,6 @@ export default function VaksanaFarmsCard() {
         <div className="absolute top-3 left-3 sm:top-4 sm:left-4">
           <span className="px-3 py-1 text-[10px] font-semibold uppercase tracking-wider bg-white/90 backdrop-blur-sm text-sage rounded-full">
             Partner Property
-          </span>
-        </div>
-        <div className="absolute top-3 right-3 sm:top-4 sm:right-4">
-          <span className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-background/70 backdrop-blur-sm text-xs font-medium text-white">
-            <Star size={12} className="text-primary fill-primary" />
-            {vaksanaFarms.rating}
           </span>
         </div>
       </div>

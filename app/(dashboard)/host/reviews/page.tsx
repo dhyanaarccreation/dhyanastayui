@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Star, MessageSquare, Send, CheckCircle2, Clock } from "lucide-react";
+import { MessageSquare, Send, CheckCircle2, Clock } from "lucide-react";
 import { PageHeader, SectionCard, StatGrid, StatusPill } from "@/app/components/DashboardUI";
 
 // ============================================
@@ -77,27 +77,12 @@ const initialReviews: Review[] = [
   },
 ];
 
-function Stars({ rating }: { rating: number }) {
-  return (
-    <div className="flex items-center gap-0.5">
-      {Array.from({ length: 5 }).map((_, i) => (
-        <Star
-          key={i}
-          size={13}
-          className={i < rating ? "text-primary fill-primary" : "text-surface-hover fill-surface-hover"}
-        />
-      ))}
-    </div>
-  );
-}
-
 export default function HostReviewsPage() {
   const [reviews, setReviews] = useState<Review[]>(initialReviews);
   const [drafts, setDrafts] = useState<Record<string, string>>({});
 
   const pending = reviews.filter((r) => !r.replied);
-  const avgRating = (reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1);
-  const fiveStar = reviews.filter((r) => r.rating === 5).length;
+  const replied = reviews.length - pending.length;
 
   const handleDraftChange = (id: string, value: string) =>
     setDrafts((prev) => ({ ...prev, [id]: value }));
@@ -124,10 +109,10 @@ export default function HostReviewsPage() {
 
       <StatGrid
         stats={[
-          { label: "Average Rating", value: `${avgRating} / 5`, delta: `${reviews.length} reviews`, icon: Star },
-          { label: "5-Star Reviews", value: String(fiveStar), delta: `${Math.round((fiveStar / reviews.length) * 100)}% of total`, icon: CheckCircle2 },
+          { label: "Total Reviews", value: String(reviews.length), delta: "across all properties", icon: MessageSquare },
+          { label: "Replied", value: String(replied), delta: `${reviews.length} total`, icon: CheckCircle2 },
           { label: "Awaiting Reply", value: String(pending.length), delta: pending.length ? "needs a response" : "all caught up", icon: Clock },
-          { label: "Reply Rate", value: `${Math.round(((reviews.length - pending.length) / reviews.length) * 100)}%`, delta: "across all properties", icon: MessageSquare },
+          { label: "Reply Rate", value: `${Math.round((replied / reviews.length) * 100)}%`, delta: "across all properties", icon: MessageSquare },
         ]}
       />
 
@@ -145,7 +130,6 @@ export default function HostReviewsPage() {
                       <p className="text-[11px] text-subtle">{r.property} · {r.date}</p>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Stars rating={r.rating} />
                       <StatusPill tone={r.replied ? "sage" : "terracotta"}>
                         {r.replied ? "Replied" : "Awaiting reply"}
                       </StatusPill>

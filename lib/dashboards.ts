@@ -259,7 +259,7 @@ export const dashboardRoles: DashboardRole[] = [
       { label: "Live Experiences", value: "8", delta: "2 seasonal" },
       { label: "Booking Requests", value: "17", delta: "5 pending" },
       { label: "Monthly Revenue", value: "₹1.9L", delta: "+7% MoM" },
-      { label: "Average Rating", value: "4.8", delta: "212 reviews" },
+      { label: "Total Reviews", value: "212", delta: "across all listings" },
     ],
     sections: [
       {
@@ -272,7 +272,7 @@ export const dashboardRoles: DashboardRole[] = [
         id: "bookings-revenue",
         title: "Bookings & Revenue",
         icon: BarChart3,
-        bullets: ["Booking Requests", "Revenue Tracking", "Ratings & Reviews"],
+        bullets: ["Booking Requests", "Revenue Tracking", "Reviews"],
       },
     ],
   },
@@ -295,7 +295,7 @@ export const dashboardRoles: DashboardRole[] = [
       { label: "Menu Items Live", value: "26", delta: "4 seasonal" },
       { label: "Orders Today", value: "31", delta: "6 pre-booked" },
       { label: "Monthly Revenue", value: "₹2.6L", delta: "+13% MoM" },
-      { label: "Customer Rating", value: "4.7", delta: "480 reviews" },
+      { label: "Total Reviews", value: "480", delta: "across all orders" },
     ],
     sections: [
       {
@@ -445,7 +445,7 @@ export const dashboardRoles: DashboardRole[] = [
       { label: "Open Tickets", value: "14", delta: "3 urgent" },
       { label: "Live Chats", value: "5", delta: "2 waiting" },
       { label: "Avg First Response", value: "2m 40s", delta: "SLA 5m" },
-      { label: "CSAT Score", value: "4.6/5", delta: "+0.2 MoM" },
+      { label: "Feedback Received", value: "312", delta: "+18 this week" },
     ],
     sections: [
       {

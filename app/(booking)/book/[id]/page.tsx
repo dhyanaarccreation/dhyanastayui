@@ -12,7 +12,6 @@ import {
   ChevronRight,
   ChevronLeft,
   Info,
-  Star,
   MapPin,
   Wifi,
   Coffee,
@@ -240,6 +239,9 @@ function BookingPageContent() {
   const [children, setChildren] = useState(0);
   const [infants, setInfants] = useState(0);
   const [selectedExperiences, setSelectedExperiences] = useState<string[]>([]);
+  // Curated experiences grid starts collapsed to 4 cards; "Explore more"
+  // reveals the rest so the step doesn't open on a long scroll.
+  const [showAllExperiences, setShowAllExperiences] = useState(false);
 
   // Guests section — compact selector, closed by default, opened by clicking
   // the card. Mirrors the Dates popover's open/close + outside-click pattern.
@@ -595,15 +597,13 @@ function BookingPageContent() {
             {/* Step 2: Curated Experiences */}
             {step === 2 && (
               <div className="animate-fade-in">
-                <h1 className="heading-display text-3xl text-foreground mb-2">
+                <h1 className="heading-display text-2xl text-foreground mb-4 ml-1">
                   Curated Experiences
                 </h1>
-                <p className="text-muted mb-6">
-                  Optional experiences to make your time at {property.name} unforgettable — add as many as you like.
-                </p>
 
-                <div className="grid sm:grid-cols-2 gap-4">
-                  {curationExperiences.map((exp) => {
+                <div className="bg-surface border border-border rounded-2xl shadow-organic p-6">
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    {(showAllExperiences ? curationExperiences : curationExperiences.slice(0, 4)).map((exp) => {
                     const isAdded = selectedExperiences.includes(exp.id);
                     return (
                       <div
@@ -612,7 +612,7 @@ function BookingPageContent() {
                           isAdded ? "border-sage/50" : "border-border"
                         }`}
                       >
-                        <div className="relative h-36 overflow-hidden bg-surface-hover">
+                        <div className="relative h-27 overflow-hidden bg-surface-hover">
                           <img
                             src={exp.image}
                             alt={exp.name}
@@ -632,40 +632,54 @@ function BookingPageContent() {
                           <p className="text-xs text-muted leading-relaxed mb-3 line-clamp-2">
                             {exp.description}
                           </p>
-                          <div className="flex items-center justify-between mb-3">
+                          <div className="flex items-center justify-between">
                             <span className="flex items-center gap-1 text-xs text-subtle">
                               <Clock size={12} /> {exp.duration}
                             </span>
-                            <span className="text-sm font-semibold text-foreground">
-                              ₹{exp.price.toLocaleString("en-IN")}
-                            </span>
+                            <div className="flex items-center gap-2">
+                              <span className="text-sm font-semibold text-foreground">
+                                ₹{exp.price.toLocaleString("en-IN")}
+                              </span>
+                              <button
+                                onClick={() => toggleExperience(exp.id)}
+                                className={`group flex items-center justify-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-200 active:scale-[0.98] ${
+                                  isAdded
+                                    ? "bg-sage/10 text-sage border border-sage/40 hover:bg-terracotta/10 hover:text-terracotta hover:border-terracotta/40"
+                                    : "bg-primary text-primary-foreground hover:bg-primary-hover"
+                                }`}
+                              >
+                                {isAdded ? (
+                                  <>
+                                    <Check size={12} className="group-hover:hidden" />
+                                    <span className="group-hover:hidden">Added</span>
+                                    <X size={12} className="hidden group-hover:inline" />
+                                    <span className="hidden group-hover:inline">Remove</span>
+                                  </>
+                                ) : (
+                                  <>
+                                    <Plus size={12} /> Add
+                                  </>
+                                )}
+                              </button>
+                            </div>
                           </div>
-                          <button
-                            onClick={() => toggleExperience(exp.id)}
-                            className={`group w-full flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 active:scale-[0.98] ${
-                              isAdded
-                                ? "bg-sage/10 text-sage border border-sage/40 hover:bg-terracotta/10 hover:text-terracotta hover:border-terracotta/40"
-                                : "bg-primary text-primary-foreground hover:bg-primary-hover"
-                            }`}
-                          >
-                            {isAdded ? (
-                              <>
-                                <Check size={15} className="group-hover:hidden" />
-                                <span className="group-hover:hidden">Added</span>
-                                <X size={15} className="hidden group-hover:inline" />
-                                <span className="hidden group-hover:inline">Remove</span>
-                              </>
-                            ) : (
-                              <>
-                                <Plus size={15} /> Add
-                              </>
-                            )}
-                          </button>
                         </div>
                       </div>
                     );
                   })}
                 </div>
+
+                {curationExperiences.length > 4 && (
+                  <button
+                    type="button"
+                    onClick={() => setShowAllExperiences((v) => !v)}
+                    className="mt-4 w-full py-2.5 rounded-xl border border-border text-sm font-semibold text-foreground hover:bg-surface-hover transition-colors"
+                  >
+                    {showAllExperiences
+                      ? "Show less"
+                      : `Explore ${curationExperiences.length - 4} more experience${curationExperiences.length - 4 > 1 ? "s" : ""}`}
+                  </button>
+                )}
 
                 {selectedExperiences.length > 0 && (
                   <div className="mt-6 flex items-center justify-between px-4 py-3 rounded-xl bg-sage/10 border border-sage/30 text-sm animate-fade-in">
@@ -677,6 +691,7 @@ function BookingPageContent() {
                     </span>
                   </div>
                 )}
+                </div>
               </div>
             )}
 
@@ -743,18 +758,6 @@ function BookingPageContent() {
                         />
                       </div>
                     </div>
-                  </div>
-
-                  <div className="bg-surface border border-border rounded-2xl p-6">
-                    <h2 className="text-lg font-semibold text-foreground mb-2">Message the Host</h2>
-                    <p className="text-sm text-muted mb-4">
-                      Let {property.host.name} know the purpose of your trip and when you expect to arrive.
-                    </p>
-                    <textarea
-                      rows={4}
-                      placeholder="Hello! We are excited to stay..."
-                      className="w-full px-4 py-3 bg-background border border-border rounded-xl text-sm text-foreground focus:outline-none focus:border-primary resize-none"
-                    ></textarea>
                   </div>
                 </div>
               </div>
@@ -852,63 +855,51 @@ function BookingPageContent() {
               </div>
             )}
 
-            {/* Navigation Button */}
-            <div className="mt-6 pt-6 border-t border-surface-hover">
-              <button
-                onClick={nextStep}
-                className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-primary to-primary-hover text-primary-foreground font-semibold text-sm rounded-xl hover:shadow-[0_0_30px_rgba(16,185,129,0.3)] transition-all flex items-center justify-center gap-2"
-              >
-                {step === totalSteps ? "Proceed to Payment" : "Continue"} <ChevronRight size={16} />
-              </button>
-            </div>
           </div>
 
           {/* Sidebar - Booking Summary */}
-          <div className="lg:w-[400px]">
+          <div className="lg:w-90">
             <div className="sticky top-[160px] bg-surface border border-border rounded-2xl overflow-hidden shadow-organic">
               {/* Property image */}
-              <div className="relative h-40 w-full bg-surface-hover">
+              <div className="relative h-36 w-full bg-surface-hover">
                 <img src={property.images[0]} alt={property.name} className="w-full h-full object-cover" />
-                <span className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-background/90 backdrop-blur-sm text-[10px] font-semibold uppercase tracking-wider text-primary">
+                <span className="absolute top-2.5 left-2.5 px-2 py-1 rounded-full bg-background/90 backdrop-blur-sm text-[9px] font-semibold uppercase tracking-wider text-primary">
                   {property.category}
                 </span>
               </div>
 
-              <div className="p-6">
-                <h3 className="font-semibold text-foreground text-base leading-snug mb-4">
+              <div className="p-5">
+                <h3 className="font-semibold text-foreground text-sm leading-snug mb-3.5">
                   {property.name}
                 </h3>
 
                 {/* Highlights */}
-                <div className="space-y-2.5 pb-5 mb-5 border-b border-border">
-                  <div className="flex items-center gap-2.5 text-sm text-muted">
-                    <Star size={15} className="text-primary fill-primary shrink-0" />
-                    <span>
-                      <span className="text-foreground font-medium">{property.rating}</span> · {property.reviewCount} reviews
-                    </span>
+                <div className="space-y-2 pb-4 mb-4 border-b border-border">
+                  <div className="flex items-center gap-2 text-xs text-muted">
+                    <span>{property.reviewCount} reviews</span>
                   </div>
-                  <div className="flex items-center gap-2.5 text-sm text-muted">
-                    <MapPin size={15} className="text-sage shrink-0" />
+                  <div className="flex items-center gap-2 text-xs text-muted">
+                    <MapPin size={13} className="text-sage shrink-0" />
                     <span>{property.location.city}, {property.location.state}</span>
                   </div>
-                  <div className="flex items-center gap-2.5 text-sm text-muted">
-                    <Wifi size={15} className="text-sage shrink-0" />
+                  <div className="flex items-center gap-2 text-xs text-muted">
+                    <Wifi size={13} className="text-sage shrink-0" />
                     <span>Free Wi-Fi</span>
                   </div>
-                  <div className="flex items-center gap-2.5 text-sm text-muted">
-                    <Coffee size={15} className="text-sage shrink-0" />
+                  <div className="flex items-center gap-2 text-xs text-muted">
+                    <Coffee size={13} className="text-sage shrink-0" />
                     <span>Breakfast included</span>
                   </div>
-                  <div className="flex items-center gap-2.5 text-sm text-muted">
-                    <ShieldCheck size={15} className="text-sage shrink-0" />
+                  <div className="flex items-center gap-2 text-xs text-muted">
+                    <ShieldCheck size={13} className="text-sage shrink-0" />
                     <span>Free cancellation</span>
                   </div>
                 </div>
 
                 {/* Price details */}
-                <div className="pb-5 mb-5 border-b border-border">
-                  <h3 className="text-xs font-semibold text-subtle uppercase tracking-wider mb-3">Price details</h3>
-                  <div className="space-y-2 text-sm">
+                <div className="pb-4 mb-4 border-b border-border">
+                  <h3 className="text-[11px] font-semibold text-subtle uppercase tracking-wider mb-2.5">Price details</h3>
+                  <div className="space-y-1.5 text-xs">
                     <div className="flex justify-between text-muted">
                       <span>₹{pricePerNight.toLocaleString()} x {nights} nights</span>
                       <span>₹{basePrice.toLocaleString()}</span>
@@ -920,26 +911,33 @@ function BookingPageContent() {
                       </div>
                     )}
                     <div className="flex justify-between text-muted">
-                      <span className="flex items-center gap-1">Platform fee <Info size={12} className="text-subtle" /></span>
+                      <span className="flex items-center gap-1">Platform fee <Info size={11} className="text-subtle" /></span>
                       <span>₹{platformFee.toLocaleString()}</span>
                     </div>
                     <div className="flex justify-between text-muted">
-                      <span className="flex items-center gap-1">Taxes <Info size={12} className="text-subtle" /></span>
+                      <span className="flex items-center gap-1">Taxes <Info size={11} className="text-subtle" /></span>
                       <span>₹{taxes.toLocaleString()}</span>
                     </div>
                   </div>
                 </div>
 
                 {/* Total — prominent */}
-                <div className="rounded-xl bg-primary/5 border border-primary/25 p-4">
+                <div className="rounded-xl bg-primary/5 border border-primary/25 p-3.5">
                   <div className="flex justify-between items-center gap-3">
-                    <span className="text-sm font-medium text-foreground">Total (INR)</span>
-                    <span className="text-2xl font-bold text-primary tabular-nums">₹{totalPrice.toLocaleString()}</span>
+                    <span className="text-xs font-medium text-foreground">Total (INR)</span>
+                    <span className="text-xl font-bold text-primary tabular-nums">₹{totalPrice.toLocaleString()}</span>
                   </div>
-                  <div className="text-xs text-muted mt-1.5">
+                  <div className="text-[11px] text-muted mt-1">
                     Includes all taxes and fees
                   </div>
                 </div>
+
+                <button
+                  onClick={nextStep}
+                  className="mt-4 w-full px-6 py-3.5 bg-gradient-to-r from-primary to-primary-hover text-primary-foreground font-semibold text-sm rounded-xl hover:shadow-[0_0_30px_rgba(16,185,129,0.3)] transition-all flex items-center justify-center gap-2"
+                >
+                  {step === totalSteps ? "Proceed to Payment" : "Continue"} <ChevronRight size={16} />
+                </button>
               </div>
             </div>
           </div>

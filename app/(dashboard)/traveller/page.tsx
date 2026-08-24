@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight, Calendar, Crown, MapPin, Sparkles, Sprout, Star, TrendingUp } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Calendar, Crown, MapPin, Sparkles, Sprout, TrendingUp } from "lucide-react";
 import { properties } from "@/lib/mock-data";
 import { getGreenImpactLevel } from "@/lib/seed-ball-mission";
 import { StatusPill } from "@/app/components/DashboardUI";
@@ -144,9 +144,6 @@ export default function TravellerDashboardOverview() {
                   <h3 className="text-sm font-semibold text-foreground mb-1 line-clamp-1 group-hover:text-primary transition-colors">
                     {item.name}
                   </h3>
-                  <div className="text-xs text-muted flex items-center gap-1 mb-2">
-                    <Star size={10} className="text-primary fill-primary" /> {item.rating}
-                  </div>
                   <div className="text-sm font-bold text-foreground">
                     ₹{item.price.toLocaleString()} <span className="text-[10px] font-normal text-subtle">/night</span>
                   </div>

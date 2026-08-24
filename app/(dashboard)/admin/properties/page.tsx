@@ -1,4 +1,4 @@
-import { Building, Star, CheckCircle2, XCircle, Eye } from "lucide-react";
+import { Building, CheckCircle2, XCircle, Eye } from "lucide-react";
 import { PageHeader, SectionCard, StatGrid, StatusPill } from "@/app/components/DashboardUI";
 import { properties } from "@/lib/mock-data";
 import Link from "next/link";
@@ -53,7 +53,6 @@ export default function AdminPropertiesPage() {
               <tr className="text-[11px] uppercase tracking-wider text-subtle border-b border-surface-hover">
                 <th className="px-5 py-3 font-semibold">Property</th>
                 <th className="px-3 py-3 font-semibold">Host</th>
-                <th className="px-3 py-3 font-semibold">Rating</th>
                 <th className="px-3 py-3 font-semibold">Price</th>
                 <th className="px-3 py-3 font-semibold">Status</th>
                 <th className="px-5 py-3 font-semibold text-right">Actions</th>
@@ -73,11 +72,6 @@ export default function AdminPropertiesPage() {
                     </div>
                   </td>
                   <td className="px-3 py-3.5 text-xs text-muted whitespace-nowrap">{p.host.name}</td>
-                  <td className="px-3 py-3.5">
-                    <span className="flex items-center gap-1 text-xs text-muted">
-                      <Star size={11} className="text-primary fill-primary" /> {p.rating}
-                    </span>
-                  </td>
                   <td className="px-3 py-3.5 text-sm text-foreground tabular-nums">₹{p.price.toLocaleString("en-IN")}</td>
                   <td className="px-3 py-3.5">
                     <StatusPill tone={tone}>{status}</StatusPill>

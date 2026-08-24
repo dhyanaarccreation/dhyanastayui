@@ -1,13 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useParams } from "next/navigation";
 import {
   ArrowLeft,
   Clock,
   MapPin,
-  Star,
   Users,
   CheckCircle2,
   ShieldCheck,
@@ -45,6 +44,18 @@ export default function ExperienceDetailsPage() {
   const [lightbox, setLightbox] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
 
+  // Caps the Reserve card to the video's own rendered height (it scrolls
+  // internally past that) instead of running taller than the video.
+  const videoWrapperRef = useRef<HTMLDivElement>(null);
+  const [videoHeight, setVideoHeight] = useState<number | null>(null);
+  useEffect(() => {
+    const el = videoWrapperRef.current;
+    if (!el) return;
+    const observer = new ResizeObserver(([entry]) => setVideoHeight(entry.contentRect.height));
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   const upNext = useMemo(() => {
     const others = experiences.filter((e) => e.id !== exp.id);
     return [...others].sort((a, b) => (a.category === exp.category ? -1 : 0) - (b.category === exp.category ? -1 : 0));
@@ -71,10 +82,27 @@ export default function ExperienceDetailsPage() {
           <ArrowLeft size={14} /> Back to Experiences
         </Link>
 
-        {/* ================= VIDEO + UP NEXT (YouTube-style) ================= */}
+        {/* Heading — above the video, matching the Stay detail page's
+            Header Info position ahead of its hero media. */}
+        <div className="mb-4">
+          <span className="px-3 py-1 bg-surface text-foreground text-[10px] uppercase tracking-wider rounded-full border border-border font-semibold mb-3 inline-block">
+            {exp.category}
+          </span>
+          <h1 className="heading-display text-3xl md:text-4xl text-foreground mb-3">{exp.name}</h1>
+          <div className="flex flex-wrap items-center gap-5 text-sm text-muted">
+            <div className="flex items-center gap-1 font-medium text-foreground">
+              {exp.reviewCount} reviews
+            </div>
+            <div className="flex items-center gap-1"><MapPin size={15} className="text-primary" /> {exp.location}</div>
+            <div className="flex items-center gap-1"><Clock size={15} /> {exp.duration}</div>
+            {exp.groupSize && <div className="flex items-center gap-1"><Users size={15} /> {exp.groupSize}</div>}
+          </div>
+        </div>
+
+        {/* ================= VIDEO + RESERVE ================= */}
         <div className="grid lg:grid-cols-3 gap-6 mb-4">
           <div className="lg:col-span-2">
-            <div className="relative aspect-video rounded-2xl overflow-hidden bg-black">
+            <div ref={videoWrapperRef} className="relative aspect-video rounded-2xl overflow-hidden bg-black">
               {exp.video ? (
                 <video
                   key={exp.id}
@@ -92,132 +120,10 @@ export default function ExperienceDetailsPage() {
                 <img src={exp.image} alt={exp.name} className="w-full h-full object-cover" />
               )}
             </div>
-            <div className="mt-4">
-              <span className="px-3 py-1 bg-surface text-foreground text-[10px] uppercase tracking-wider rounded-full border border-border font-semibold mb-3 inline-block">
-                {exp.category}
-              </span>
-              <h1 className="heading-display text-3xl md:text-4xl text-foreground mb-3">{exp.name}</h1>
-              <div className="flex flex-wrap items-center gap-5 text-sm text-muted">
-                <div className="flex items-center gap-1 font-medium text-foreground">
-                  <Star size={15} className="text-primary fill-primary" /> {exp.rating}{" "}
-                  <span className="text-subtle font-normal">({exp.reviewCount} reviews)</span>
-                </div>
-                <div className="flex items-center gap-1"><MapPin size={15} className="text-primary" /> {exp.location}</div>
-                <div className="flex items-center gap-1"><Clock size={15} /> {exp.duration}</div>
-                {exp.groupSize && <div className="flex items-center gap-1"><Users size={15} /> {exp.groupSize}</div>}
-              </div>
-              <p className="text-[11px] text-subtle mt-3">Sample preview clip — full recipe/host videos are filming soon.</p>
-            </div>
           </div>
 
-          {/* Up Next */}
-          <div className="lg:col-span-1">
-            <p className="text-xs font-semibold uppercase tracking-wider text-subtle mb-3">Up Next</p>
-            <div className="space-y-3 lg:max-h-[420px] lg:overflow-y-auto pr-1">
-              {upNext.map((e) => (
-                <Link
-                  key={e.id}
-                  href={`/stays/experiences/${e.id}`}
-                  className="group flex gap-3 rounded-xl hover:bg-surface-hover p-1.5 transition-colors"
-                >
-                  <div className="relative w-28 aspect-video rounded-lg overflow-hidden shrink-0 bg-surface">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={e.image} alt={e.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                    {e.video && (
-                      <span className="absolute inset-0 flex items-center justify-center bg-black/10 group-hover:bg-black/30 transition-colors">
-                        <PlayCircle size={22} className="text-white drop-shadow" />
-                      </span>
-                    )}
-                    <span className="absolute bottom-1 right-1 px-1.5 py-0.5 text-[9px] font-semibold bg-black/70 text-white rounded">{e.duration}</span>
-                  </div>
-                  <div className="min-w-0 py-0.5">
-                    <p className="text-sm font-medium text-foreground line-clamp-2 group-hover:text-primary transition-colors">{e.name}</p>
-                    <p className="text-[11px] text-subtle mt-1">{e.category} · {e.location}</p>
-                    <p className="text-[11px] text-muted mt-0.5 flex items-center gap-1">
-                      <Star size={9} className="text-primary fill-primary" /> {e.rating}
-                    </p>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* ================= DETAILS + BOOKING ================= */}
-        <div className="grid lg:grid-cols-3 gap-12 mt-10">
-          <div className="lg:col-span-2 space-y-10">
-            {exp.host && (
-              <div className="flex items-center gap-4 py-6 border-y border-border">
-                <div className="w-14 h-14 rounded-full bg-surface-hover overflow-hidden shrink-0">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={exp.host.avatar} alt={exp.host.name} className="w-full h-full object-cover" />
-                </div>
-                <div>
-                  <h3 className="text-foreground font-medium">Hosted by {exp.host.name}</h3>
-                  <p className="text-sm text-muted">{exp.host.role}</p>
-                </div>
-              </div>
-            )}
-
-            <div>
-              <h2 className="text-2xl font-semibold text-foreground mb-4">What you&apos;ll do</h2>
-              <p className="text-muted leading-relaxed">{exp.description}</p>
-            </div>
-
-            {exp.included && (
-              <div>
-                <h2 className="text-2xl font-semibold text-foreground mb-4">What&apos;s included</h2>
-                <div className="grid sm:grid-cols-2 gap-4">
-                  {exp.included.map((item) => (
-                    <div key={item} className="flex items-start gap-3">
-                      <CheckCircle2 size={20} className="text-primary shrink-0" />
-                      <span className="text-foreground text-sm">{item}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {exp.gallery && exp.gallery.length > 0 && (
-              <div>
-                <h2 className="text-2xl font-semibold text-foreground mb-4">Photos</h2>
-                <div className="grid grid-cols-3 gap-3">
-                  {[exp.image, ...exp.gallery].map((src, i) => (
-                    <button
-                      key={i}
-                      onClick={() => setLightbox(src)}
-                      className="relative aspect-square rounded-xl overflow-hidden group"
-                    >
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={src} alt={`${exp.name} photo ${i + 1}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            <div>
-              <h2 className="text-2xl font-semibold text-foreground mb-4">Guest Stories</h2>
-              <div className="grid sm:grid-cols-2 gap-5">
-                {experienceTestimonials.map((t) => (
-                  <div key={t.name} className="p-5 rounded-2xl bg-surface border border-border relative">
-                    <Quote size={20} className="text-primary/20 absolute top-4 right-4" />
-                    <div className="flex items-center gap-3 mb-3">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={t.avatar} alt={t.name} className="w-9 h-9 rounded-full object-cover border border-border" />
-                      <div>
-                        <p className="text-sm font-semibold text-foreground">{t.name}</p>
-                        <p className="text-xs text-subtle">{t.location}</p>
-                      </div>
-                    </div>
-                    <p className="text-sm text-muted leading-relaxed">&ldquo;{t.comment}&rdquo;</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Booking Sidebar */}
+          {/* Booking Sidebar — sits beside the video, same spot the Stay
+              detail page's Reserve card occupies next to its hero media. */}
           <div className="lg:col-span-1">
             <div className="bg-surface border border-border rounded-3xl p-6 md:p-8 sticky top-24 shadow-2xl">
               {!reserved ? (
@@ -306,6 +212,127 @@ export default function ExperienceDetailsPage() {
 
             <div className="mt-6 flex items-center justify-center gap-2 text-xs text-muted">
               <ShieldCheck size={16} className="text-sage" /> Dhyana Verified Experience
+            </div>
+          </div>
+        </div>
+
+        {/* Up Next — horizontal reel below the video, YouTube-card style
+            matching the Stay detail page's Stay Stories row. */}
+        <div className="mt-6 md:mt-8">
+          <p className="text-xs font-semibold uppercase tracking-wider text-primary mb-3">Up Next</p>
+          <div className="flex gap-4 md:gap-5 overflow-x-auto pb-2 scrollbar-hide">
+            {upNext.map((e) => (
+              <Link
+                key={e.id}
+                href={`/stays/experiences/${e.id}`}
+                className="group/card shrink-0 w-55 sm:w-65"
+              >
+                <div className="relative w-full aspect-video rounded-xl overflow-hidden bg-surface-hover">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={e.image}
+                    alt={e.name}
+                    loading="lazy"
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-out group-hover/card:scale-[1.04]"
+                  />
+                  <div className="absolute inset-0 bg-black/0 group-hover/card:bg-black/20 transition-colors duration-300" />
+                  {e.video && (
+                    <span className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/card:opacity-100 transition-opacity duration-200">
+                      <span className="w-11 h-11 rounded-full bg-black/70 flex items-center justify-center text-white">
+                        <PlayCircle size={20} />
+                      </span>
+                    </span>
+                  )}
+                  <span className="absolute bottom-2 right-2 px-1.5 py-0.5 text-[10px] font-semibold bg-black/70 text-white rounded">
+                    {e.duration}
+                  </span>
+                </div>
+                <div className="flex gap-2.5 mt-2.5">
+                  <div className="w-9 h-9 rounded-full overflow-hidden shrink-0 bg-surface-hover">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={e.image} alt="" className="w-full h-full object-cover" />
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-sm font-semibold text-foreground line-clamp-2 leading-snug">{e.name}</p>
+                    <p className="text-xs text-subtle mt-0.5 line-clamp-1">{e.category} · {e.location}</p>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+
+        {/* ================= DETAILS ================= */}
+        <div className="max-w-3xl mt-10">
+          <div className="space-y-10">
+            {exp.host && (
+              <div className="flex items-center gap-4 py-6 border-y border-border">
+                <div className="w-14 h-14 rounded-full bg-surface-hover overflow-hidden shrink-0">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={exp.host.avatar} alt={exp.host.name} className="w-full h-full object-cover" />
+                </div>
+                <div>
+                  <h3 className="text-foreground font-medium">Hosted by {exp.host.name}</h3>
+                  <p className="text-sm text-muted">{exp.host.role}</p>
+                </div>
+              </div>
+            )}
+
+            <div>
+              <h2 className="text-2xl font-semibold text-foreground mb-4">What you&apos;ll do</h2>
+              <p className="text-muted leading-relaxed">{exp.description}</p>
+            </div>
+
+            {exp.included && (
+              <div>
+                <h2 className="text-2xl font-semibold text-foreground mb-4">What&apos;s included</h2>
+                <div className="grid sm:grid-cols-2 gap-4">
+                  {exp.included.map((item) => (
+                    <div key={item} className="flex items-start gap-3">
+                      <CheckCircle2 size={20} className="text-primary shrink-0" />
+                      <span className="text-foreground text-sm">{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {exp.gallery && exp.gallery.length > 0 && (
+              <div>
+                <h2 className="text-2xl font-semibold text-foreground mb-4">Photos</h2>
+                <div className="grid grid-cols-3 gap-3">
+                  {[exp.image, ...exp.gallery].map((src, i) => (
+                    <button
+                      key={i}
+                      onClick={() => setLightbox(src)}
+                      className="relative aspect-square rounded-xl overflow-hidden group"
+                    >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={src} alt={`${exp.name} photo ${i + 1}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            <div>
+              <h2 className="text-2xl font-semibold text-foreground mb-4">Guest Stories</h2>
+              <div className="grid sm:grid-cols-2 gap-5">
+                {experienceTestimonials.map((t) => (
+                  <div key={t.name} className="p-5 rounded-2xl bg-surface border border-border relative">
+                    <Quote size={20} className="text-primary/20 absolute top-4 right-4" />
+                    <div className="flex items-center gap-3 mb-3">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={t.avatar} alt={t.name} className="w-9 h-9 rounded-full object-cover border border-border" />
+                      <div>
+                        <p className="text-sm font-semibold text-foreground">{t.name}</p>
+                        <p className="text-xs text-subtle">{t.location}</p>
+                      </div>
+                    </div>
+                    <p className="text-sm text-muted leading-relaxed">&ldquo;{t.comment}&rdquo;</p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>

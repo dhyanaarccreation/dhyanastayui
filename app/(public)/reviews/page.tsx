@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { ArrowLeft, ArrowRight, Quote, Star } from "lucide-react";
+import { ArrowLeft, ArrowRight, Quote } from "lucide-react";
 import { testimonials } from "@/lib/mock-data";
 import { TestimonialMeta } from "@/app/components/TestimonialsCarousel";
 
@@ -74,11 +74,6 @@ export default function ReviewsPage() {
                   <h4 className="text-sm font-semibold text-foreground">{t.name}</h4>
                   <p className="text-xs text-subtle">{t.location}</p>
                 </div>
-              </div>
-              <div className="flex gap-1 mb-3">
-                {Array.from({ length: t.rating }).map((_, i) => (
-                  <Star key={i} size={13} className="text-primary fill-primary" />
-                ))}
               </div>
               <p className="text-sm text-muted leading-relaxed mb-3">&ldquo;{t.comment}&rdquo;</p>
               <TestimonialMeta t={t} />

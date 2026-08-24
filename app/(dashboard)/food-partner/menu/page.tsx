@@ -70,9 +70,6 @@ export default function FoodPartnerMenuPage() {
           </p>
           <div className="flex items-center gap-5 mt-4 text-xs text-muted">
             <span className="flex items-center gap-1">
-              <Star size={12} className="text-primary fill-primary" /> 4.7 (480)
-            </span>
-            <span className="flex items-center gap-1">
               <Clock size={12} /> 7 AM – 9:30 PM
             </span>
             <button className="text-primary hover:underline flex items-center gap-1">

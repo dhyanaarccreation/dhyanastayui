@@ -64,8 +64,8 @@ export default function HospitalityConsultancyPage() {
                 <div className="text-sm text-muted">Increase in RevPAR</div>
               </div>
               <div className="border-l-2 border-sage pl-4">
-                <div className="text-3xl font-bold text-foreground mb-1">4.92</div>
-                <div className="text-sm text-muted">Average Guest Rating (up from 4.2)</div>
+                <div className="text-3xl font-bold text-foreground mb-1">+68%</div>
+                <div className="text-sm text-muted">Increase in repeat bookings</div>
               </div>
             </div>
             

@@ -5,7 +5,6 @@ import { useParams } from "next/navigation";
 import { useState } from "react";
 import {
   ArrowLeft,
-  Star,
   ShieldCheck,
   MapPin,
   Quote,
@@ -100,7 +99,6 @@ export default function EventPlannerDetailsPage() {
                 {planner.name} <ShieldCheck size={22} className="text-sage" />
               </h1>
               <div className="flex items-center gap-4 text-sm text-white/80 mt-2">
-                <span className="flex items-center gap-1"><Star size={14} className="text-primary fill-primary" /> {planner.rating}</span>
                 <span>{planner.eventsDone}+ events curated</span>
               </div>
             </div>

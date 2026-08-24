@@ -183,7 +183,7 @@ export default function SuperAdminBookingsPage() {
               <li key={p.id} className="flex items-center justify-between gap-3 px-5 py-3.5">
                 <div className="min-w-0">
                   <p className="text-sm font-medium text-foreground truncate">{p.name}</p>
-                  <p className="text-xs text-subtle mt-0.5">{p.experiences} experiences · {p.rating}★</p>
+                  <p className="text-xs text-subtle mt-0.5">{p.experiences} experiences</p>
                 </div>
                 <StatusPill tone={p.status === "Active" ? "sage" : "primary"}>{p.status}</StatusPill>
               </li>

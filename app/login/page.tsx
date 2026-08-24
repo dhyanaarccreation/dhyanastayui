@@ -208,9 +208,9 @@ export default function LoginPage() {
               </div>
             </div>
             <div>
-              <div className="text-2xl font-bold text-gradient-gold">4.82</div>
+              <div className="text-2xl font-bold text-gradient-gold">8,400+</div>
               <div className="text-[10px] text-subtle uppercase tracking-wider mt-1">
-                Avg Rating
+                Guest Reviews
               </div>
             </div>
             <div>

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import {
   Plus,
-  Star,
+  MessageSquare,
   MapPin,
   Eye,
   Pencil,
@@ -174,7 +174,7 @@ export default function HostPropertiesPage() {
           { label: "Total Properties", value: "3", icon: Home },
           { label: "Live Listings", value: "2", delta: "1 paused" },
           { label: "Avg Occupancy", value: "78%", delta: "+5% MoM" },
-          { label: "Avg Rating", value: "4.85", delta: "264 reviews", icon: Star },
+          { label: "Total Reviews", value: "264", delta: "across all listings", icon: MessageSquare },
         ]}
       />
 
@@ -206,10 +206,7 @@ export default function HostPropertiesPage() {
                     <span>
                       Occupancy <span className="text-foreground font-semibold">{occupancy}</span>
                     </span>
-                    <span className="flex items-center gap-1">
-                      <Star size={11} className="text-primary fill-primary" />
-                      {p.rating} ({p.reviewCount})
-                    </span>
+                    <span>{p.reviewCount} reviews</span>
                   </div>
                 </div>
                 <div className="flex md:flex-col gap-2 shrink-0">

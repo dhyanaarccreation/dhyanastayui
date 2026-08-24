@@ -86,7 +86,7 @@ export default function ExperienceListingsPage() {
                 <div className="flex items-center justify-between mt-3 text-xs">
                   <span className="text-foreground font-semibold">₹{e.price}<span className="text-subtle font-normal">/person</span></span>
                   <span className="flex items-center gap-1 text-muted">
-                    <Star size={11} className="text-primary fill-primary" /> {e.rating} ({e.reviewCount})
+                    {e.reviewCount} reviews
                   </span>
                 </div>
                 <p className="text-[11px] text-subtle mt-2">

@@ -4,7 +4,6 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import {
   Quote,
-  Star,
   ThumbsUp,
   ChevronLeft,
   ChevronRight,
@@ -342,19 +341,6 @@ function TestimonialCard({
           <h4 className="text-sm font-semibold text-foreground">{t.name}</h4>
           <p className="text-xs text-subtle">{t.location}</p>
         </div>
-      </div>
-
-      <div className="flex gap-1 mb-4">
-        {Array.from({ length: t.rating }).map((_, i) => (
-          <Star
-            key={i}
-            size={14}
-            className={`text-primary fill-primary transition-all duration-300 ease-out ${
-              entered ? "opacity-100 scale-100" : "opacity-0 scale-50"
-            }`}
-            style={{ transitionDelay: entered ? `${delay + 250 + i * 60}ms` : "0ms" }}
-          />
-        ))}
       </div>
 
       <p className={`text-sm text-muted leading-relaxed mb-2 ${expanded ? "" : "line-clamp-3"}`}>

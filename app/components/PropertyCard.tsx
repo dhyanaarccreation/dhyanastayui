@@ -1,4 +1,4 @@
-import { Star, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import type { properties } from "@/lib/mock-data";
 import ImageCard from "./cards/ImageCard";
 
@@ -15,8 +15,7 @@ export default function PropertyCard({ property }: { property: Property }) {
       subtitle={`${property.location.city}, ${property.location.state}`}
       meta={
         <span className="inline-flex items-center gap-1">
-          <Star size={12} className="fill-primary text-primary" />
-          {property.rating} ({property.reviewCount})
+          {property.reviewCount} reviews
           <span className="mx-1 text-white/40">·</span>
           <span className="font-semibold text-white">
             ₹{property.price.toLocaleString()}
