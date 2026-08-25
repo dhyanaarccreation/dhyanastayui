@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import {
@@ -243,6 +243,27 @@ function BookingPageContent() {
   // reveals the rest so the step doesn't open on a long scroll.
   const [showAllExperiences, setShowAllExperiences] = useState(false);
 
+  // Experiences added on the stay page (any "Curated Experiences Near You"
+  // tag, whether or not it matches one of the six `curationExperiences`
+  // above) arrive as `?addOns=Name|Price,Name|Price` — a name/price pair per
+  // tag, since most of those tags don't have a real id from `experiences`
+  // for this fixed list to recognize. Parsed once on mount; independent of
+  // the `selectedExperiences` picked in Step 2 below, so nothing is double
+  // counted between the two.
+  const stayPageAddOns = useMemo(() => {
+    const raw = searchParams.get("addOns");
+    if (!raw) return [] as { name: string; price: number }[];
+    return raw
+      .split(",")
+      .map((pair) => {
+        const [name, price] = decodeURIComponent(pair).split("|");
+        return { name, price: Number(price) };
+      })
+      .filter((item) => item.name && Number.isFinite(item.price));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  const stayPageAddOnsTotal = stayPageAddOns.reduce((sum, item) => sum + item.price, 0);
+
   // Guests section — compact selector, closed by default, opened by clicking
   // the card. Mirrors the Dates popover's open/close + outside-click pattern.
   const [guestsOpen, setGuestsOpen] = useState(false);
@@ -325,7 +346,7 @@ function BookingPageContent() {
   const experiencesTotal = curationExperiences
     .filter((exp) => selectedExperiences.includes(exp.id))
     .reduce((sum, exp) => sum + exp.price, 0);
-  const totalPrice = basePrice + platformFee + taxes + experiencesTotal;
+  const totalPrice = basePrice + platformFee + taxes + experiencesTotal + stayPageAddOnsTotal;
 
   const totalSteps = 4;
   const nextStep = () => {
@@ -681,8 +702,17 @@ function BookingPageContent() {
                   </button>
                 )}
 
+                {stayPageAddOns.length > 0 && (
+                  <div className="mt-6 px-4 py-3 rounded-xl bg-sage/10 border border-sage/30 text-sm animate-fade-in">
+                    <p className="text-foreground font-medium mb-1">
+                      Already added from the stay page: {stayPageAddOns.map((a) => a.name).join(", ")}
+                    </p>
+                    <p className="text-sage font-semibold">+₹{stayPageAddOnsTotal.toLocaleString("en-IN")}</p>
+                  </div>
+                )}
+
                 {selectedExperiences.length > 0 && (
-                  <div className="mt-6 flex items-center justify-between px-4 py-3 rounded-xl bg-sage/10 border border-sage/30 text-sm animate-fade-in">
+                  <div className="mt-3 flex items-center justify-between px-4 py-3 rounded-xl bg-sage/10 border border-sage/30 text-sm animate-fade-in">
                     <span className="text-foreground font-medium">
                       {selectedExperiences.length} experience{selectedExperiences.length > 1 ? "s" : ""} added
                     </span>
@@ -808,7 +838,7 @@ function BookingPageContent() {
 
                   <div className="bg-surface border border-border rounded-2xl p-6">
                     <h2 className="text-lg font-semibold text-foreground mb-4">Curated Experiences</h2>
-                    {selectedExperiences.length === 0 ? (
+                    {selectedExperiences.length === 0 && stayPageAddOns.length === 0 ? (
                       <p className="text-sm text-muted">No experiences added yet.</p>
                     ) : (
                       <div className="space-y-3">
@@ -820,6 +850,12 @@ function BookingPageContent() {
                               <span className="text-muted">₹{exp.price.toLocaleString("en-IN")}</span>
                             </div>
                           ))}
+                        {stayPageAddOns.map((addOn) => (
+                          <div key={addOn.name} className="flex items-center justify-between text-sm">
+                            <span className="text-foreground">{addOn.name}</span>
+                            <span className="text-muted">₹{addOn.price.toLocaleString("en-IN")}</span>
+                          </div>
+                        ))}
                       </div>
                     )}
                   </div>
@@ -831,10 +867,10 @@ function BookingPageContent() {
                         <span>₹{pricePerNight.toLocaleString()} x {nights} nights</span>
                         <span>₹{basePrice.toLocaleString()}</span>
                       </div>
-                      {selectedExperiences.length > 0 && (
+                      {(selectedExperiences.length > 0 || stayPageAddOns.length > 0) && (
                         <div className="flex justify-between text-muted">
                           <span>Curated experiences</span>
-                          <span>₹{experiencesTotal.toLocaleString()}</span>
+                          <span>₹{(experiencesTotal + stayPageAddOnsTotal).toLocaleString()}</span>
                         </div>
                       )}
                       <div className="flex justify-between text-muted">
@@ -904,10 +940,10 @@ function BookingPageContent() {
                       <span>₹{pricePerNight.toLocaleString()} x {nights} nights</span>
                       <span>₹{basePrice.toLocaleString()}</span>
                     </div>
-                    {selectedExperiences.length > 0 && (
+                    {(selectedExperiences.length > 0 || stayPageAddOns.length > 0) && (
                       <div className="flex justify-between text-muted animate-fade-in">
-                        <span>Curated experiences ({selectedExperiences.length})</span>
-                        <span>₹{experiencesTotal.toLocaleString()}</span>
+                        <span>Curated experiences ({selectedExperiences.length + stayPageAddOns.length})</span>
+                        <span>₹{(experiencesTotal + stayPageAddOnsTotal).toLocaleString()}</span>
                       </div>
                     )}
                     <div className="flex justify-between text-muted">

@@ -5,11 +5,11 @@ import { vaksanaFarms } from "@/lib/vaksana-farms";
 // Large partner-property spotlight card shown in place of individual listings
 // under the Farm Stays category on /stays — links to the dedicated
 // /vaksana-farms page rather than a single stay's detail page.
-export default function VaksanaFarmsCard() {
+export default function VaksanaFarmsCard({ className = "col-span-full" }: { className?: string }) {
   return (
     <Link
       href="/vaksana-farms"
-      className="group col-span-full flex flex-col md:flex-row rounded-card-lg border-[5px] border-surface overflow-hidden bg-surface shadow-[var(--shadow-card)] transition-all duration-300 hover:shadow-[var(--shadow-card-hover)] hover:-translate-y-1"
+      className={`group flex flex-col md:flex-row rounded-card-lg border-[5px] border-surface overflow-hidden bg-surface shadow-[var(--shadow-card)] transition-all duration-300 hover:shadow-[var(--shadow-card-hover)] hover:-translate-y-1 ${className}`}
     >
       {/* Hero image */}
       <div className="relative h-56 md:h-auto md:w-[42%] shrink-0 overflow-hidden bg-surface-hover">

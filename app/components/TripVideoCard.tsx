@@ -2,14 +2,18 @@
 
 import { useState } from "react";
 import { Play, Camera, PlayCircle, ExternalLink } from "lucide-react";
+import { getYouTubeEmbedUrl } from "@/lib/youtube";
 
 // ============================================
 // TripVideoCard — the "watch the trip" unit used
 // on a Travel Guide Experience Page. Plays inline
-// (no forced navigation away from Dhyana) and links
-// out to the curator's real channel/profile instead
-// of embedding a fabricated video URL — see the
-// "video platform UI" note in AGENTS.md.
+// (no forced navigation away from Dhyana). When a
+// real `videoUrl` is supplied it embeds that video
+// directly (fullscreen stays in-page via the
+// player's own Fullscreen-API control); otherwise it
+// falls back to a demo overlay linking out to the
+// curator's real channel/profile instead of
+// embedding a fabricated video URL.
 // ============================================
 
 export type VideoPlatform = "youtube" | "instagram";
@@ -20,6 +24,9 @@ interface TripVideoCardProps {
   platform: VideoPlatform;
   curatorName: string;
   profileUrl?: string;
+  /** Real source video URL (e.g. a YouTube watch/share link). When present
+   *  and playable, this embeds and plays inline instead of the demo overlay. */
+  videoUrl?: string;
   className?: string;
 }
 
@@ -34,10 +41,12 @@ export default function TripVideoCard({
   platform,
   curatorName,
   profileUrl,
+  videoUrl,
   className = "",
 }: TripVideoCardProps) {
   const [playing, setPlaying] = useState(false);
   const PlatformIcon = platformMeta[platform].icon;
+  const embedUrl = platform === "youtube" && videoUrl ? getYouTubeEmbedUrl(videoUrl, { autoplay: true }) : null;
 
   return (
     <div className={className}>
@@ -56,7 +65,15 @@ export default function TripVideoCard({
           <PlatformIcon size={11} /> {platformMeta[platform].name}
         </span>
 
-        {playing ? (
+        {playing && embedUrl ? (
+          <iframe
+            src={embedUrl}
+            title={label}
+            className="absolute inset-0 w-full h-full"
+            allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+            allowFullScreen
+          />
+        ) : playing ? (
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-2.5 px-6 text-center">
             <span className="w-14 h-14 rounded-full bg-white/10 border border-white/30 flex items-center justify-center animate-pulse">
               <Play size={20} className="text-white fill-white ml-0.5" />

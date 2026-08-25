@@ -70,7 +70,7 @@ export default function DestinationsSection() {
                 {featured.map((dest, i) => (
                   <ImageCard
                     key={dest.name}
-                    href="/#explore-stays"
+                    href={`/destinations/${dest.slug}`}
                     image={dest.image}
                     alt={dest.name}
                     title={`${dest.name},`}

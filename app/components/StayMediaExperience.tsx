@@ -12,6 +12,7 @@ import {
   type StayRoom,
 } from "@/lib/content-generator";
 import StayRoomSelector from "@/app/components/StayRoomSelector";
+import { getYouTubeEmbedUrl } from "@/lib/youtube";
 
 interface StayMediaExperienceProps {
   property: Property;
@@ -75,7 +76,9 @@ export default function StayMediaExperience({
   const selectedRoom = rooms.find((r) => r.id === selectedRoomId) ?? rooms[0];
 
   const activeTab = tabs.find((t) => t.key === activeTabKey) ?? tabs[0];
-  const hasVideo = Boolean(nowPlaying.videoSrc) && !videoFailed;
+  const youtubeEmbedUrl = nowPlaying.youtubeUrl ? getYouTubeEmbedUrl(nowPlaying.youtubeUrl, { autoplay: true }) : null;
+  const hasYouTube = Boolean(youtubeEmbedUrl);
+  const hasVideo = !hasYouTube && Boolean(nowPlaying.videoSrc) && !videoFailed;
 
   // Some browsers never fire a <video> "error" event for a bad source, so
   // also fall back to the poster image if playback never actually starts.
@@ -143,7 +146,7 @@ export default function StayMediaExperience({
       document.getElementById("reviews")?.scrollIntoView({ behavior: "smooth", block: "start" });
       return;
     }
-    if (item.videoSrc) {
+    if (item.videoSrc || item.youtubeUrl) {
       setVideoFailed(false);
       setNowPlaying(item);
     }
@@ -155,7 +158,16 @@ export default function StayMediaExperience({
       <div className="grid grid-cols-1 md:grid-cols-[3fr_2fr] lg:grid-cols-[2fr_1fr] gap-3 md:gap-4">
         {/* Main video */}
         <div className="relative aspect-video rounded-2xl sm:rounded-[28px] overflow-hidden bg-surface-hover group">
-          {hasVideo ? (
+          {hasYouTube ? (
+            <iframe
+              key={nowPlaying.id}
+              src={youtubeEmbedUrl ?? undefined}
+              title={nowPlaying.title}
+              className="absolute inset-0 w-full h-full"
+              allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+              allowFullScreen
+            />
+          ) : hasVideo ? (
             <video
               ref={videoRef}
               key={nowPlaying.id}
@@ -327,7 +339,7 @@ export default function StayMediaExperience({
                   <span className="absolute bottom-2.5 right-2.5 w-8 h-8 rounded-full bg-white/90 flex items-center justify-center text-foreground opacity-0 group-hover/card:opacity-100 transition-opacity duration-200">
                     <ArrowRight size={14} />
                   </span>
-                ) : item.videoSrc ? (
+                ) : item.videoSrc || item.youtubeUrl ? (
                   <span className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/card:opacity-100 transition-opacity duration-200">
                     <span className="w-11 h-11 rounded-full bg-black/70 flex items-center justify-center text-white">
                       <Play size={16} className="ml-0.5 fill-white" />

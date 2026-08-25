@@ -17,6 +17,7 @@ import {
   Copy,
 } from "lucide-react";
 import { experiences } from "@/lib/mock-data";
+import WishlistButton from "@/app/components/WishlistButton";
 
 const experienceTestimonials = [
   {
@@ -75,12 +76,15 @@ export default function ExperienceDetailsPage() {
   return (
     <div className="bg-background pb-24 pt-[88px]">
       <div className="max-w-[1200px] mx-auto px-6 lg:px-8">
-        <Link
-          href="/experiences"
-          className="inline-flex items-center gap-2 px-4 py-2 mb-6 bg-surface hover:bg-surface-hover rounded-full text-xs font-medium text-foreground transition-colors border border-border"
-        >
-          <ArrowLeft size={14} /> Back to Experiences
-        </Link>
+        <div className="flex items-center justify-between mb-6">
+          <Link
+            href="/experiences"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-surface hover:bg-surface-hover rounded-full text-xs font-medium text-foreground transition-colors border border-border"
+          >
+            <ArrowLeft size={14} /> Back to Experiences
+          </Link>
+          <WishlistButton id={`experience-${exp.id}`} label={exp.name} />
+        </div>
 
         {/* Heading — above the video, matching the Stay detail page's
             Header Info position ahead of its hero media. */}

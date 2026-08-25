@@ -55,27 +55,37 @@ export default function BlogDetailPage() {
           {post.excerpt}
         </p>
 
-        <h2 className="heading-display text-2xl md:text-3xl text-foreground mt-12 mb-4">
-          The Evolution of Hospitality
-        </h2>
-        <p className="text-muted leading-relaxed mb-6">
-          The traditional hotel model was built on predictability. The room in Tokyo looked exactly like the room in New York. But modern travellers are rejecting this homogeneity. They want connection, authenticity, and design that responds to its environment.
-        </p>
-        <p className="text-muted leading-relaxed mb-6">
-          This shift has given rise to the curated stay — properties where the architecture itself is the destination.
-        </p>
+        {post.body ? (
+          post.body.map((paragraph, i) => (
+            <p key={i} className="text-muted leading-relaxed mb-6">
+              {paragraph}
+            </p>
+          ))
+        ) : (
+          <>
+            <h2 className="heading-display text-2xl md:text-3xl text-foreground mt-12 mb-4">
+              The Evolution of Hospitality
+            </h2>
+            <p className="text-muted leading-relaxed mb-6">
+              The traditional hotel model was built on predictability. The room in Tokyo looked exactly like the room in New York. But modern travellers are rejecting this homogeneity. They want connection, authenticity, and design that responds to its environment.
+            </p>
+            <p className="text-muted leading-relaxed mb-6">
+              This shift has given rise to the curated stay — properties where the architecture itself is the destination.
+            </p>
 
-        <blockquote className="border-l-2 border-primary pl-6 py-2 my-10 text-lg text-foreground italic">
-          &ldquo;We don&apos;t remember the rooms that looked like everywhere
-          else. We remember the places that made us feel something.&rdquo;
-        </blockquote>
+            <blockquote className="border-l-2 border-primary pl-6 py-2 my-10 text-lg text-foreground italic">
+              &ldquo;We don&apos;t remember the rooms that looked like everywhere
+              else. We remember the places that made us feel something.&rdquo;
+            </blockquote>
 
-        <h2 className="heading-display text-2xl md:text-3xl text-foreground mt-12 mb-4">
-          Sustainability as a Baseline
-        </h2>
-        <p className="text-muted leading-relaxed mb-6">
-          Beautiful design is no longer enough. The properties of the future must be functionally integrated with their ecosystem. This means utilizing local materials, implementing passive cooling techniques, and operating with a zero-waste philosophy.
-        </p>
+            <h2 className="heading-display text-2xl md:text-3xl text-foreground mt-12 mb-4">
+              Sustainability as a Baseline
+            </h2>
+            <p className="text-muted leading-relaxed mb-6">
+              Beautiful design is no longer enough. The properties of the future must be functionally integrated with their ecosystem. This means utilizing local materials, implementing passive cooling techniques, and operating with a zero-waste philosophy.
+            </p>
+          </>
+        )}
 
         <div className="my-12 p-8 bg-surface border border-border rounded-2xl">
           <h3 className="text-foreground mt-0 mb-4 font-semibold">Read Next</h3>

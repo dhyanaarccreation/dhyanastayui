@@ -353,39 +353,21 @@ export default function StaysExplorer() {
           </div>
         )}
 
+        {/* Single row, horizontally scrollable — every result is reachable
+            by scrolling right instead of wrapping to further rows/pages. */}
         <PropertyGrid
           properties={filtered}
-          leading={showVaksanaCard ? <VaksanaFarmsCard /> : undefined}
+          leading={
+            showVaksanaCard ? (
+              <VaksanaFarmsCard className="shrink-0 w-[85vw] sm:w-[520px] lg:w-[620px] snap-start" />
+            ) : undefined
+          }
           emptyMessage={
             selectedDestination
               ? `No curated stays found in ${selectedDestination} yet.`
               : "No curated stays match your search yet."
           }
         />
-
-        {/* Pagination Placeholder */}
-        {filtered.length > 0 && (
-          <div className="mt-12 flex justify-center">
-            <div className="flex items-center gap-2">
-              <button className="w-10 h-10 flex items-center justify-center rounded-full bg-surface text-muted shadow-organic hover:text-foreground transition-colors disabled:opacity-50">
-                {"<"}
-              </button>
-              <button className="w-10 h-10 flex items-center justify-center rounded-full bg-primary text-primary-foreground font-semibold shadow-organic">
-                1
-              </button>
-              <button className="w-10 h-10 flex items-center justify-center rounded-full bg-surface text-muted shadow-organic hover:text-foreground transition-colors">
-                2
-              </button>
-              <button className="w-10 h-10 flex items-center justify-center rounded-full bg-surface text-muted shadow-organic hover:text-foreground transition-colors">
-                3
-              </button>
-              <span className="text-subtle">...</span>
-              <button className="w-10 h-10 flex items-center justify-center rounded-full bg-surface text-muted shadow-organic hover:text-foreground transition-colors">
-                {">"}
-              </button>
-            </div>
-          </div>
-        )}
       </div>
 
       {/* ================= FILTERS DRAWER ================= */}

@@ -1,7 +1,12 @@
-import { Heart, MapPin, Sparkles, Plane } from "lucide-react";
+"use client";
+
+import { ArrowRight, Heart, MapPin, Sparkles, Plane } from "lucide-react";
 import { PageHeader, SectionCard } from "@/app/components/DashboardUI";
 import PropertyCard from "@/app/components/PropertyCard";
-import { properties } from "@/lib/mock-data";
+import ImageCard from "@/app/components/cards/ImageCard";
+import WishlistButton from "@/app/components/WishlistButton";
+import { properties, experiences } from "@/lib/mock-data";
+import { useWishlist } from "@/lib/useWishlist";
 
 const bucketList = [
   { place: "Spiti Valley", note: "Cold desert homestay, next summer", img: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&q=70" },
@@ -18,7 +23,12 @@ const dreams = [
 ];
 
 export default function TravellerWishlistPage() {
-  const saved = properties.slice(0, 3);
+  const { ids, hydrated } = useWishlist();
+
+  // Ids are namespaced by WishlistButton as `stay-<id>` / `experience-<id>` /
+  // `destination-<slug>` — split back out to look each one up for real.
+  const savedStays = properties.filter((p) => ids.includes(`stay-${p.id}`));
+  const savedExperiences = experiences.filter((e) => ids.includes(`experience-${e.id}`));
 
   return (
     <div className="space-y-4 pb-12">
@@ -27,20 +37,56 @@ export default function TravellerWishlistPage() {
         subtitle="Stays you've saved, places you dream about, and plans for the future."
       />
 
-      {/* Saved stays */}
+      {/* Saved stays — the heart button on any stay/destination page, or the
+          heart overlay on a stay card, all write here via useWishlist. */}
       <div>
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-sm font-semibold text-foreground flex items-center gap-2">
             <Heart size={15} className="text-terracotta" /> Favourite Properties
-            <span className="text-xs text-subtle font-normal">({saved.length})</span>
+            {hydrated && <span className="text-xs text-subtle font-normal">({savedStays.length})</span>}
           </h2>
         </div>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 stagger-children">
-          {saved.map((p) => (
-            <PropertyCard key={p.id} property={p} />
-          ))}
-        </div>
+        {!hydrated ? null : savedStays.length > 0 ? (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 stagger-children">
+            {savedStays.map((p) => (
+              <PropertyCard key={p.id} property={p} />
+            ))}
+          </div>
+        ) : (
+          <div className="bg-surface border border-border rounded-2xl p-8 text-center">
+            <Heart size={22} className="text-subtle mx-auto mb-2" />
+            <p className="text-sm text-subtle">
+              No stays saved yet — tap the heart on any stay to add it here.
+            </p>
+          </div>
+        )}
       </div>
+
+      {/* Saved experiences */}
+      {hydrated && savedExperiences.length > 0 && (
+        <div>
+          <h2 className="text-sm font-semibold text-foreground flex items-center gap-2 mb-4">
+            <Sparkles size={15} className="text-primary" /> Favourite Experiences
+            <span className="text-xs text-subtle font-normal">({savedExperiences.length})</span>
+          </h2>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 stagger-children">
+            {savedExperiences.map((exp) => (
+              <ImageCard
+                key={exp.id}
+                href={`/experiences/${exp.id}`}
+                image={exp.image}
+                alt={exp.name}
+                badge={exp.category}
+                title={exp.name.split(" ").slice(0, 3).join(" ")}
+                actionLabel={`₹${exp.price.toLocaleString("en-IN")}`}
+                actionIcon={ArrowRight}
+                titleLayout="row"
+                topRight={<WishlistButton id={`experience-${exp.id}`} label={exp.name} variant="icon" />}
+              />
+            ))}
+          </div>
+        </div>
+      )}
 
       <div className="grid lg:grid-cols-2 gap-6">
         <SectionCard title="Bucket List Destinations" icon={MapPin} action={{ label: "Add place", href: "/#explore-stays" }}>

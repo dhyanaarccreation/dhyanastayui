@@ -6,7 +6,17 @@ import ImageCard from "./cards/ImageCard";
 
 type Property = (typeof properties)[number];
 
-export default function ExploreStayCard({ property }: { property: Property }) {
+export default function ExploreStayCard({
+  property,
+  className = "w-full aspect-[4/3]",
+}: {
+  property: Property;
+  /** Overrides sizing entirely (e.g. a fixed carousel-slide width) — passed
+   *  through as `size="fill"` so it never fights ImageCard's own default
+   *  `w-full` (Tailwind can't reliably resolve two conflicting width
+   *  utilities by class-string order alone). */
+  className?: string;
+}) {
   const curator = property.curatedBy ? getCuratorByHandle(property.curatedBy) : undefined;
 
   return (
@@ -18,6 +28,8 @@ export default function ExploreStayCard({ property }: { property: Property }) {
       actionLabel={`₹${property.price.toLocaleString()}`}
       actionIcon={ArrowRight}
       titleLayout="row"
+      size="fill"
+      className={className}
       topRight={
         curator && (
           <div

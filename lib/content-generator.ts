@@ -16,13 +16,23 @@
 // stay exactly the same.
 // ============================================
 
-import type { Property } from "./mock-data";
+import { experiences, type Property } from "./mock-data";
 
 export interface CuratedExperienceTag {
+  /** Stable id (slugified name) — always present, used as the "add to
+   *  reservation" cart key regardless of whether a real listing backs it. */
+  id: string;
   name: string;
   icon: string; // lucide-react icon name, resolved by the UI layer
   description: string;
   image: string;
+  price: number;
+  duration: string;
+  included: string[];
+  /** Set only when this tag's name exactly matches a real bookable listing
+   *  in `experiences` — lets the UI show that listing's real video/host/
+   *  description instead of the merely-generated ones. */
+  experienceId?: string;
 }
 
 export interface LocationGuide {
@@ -228,13 +238,81 @@ const EXPERIENCE_IMAGE_POOL = {
   bbq: "https://images.unsplash.com/photo-1661773031258-9bd959928118?q=80&w=1200&auto=format&fit=crop",
 } as const;
 
+// A handful of tag names exactly match a real bookable listing (e.g. "Pottery
+// Workshop" → experiences[e4]) — those borrow its real price/duration so the
+// two never disagree. Every other tag still needs a price to be addable to a
+// reservation, so one is derived deterministically from its name (stable
+// across renders) rather than hand-typed for every one of ~50 generated tags.
+const PRICE_TIERS: { price: number; duration: string }[] = [
+  { price: 350, duration: "1 hr" },
+  { price: 550, duration: "1.5 hrs" },
+  { price: 800, duration: "2 hrs" },
+  { price: 1200, duration: "3 hrs" },
+  { price: 1800, duration: "Half day" },
+];
+
+function derivedPricing(name: string): { price: number; duration: string } {
+  let hash = 0;
+  for (let i = 0; i < name.length; i++) hash = (hash * 31 + name.charCodeAt(i)) >>> 0;
+  return PRICE_TIERS[hash % PRICE_TIERS.length];
+}
+
+// One concrete "what's included" line per icon, so a generated tag without a
+// real matching listing still reads as a real, bookable experience instead
+// of a bare description — same reasoning as `derivedPricing` above.
+const INCLUDED_BY_ICON: Record<string, string> = {
+  Palette: "Materials & glazing included",
+  Bike: "Bike & helmet provided",
+  Sunrise: "Mat & props provided",
+  Music2: "Instruments/singing bowls provided",
+  Coffee: "Tastings included",
+  Sprout: "Tools & gloves provided",
+  Bird: "Binoculars provided",
+  Flame: "Ingredients & firewood included",
+  Sparkles: "All treatment products included",
+  Wind: "Cushions & blankets provided",
+  TreePine: "Trail snacks included",
+  UtensilsCrossed: "Full course menu included",
+  ChefHat: "Ingredients & recipe card included",
+  GlassWater: "Tasting flight included",
+  Hammer: "Tools & materials provided",
+  CookingPot: "Ingredients included",
+  Moon: "Telescope provided",
+  Mountain: "Trekking gear provided",
+  Landmark: "Guided commentary included",
+  Utensils: "Tastings included",
+  BookOpen: "Light refreshments included",
+  Waves: "Board & gear provided",
+  Fish: "Tastings included",
+  Croissant: "Tastings included",
+  Camera: "Camera tips & guidance included",
+  Footprints: "Local host guide included",
+  Sun: "Warm drinks included",
+  ShoppingBag: "Local recommendations included",
+};
+
+function derivedIncluded(icon: string): string[] {
+  return [INCLUDED_BY_ICON[icon] ?? "Guided by your host", "Beginner-friendly, no experience needed"];
+}
+
 function exp(
   name: string,
   icon: string,
   description: string,
   image: keyof typeof EXPERIENCE_IMAGE_POOL
 ): CuratedExperienceTag {
-  return { name, icon, description, image: EXPERIENCE_IMAGE_POOL[image] };
+  const realMatch = experiences.find((e) => e.name === name);
+  const pricing = realMatch ? { price: realMatch.price, duration: realMatch.duration } : derivedPricing(name);
+  return {
+    id: slugify(name),
+    name,
+    icon,
+    description,
+    image: EXPERIENCE_IMAGE_POOL[image],
+    experienceId: realMatch?.id,
+    included: realMatch?.included ?? derivedIncluded(icon),
+    ...pricing,
+  };
 }
 
 const CATEGORY_EXPERIENCES: Record<string, CuratedExperienceTag[]> = {
@@ -322,8 +400,32 @@ export function getCuratedExperiences(category: string): CuratedExperienceTag[] 
 // ------------------------------------------------
 
 const CITY_BLOG_GUIDES: Record<string, string[]> = {
-  Auroville: ["Hidden Cafes", "Matrimandir Guide", "Cycling Routes"],
-  Pondicherry: ["French Quarter", "Paradise Beach", "Weekend Guide"],
+  Auroville: [
+    "Hidden Cafes",
+    "Matrimandir Guide",
+    "Cycling Routes",
+    "SVARAM Sound Garden",
+    "Sound Therapy & Healing",
+    "Auroville Bamboo Centre",
+    "Auroville Earth Institute",
+    "Auroville Visitors Centre",
+    "Tree Top Kafe",
+    "Sadhana Forest",
+    "Solitude Farm & Cafe",
+    "Savitri Bhavan",
+  ],
+  Pondicherry: [
+    "French Quarter",
+    "Paradise Beach",
+    "Weekend Guide",
+    "Sri Aurobindo Ashram",
+    "Arulmigu Manakula Vinayagar Temple",
+    "Basilica of the Sacred Heart of Jesus",
+    "Pondicherry Museum",
+    "Promenade Beach",
+    "Eden Beach",
+    "Auroville Day Trip",
+  ],
   Coorg: ["Coffee Estate Guide", "Waterfalls", "Local Cuisine"],
   Kodaikanal: ["Lake Walks & Boating", "Best Viewpoints", "Homestay Food Trail"],
   Palakkad: ["Ayurveda 101", "Nila River Guide", "Temple Trail"],
@@ -385,8 +487,11 @@ export interface StayReelItem {
   title: string;
   caption?: string;
   thumbnail: string;
-  /** Present only when a real, playable video asset backs this card. */
+  /** Present only when a real, playable local video asset backs this card. */
   videoSrc?: string;
+  /** Present only when a real YouTube video (watch/share link) backs this
+   *  card — takes priority over `videoSrc` and embeds inline via `lib/youtube`. */
+  youtubeUrl?: string;
 }
 
 export interface StayReelTab {

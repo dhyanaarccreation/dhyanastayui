@@ -1,16 +1,18 @@
 import { ArrowRight } from "lucide-react";
 import type { properties } from "@/lib/mock-data";
 import ImageCard from "./cards/ImageCard";
+import WishlistButton from "./WishlistButton";
 
 type Property = (typeof properties)[number];
 
-export default function PropertyCard({ property }: { property: Property }) {
+export default function PropertyCard({ property, className }: { property: Property; className?: string }) {
   return (
     <ImageCard
       href={`/stays/${property.slug}`}
       image={property.images[0]}
       alt={property.name}
       badge={property.isTrending ? "Trending" : property.category}
+      topRight={<WishlistButton id={`stay-${property.id}`} label={property.name} variant="icon" />}
       title={property.name}
       subtitle={`${property.location.city}, ${property.location.state}`}
       meta={
@@ -25,6 +27,7 @@ export default function PropertyCard({ property }: { property: Property }) {
       }
       actionLabel="View Stay"
       actionIcon={ArrowRight}
+      className={className}
     />
   );
 }

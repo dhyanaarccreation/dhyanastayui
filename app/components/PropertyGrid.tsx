@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { Sparkles } from "lucide-react";
 import type { properties } from "@/lib/mock-data";
 import ExploreStayCard from "./ExploreStayCard";
+import HorizontalScrollRow from "./HorizontalScrollRow";
 
 type Property = (typeof properties)[number];
 
@@ -26,11 +27,15 @@ export default function PropertyGrid({
   }
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+    <HorizontalScrollRow label="stays">
       {leading}
       {properties.map((property) => (
-        <ExploreStayCard key={property.id} property={property} />
+        <ExploreStayCard
+          key={property.id}
+          property={property}
+          className="shrink-0 w-[62vw] sm:w-64 lg:w-72 aspect-[4/3] snap-start"
+        />
       ))}
-    </div>
+    </HorizontalScrollRow>
   );
 }

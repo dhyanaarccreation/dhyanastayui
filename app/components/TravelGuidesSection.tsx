@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { MapPin, Search, User } from "lucide-react";
 import { travelCurators, DEMO_DATA_NOTICE } from "@/lib/travel-guides-data";
 import CuratorAvatar from "./CuratorAvatar";
+import HorizontalScrollRow from "./HorizontalScrollRow";
 import ImageCard from "./cards/ImageCard";
 
 // ============================================
@@ -73,9 +74,11 @@ export default function TravelGuidesSection() {
           </div>
         </div>
 
-        {/* Curator cards — sized to match the Explore Stays cards (aspect-ratio image + compact info row) */}
+        {/* Curator cards — sized to match the Explore Stays cards (aspect-ratio image + compact info row).
+            Single row, horizontally scrollable at every screen size — matches
+            the Explore All Stays row instead of wrapping to further rows. */}
         {visible.length > 0 ? (
-          <div className="flex overflow-x-auto overscroll-x-contain snap-x snap-mandatory scroll-smooth scrollbar-hide gap-4 -mx-6 px-6 pb-1 sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:px-0 sm:pb-0 sm:overflow-visible sm:snap-none sm:max-w-[70%] sm:mx-auto stagger-children">
+          <HorizontalScrollRow label="travel guides">
             {visible.map((c) => (
               <ImageCard
                 key={c.handle}
@@ -99,10 +102,10 @@ export default function TravelGuidesSection() {
                   </span>
                 }
                 metaClassName="text-[8px] sm:text-[10px]"
-                className="shrink-0 w-[203px] snap-start sm:w-auto"
+                className="shrink-0 w-[45vw] sm:w-56 lg:w-64 snap-start"
               />
             ))}
-          </div>
+          </HorizontalScrollRow>
         ) : (
           <div className="text-center py-14">
             <Search size={24} className="text-subtle mx-auto mb-3" />

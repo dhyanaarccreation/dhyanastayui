@@ -9,7 +9,6 @@ import {
   MapPin,
   Star,
   Share,
-  Heart,
   ChevronRight,
   Wifi,
   Coffee,
@@ -20,11 +19,16 @@ import {
   BookOpen,
   ArrowRight,
   Sparkles,
+  Clock,
+  Plus,
+  Check,
+  Users,
   X,
 } from "lucide-react";
-import { properties, reviews } from "@/lib/mock-data";
-import { enrichProperty } from "@/lib/content-generator";
+import { properties, reviews, experiences } from "@/lib/mock-data";
+import { enrichProperty, type CuratedExperienceTag } from "@/lib/content-generator";
 import StayMediaExperience from "@/app/components/StayMediaExperience";
+import WishlistButton from "@/app/components/WishlistButton";
 
 // Resolves a curated-experience icon name (stored as a plain string in the
 // generator, same convention as `categories[].icon` in mock-data.ts) to its
@@ -32,6 +36,22 @@ import StayMediaExperience from "@/app/components/StayMediaExperience";
 function resolveIcon(name: string): LucideIcons.LucideIcon {
   const icons = LucideIcons as unknown as Record<string, LucideIcons.LucideIcon>;
   return icons[name] ?? LucideIcons.Sparkles;
+}
+
+// Pushes a history entry while a modal is open so the device/browser Back
+// button closes just the modal instead of leaving this stay page entirely.
+// Every close action (X, backdrop, ESC) must go through `window.history.back()`
+// rather than setting state directly, so the pushed entry is always consumed
+// and a later Back press never gets "swallowed" by a leftover entry.
+function useModalBackDismiss(isOpen: boolean, onDismiss: () => void) {
+  useEffect(() => {
+    if (!isOpen) return;
+    window.history.pushState({ dhyanaModal: true }, "");
+    const handlePopState = () => onDismiss();
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen]);
 }
 
 export default function PropertyDetailsPage() {
@@ -47,6 +67,29 @@ export default function PropertyDetailsPage() {
   const [storyOpen, setStoryOpen] = useState(false);
   const [galleryOpen, setGalleryOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [selectedExperience, setSelectedExperience] = useState<CuratedExperienceTag | null>(null);
+  // Every curated tag (`CuratedExperienceTag.id`) can be added here, whether
+  // or not it happens to match a real listing in `experiences` — see the
+  // `addOns` query param below for how this reaches the booking page.
+  const [addedExperienceIds, setAddedExperienceIds] = useState<string[]>([]);
+
+  // The full real listing behind a matched tag — carries the richer detail
+  // (real description, host, included-items, its own real video) that the
+  // generated tag alone doesn't have. Undefined for a tag with no real match.
+  const matchedExperience = selectedExperience?.experienceId
+    ? experiences.find((e) => e.id === selectedExperience.experienceId)
+    : undefined;
+
+  useModalBackDismiss(experiencesOpen, () => setExperiencesOpen(false));
+  useModalBackDismiss(storyOpen, () => setStoryOpen(false));
+  useModalBackDismiss(Boolean(selectedExperience), () => setSelectedExperience(null));
+  useModalBackDismiss(galleryOpen, () => {
+    setGalleryOpen(false);
+    setSelectedImage(null);
+  });
+
+  const toggleAddedExperience = (id: string) =>
+    setAddedExperienceIds((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]));
 
   // Gallery modal — ESC to close, lock body scroll while open.
   useEffect(() => {
@@ -57,7 +100,7 @@ export default function PropertyDetailsPage() {
       if (e.key === "Escape") {
         setSelectedImage((current) => {
           if (current) return null; // first ESC closes the enlarged image only
-          setGalleryOpen(false);
+          window.history.back(); // second ESC closes the gallery via the pushed entry
           return current;
         });
       }
@@ -93,9 +136,7 @@ export default function PropertyDetailsPage() {
             <button className="flex items-center gap-2 px-4 py-2 rounded-full border border-border text-sm font-medium text-foreground hover:bg-surface-hover transition-colors">
               <Share size={14} /> Share
             </button>
-            <button className="flex items-center gap-2 px-4 py-2 rounded-full border border-border text-sm font-medium text-foreground hover:bg-surface-hover hover:text-red-400 transition-colors">
-              <Heart size={14} /> Save
-            </button>
+            <WishlistButton id={`stay-${property.id}`} label={property.name} />
           </div>
         </div>
       </div>
@@ -133,7 +174,13 @@ export default function PropertyDetailsPage() {
         property={property}
         enriched={enriched}
         propertyReviews={propertyReviews}
-        reserveCard={(selectedRoom) => (
+        reserveCard={(selectedRoom) => {
+          const addedTags = enriched.curatedExperiences.filter((e) => addedExperienceIds.includes(e.id));
+          const addOnsTotal = addedTags.reduce((sum, e) => sum + e.price, 0);
+          const addOnsParam = addedTags.length
+            ? `&addOns=${encodeURIComponent(addedTags.map((e) => `${e.name}|${e.price}`).join(","))}`
+            : "";
+          return (
           <div className="bg-surface border border-border rounded-2xl p-3.5 sm:p-4 shadow-xl w-full">
             <div className="flex items-end justify-between mb-1.5">
               <div>
@@ -165,9 +212,18 @@ export default function PropertyDetailsPage() {
               </div>
             </div>
 
+            {addedTags.length > 0 && (
+              <div className="flex items-center justify-between border-t border-border pt-2.5 pb-1 text-xs text-foreground">
+                <span>
+                  {addedTags.length} experience{addedTags.length > 1 ? "s" : ""} added
+                </span>
+                <span className="font-medium">+₹{addOnsTotal.toLocaleString()}</span>
+              </div>
+            )}
+
             <Link
-              href={`/book/${property.id}?guests=${guests}`}
-              className="group/reserve w-full py-3 px-5 bg-primary text-primary-foreground font-semibold text-[15px] tracking-wide rounded-2xl shadow-md hover:shadow-lg hover:bg-primary-hover hover:-translate-y-0.5 active:translate-y-0 active:shadow-md transition-all duration-200 flex items-center justify-center gap-2"
+              href={`/book/${property.id}?guests=${guests}${addOnsParam}`}
+              className="group/reserve w-full py-3 px-5 bg-primary text-primary-foreground font-semibold text-[15px] tracking-wide rounded-2xl shadow-md hover:shadow-lg hover:bg-primary-hover hover:-translate-y-0.5 active:translate-y-0 active:shadow-md transition-all duration-200 flex items-center justify-center gap-2 mt-2"
             >
               Reserve
               <ArrowRight
@@ -179,7 +235,8 @@ export default function PropertyDetailsPage() {
               Free to explore · Secure booking
             </p>
           </div>
-        )}
+          );
+        }}
         onOpenStory={() => setStoryOpen(true)}
         onOpenGallery={() => setGalleryOpen(true)}
         onOpenExperiences={() => setExperiencesOpen(true)}
@@ -189,7 +246,7 @@ export default function PropertyDetailsPage() {
       {experiencesOpen && (
         <div
           className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-10 bg-white/40 backdrop-blur-md animate-fade-in"
-          onClick={() => setExperiencesOpen(false)}
+          onClick={() => window.history.back()}
         >
           <div
             className="relative w-full max-w-4xl max-h-[85vh] overflow-y-auto bg-background rounded-3xl shadow-2xl p-5 md:p-8 animate-fade-in"
@@ -206,7 +263,7 @@ export default function PropertyDetailsPage() {
               </div>
               <button
                 type="button"
-                onClick={() => setExperiencesOpen(false)}
+                onClick={() => window.history.back()}
                 aria-label="Close curated experiences"
                 className="w-10 h-10 rounded-full bg-surface-hover hover:bg-surface border border-border flex items-center justify-center text-foreground transition-colors shrink-0"
               >
@@ -248,11 +305,129 @@ export default function PropertyDetailsPage() {
         </div>
       )}
 
+      {/* Selected Experience Detail — opened by a single "Curated Experiences
+          Near You" tag, scoped to that one experience only. Reads like its
+          own page: media (real video when the tag matches a real listing,
+          else the stay's own hero footage — never a fabricated video URL),
+          a one-line tagline, and a fuller detail section below. */}
+      {selectedExperience && (
+        <div
+          className="fixed inset-0 z-[100] flex items-start justify-center overflow-y-auto p-0 md:p-10 bg-white/40 backdrop-blur-md animate-fade-in"
+          onClick={() => window.history.back()}
+        >
+          <div
+            className="relative w-full min-h-screen md:min-h-0 md:max-w-2xl md:max-h-[90vh] overflow-y-auto bg-background md:rounded-3xl shadow-2xl animate-fade-in"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="relative h-72 md:h-96 overflow-hidden md:rounded-t-3xl bg-foreground">
+              <video
+                key={selectedExperience.name}
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                poster={selectedExperience.image}
+                className="absolute inset-0 w-full h-full object-cover"
+              >
+                <source src={matchedExperience?.video ?? enriched.heroVideo} type="video/mp4" />
+              </video>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-black/10" />
+              <button
+                type="button"
+                onClick={() => window.history.back()}
+                aria-label="Close experience details"
+                className="absolute top-4 right-4 w-10 h-10 rounded-full bg-black/30 hover:bg-black/50 backdrop-blur-md flex items-center justify-center text-white transition-colors"
+              >
+                <X size={18} />
+              </button>
+              <div className="absolute inset-x-0 bottom-0 p-5 md:p-6">
+                <h3 className="heading-display text-2xl md:text-3xl text-white mb-1.5">
+                  {selectedExperience.name}
+                </h3>
+                <p className="text-sm text-white/80 max-w-md">{selectedExperience.description}</p>
+              </div>
+            </div>
+
+            <div className="p-5 md:p-8">
+              <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-muted mb-6 pb-6 border-b border-border">
+                <span className="flex items-center gap-1.5">
+                  <Clock size={14} /> {selectedExperience.duration}
+                </span>
+                <span className="font-semibold text-foreground">
+                  ₹{selectedExperience.price.toLocaleString()} / person
+                </span>
+                {matchedExperience?.groupSize && (
+                  <span className="flex items-center gap-1.5">
+                    <Users size={14} /> {matchedExperience.groupSize}
+                  </span>
+                )}
+              </div>
+
+              {/* Hosted by the real listing's own host when this tag matched
+                  one; otherwise this stay's own real host arranges it —
+                  never a fabricated per-tag person. */}
+              <div className="flex items-center gap-3 mb-6 pb-6 border-b border-border">
+                <img
+                  src={matchedExperience?.host?.avatar ?? property.host.avatar}
+                  alt={matchedExperience?.host?.name ?? property.host.name}
+                  className="w-11 h-11 rounded-full object-cover border border-border"
+                />
+                <div>
+                  <p className="text-sm font-semibold text-foreground">
+                    {matchedExperience?.host?.name ?? property.host.name}
+                  </p>
+                  <p className="text-xs text-muted">{matchedExperience?.host?.role ?? "Your host"}</p>
+                </div>
+              </div>
+
+              <h4 className="text-xs font-semibold uppercase tracking-wider text-primary mb-3">
+                About this experience
+              </h4>
+              <p className="text-muted leading-relaxed mb-6">
+                {matchedExperience?.description ?? selectedExperience.description}
+              </p>
+
+              <h4 className="text-xs font-semibold uppercase tracking-wider text-primary mb-3">
+                What&rsquo;s included
+              </h4>
+              <ul className="space-y-2 mb-6">
+                {selectedExperience.included.map((item) => (
+                  <li key={item} className="flex items-center gap-2 text-sm text-muted">
+                    <CheckCircle2 size={14} className="text-sage shrink-0" /> {item}
+                  </li>
+                ))}
+              </ul>
+
+              <button
+                type="button"
+                onClick={() => toggleAddedExperience(selectedExperience.id)}
+                className={`w-full py-3 px-5 font-semibold text-[15px] tracking-wide rounded-2xl transition-all duration-200 flex items-center justify-center gap-2 ${
+                  addedExperienceIds.includes(selectedExperience.id)
+                    ? "bg-sage/15 text-sage border border-sage/40"
+                    : "bg-primary text-primary-foreground shadow-md hover:shadow-lg hover:bg-primary-hover"
+                }`}
+              >
+                {addedExperienceIds.includes(selectedExperience.id) ? (
+                  <>
+                    <Check size={16} /> Added to your reservation
+                  </>
+                ) : (
+                  <>
+                    <Plus size={16} /> Add to Reservation · ₹{selectedExperience.price.toLocaleString()}
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Story Modal */}
       {storyOpen && (
         <div
           className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-10 bg-white/40 backdrop-blur-md animate-fade-in"
-          onClick={() => setStoryOpen(false)}
+          onClick={() => window.history.back()}
         >
           <div
             className="relative w-full max-w-3xl max-h-[88vh] overflow-y-auto bg-background rounded-3xl shadow-2xl animate-fade-in"
@@ -267,7 +442,7 @@ export default function PropertyDetailsPage() {
               <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-transparent" />
               <button
                 type="button"
-                onClick={() => setStoryOpen(false)}
+                onClick={() => window.history.back()}
                 aria-label="Close story"
                 className="absolute top-4 right-4 w-10 h-10 rounded-full bg-black/30 hover:bg-black/50 backdrop-blur-md flex items-center justify-center text-white transition-colors"
               >
@@ -332,10 +507,7 @@ export default function PropertyDetailsPage() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
             className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-10 bg-white/40 backdrop-blur-md"
-            onClick={() => {
-              setGalleryOpen(false);
-              setSelectedImage(null);
-            }}
+            onClick={() => window.history.back()}
           >
             <motion.div
               initial={{ opacity: 0, scale: 0.94 }}
@@ -354,10 +526,7 @@ export default function PropertyDetailsPage() {
                 </div>
                 <button
                   type="button"
-                  onClick={() => {
-                    setGalleryOpen(false);
-                    setSelectedImage(null);
-                  }}
+                  onClick={() => window.history.back()}
                   aria-label="Close gallery"
                   className="w-11 h-11 rounded-full bg-surface-hover hover:bg-surface border border-border flex items-center justify-center text-foreground transition-colors shrink-0"
                 >
@@ -424,8 +593,9 @@ export default function PropertyDetailsPage() {
           {/* Main Content (Left) */}
           <div className="lg:w-2/3">
             {/* Curated Experiences — auto-assigned by stay category. Clicking
-                one opens the same Curated Experiences modal used by the Stay
-                Stories reel, showing what the experience actually involves. */}
+                one opens its own detail panel (not the "see all" grid used by
+                the Stay Stories reel's Experiences tab), showing what that
+                specific experience involves and letting it be added here. */}
             <div className="py-8 border-b border-surface-hover">
               <h2 className="heading-display text-2xl text-foreground mb-6">
                 Curated Experiences Near You
@@ -437,7 +607,7 @@ export default function PropertyDetailsPage() {
                     <button
                       key={exp.name}
                       type="button"
-                      onClick={() => setExperiencesOpen(true)}
+                      onClick={() => setSelectedExperience(exp)}
                       className="flex items-center gap-3 bg-surface border border-border rounded-2xl p-4 text-left hover:border-primary/40 hover:-translate-y-0.5 transition-all"
                     >
                       <div className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0">
@@ -512,40 +682,9 @@ export default function PropertyDetailsPage() {
               </button>
             </div>
 
-            {/* Reviews (Preview) */}
-            <div className="py-8 border-b border-surface-hover" id="reviews">
-              <div className="flex items-center gap-2 mb-6">
-                <h2 className="heading-display text-2xl text-foreground">
-                  {property.reviewCount} reviews
-                </h2>
-              </div>
-              
-              <div className="grid sm:grid-cols-2 gap-6">
-                {propertyReviews.slice(0, 4).map((review) => (
-                  <div key={review.id} className="bg-surface p-5 rounded-2xl border border-border">
-                    <div className="flex items-center gap-3 mb-4">
-                      <img
-                        src={review.avatar}
-                        alt={review.userName}
-                        className="w-10 h-10 rounded-full object-cover border border-border"
-                      />
-                      <div>
-                        <h4 className="font-medium text-foreground text-sm">{review.userName}</h4>
-                        <p className="text-xs text-subtle">{review.date}</p>
-                      </div>
-                    </div>
-                    <p className="text-sm text-muted leading-relaxed line-clamp-3">
-                      {review.comment}
-                    </p>
-                  </div>
-                ))}
-              </div>
-              <button className="mt-6 px-6 py-3 border border-border rounded-xl text-sm font-medium text-foreground hover:bg-surface-hover transition-colors">
-                Show all {property.reviewCount} reviews
-              </button>
-            </div>
-
-            {/* Blog Recommendations — auto-assigned by stay location */}
+            {/* Blog Recommendations — auto-assigned by stay location.
+                Sequenced ahead of Reviews below (Explore first, then
+                Reviews), each full-width rather than side by side. */}
             <div className="py-8 border-b border-surface-hover">
               <h2 className="heading-display text-2xl text-foreground mb-2">
                 Explore {property.location.city}
@@ -573,6 +712,37 @@ export default function PropertyDetailsPage() {
                   </Link>
                 ))}
               </div>
+            </div>
+
+            {/* Reviews (Preview) */}
+            <div className="py-8 border-b border-surface-hover" id="reviews">
+              <h2 className="heading-display text-2xl text-foreground mb-6">
+                {property.reviewCount} reviews
+              </h2>
+
+              <div className="grid sm:grid-cols-2 gap-6">
+                {propertyReviews.slice(0, 4).map((review) => (
+                  <div key={review.id} className="bg-surface p-5 rounded-2xl border border-border">
+                    <div className="flex items-center gap-3 mb-4">
+                      <img
+                        src={review.avatar}
+                        alt={review.userName}
+                        className="w-10 h-10 rounded-full object-cover border border-border"
+                      />
+                      <div>
+                        <h4 className="font-medium text-foreground text-sm">{review.userName}</h4>
+                        <p className="text-xs text-subtle">{review.date}</p>
+                      </div>
+                    </div>
+                    <p className="text-sm text-muted leading-relaxed line-clamp-3">
+                      {review.comment}
+                    </p>
+                  </div>
+                ))}
+              </div>
+              <button className="mt-6 px-6 py-3 border border-border rounded-xl text-sm font-medium text-foreground hover:bg-surface-hover transition-colors">
+                Show all {property.reviewCount} reviews
+              </button>
             </div>
 
           </div>
