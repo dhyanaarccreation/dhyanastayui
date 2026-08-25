@@ -316,8 +316,8 @@ body {
    A visible SECOND physical edge behind the main surface —
    not just a shadow. Reserved for the hero-area "featured"
    surfaces (spotlight card, main search bar, explore-stays
-   search/location controls, AI Planner button); property
-   cards and everything else keep their existing treatment.
+   search/location controls); property cards and everything
+   else keep their existing treatment.
 
    Border-radius is deliberately NOT set here — apply the
    component's own rounded-* utility alongside this class,
@@ -358,18 +358,6 @@ body {
   filter: blur(9px);
   border-radius: 50%;
   z-index: -2;
-}
-
-/* Small-pill variant (AI Planner) — tighter offsets, same mechanics */
-.soft-3d-double-sm::after {
-  left: 5px;
-  right: 5px;
-  bottom: -4px;
-}
-
-.soft-3d-double-sm::before {
-  bottom: -8px;
-  height: 6px;
 }
 
 @media (prefers-reduced-motion: reduce) {

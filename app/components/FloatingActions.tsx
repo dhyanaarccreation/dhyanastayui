@@ -118,7 +118,7 @@ export default function FloatingActions() {
         <button
           onClick={() => setAiOpen(true)}
           aria-label="Open AI Trip Planner"
-          className="soft-3d-double soft-3d-double-sm flex items-center gap-2 pl-3 pr-4 py-2.5 rounded-full hover:-translate-y-px transition-transform"
+          className="flex items-center gap-2 pl-3 pr-4 py-2.5 rounded-full bg-white border border-[var(--surface-border)] shadow-[var(--shadow-soft)] hover:shadow-[var(--shadow-hover)] hover:-translate-y-px active:scale-95 transition-all duration-200"
         >
           <span className="flex items-center justify-center w-9 h-9 rounded-full bg-background shrink-0">
             <LogoMark size={22} />

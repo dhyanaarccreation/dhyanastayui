@@ -117,9 +117,10 @@ export default function DashboardLayout({
         <nav className="p-4 flex-1 space-y-1">
           {navItems.map((item) => {
             const base = item.href.split("#")[0];
+            const isRoot = base === `/${role.slug}`;
             const isActive =
               !item.href.includes("#") &&
-              (pathname === base || pathname.startsWith(base + "/"));
+              (pathname === base || (!isRoot && pathname.startsWith(base + "/")));
             return (
               <Link
                 key={item.href}
@@ -165,7 +166,7 @@ export default function DashboardLayout({
           <div className="flex items-center gap-4">
             <Link
               href="/"
-              className="text-sm font-medium text-primary hover:underline"
+              className="text-sm font-medium text-green-600 border border-green-600 rounded-full px-4 py-1.5 hover:bg-green-600 hover:text-white transition-colors"
             >
               Back to main site
             </Link>

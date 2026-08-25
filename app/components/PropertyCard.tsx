@@ -1,3 +1,5 @@
+"use client";
+
 import { ArrowRight } from "lucide-react";
 import type { properties } from "@/lib/mock-data";
 import ImageCard from "./cards/ImageCard";

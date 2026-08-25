@@ -1,18 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight, Calendar, Crown, MapPin, Sparkles, Sprout, TrendingUp } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Calendar, MapPin, Sparkles, Sprout, TrendingUp } from "lucide-react";
 import { properties } from "@/lib/mock-data";
 import { getGreenImpactLevel } from "@/lib/seed-ball-mission";
-import { StatusPill } from "@/app/components/DashboardUI";
 
 // Mock traveller balances for this overview page (distinct currencies).
 const travellerSeedBalls = 680; // seed balls contributed — separate from reward points below
-const travellerMembership = {
-  name: "Leaf",
-  emoji: "🍃",
-  perk: "Unlimited AI trip planning + double reward points (2x)",
-};
 
 export default function TravellerDashboardOverview() {
   const upcomingTrip = properties[0];
@@ -199,23 +193,6 @@ export default function TravellerDashboardOverview() {
                 </p>
               </>
             )}
-          </div>
-
-          {/* Membership Snapshot */}
-          <div className="bg-surface border border-border rounded-2xl p-6 mt-6">
-            <div className="flex items-center justify-between mb-3">
-              <h3 className="text-sm font-semibold text-foreground flex items-center gap-2">
-                <Crown size={15} className="text-primary" /> Membership
-              </h3>
-              <Link href="/traveller/membership" className="text-xs text-primary hover:underline flex items-center gap-1">
-                Manage <ArrowUpRight size={12} />
-              </Link>
-            </div>
-            <div className="flex items-center gap-2 mb-2">
-              <span className="text-xl leading-none">{travellerMembership.emoji}</span>
-              <StatusPill tone="primary">{travellerMembership.name} Member</StatusPill>
-            </div>
-            <p className="text-xs text-muted leading-relaxed">{travellerMembership.perk}</p>
           </div>
         </div>
       </div>

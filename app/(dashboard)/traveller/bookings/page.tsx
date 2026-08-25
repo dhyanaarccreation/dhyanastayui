@@ -2,8 +2,19 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Search, MapPin, Download, Filter } from "lucide-react";
+import { Search, MapPin, Download, Filter, Phone } from "lucide-react";
 import { properties } from "@/lib/mock-data";
+import { tripBookings, mockTicket, type TicketDetails, type BookingStatus } from "@/lib/trip-dashboard-data";
+import TicketModal from "@/app/components/trip/TicketModal";
+import { StatusPill } from "@/app/components/DashboardUI";
+
+const tripBookingStatusTone: Record<BookingStatus, "sage" | "primary" | "terracotta" | "muted"> = {
+  Confirmed: "sage",
+  "In Progress": "primary",
+  Pending: "muted",
+  Completed: "muted",
+  Cancelled: "terracotta",
+};
 
 // ============================================
 // Local mock booking data — cycles through a
@@ -91,6 +102,21 @@ export default function BookingsPage() {
   const [activeTab, setActiveTab] = useState("upcoming");
   const [search, setSearch] = useState("");
   const [sortAsc, setSortAsc] = useState(true);
+  const [ticketOpen, setTicketOpen] = useState(false);
+  const [activeTicket, setActiveTicket] = useState<TicketDetails>(mockTicket);
+
+  function openBookingTicket(booking: (typeof tripBookings)[number]) {
+    setActiveTicket({
+      bookingId: booking.id,
+      title: booking.title,
+      date: booking.date,
+      time: booking.time,
+      location: booking.location,
+      travellerName: mockTicket.travellerName,
+      instructions: mockTicket.instructions,
+    });
+    setTicketOpen(true);
+  }
 
   const query = search.trim().toLowerCase();
 
@@ -147,7 +173,7 @@ export default function BookingsPage() {
       </div>
 
       <div className="flex gap-6 border-b border-border mb-4">
-        {["upcoming", "past", "cancelled"].map((tab) => (
+        {["upcoming", "past", "cancelled", "trip"].map((tab) => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
@@ -155,7 +181,7 @@ export default function BookingsPage() {
               activeTab === tab ? "text-foreground" : "text-subtle hover:text-muted"
             }`}
           >
-            {tab}
+            {tab === "trip" ? "This Trip" : tab}
             {activeTab === tab && (
               <div className="absolute bottom-0 left-0 w-full h-0.5 bg-primary" />
             )}
@@ -348,7 +374,60 @@ export default function BookingsPage() {
             </div>
           )
         )}
+
+        {activeTab === "trip" && (
+          <div className="grid md:grid-cols-2 gap-4">
+            {tripBookings.map((booking) => (
+              <div key={booking.id} className="bg-surface border border-border rounded-2xl p-5">
+                <div className="flex items-start justify-between gap-2 mb-2">
+                  <div>
+                    <p className="text-[10px] uppercase tracking-wider text-subtle">{booking.category}</p>
+                    <h3 className="text-sm font-semibold text-foreground">{booking.title}</h3>
+                  </div>
+                  <StatusPill tone={tripBookingStatusTone[booking.status]}>{booking.status}</StatusPill>
+                </div>
+                <p className="text-xs text-muted flex items-center gap-1 mb-1">
+                  {booking.date}, {booking.time}
+                </p>
+                <p className="text-xs text-muted flex items-center gap-1 mb-4">
+                  <MapPin size={12} /> {booking.location}
+                </p>
+                <p className="text-[11px] text-subtle mb-3">ID: {booking.id}</p>
+                <div className="flex flex-wrap gap-2">
+                  {booking.hasTicket && (
+                    <button
+                      onClick={() => openBookingTicket(booking)}
+                      className="px-3 py-1.5 bg-primary text-primary-foreground text-xs font-medium rounded-lg hover:bg-primary-hover transition-colors"
+                    >
+                      Ticket
+                    </button>
+                  )}
+                  {booking.contactPhone && (
+                    <a
+                      href={`tel:${booking.contactPhone}`}
+                      className="px-3 py-1.5 bg-surface-hover border border-border text-foreground text-xs font-medium rounded-lg hover:bg-surface transition-colors flex items-center gap-1"
+                    >
+                      <Phone size={11} /> Contact
+                    </a>
+                  )}
+                  {booking.directionsHref && (
+                    <a
+                      href={booking.directionsHref}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-3 py-1.5 border border-primary text-primary text-xs font-medium rounded-lg hover:bg-primary/10 transition-colors"
+                    >
+                      Directions
+                    </a>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
+
+      <TicketModal ticket={activeTicket} open={ticketOpen} onClose={() => setTicketOpen(false)} />
     </div>
   );
 }
