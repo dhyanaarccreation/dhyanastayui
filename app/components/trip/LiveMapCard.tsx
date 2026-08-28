@@ -18,9 +18,9 @@ export default function LiveMapCard({ location }: { location: LiveLocation }) {
   }
 
   return (
-    <div className="bg-surface border border-border rounded-2xl overflow-hidden">
+    <div className="bg-surface border border-border rounded-2xl overflow-hidden h-full flex flex-col">
       <div
-        className="relative h-40"
+        className="relative flex-1 min-h-[220px]"
         style={{
           backgroundImage: "radial-gradient(var(--color-border) 1px, transparent 1px)",
           backgroundSize: "14px 14px",

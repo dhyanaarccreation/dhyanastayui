@@ -7,22 +7,21 @@ import {
   ChevronDown,
   ChevronUp,
   Ticket as TicketIcon,
-  Wallet,
   Wifi,
   Phone,
-  ArrowUpRight,
   History,
   MapPin,
-  Clock,
   CheckCircle2,
+  Navigation,
+  Clock,
 } from "lucide-react";
 
 import { SectionCard, StatusPill } from "@/app/components/DashboardUI";
 import LiveMapCard from "@/app/components/trip/LiveMapCard";
-import TripTimeline from "@/app/components/trip/TripTimeline";
-import CurrentActivityHero from "@/app/components/trip/CurrentActivityHero";
+import ItineraryPanel from "@/app/components/trip/ItineraryPanel";
 import RescheduleBanner from "@/app/components/trip/RescheduleBanner";
 import TicketModal from "@/app/components/trip/TicketModal";
+import BookingDetailModal from "@/app/components/trip/BookingDetailModal";
 import SOSModal from "@/app/components/trip/SOSModal";
 import SupportDrawer from "@/app/components/trip/SupportDrawer";
 import QuickContactBar from "@/app/components/trip/QuickContactBar";
@@ -30,19 +29,18 @@ import QuickContactBar from "@/app/components/trip/QuickContactBar";
 import {
   activeTrip,
   todayTimeline,
-  tomorrowPreview,
   liveLocation,
   tripBookings,
   mockTicket,
   stayDetails,
   foodOrders,
-  tripExpense,
   tripNotifications,
   tripActivityHistory,
   hostContact,
   directionsUrl,
   type TimelineActivity,
   type TicketDetails,
+  type TripBooking,
 } from "@/lib/trip-dashboard-data";
 
 const foodSteps = ["Ordered", "Preparing", "Ready", "Delivered"] as const;
@@ -64,6 +62,7 @@ export default function TravellerTripPage() {
   const [activeTicket, setActiveTicket] = useState<TicketDetails>(mockTicket);
   const [sosOpen, setSosOpen] = useState(false);
   const [supportOpen, setSupportOpen] = useState(false);
+  const [detailBooking, setDetailBooking] = useState<TripBooking | null>(null);
 
   function handleSkip(id: string) {
     setActivities((prev) => {
@@ -81,30 +80,40 @@ export default function TravellerTripPage() {
     setTicketOpen(true);
   }
 
-  function openActivityTicket(activity: TimelineActivity) {
+  function openBookingTicket(booking: (typeof tripBookings)[number]) {
     openTicket({
-      bookingId: mockTicket.bookingId,
-      title: activity.title,
-      date: "Today",
-      time: activity.time,
-      location: activity.location ?? activeTrip.destination,
+      bookingId: booking.id,
+      title: booking.title,
+      date: booking.date,
+      time: booking.time,
+      location: booking.location,
       travellerName: mockTicket.travellerName,
       instructions: mockTicket.instructions,
     });
   }
 
   const current = activities.find((a) => a.status === "current");
-  const remainingToday = activities.filter((a) => a.status === "upcoming" || a.status === "delayed");
   const completedCount = activities.filter((a) => a.status === "completed").length;
   const remainingCount = activities.filter((a) => a.status !== "completed" && a.status !== "skipped").length;
-  const progressPct = Math.round((completedCount / activities.length) * 100);
 
-  const statTiles = [
-    { label: "Leave At", value: liveLocation.recommendedDeparture, icon: Clock },
-    { label: "Bookings", value: String(tripBookings.length), icon: TicketIcon },
-    { label: "Activities Done", value: `${completedCount}/${activities.length}`, icon: CheckCircle2 },
-    { label: "Spent", value: `₹${tripExpense.spent.toLocaleString("en-IN")}`, icon: Wallet },
-  ];
+  // ---- Staged trip progress: Arrival → Stay → Experience → Food → Activity → Departure ----
+  const tripStages = ["Arrival", "Stay", "Experience", "Food", "Activity", "Departure"] as const;
+  function stageForTitle(title?: string): (typeof tripStages)[number] {
+    const t = (title ?? "").toLowerCase();
+    if (/breakfast|lunch|dinner|food/.test(t)) return "Food";
+    if (/check-?in|check-?out|stay/.test(t)) return "Stay";
+    if (/airport|departure/.test(t)) return "Departure";
+    return "Experience";
+  }
+  const tripComplete = activeTrip.currentDay >= activeTrip.totalDays && remainingCount === 0;
+  const activeStage = tripComplete ? "Departure" : stageForTitle(current?.title);
+  const activeStageIdx = tripStages.indexOf(activeStage);
+
+  // ---- Now / Next / Later ----
+  const currentIdx = activities.findIndex((a) => a.status === "current");
+  const upcomingAfterCurrent = activities.slice(currentIdx + 1).filter((a) => a.status === "upcoming" || a.status === "delayed");
+  const nextActivity = upcomingAfterCurrent[0];
+  const laterActivity = upcomingAfterCurrent[1];
 
   return (
     <div className="space-y-5 pb-16">
@@ -145,19 +154,6 @@ export default function TravellerTripPage() {
         </div>
       </div>
 
-      {/* Quick stat row */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        {statTiles.map((s) => (
-          <div key={s.label} className="bg-surface border border-border rounded-xl px-4 py-3">
-            <div className="flex items-center justify-between">
-              <p className="text-[11px] text-muted">{s.label}</p>
-              <s.icon size={13} className="text-primary" />
-            </div>
-            <p className="text-lg font-bold text-foreground mt-1 tabular-nums">{s.value}</p>
-          </div>
-        ))}
-      </div>
-
       {/* Live status line */}
       <div className="bg-surface border border-border rounded-2xl px-5 py-3 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm">
         <StatusPill tone="sage">🟢 Currently at {current?.title ?? liveLocation.currentLabel}</StatusPill>
@@ -165,103 +161,148 @@ export default function TravellerTripPage() {
         <span className="text-muted ml-auto">Leave at <span className="text-primary font-semibold">{liveLocation.recommendedDeparture}</span></span>
       </div>
 
-      {/* Instant access: contacts + ticket */}
-      <div className="grid lg:grid-cols-4 gap-5">
-        <SectionCard title="Quick Contacts" icon={Phone} className="lg:col-span-3">
-          <div className="p-4">
-            <QuickContactBar onOpenSupport={() => setSupportOpen(true)} onOpenSOS={() => setSosOpen(true)} />
-          </div>
-        </SectionCard>
-
-        <SectionCard title="Show My Ticket" icon={TicketIcon}>
-          <div className="p-4">
-            <p className="text-sm font-medium text-foreground">{mockTicket.title}</p>
-            <p className="text-xs text-muted mb-2">{mockTicket.date} · {mockTicket.time}</p>
-            <StatusPill tone="sage">🟢 Confirmed</StatusPill>
-            <button
-              onClick={() => openTicket(mockTicket)}
-              className="w-full mt-2.5 py-2 bg-primary text-primary-foreground text-xs font-semibold rounded-lg hover:bg-primary-hover transition-colors"
-            >
-              Show Ticket
-            </button>
-          </div>
-        </SectionCard>
+      {/* Staged trip progress */}
+      <div className="bg-surface border border-border rounded-2xl px-5 py-4">
+        <div className="flex items-center">
+          {tripStages.map((stage, i) => (
+            <div key={stage} className="flex items-center flex-1 last:flex-none">
+              <div className="flex flex-col items-center gap-1.5 shrink-0">
+                <span
+                  className={`w-7 h-7 rounded-full flex items-center justify-center border ${
+                    i < activeStageIdx
+                      ? "bg-sage text-white border-sage"
+                      : i === activeStageIdx
+                      ? "bg-primary text-white border-primary"
+                      : "bg-surface-hover text-subtle border-border"
+                  }`}
+                >
+                  {i < activeStageIdx ? <CheckCircle2 size={14} /> : <span className="text-[10px] font-bold">{i + 1}</span>}
+                </span>
+                <span className={`text-[10px] font-medium whitespace-nowrap ${i === activeStageIdx ? "text-primary" : "text-subtle"}`}>
+                  {stage}
+                </span>
+              </div>
+              {i < tripStages.length - 1 && (
+                <span className={`flex-1 h-px mx-1.5 ${i < activeStageIdx ? "bg-sage" : "bg-border"}`} />
+              )}
+            </div>
+          ))}
+        </div>
+        <p className="text-[11px] text-subtle mt-3">
+          Day {activeTrip.currentDay} of {activeTrip.totalDays} · {completedCount} activities done · {remainingCount} left today
+        </p>
       </div>
 
-      {/* Hero: current activity + map */}
+      {/* Now / Next / Later */}
+      <div className="grid sm:grid-cols-3 gap-3">
+        <div className="bg-primary/5 border border-primary/30 rounded-2xl p-4">
+          <p className="text-[10px] font-semibold uppercase tracking-wider text-primary mb-1.5">Now</p>
+          {current ? (
+            <>
+              <p className="text-sm font-semibold text-foreground">{current.title}</p>
+              <p className="text-xs text-muted mt-1 flex items-center gap-1">
+                <Clock size={11} /> {current.time}
+              </p>
+              {current.location && (
+                <p className="text-xs text-muted flex items-center gap-1 mt-0.5">
+                  <MapPin size={11} /> {current.location}
+                </p>
+              )}
+            </>
+          ) : (
+            <p className="text-sm text-muted">Nothing in progress right now.</p>
+          )}
+        </div>
+
+        <div className="bg-surface border border-border rounded-2xl p-4">
+          <p className="text-[10px] font-semibold uppercase tracking-wider text-subtle mb-1.5">Next</p>
+          {nextActivity ? (
+            <>
+              <p className="text-sm font-semibold text-foreground">{nextActivity.title}</p>
+              <p className="text-xs text-muted mt-1 flex items-center gap-1">
+                <Clock size={11} /> {nextActivity.time}
+                {nextActivity.title === liveLocation.nextLabel && ` · ${liveLocation.distanceKm} km away`}
+              </p>
+              <a
+                href={directionsUrl(nextActivity.location ?? nextActivity.title)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 mt-2 text-xs font-medium text-primary hover:underline"
+              >
+                <Navigation size={11} /> Navigate
+              </a>
+            </>
+          ) : (
+            <p className="text-sm text-muted">Nothing else planned today.</p>
+          )}
+        </div>
+
+        <div className="bg-surface border border-border rounded-2xl p-4">
+          <p className="text-[10px] font-semibold uppercase tracking-wider text-subtle mb-1.5">Later</p>
+          {laterActivity ? (
+            <>
+              <p className="text-sm font-semibold text-foreground">{laterActivity.title}</p>
+              <p className="text-xs text-muted mt-1 flex items-center gap-1">
+                <Clock size={11} /> {laterActivity.time}
+              </p>
+            </>
+          ) : (
+            <p className="text-sm text-muted">That&apos;s it for today.</p>
+          )}
+        </div>
+      </div>
+
+      {/* Map (top left, wider) + detailed itinerary with actions (right, proportion-driven) */}
       <div className="grid lg:grid-cols-3 gap-5">
         <div className="lg:col-span-2">
-          <CurrentActivityHero activity={current} onSkip={handleSkip} />
+          <LiveMapCard location={liveLocation} />
         </div>
-        <LiveMapCard location={liveLocation} />
+        <ItineraryPanel
+          activities={activities}
+          onSkip={handleSkip}
+          onReschedule={() => setShowReschedule(true)}
+        />
       </div>
 
       {showReschedule && (
         <RescheduleBanner onAccept={() => setShowReschedule(false)} onKeep={() => setShowReschedule(false)} />
       )}
 
-      {/* Dense info row */}
-      <div className="grid lg:grid-cols-3 gap-5">
-        <SectionCard title="Today's Timeline">
-          <div className="max-h-64 overflow-y-auto">
-            <TripTimeline activities={activities} />
-          </div>
-        </SectionCard>
-
-        <SectionCard title="Upcoming">
-          <div className="max-h-64 overflow-y-auto divide-y divide-surface-hover">
-            {remainingToday.map((a) => (
-              <button
-                key={a.id}
-                onClick={() => openActivityTicket(a)}
-                className="w-full flex items-center justify-between gap-3 px-4 py-2.5 text-left hover:bg-surface-hover transition-colors"
-              >
-                <span className="text-xs text-foreground">
-                  <span className="text-muted">{a.time}</span> — {a.title}
-                </span>
-                <ArrowUpRight size={12} className="text-subtle shrink-0" />
-              </button>
-            ))}
-            <div className="px-4 py-2 bg-surface-hover/50">
-              <p className="text-[10px] uppercase tracking-wider text-subtle">Tomorrow</p>
-            </div>
-            {tomorrowPreview.map((a) => (
-              <div key={a.id} className="flex items-center justify-between gap-3 px-4 py-2.5">
-                <span className="text-xs text-muted">
-                  <span className="text-subtle">{a.time}</span> — {a.title}
-                </span>
-              </div>
-            ))}
-          </div>
-        </SectionCard>
-
-        <SectionCard title="My Bookings" action={{ label: "View all", href: "/traveller/bookings" }}>
-          <div className="max-h-64 overflow-y-auto divide-y divide-surface-hover">
-            {tripBookings.slice(0, 4).map((b) => (
-              <div key={b.id} className="px-4 py-2.5">
-                <div className="flex items-center justify-between gap-2">
-                  <p className="text-xs font-medium text-foreground truncate">{b.title}</p>
+      {/* My Bookings */}
+      <SectionCard title="My Bookings" action={{ label: "View all", href: "/traveller/bookings" }}>
+        <div className="max-h-64 overflow-y-auto divide-y divide-surface-hover">
+          {tripBookings.slice(0, 4).map((b) => (
+            <div key={b.id} className="px-4 py-2.5">
+              <div className="flex items-center justify-between gap-2">
+                <p className="text-xs font-medium text-foreground truncate">{b.title}</p>
+                {b.hasTicket ? (
+                  <button
+                    onClick={() => openBookingTicket(b)}
+                    className="flex items-center gap-1 px-2.5 py-1 bg-primary text-primary-foreground text-[11px] font-semibold rounded-lg hover:bg-primary-hover transition-colors shrink-0"
+                  >
+                    <TicketIcon size={11} /> Ticket
+                  </button>
+                ) : (
                   <StatusPill tone={bookingStatusTone[b.status]}>{b.status}</StatusPill>
-                </div>
-                <p className="text-[11px] text-subtle mt-0.5">{b.category} · {b.date}, {b.time}</p>
+                )}
               </div>
-            ))}
-          </div>
-        </SectionCard>
-      </div>
-
-      {/* Trip Progress */}
-      <div className="bg-surface border border-border rounded-2xl px-5 py-3.5 flex items-center gap-4">
-        <p className="text-xs text-muted whitespace-nowrap">Day {activeTrip.currentDay} / {activeTrip.totalDays}</p>
-        <div className="h-2 flex-1 rounded-full bg-surface-hover overflow-hidden">
-          <div className="h-full rounded-full bg-primary" style={{ width: `${progressPct}%` }} />
+              <div className="flex items-center justify-between gap-2 mt-0.5">
+                <p className="text-[11px] text-subtle">{b.category} · {b.date}, {b.time}</p>
+                <button
+                  onClick={() => setDetailBooking(b)}
+                  className="text-[11px] text-primary hover:underline shrink-0"
+                >
+                  View Booking
+                </button>
+              </div>
+            </div>
+          ))}
         </div>
-        <p className="text-xs text-muted whitespace-nowrap">{completedCount} done · {remainingCount} left</p>
-      </div>
+      </SectionCard>
 
-      {/* Stay / Food / Budget */}
-      <div className="grid lg:grid-cols-3 gap-5">
-        <SectionCard title="Your Stay">
+      {/* Stay / Food */}
+      <div className="grid lg:grid-cols-2 gap-5">
+        <SectionCard title="Your Stay" action={{ label: "View full details", href: "/traveller/stay" }}>
           <div className="p-4">
             <div className="flex gap-3">
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -331,33 +372,14 @@ export default function TravellerTripPage() {
             })}
           </div>
         </SectionCard>
-
-        <SectionCard title="Trip Budget" icon={Wallet}>
-          <div className="p-4">
-            <div className="flex items-end justify-between mb-1">
-              <p className="text-xl font-bold text-foreground tabular-nums">₹{tripExpense.budget.toLocaleString("en-IN")}</p>
-            </div>
-            <div className="h-2 rounded-full bg-surface-hover overflow-hidden mb-2.5">
-              <div
-                className="h-full rounded-full bg-terracotta"
-                style={{ width: `${Math.min(100, Math.round((tripExpense.spent / tripExpense.budget) * 100))}%` }}
-              />
-            </div>
-            <div className="flex justify-between text-xs mb-3">
-              <span className="text-muted">Spent <span className="text-foreground font-medium">₹{tripExpense.spent.toLocaleString("en-IN")}</span></span>
-              <span className="text-muted">Left <span className="text-sage font-medium">₹{(tripExpense.budget - tripExpense.spent).toLocaleString("en-IN")}</span></span>
-            </div>
-            <div className="space-y-1 max-h-24 overflow-y-auto">
-              {tripExpense.breakdown.map((b) => (
-                <div key={b.category} className="flex items-center justify-between text-xs">
-                  <span className="text-muted">{b.category}</span>
-                  <span className="text-foreground">₹{b.amount.toLocaleString("en-IN")}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </SectionCard>
       </div>
+
+      {/* Quick contacts — kept small, tucked near the bottom */}
+      <SectionCard title="Quick Contacts" icon={Phone}>
+        <div className="p-4">
+          <QuickContactBar onOpenSupport={() => setSupportOpen(true)} onOpenSOS={() => setSosOpen(true)} />
+        </div>
+      </SectionCard>
 
       <SectionCard title="Trip Activity History">
         <button
@@ -382,6 +404,7 @@ export default function TravellerTripPage() {
       </SectionCard>
 
       <TicketModal ticket={activeTicket} open={ticketOpen} onClose={() => setTicketOpen(false)} />
+      <BookingDetailModal booking={detailBooking} open={detailBooking !== null} onClose={() => setDetailBooking(null)} />
       {sosOpen && <SOSModal onClose={() => setSosOpen(false)} />}
       <SupportDrawer open={supportOpen} onClose={() => setSupportOpen(false)} />
     </div>

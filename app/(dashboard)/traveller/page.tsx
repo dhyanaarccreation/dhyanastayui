@@ -1,14 +1,27 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight, Calendar, MapPin, Sparkles, Sprout, TrendingUp } from "lucide-react";
 import { properties } from "@/lib/mock-data";
 import { getGreenImpactLevel } from "@/lib/seed-ball-mission";
+import { tripBookings, type BookingStatus, type TripBooking } from "@/lib/trip-dashboard-data";
+import { StatusPill } from "@/app/components/DashboardUI";
+import BookingDetailModal from "@/app/components/trip/BookingDetailModal";
 
 // Mock traveller balances for this overview page (distinct currencies).
 const travellerSeedBalls = 680; // seed balls contributed — separate from reward points below
 
+const bookingStatusTone: Record<BookingStatus, "sage" | "primary" | "terracotta" | "muted"> = {
+  Confirmed: "sage",
+  "In Progress": "primary",
+  Pending: "muted",
+  Completed: "muted",
+  Cancelled: "terracotta",
+};
+
 export default function TravellerDashboardOverview() {
+  const [detailBooking, setDetailBooking] = useState<TripBooking | null>(null);
   const upcomingTrip = properties[0];
   const wishlistItems = properties.slice(1, 3);
   const { current: impactTier, next: nextImpactTier } = getGreenImpactLevel(travellerSeedBalls);
@@ -196,6 +209,33 @@ export default function TravellerDashboardOverview() {
           </div>
         </div>
       </div>
+
+      {/* My Bookings */}
+      <div className="bg-surface border border-border rounded-2xl overflow-hidden">
+        <div className="flex justify-between items-end px-6 py-5">
+          <h2 className="text-xl font-semibold text-foreground">My Bookings</h2>
+          <Link href="/traveller/bookings" className="text-sm text-primary hover:underline">
+            View all bookings
+          </Link>
+        </div>
+        <div className="divide-y divide-surface-hover">
+          {tripBookings.slice(0, 4).map((b) => (
+            <button
+              key={b.id}
+              onClick={() => setDetailBooking(b)}
+              className="w-full flex items-center justify-between gap-4 px-6 py-4 text-left hover:bg-surface-hover transition-colors"
+            >
+              <div className="min-w-0">
+                <p className="text-sm font-medium text-foreground truncate">{b.title}</p>
+                <p className="text-xs text-muted mt-0.5">{b.category} · {b.date}, {b.time}</p>
+              </div>
+              <StatusPill tone={bookingStatusTone[b.status]}>{b.status}</StatusPill>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <BookingDetailModal booking={detailBooking} open={detailBooking !== null} onClose={() => setDetailBooking(null)} />
     </div>
   );
 }

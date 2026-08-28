@@ -21,22 +21,22 @@ export default function QuickContactBar({
   ] as const;
 
   return (
-    <div className="grid grid-cols-5 gap-2">
+    <div className="grid grid-cols-5 gap-1.5">
       {items.map((item) => {
         const content = (
           <>
             <span
-              className={`w-10 h-10 rounded-full flex items-center justify-center ${
+              className={`w-7 h-7 rounded-full flex items-center justify-center ${
                 "danger" in item && item.danger ? "bg-terracotta/10 text-terracotta" : "bg-primary/10 text-primary"
               }`}
             >
-              <item.icon size={17} />
+              <item.icon size={13} />
             </span>
-            <span className="text-[11px] font-medium text-foreground">{item.label}</span>
+            <span className="text-[10px] font-medium text-foreground">{item.label}</span>
           </>
         );
         const className =
-          "flex flex-col items-center gap-1.5 py-3 bg-surface border border-border rounded-xl hover:border-primary/50 transition-colors";
+          "flex flex-col items-center gap-1 py-2 bg-surface border border-border rounded-lg hover:border-primary/50 transition-colors";
 
         if ("href" in item && item.href) {
           return (

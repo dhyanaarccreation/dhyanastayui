@@ -54,6 +54,9 @@ import {
   Bookmark,
   Share2,
   Wand2,
+  Leaf,
+  Car,
+  MapPin,
 } from "lucide-react";
 
 export interface DashSection {
@@ -90,10 +93,17 @@ export const dashboardRoles: DashboardRole[] = [
     nav: [
       { label: "My Trip", href: "/traveller/trip", icon: Navigation },
       { label: "Dashboard Overview", href: "/traveller", icon: Compass },
-      { label: "My Profile", href: "/traveller/profile", icon: User },
-      { label: "My Bookings", href: "/traveller/bookings", icon: CalendarDays },
       { label: "Itinerary", href: "/traveller/itinerary", icon: Map },
-      { label: "AI Trip Planner", href: "/traveller/ai-planner", icon: Star },
+      { label: "My Bookings", href: "/traveller/bookings", icon: CalendarDays },
+      { label: "My Stay", href: "/traveller/stay", icon: Home },
+      { label: "Experiences", href: "/traveller/experiences", icon: Leaf },
+      { label: "Transport", href: "/traveller/transport", icon: Car },
+      { label: "Tickets & Documents", href: "/traveller/documents", icon: Ticket },
+      { label: "Food", href: "/traveller/food", icon: UtensilsCrossed },
+      { label: "Live Location", href: "/traveller/location", icon: MapPin },
+      { label: "Trip Contacts", href: "/traveller/contacts", icon: Users },
+      { label: "SOS", href: "/traveller/sos", icon: Siren },
+      { label: "My Profile", href: "/traveller/profile", icon: User },
       { label: "Bucket List", href: "/traveller/wishlist", icon: Heart },
       { label: "Membership", href: "/traveller/membership", icon: Crown },
       { label: "Rewards & Coupons", href: "/traveller/rewards", icon: Gift },

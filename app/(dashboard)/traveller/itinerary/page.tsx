@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { MapPin, Users, Calendar, ChevronDown, ArrowUpRight } from "lucide-react";
+import { MapPin, Users, Calendar, ChevronDown, ArrowUpRight, CheckCircle2, Circle, AlertTriangle, XCircle } from "lucide-react";
 
 import { PageHeader, SectionCard, StatGrid } from "@/app/components/DashboardUI";
 import TicketModal from "@/app/components/trip/TicketModal";
@@ -13,9 +13,18 @@ import {
   mockTicket,
   directionsUrl,
   type TicketDetails,
+  type ActivityStatus,
 } from "@/lib/trip-dashboard-data";
 
 type TabId = "today" | "tomorrow" | "all";
+
+const stopStatusStyle: Record<ActivityStatus, { icon: typeof Circle; className: string }> = {
+  completed: { icon: CheckCircle2, className: "text-sage" },
+  current: { icon: Circle, className: "text-primary fill-primary" },
+  upcoming: { icon: Circle, className: "text-subtle" },
+  delayed: { icon: AlertTriangle, className: "text-terracotta" },
+  skipped: { icon: XCircle, className: "text-subtle" },
+};
 
 export default function TravellerItineraryPage() {
   const [tab, setTab] = useState<TabId>("today");
@@ -94,14 +103,18 @@ export default function TravellerItineraryPage() {
               {day.items.map((stop) => {
                 const key = `${day.day}-${stop.time}-${stop.title}`;
                 const isOpen = expanded === key;
+                const { icon: StatusIcon, className: statusClassName } = stopStatusStyle[stop.status ?? "upcoming"];
                 return (
                   <div key={key}>
                     <button
                       onClick={() => setExpanded(isOpen ? null : key)}
                       className="w-full flex items-center justify-between gap-3 px-5 py-3.5 text-left hover:bg-surface-hover transition-colors"
                     >
-                      <span className="text-sm text-foreground">
-                        <span className="text-muted">{stop.time}</span> — {stop.title}
+                      <span className="flex items-center gap-2.5 text-sm text-foreground min-w-0">
+                        <StatusIcon size={14} className={`shrink-0 ${statusClassName}`} />
+                        <span className={stop.status === "skipped" ? "line-through text-subtle" : ""}>
+                          <span className="text-muted">{stop.time}</span> — {stop.title}
+                        </span>
                       </span>
                       <ChevronDown size={14} className={`text-subtle shrink-0 transition-transform ${isOpen ? "rotate-180" : ""}`} />
                     </button>

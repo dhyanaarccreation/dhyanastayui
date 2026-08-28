@@ -114,17 +114,92 @@ export interface TripBooking {
   hasTicket?: boolean;
   contactPhone?: string;
   directionsHref?: string;
+  guests?: number;
+  paymentStatus?: string;
+  cancellationPolicy?: string;
 }
 
 export const tripBookings: TripBooking[] = [
-  { id: "DHY-773412", category: "Stay", title: stayProperty.name, date: "Aug 23", time: "2:00 PM", location: "Auroville, Tamil Nadu", status: "Confirmed", hasTicket: true, contactPhone: "+91 98765 43210", directionsHref: directionsUrl("The Canopy Tiny House, Auroville") },
-  { id: "DHY-118820", category: "Experience", title: "Matrimandir Visitor Centre Pass", date: "Aug 25", time: "3:30 PM", location: "Matrimandir, Auroville", status: "Confirmed", hasTicket: true, directionsHref: directionsUrl("Matrimandir, Auroville") },
-  { id: "DHY-556291", category: "Experience", title: "Photography Experience", date: "Aug 25", time: "5:00 PM", location: "Auroville", status: "Confirmed", hasTicket: true },
-  { id: "DHY-902341", category: "Bike Rental", title: "Scooter Rental — 2 days", date: "Aug 24", time: "9:00 AM", location: "Auroville Visitor Centre", status: "In Progress", contactPhone: "+91 90000 11122" },
-  { id: "DHY-347710", category: "Food Order", title: "Auroville Breakfast Basket", date: "Aug 25", time: "8:00 AM", location: "Delivered to stay", status: "Completed" },
-  { id: "DHY-229981", category: "Cab", title: "Airport Pickup Cab", date: "Aug 23", time: "11:00 AM", location: "Chennai Airport → Auroville", status: "Completed", contactPhone: "+91 90000 33344" },
-  { id: "DHY-664501", category: "Event", title: "Sunset Beach Bonfire Night", date: "Aug 26", time: "6:30 PM", location: "Auroville Beach", status: "Pending", directionsHref: directionsUrl("Auroville Beach") },
-  { id: "DHY-810023", category: "Workshop", title: "Pottery Workshop with Murugan K.", date: "Aug 27", time: "10:00 AM", location: "Auroville Studio", status: "Confirmed", hasTicket: true },
+  { id: "DHY-773412", category: "Stay", title: stayProperty.name, date: "Aug 23", time: "2:00 PM", location: "Auroville, Tamil Nadu", status: "Confirmed", hasTicket: true, contactPhone: "+91 98765 43210", directionsHref: directionsUrl("The Canopy Tiny House, Auroville"), guests: 2, paymentStatus: "Paid in full", cancellationPolicy: "Free cancellation until 48 hours before check-in" },
+  { id: "DHY-118820", category: "Experience", title: "Matrimandir Visitor Centre Pass", date: "Aug 25", time: "3:30 PM", location: "Matrimandir, Auroville", status: "Confirmed", hasTicket: true, directionsHref: directionsUrl("Matrimandir, Auroville"), guests: 2, paymentStatus: "Paid in full", cancellationPolicy: "Non-refundable within 24 hours of the slot" },
+  { id: "DHY-556291", category: "Experience", title: "Photography Experience", date: "Aug 25", time: "5:00 PM", location: "Auroville", status: "Confirmed", hasTicket: true, guests: 2, paymentStatus: "Paid in full", cancellationPolicy: "Free cancellation until 24 hours before" },
+  { id: "DHY-902341", category: "Bike Rental", title: "Scooter Rental — 2 days", date: "Aug 24", time: "9:00 AM", location: "Auroville Visitor Centre", status: "In Progress", contactPhone: "+91 90000 11122", guests: 1, paymentStatus: "Paid in full", cancellationPolicy: "Non-refundable once picked up" },
+  { id: "DHY-347710", category: "Food Order", title: "Auroville Breakfast Basket", date: "Aug 25", time: "8:00 AM", location: "Delivered to stay", status: "Completed", guests: 2, paymentStatus: "Paid in full", cancellationPolicy: "Non-refundable after preparation begins" },
+  { id: "DHY-229981", category: "Cab", title: "Airport Pickup Cab", date: "Aug 23", time: "11:00 AM", location: "Chennai Airport → Auroville", status: "Completed", contactPhone: "+91 90000 33344", guests: 2, paymentStatus: "Paid in full", cancellationPolicy: "Free cancellation until 1 hour before pickup" },
+  { id: "DHY-664501", category: "Event", title: "Sunset Beach Bonfire Night", date: "Aug 26", time: "6:30 PM", location: "Auroville Beach", status: "Pending", directionsHref: directionsUrl("Auroville Beach"), guests: 2, paymentStatus: "Pay at venue", cancellationPolicy: "Free cancellation until 6 hours before" },
+  { id: "DHY-810023", category: "Workshop", title: "Pottery Workshop with Murugan K.", date: "Aug 27", time: "10:00 AM", location: "Auroville Studio", status: "Confirmed", hasTicket: true, guests: 2, paymentStatus: "Paid in full", cancellationPolicy: "Free cancellation until 24 hours before" },
+];
+
+export interface TripExperience {
+  id: string;
+  title: string;
+  date: string;
+  time: string;
+  duration: string;
+  location: string;
+  meetingPoint: string;
+  responsiblePerson: string;
+  contactPhone: string;
+  description: string;
+  whatToBring: string[];
+  included: string[];
+  notIncluded: string[];
+  hasTicket: boolean;
+  status: BookingStatus;
+}
+
+export const tripExperiences: TripExperience[] = [
+  {
+    id: "DHY-118820",
+    title: "Matrimandir Visitor Centre Pass",
+    date: "Aug 25",
+    time: "3:30 PM",
+    duration: "1.5 hours",
+    location: "Matrimandir, Auroville",
+    meetingPoint: "Matrimandir Visitor Centre reception",
+    responsiblePerson: "Arun (Local Guide)",
+    contactPhone: "+91 91234 56780",
+    description: "A guided visit to the Matrimandir viewpoint and the surrounding Auroville township, with context on its history and design.",
+    whatToBring: ["Valid photo ID", "Comfortable walking shoes"],
+    included: ["Guided walkthrough", "Viewpoint access pass"],
+    notIncluded: ["Transport to the centre", "Inner chamber access"],
+    hasTicket: true,
+    status: "Confirmed",
+  },
+  {
+    id: "DHY-556291",
+    title: "Photography Experience",
+    date: "Aug 25",
+    time: "5:00 PM",
+    duration: "2 hours",
+    location: "Auroville",
+    meetingPoint: "The Canopy Tiny House, main gate",
+    responsiblePerson: "Karthik Iyer (Experience Host)",
+    contactPhone: "+91 90000 55678",
+    description: "A golden-hour photo walk through Auroville's forest trails and township landmarks with a local photographer.",
+    whatToBring: ["Your own camera or phone", "Water bottle"],
+    included: ["Photographer-guide", "Edited digital shots (10)"],
+    notIncluded: ["Prints", "Drone shots"],
+    hasTicket: true,
+    status: "Confirmed",
+  },
+  {
+    id: "DHY-810023",
+    title: "Pottery Workshop with Murugan K.",
+    date: "Aug 27",
+    time: "10:00 AM",
+    duration: "2 hours",
+    location: "Auroville Studio",
+    meetingPoint: "Auroville Studio, Kuilapalayam",
+    responsiblePerson: "Murugan K. (Workshop Host)",
+    contactPhone: "+91 90000 77812",
+    description: "Hands-on terracotta pottery session on the wheel, finishing with a piece you take home.",
+    whatToBring: ["Clothes you don't mind getting clay on"],
+    included: ["Materials", "Firing & take-home piece", "Refreshments"],
+    notIncluded: ["Shipping for fragile pieces"],
+    hasTicket: true,
+    status: "Confirmed",
+  },
 ];
 
 export interface TicketDetails {
@@ -213,12 +288,26 @@ export interface TransportContact {
   bookingId: string;
   phone: string;
   pickupLocation?: string;
+  pickupTime?: string;
+  driverName?: string;
+  status?: "Confirmed" | "In Progress" | "Completed";
 }
 
 export const transportContacts: TransportContact[] = [
-  { type: "Bike", provider: "GreenWheels Auroville", vehicle: "Honda Activa · TN 33 AB 1234", bookingId: "DHY-902341", phone: "+91 90000 11122", pickupLocation: "Auroville Visitor Centre" },
-  { type: "Cab", provider: "Dhyana Cabs", vehicle: "Toyota Etios · TN 07 CD 5678", bookingId: "DHY-229981", phone: "+91 90000 33344", pickupLocation: "Stay entrance" },
+  { type: "Bike", provider: "GreenWheels Auroville", vehicle: "Honda Activa · TN 33 AB 1234", bookingId: "DHY-902341", phone: "+91 90000 11122", pickupLocation: "Auroville Visitor Centre", pickupTime: "9:00 AM", driverName: "Selvam R.", status: "In Progress" },
+  { type: "Cab", provider: "Dhyana Cabs", vehicle: "Toyota Etios · TN 07 CD 5678", bookingId: "DHY-229981", phone: "+91 90000 33344", pickupLocation: "Stay entrance", pickupTime: "11:00 AM", driverName: "Kumar S.", status: "Completed" },
 ];
+
+export interface SupportContact {
+  name: string;
+  phone: string;
+  avatar?: string;
+}
+
+export const supportContact: SupportContact = {
+  name: "Dhyana Trip Support",
+  phone: "+91 1800 202 4040",
+};
 
 export type FoodOrderStatus = "Ordered" | "Preparing" | "Ready" | "Delivered";
 
@@ -233,6 +322,22 @@ export interface FoodOrder {
 
 export const foodOrders: FoodOrder[] = [
   { id: "fo-1", meal: "Breakfast", orderNumber: "DS10284", items: "2 × Breakfast", status: "Preparing", expectedTime: "8:30 AM" },
+];
+
+export interface PlannedMeal {
+  id: string;
+  meal: "Breakfast" | "Lunch" | "Dinner";
+  time: string;
+  restaurant: string;
+  items: string;
+  status: "Delivered" | "Reserved" | "Preparing";
+  location: string;
+}
+
+export const dailyMeals: PlannedMeal[] = [
+  { id: "meal-1", meal: "Breakfast", time: "8:00 AM", restaurant: "The Canopy Tiny House", items: "2 × Breakfast basket", status: "Delivered", location: "Delivered to stay" },
+  { id: "meal-2", meal: "Lunch", time: "1:30 PM", restaurant: "Solar Kitchen", items: "Curated thali for 2", status: "Reserved", location: "Auroville" },
+  { id: "meal-3", meal: "Dinner", time: "7:30 PM", restaurant: "Naturellement, Auroville", items: "Traditional Pondicherry Dinner for 2", status: "Reserved", location: "Naturellement, Auroville" },
 ];
 
 export interface TripExpense {
@@ -282,6 +387,7 @@ export interface ItineraryStop {
   time: string;
   title: string;
   location?: string;
+  status?: ActivityStatus;
 }
 
 export interface ItineraryDay {
@@ -295,45 +401,45 @@ export const fullItinerary: ItineraryDay[] = [
     day: 1,
     date: "Aug 24",
     items: [
-      { time: "9:00 AM", title: "Scooter Pickup & Orientation", location: "Auroville Visitor Centre" },
-      { time: "11:00 AM", title: "Explore Auroville Township", location: "Auroville" },
-      { time: "1:00 PM", title: "Lunch at Solar Kitchen", location: "Auroville" },
-      { time: "4:00 PM", title: "Matrimandir Sunset Viewing", location: "Matrimandir, Auroville" },
-      { time: "8:00 PM", title: "Dinner at Stay", location: "The Canopy Tiny House" },
+      { time: "9:00 AM", title: "Scooter Pickup & Orientation", location: "Auroville Visitor Centre", status: "completed" },
+      { time: "11:00 AM", title: "Explore Auroville Township", location: "Auroville", status: "completed" },
+      { time: "1:00 PM", title: "Lunch at Solar Kitchen", location: "Auroville", status: "completed" },
+      { time: "4:00 PM", title: "Matrimandir Sunset Viewing", location: "Matrimandir, Auroville", status: "completed" },
+      { time: "8:00 PM", title: "Dinner at Stay", location: "The Canopy Tiny House", status: "completed" },
     ],
   },
   {
     day: 2,
     date: "Aug 25",
-    items: todayTimeline.map((a) => ({ time: a.time, title: a.title, location: a.location })),
+    items: todayTimeline.map((a) => ({ time: a.time, title: a.title, location: a.location, status: a.status })),
   },
   {
     day: 3,
     date: "Aug 26",
     items: [
-      { time: "9:00 AM", title: "Yoga", location: "The Canopy Tiny House" },
-      { time: "11:00 AM", title: "Local Tour", location: "Auroville" },
-      { time: "1:00 PM", title: "Lunch", location: "Auroville" },
-      { time: "6:30 PM", title: "Sunset Beach Bonfire Night", location: "Auroville Beach" },
+      { time: "9:00 AM", title: "Yoga", location: "The Canopy Tiny House", status: "upcoming" },
+      { time: "11:00 AM", title: "Local Tour", location: "Auroville", status: "upcoming" },
+      { time: "1:00 PM", title: "Lunch", location: "Auroville", status: "upcoming" },
+      { time: "6:30 PM", title: "Sunset Beach Bonfire Night", location: "Auroville Beach", status: "upcoming" },
     ],
   },
   {
     day: 4,
     date: "Aug 27",
     items: [
-      { time: "10:00 AM", title: "Pottery Workshop with Murugan K.", location: "Auroville Studio" },
-      { time: "1:00 PM", title: "Lunch", location: "Auroville" },
-      { time: "4:00 PM", title: "Free Time — Auroville Market", location: "Auroville" },
-      { time: "8:00 PM", title: "Dinner", location: "The Canopy Tiny House" },
+      { time: "10:00 AM", title: "Pottery Workshop with Murugan K.", location: "Auroville Studio", status: "upcoming" },
+      { time: "1:00 PM", title: "Lunch", location: "Auroville", status: "upcoming" },
+      { time: "4:00 PM", title: "Free Time — Auroville Market", location: "Auroville", status: "upcoming" },
+      { time: "8:00 PM", title: "Dinner", location: "The Canopy Tiny House", status: "upcoming" },
     ],
   },
   {
     day: 5,
     date: "Aug 28",
     items: [
-      { time: "8:00 AM", title: "Breakfast", location: "The Canopy Tiny House" },
-      { time: "10:00 AM", title: "Pack & Check-out", location: "The Canopy Tiny House" },
-      { time: "11:00 AM", title: "Airport Drop", location: "Auroville → Chennai Airport" },
+      { time: "8:00 AM", title: "Breakfast", location: "The Canopy Tiny House", status: "upcoming" },
+      { time: "10:00 AM", title: "Pack & Check-out", location: "The Canopy Tiny House", status: "upcoming" },
+      { time: "11:00 AM", title: "Airport Drop", location: "Auroville → Chennai Airport", status: "upcoming" },
     ],
   },
 ];

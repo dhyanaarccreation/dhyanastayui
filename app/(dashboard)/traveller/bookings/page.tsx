@@ -4,8 +4,9 @@ import { useState } from "react";
 import Link from "next/link";
 import { Search, MapPin, Download, Filter, Phone } from "lucide-react";
 import { properties } from "@/lib/mock-data";
-import { tripBookings, mockTicket, type TicketDetails, type BookingStatus } from "@/lib/trip-dashboard-data";
+import { tripBookings, mockTicket, type TicketDetails, type BookingStatus, type TripBooking } from "@/lib/trip-dashboard-data";
 import TicketModal from "@/app/components/trip/TicketModal";
+import BookingDetailModal from "@/app/components/trip/BookingDetailModal";
 import { StatusPill } from "@/app/components/DashboardUI";
 
 const tripBookingStatusTone: Record<BookingStatus, "sage" | "primary" | "terracotta" | "muted"> = {
@@ -104,6 +105,7 @@ export default function BookingsPage() {
   const [sortAsc, setSortAsc] = useState(true);
   const [ticketOpen, setTicketOpen] = useState(false);
   const [activeTicket, setActiveTicket] = useState<TicketDetails>(mockTicket);
+  const [detailBooking, setDetailBooking] = useState<TripBooking | null>(null);
 
   function openBookingTicket(booking: (typeof tripBookings)[number]) {
     setActiveTicket({
@@ -402,6 +404,12 @@ export default function BookingsPage() {
                       Ticket
                     </button>
                   )}
+                  <button
+                    onClick={() => setDetailBooking(booking)}
+                    className="px-3 py-1.5 bg-surface-hover border border-border text-foreground text-xs font-medium rounded-lg hover:bg-surface transition-colors"
+                  >
+                    View Booking
+                  </button>
                   {booking.contactPhone && (
                     <a
                       href={`tel:${booking.contactPhone}`}
@@ -428,6 +436,7 @@ export default function BookingsPage() {
       </div>
 
       <TicketModal ticket={activeTicket} open={ticketOpen} onClose={() => setTicketOpen(false)} />
+      <BookingDetailModal booking={detailBooking} open={detailBooking !== null} onClose={() => setDetailBooking(null)} />
     </div>
   );
 }
