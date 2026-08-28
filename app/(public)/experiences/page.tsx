@@ -113,7 +113,7 @@ export default function ExperiencesPage() {
           <span className="text-sm text-subtle">{visible.length} experiences</span>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {visible.map((exp) => (
             <ImageCard
               key={exp.id}

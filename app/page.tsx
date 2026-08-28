@@ -24,7 +24,7 @@ function HeroSection() {
             LEFT: PLAYABLE VIDEO
         ============================================ */}
         <div className="relative w-full animate-fade-in">
-          <div className="w-full h-[280px] sm:h-[320px] lg:h-[300px] overflow-hidden rounded-[50px] shadow-organic">
+          <div className="w-full h-70 sm:h-80 lg:h-75 overflow-hidden rounded-[50px] shadow-organic">
             <video
               src="/motion-video.mp4"
               autoPlay

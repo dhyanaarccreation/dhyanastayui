@@ -72,7 +72,7 @@ export default function ArchitectureConsultancyPage() {
               ))}
             </ul>
           </div>
-          <div className="md:w-1/2 h-[500px] relative rounded-2xl overflow-hidden border border-border">
+          <div className="md:w-1/2 h-37.5 relative rounded-2xl overflow-hidden border border-border">
              <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=800&auto=format&fit=crop" alt="Interior Details" className="w-full h-full object-cover opacity-80" />
           </div>
         </div>

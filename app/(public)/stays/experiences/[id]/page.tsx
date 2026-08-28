@@ -125,34 +125,34 @@ export default function ExperienceDetailsPage() {
           {/* Booking Sidebar — sits beside the video, same spot the Stay
               detail page's Reserve card occupies next to its hero media. */}
           <div className="lg:col-span-1">
-            <div className="bg-surface border border-border rounded-3xl p-6 md:p-8 sticky top-24 shadow-2xl">
+            <div className="bg-surface border border-border rounded-3xl p-5 md:p-6 sticky top-24 shadow-2xl">
               {!reserved ? (
                 <>
-                  <div className="flex items-baseline gap-2 mb-6 text-foreground">
-                    <span className="text-3xl font-bold">₹{exp.price}</span>
-                    <span className="text-sm text-muted">/ person</span>
+                  <div className="flex items-baseline gap-2 mb-4 text-foreground">
+                    <span className="text-2xl font-bold">₹{exp.price}</span>
+                    <span className="text-xs text-muted">/ person</span>
                   </div>
 
-                  <div className="space-y-4 mb-6">
+                  <div className="space-y-3 mb-4">
                     <div className="border border-border rounded-xl overflow-hidden">
-                      <div className="p-3 border-b border-border bg-background">
-                        <label className="block text-[10px] uppercase tracking-wider text-subtle font-bold mb-1">Date</label>
-                        <input type="date" className="w-full bg-transparent text-foreground text-sm focus:outline-none cursor-pointer" defaultValue="2026-10-16" />
+                      <div className="p-2.5 border-b border-border bg-background">
+                        <label className="block text-[9px] uppercase tracking-wider text-subtle font-bold mb-0.5">Date</label>
+                        <input type="date" className="w-full bg-transparent text-foreground text-xs focus:outline-none cursor-pointer" defaultValue="2026-10-16" />
                       </div>
-                      <div className="p-3 bg-background flex justify-between items-center">
+                      <div className="p-2.5 bg-background flex justify-between items-center">
                         <div>
-                          <label className="block text-[10px] uppercase tracking-wider text-subtle font-bold mb-1">Guests</label>
-                          <div className="text-sm text-foreground">{guests} {guests === 1 ? "Guest" : "Guests"}</div>
+                          <label className="block text-[9px] uppercase tracking-wider text-subtle font-bold mb-0.5">Guests</label>
+                          <div className="text-xs text-foreground">{guests} {guests === 1 ? "Guest" : "Guests"}</div>
                         </div>
-                        <div className="flex items-center gap-3">
-                          <button onClick={() => setGuests(Math.max(1, guests - 1))} className="w-8 h-8 rounded-full border border-border flex items-center justify-center text-foreground hover:border-primary transition-colors">-</button>
-                          <button onClick={() => setGuests(Math.min(6, guests + 1))} className="w-8 h-8 rounded-full border border-border flex items-center justify-center text-foreground hover:border-primary transition-colors">+</button>
+                        <div className="flex items-center gap-2">
+                          <button onClick={() => setGuests(Math.max(1, guests - 1))} className="w-6 h-6 rounded-full border border-border flex items-center justify-center text-foreground text-sm hover:border-primary transition-colors">-</button>
+                          <button onClick={() => setGuests(Math.min(6, guests + 1))} className="w-6 h-6 rounded-full border border-border flex items-center justify-center text-foreground text-sm hover:border-primary transition-colors">+</button>
                         </div>
                       </div>
                     </div>
                   </div>
 
-                  <div className="space-y-3 text-sm border-b border-border pb-6 mb-6">
+                  <div className="space-y-2 text-xs border-b border-border pb-4 mb-4">
                     <div className="flex justify-between text-muted">
                       <span>₹{exp.price} x {guests} guests</span>
                       <span>₹{exp.price * guests}</span>
@@ -163,18 +163,18 @@ export default function ExperienceDetailsPage() {
                     </div>
                   </div>
 
-                  <div className="flex justify-between items-center text-lg font-bold text-foreground mb-6">
+                  <div className="flex justify-between items-center text-base font-bold text-foreground mb-4">
                     <span>Total</span>
                     <span>₹{total}</span>
                   </div>
 
                   <button
                     onClick={() => setReserved(true)}
-                    className="w-full py-4 bg-gradient-to-r from-primary to-primary-hover text-primary-foreground font-semibold rounded-xl hover:shadow-[0_0_30px_rgba(16,185,129,0.3)] transition-all mb-4"
+                    className="w-full py-3 bg-gradient-to-r from-primary to-primary-hover text-primary-foreground font-semibold text-sm rounded-xl hover:shadow-[0_0_30px_rgba(16,185,129,0.3)] transition-all mb-3"
                   >
                     Reserve Experience
                   </button>
-                  <p className="text-center text-xs text-subtle">You won&apos;t be charged yet</p>
+                  <p className="text-center text-[11px] text-subtle">You won&apos;t be charged yet</p>
                 </>
               ) : (
                 <div className="text-center py-4 animate-fade-in-up">

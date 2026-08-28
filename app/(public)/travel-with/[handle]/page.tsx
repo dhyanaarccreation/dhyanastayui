@@ -15,7 +15,6 @@ import {
   ChevronUp,
   Bookmark,
   Users,
-  Compass,
 } from "lucide-react";
 import {
   influencerProfile,
@@ -91,7 +90,7 @@ function RiyaCuratorPage() {
             <img
               src={influencerProfile.avatar}
               alt={influencerProfile.name}
-              className="w-20 h-20 sm:w-24 sm:h-24 rounded-full object-cover border-4 border-background shadow-organic"
+              className="w-26 h-26 sm:w-31 sm:h-31 rounded-full object-cover border-4 border-background shadow-organic"
             />
             <div className="min-w-0">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sage/15 text-sage text-[11px] font-semibold uppercase tracking-wider">
@@ -294,12 +293,12 @@ function VjSiddhuCuratorPage() {
     <div className="bg-background min-h-screen pb-20">
       {/* Hero */}
       <div className="bg-gradient-to-br from-sage/15 via-background to-primary/5 border-b border-border">
-        <div className="max-w-[1100px] mx-auto px-6 lg:px-8 py-10 sm:py-14">
+        <div className="max-w-[1100px] mx-auto px-6 lg:px-8 pt-10 sm:pt-14 pb-6 sm:pb-8">
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5">
             <CuratorAvatar
               name={p.name}
               avatar={p.avatar}
-              className="w-20 h-20 sm:w-24 sm:h-24 rounded-full object-cover border-4 border-background shadow-organic text-2xl"
+              className="w-26 h-26 sm:w-31 sm:h-31 rounded-full object-cover border-4 border-background shadow-organic text-2xl"
             />
             <div className="min-w-0">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sage/15 text-sage text-[11px] font-semibold uppercase tracking-wider">
@@ -312,32 +311,14 @@ function VjSiddhuCuratorPage() {
               <p className="text-sm text-muted mt-1.5 flex items-center gap-1.5">
                 <MapPin size={13} /> {p.region} · {p.creatorName}
               </p>
-              <p className="text-sm text-muted mt-2 max-w-xl leading-relaxed">{p.intro}</p>
-              <div className="flex flex-wrap gap-1.5 mt-3">
-                {p.travelStyle.map((s) => (
-                  <span key={s} className="text-[10px] px-2.5 py-1 rounded-full bg-surface border border-border text-muted font-medium">{s}</span>
-                ))}
-              </div>
             </div>
           </div>
         </div>
       </div>
 
       <div className="max-w-[1100px] mx-auto px-6 lg:px-8">
-        {/* Featured destinations */}
-        <section className="pt-10 sm:pt-14 pb-10 sm:pb-14 border-b border-border">
-          <span className="text-xs font-semibold text-sage uppercase tracking-widest flex items-center gap-1.5">
-            <Compass size={12} /> Featured Destinations
-          </span>
-          <div className="flex flex-wrap gap-2 mt-3">
-            {p.featuredDestinations.map((d) => (
-              <span key={d} className="px-3 py-1.5 rounded-full bg-sage/10 text-sage text-xs font-medium">{d}</span>
-            ))}
-          </div>
-        </section>
-
         {/* Handpicked stays */}
-        <section className="py-10 sm:py-14">
+        <section className="pt-6 sm:pt-8 pb-6 sm:pb-8">
           <div className="mb-6">
             <span className="text-xs font-semibold text-sage uppercase tracking-widest flex items-center gap-1.5">
               <Bookmark size={12} /> My Handpicked Stays
@@ -373,7 +354,7 @@ function VjSiddhuCuratorPage() {
         </section>
 
         {/* Itineraries */}
-        <section className="py-10 sm:py-14 border-t border-border">
+        <section className="pt-6 sm:pt-8 pb-10 sm:pb-14 border-t border-border">
           <span className="text-xs font-semibold text-sage uppercase tracking-widest">My Travel Guides</span>
           <h2 className="heading-organic text-xl sm:text-2xl text-foreground mt-1.5 mb-6">
             Ready-Made Trips You Can Copy &amp; Customise
@@ -498,7 +479,7 @@ function GuideComingSoonPage({ curator }: { curator: NonNullable<ReturnType<type
             <CuratorAvatar
               name={curator.name}
               avatar={curator.avatar}
-              className="w-20 h-20 sm:w-24 sm:h-24 rounded-full object-cover border-4 border-background shadow-organic text-2xl"
+              className="w-26 h-26 sm:w-31 sm:h-31 rounded-full object-cover border-4 border-background shadow-organic text-2xl"
             />
             <div className="min-w-0">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sage/15 text-sage text-[11px] font-semibold uppercase tracking-wider">

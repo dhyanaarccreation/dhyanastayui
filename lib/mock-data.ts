@@ -99,6 +99,17 @@ export interface BlogPost {
   /** Real per-post paragraphs — when present, the blog detail page renders
    *  these instead of its generic fallback body. */
   body?: string[];
+  /** Present only for guide posts about a single bookable venue (a café,
+   *  restaurant, workshop studio...) — renders a "Location & Contact" card
+   *  plus Pre-book / Add to Itinerary actions on the blog detail page. */
+  venue?: {
+    address: string;
+    hours: string;
+    avgCost: string;
+    phone: string;
+    /** Related nearby spots — linked when they exist as their own guide, plain text otherwise. */
+    alternatives?: { title: string; slug?: string; note: string }[];
+  };
 }
 
 export interface Testimonial {
@@ -1393,6 +1404,32 @@ export const blogPosts: BlogPost[] = [
       "For a fuller visit — including where to stay and what else is nearby — it's worth treating Auroville as its own trip rather than a rushed half-day stop tacked onto Pondicherry.",
     ],
   },
+  {
+    id: "b24",
+    title: "Hidden Cafes",
+    excerpt: "A quiet neighborhood nook off Auroville Main Road, away from the crowded tourist streets of White Town.",
+    category: "Pondicherry Guide",
+    author: "Dhyana Editorial",
+    date: "2026-08-22",
+    readTime: "3 min",
+    image: "https://images.unsplash.com/photo-1701432936092-c854d7bc0f43?q=80&w=1200&auto=format&fit=crop",
+    slug: "hidden-cafes",
+    body: [
+      "This spot sits in Kottakuppam, well off the tourist path — a quiet, unassuming neighborhood nook away from the crowded streets of White Town.",
+      "The menu is a mix of fast food, quick bites, and beverages. Reviews consistently point the same direction: stick to the basics — snacks and coffee — rather than anything more ambitious, since quality can vary across the rest of the menu.",
+      "Looking for other nature-themed hidden spots nearby? It's worth pairing this with the tree-top setting of Tree Top Kafe, or the green courtyards of Café des Arts closer to the French Quarter.",
+    ],
+    venue: {
+      address: "No. 42, Bharathi Nagar, Periyamudaliyar Chavadi, Auroville Main Road, Kottakuppam, Puducherry — 605104",
+      hours: "Open daily until 10:00 PM",
+      avgCost: "Around ₹300 for two people",
+      phone: "+91 96006 27284",
+      alternatives: [
+        { title: "Tree Top Kafe", slug: "tree-top-kafe", note: "Elevated treehouse dining, Auroville" },
+        { title: "Café des Arts", note: "Green courtyard café, French Quarter" },
+      ],
+    },
+  },
 ];
 
 // ============================================
@@ -1448,7 +1485,7 @@ export const platformStats = {
 // ============================================
 
 export const navLinks = [
-  { label: "Home", href: "/" },
+  { label: "Explore Stay", href: "/" },
   { label: "Experiences", href: "/experiences" },
   { label: "Business", href: "/business" },
 ];

@@ -31,7 +31,7 @@ export default function DestinationDetailPage() {
   return (
     <div className="bg-background min-h-screen pb-24">
       {/* Hero */}
-      <div className="relative h-[42vh] min-h-[320px] w-full overflow-hidden">
+      <div className="relative h-[13vh] min-h-24 w-full overflow-hidden">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={destination.image} alt={destination.name} className="absolute inset-0 w-full h-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-black/10" />

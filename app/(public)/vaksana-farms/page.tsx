@@ -134,7 +134,7 @@ export default function VaksanaFarmsPage() {
 
       {/* Gallery Grid (hero) — farm-level, unchanged regardless of which stay a visitor picks below */}
       <div className="max-w-[1200px] mx-auto px-6 lg:px-8 mb-6">
-        <div className="grid grid-cols-4 grid-rows-2 gap-2 md:gap-4 h-[300px] md:h-[500px] rounded-2xl overflow-hidden">
+        <div className="grid grid-cols-4 grid-rows-2 gap-2 md:gap-4 h-22.5 md:h-37.5 rounded-2xl overflow-hidden">
           <div className="col-span-4 md:col-span-2 row-span-2 bg-surface-hover relative overflow-hidden">
             {heroVideoFailed ? (
               <img src={vaksanaFarms.heroImage} alt={vaksanaFarms.name} className="absolute inset-0 w-full h-full object-cover" />

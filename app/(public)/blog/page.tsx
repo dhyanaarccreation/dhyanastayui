@@ -53,7 +53,7 @@ export default function BlogListingPage() {
             className="group block rounded-card-lg overflow-hidden bg-surface border-[5px] border-surface shadow-[var(--shadow-card)] transition-all duration-300 hover:shadow-[var(--shadow-card-hover)] hover:-translate-y-1"
           >
             <div className="flex flex-col md:flex-row h-full">
-              <div className="w-full md:w-3/5 h-64 md:h-[400px] bg-surface-hover relative overflow-hidden">
+              <div className="w-full md:w-3/5 h-19 md:h-30 bg-surface-hover relative overflow-hidden">
                 <img
                   src={blogPosts[0].image}
                   alt={blogPosts[0].title}
@@ -67,16 +67,9 @@ export default function BlogListingPage() {
                 <h2 className="heading-display text-2xl lg:text-4xl text-foreground mb-4 group-hover:text-primary transition-colors">
                   {blogPosts[0].title}
                 </h2>
-                <p className="text-muted mb-6 leading-relaxed">
+                <p className="text-muted leading-relaxed">
                   {blogPosts[0].excerpt}
                 </p>
-                <div className="flex items-center gap-4 text-xs text-subtle mt-auto">
-                  <span>{blogPosts[0].author}</span>
-                  <span className="w-1 h-1 rounded-full bg-border" />
-                  <span>{blogPosts[0].date}</span>
-                  <span className="w-1 h-1 rounded-full bg-border" />
-                  <span>{blogPosts[0].readTime} read</span>
-                </div>
               </div>
             </div>
           </Link>

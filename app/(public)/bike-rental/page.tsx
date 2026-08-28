@@ -72,7 +72,7 @@ export default function BikeRentalPage() {
               </div>
             </div>
           </div>
-          <div className="w-full md:w-1/2 h-[400px] relative">
+          <div className="w-full md:w-1/2 h-30 relative">
             <div className="absolute inset-0 bg-gradient-to-r from-background to-transparent z-10 md:hidden" />
             <img src="https://images.unsplash.com/photo-1558981806-ec527fa84c39?q=80&w=800&auto=format&fit=crop" alt="Motorcycle" className="w-full h-full object-cover rounded-3xl opacity-80" />
           </div>
