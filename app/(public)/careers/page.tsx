@@ -12,11 +12,11 @@ export default function CareersPage() {
   return (
     <div className="bg-background min-h-screen pb-24">
       {/* Header */}
-      <div className="py-24 text-center px-6 border-b border-surface-hover">
+      <div className="py-16 text-center px-6 border-b border-surface-hover">
         <span className="text-xs font-semibold text-primary uppercase tracking-widest mb-4 block">
           Join the Team
         </span>
-        <h1 className="heading-display text-4xl lg:text-6xl text-foreground mb-6">
+        <h1 className="heading-display text-3xl lg:text-5xl text-foreground mb-6">
           Build the Future of Hospitality
         </h1>
         <p className="text-muted max-w-2xl mx-auto">
@@ -24,20 +24,20 @@ export default function CareersPage() {
         </p>
       </div>
 
-      <div className="max-w-[1200px] mx-auto px-6 lg:px-8 py-16">
+      <div className="container-page py-12">
         {/* Culture */}
-        <div className="grid md:grid-cols-3 gap-8 mb-24">
-          <div className="p-8 bg-surface border border-surface-hover rounded-2xl">
+        <div className="grid md:grid-cols-3 gap-6 mb-24">
+          <div className="p-6 bg-surface border border-surface-hover rounded-2xl">
             <Users size={24} className="text-primary mb-4" />
             <h3 className="text-lg font-semibold text-foreground mb-2">Small & Autonomous</h3>
             <p className="text-sm text-muted">We operate in small, highly capable teams. Minimal bureaucracy, maximum ownership.</p>
           </div>
-          <div className="p-8 bg-surface border border-surface-hover rounded-2xl">
+          <div className="p-6 bg-surface border border-surface-hover rounded-2xl">
             <Zap size={24} className="text-primary mb-4" />
             <h3 className="text-lg font-semibold text-foreground mb-2">Design Obsessed</h3>
             <p className="text-sm text-muted">Whether it's a digital interface or a physical space, we believe design solves everything.</p>
           </div>
-          <div className="p-8 bg-surface border border-surface-hover rounded-2xl">
+          <div className="p-6 bg-surface border border-surface-hover rounded-2xl">
             <Compass size={24} className="text-primary mb-4" />
             <h3 className="text-lg font-semibold text-foreground mb-2">Travel Encouraged</h3>
             <p className="text-sm text-muted">We want you to experience our properties. Generous annual travel credits are part of the deal.</p>
@@ -46,11 +46,11 @@ export default function CareersPage() {
 
         {/* Open Roles */}
         <div>
-          <h2 className="heading-display text-3xl text-foreground mb-8">Open Positions</h2>
+          <h2 className="heading-display text-2xl text-foreground mb-6">Open Positions</h2>
           
           <div className="space-y-4">
             {jobs.map((job, i) => (
-              <div key={i} className="group p-6 bg-surface border border-surface-hover rounded-2xl hover:border-border transition-colors flex flex-col md:flex-row md:items-center justify-between gap-4 cursor-pointer">
+              <div key={i} className="group p-5 bg-surface border border-surface-hover rounded-2xl hover:border-border transition-colors flex flex-col md:flex-row md:items-center justify-between gap-4 cursor-pointer">
                 <div>
                   <h3 className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors mb-2">
                     {job.title}
@@ -70,7 +70,7 @@ export default function CareersPage() {
             ))}
           </div>
 
-          <div className="mt-12 p-8 bg-gradient-to-r from-surface to-surface-hover border border-border rounded-2xl text-center">
+          <div className="mt-8 p-6 bg-gradient-to-r from-surface to-surface-hover border border-border rounded-2xl text-center">
             <h3 className="text-lg font-semibold text-foreground mb-2">Don't see a fit?</h3>
             <p className="text-sm text-muted mb-6">We're always looking for exceptional talent. Send us your resume anyway.</p>
             <a href="mailto:careers@dhyanastays.com" className="inline-flex items-center gap-2 px-6 py-3 border border-border text-foreground text-sm font-medium rounded-full hover:bg-border transition-colors">

@@ -22,7 +22,7 @@ export default function SOSModal({ onClose }: { onClose: () => void }) {
           </button>
         </div>
 
-        <div className="p-6 text-center">
+        <div className="p-5 text-center">
           {step === "confirm" ? (
             <>
               <div className="w-16 h-16 mx-auto rounded-full bg-terracotta/10 flex items-center justify-center mb-4">

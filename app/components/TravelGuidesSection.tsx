@@ -34,8 +34,8 @@ export default function TravelGuidesSection() {
   }, [destinationQuery, curatorQuery]);
 
   return (
-    <section id="travel-guides" className="py-5 md:py-7 bg-background scroll-mt-20">
-      <div className="max-w-[1400px] mx-auto px-6 lg:px-8">
+    <section id="travel-guides" className="py-5 md:py-7 bg-background scroll-mt-12">
+      <div className="container-page">
         {/* Header — heading left, both search boxes right, single row (matches Destinations) */}
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 mb-5 sm:mb-6">
           <div>
@@ -47,8 +47,10 @@ export default function TravelGuidesSection() {
             </h2>
           </div>
 
-          {/* Search — destination + curator */}
-          <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-3 w-full sm:w-auto">
+          {/* Search — destination + curator. role="search" is both correct
+              semantics and what the globals.css rule keys off to drop the
+              global focus ring on these inputs. */}
+          <div role="search" className="flex flex-col sm:flex-row gap-2.5 sm:gap-3 w-full sm:w-auto">
             <div className="relative sm:w-56">
               <MapPin size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-subtle" />
               <input
@@ -57,7 +59,7 @@ export default function TravelGuidesSection() {
                 onChange={(e) => setDestinationQuery(e.target.value)}
                 placeholder="Search destination"
                 aria-label="Search destination — Travel Guides"
-                className="w-full pl-11 pr-4 py-2.5 sm:py-3 bg-surface rounded-full text-sm text-foreground placeholder-subtle shadow-organic focus:outline-none focus:ring-2 focus:ring-primary/40 transition-shadow"
+                className="w-full pl-11 pr-4 py-2.5 sm:py-3 bg-surface rounded-full text-sm text-foreground placeholder-subtle shadow-organic focus:outline-none transition-shadow"
               />
             </div>
             <div className="relative sm:w-56">
@@ -68,7 +70,7 @@ export default function TravelGuidesSection() {
                 onChange={(e) => setCuratorQuery(e.target.value)}
                 placeholder="Search influencer / creator"
                 aria-label="Search travel curator — Travel Guides"
-                className="w-full pl-11 pr-4 py-2.5 sm:py-3 bg-surface rounded-full text-sm text-foreground placeholder-subtle shadow-organic focus:outline-none focus:ring-2 focus:ring-primary/40 transition-shadow"
+                className="w-full pl-11 pr-4 py-2.5 sm:py-3 bg-surface rounded-full text-sm text-foreground placeholder-subtle shadow-organic focus:outline-none transition-shadow"
               />
             </div>
           </div>
@@ -89,7 +91,7 @@ export default function TravelGuidesSection() {
                   <CuratorAvatar
                     name={c.name}
                     avatar={c.avatar}
-                    className="absolute inset-0 w-full h-full object-cover text-3xl group-hover:scale-105 transition-transform duration-500"
+                    className="absolute inset-0 w-full h-full object-cover text-2xl group-hover:scale-105 transition-transform duration-500"
                   />
                 }
                 title={c.name}
@@ -102,12 +104,13 @@ export default function TravelGuidesSection() {
                   </span>
                 }
                 metaClassName="text-[8px] sm:text-[10px]"
-                className="shrink-0 w-[45vw] sm:w-56 lg:w-64 snap-start"
+                size="fill"
+                className="shrink-0 w-[70%] sm:w-[calc((100%-1.25rem)/2)] md:w-[calc((100%-2.5rem)/3)] lg:w-[calc((100%-3.75rem)/4)] aspect-[4/3] snap-start"
               />
             ))}
           </HorizontalScrollRow>
         ) : (
-          <div className="text-center py-14">
+          <div className="text-center py-10">
             <Search size={24} className="text-subtle mx-auto mb-3" />
             <p className="text-sm text-subtle">
               No travel curator matches yet — more curators join every month.

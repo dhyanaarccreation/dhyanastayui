@@ -62,7 +62,7 @@ export default function ExperienceListingsPage() {
       </div>
 
       {/* Listing cards */}
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 stagger-children">
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 stagger-children">
         {visible.map((e) => {
           const m = meta[e.id] ?? { status: "Live", tone: "sage" as const, booked: 0, capacity: 10 };
           return (
@@ -106,7 +106,7 @@ export default function ExperienceListingsPage() {
         })}
       </div>
       {visible.length === 0 && (
-        <p className="text-sm text-muted text-center py-10 bg-surface border border-border rounded-2xl">
+        <p className="text-sm text-muted text-center py-8 bg-surface border border-border rounded-2xl">
           No {cat.toLowerCase()} experiences yet — create one with “New Experience”.
         </p>
       )}

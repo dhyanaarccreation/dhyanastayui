@@ -121,7 +121,7 @@ export default function EventPlannerContactsPage() {
         </div>
       </section>
 
-      <div className="grid lg:grid-cols-2 gap-6">
+      <div className="grid lg:grid-cols-2 gap-5">
         {/* Consultations */}
         <SectionCard title="Consultation Requests" icon={Video}>
           <ul className="divide-y divide-surface-hover">

@@ -84,10 +84,10 @@ export default function HostCalendarPage() {
         subtitle="Availability for The Canopy Tiny House — manage bookings, blocks and rates."
       />
 
-      <div className="grid lg:grid-cols-3 gap-6">
+      <div className="grid lg:grid-cols-3 gap-5">
         {/* Calendar */}
         <SectionCard title="July 2026" icon={CalendarDays} className="lg:col-span-2">
-          <div className="p-5">
+          <div className="p-4">
             <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
               <p className="text-xs text-muted">Click an available or closed date to toggle it for booking.</p>
               <div className="flex items-center gap-2">
@@ -171,7 +171,7 @@ export default function HostCalendarPage() {
             </ul>
           </SectionCard>
 
-          <div className="bg-gradient-to-br from-sage/15 to-surface border border-sage/25 rounded-2xl p-5">
+          <div className="bg-gradient-to-br from-sage/15 to-surface border border-sage/25 rounded-2xl p-4">
             <p className="text-xs font-semibold text-sage flex items-center gap-1.5 uppercase tracking-wider">
               <TrendingUp size={13} /> Smart pricing tip
             </p>
@@ -185,7 +185,7 @@ export default function HostCalendarPage() {
 
       {/* Block dates */}
       <SectionCard title="Block Dates" icon={Ban}>
-        <div className="p-5 grid md:grid-cols-2 gap-6">
+        <div className="p-4 grid md:grid-cols-2 gap-5">
           <form onSubmit={addBlockedRange} className="space-y-3">
             <p className="text-xs text-muted">
               Block a date range for maintenance or personal use — blocked dates won&apos;t accept bookings.

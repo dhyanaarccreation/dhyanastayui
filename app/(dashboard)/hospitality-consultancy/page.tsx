@@ -54,7 +54,7 @@ export default function HospitalityConsultancyPage() {
       />
 
       {/* Pipeline */}
-      <div className="bg-surface border border-border rounded-2xl p-6">
+      <div className="bg-surface border border-border rounded-2xl p-5">
         <p className="text-sm font-semibold text-foreground mb-1">Listing pipeline</p>
         <p className="text-xs text-muted mb-5">
           Owners submit with full property information → automated systematic checks → only clean files reach a manager → review call → approved for listing.
@@ -72,7 +72,7 @@ export default function HospitalityConsultancyPage() {
         </div>
       </div>
 
-      <div className="grid lg:grid-cols-2 gap-6">
+      <div className="grid lg:grid-cols-2 gap-5">
         {/* Today's calls */}
         <SectionCard title="Today's Owner Calls" icon={PhoneCall} action={{ label: "All reviews", href: "/hospitality-consultancy/reviews" }}>
           <ul className="divide-y divide-surface-hover">

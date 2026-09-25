@@ -21,12 +21,12 @@ export default function TravellerTransportPage() {
         subtitle="Every ride booked for this trip — driver, vehicle and pickup details in one place."
       />
 
-      <div className="grid lg:grid-cols-2 gap-5">
+      <div className="grid lg:grid-cols-2 gap-4">
         {transportContacts.map((t) => {
           const Icon = typeIcon[t.type];
           return (
             <SectionCard key={t.bookingId} title={`${t.type} · ${t.provider}`} icon={Icon}>
-              <div className="p-5">
+              <div className="p-4">
                 <div className="flex items-start justify-between gap-3 mb-3">
                   <div>
                     <p className="text-sm font-semibold text-foreground">{t.vehicle}</p>

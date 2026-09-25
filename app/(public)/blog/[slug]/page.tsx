@@ -16,10 +16,10 @@ export default function BlogDetailPage() {
   return (
     <div className="bg-background min-h-screen pb-24">
       {/* Header */}
-      <div className="max-w-[800px] mx-auto px-6 lg:px-8 py-16">
+      <div className="max-w-[800px] mx-auto px-6 lg:px-8 py-12">
         <Link
           href="/blog"
-          className="inline-flex items-center gap-2 text-xs text-muted hover:text-foreground mb-8 transition-colors"
+          className="inline-flex items-center gap-2 text-xs text-muted hover:text-foreground mb-6 transition-colors"
         >
           <ArrowLeft size={14} /> Back to Journal
         </Link>
@@ -28,7 +28,7 @@ export default function BlogDetailPage() {
           {post.category}
         </span>
 
-        <h1 className="heading-display text-xl md:text-4xl text-foreground leading-tight">
+        <h1 className="heading-display text-xl md:text-3xl text-foreground leading-tight">
           {post.title}
         </h1>
 
@@ -39,7 +39,7 @@ export default function BlogDetailPage() {
       </div>
 
       {/* Hero Image */}
-      <div className="max-w-[1000px] mx-auto px-6 lg:px-8 mb-16">
+      <div className="max-w-[1000px] mx-auto px-6 lg:px-8 mb-10">
         <div className="w-full h-48 md:h-80 rounded-2xl bg-surface-hover relative overflow-hidden">
           <img
             src={post.image}
@@ -51,12 +51,12 @@ export default function BlogDetailPage() {
 
       {/* Content */}
       <div className="max-w-[800px] mx-auto px-6 lg:px-8">
-        <p className="text-lg text-foreground mb-8 leading-relaxed">
+        <p className="text-lg text-foreground mb-6 leading-relaxed">
           {post.excerpt}
         </p>
 
         {post.venue && (
-          <div className="mb-10 p-6 bg-surface border border-border rounded-2xl">
+          <div className="mb-8 p-5 bg-surface border border-border rounded-2xl">
             <h3 className="text-xs font-semibold uppercase tracking-wider text-primary mb-4">
               Location &amp; Contact
             </h3>
@@ -91,7 +91,7 @@ export default function BlogDetailPage() {
           ))
         ) : (
           <>
-            <h2 className="heading-display text-2xl md:text-3xl text-foreground mt-12 mb-4">
+            <h2 className="heading-display text-xl md:text-2xl text-foreground mt-8 mb-4">
               The Evolution of Hospitality
             </h2>
             <p className="text-muted leading-relaxed mb-6">
@@ -106,7 +106,7 @@ export default function BlogDetailPage() {
               else. We remember the places that made us feel something.&rdquo;
             </blockquote>
 
-            <h2 className="heading-display text-2xl md:text-3xl text-foreground mt-12 mb-4">
+            <h2 className="heading-display text-xl md:text-2xl text-foreground mt-8 mb-4">
               Sustainability as a Baseline
             </h2>
             <p className="text-muted leading-relaxed mb-6">
@@ -116,7 +116,7 @@ export default function BlogDetailPage() {
         )}
 
         {post.venue?.alternatives && post.venue.alternatives.length > 0 && (
-          <div className="mb-10">
+          <div className="mb-8">
             <h3 className="text-xs font-semibold uppercase tracking-wider text-primary mb-3">
               Other Hidden Alternatives
             </h3>
@@ -142,7 +142,7 @@ export default function BlogDetailPage() {
           </div>
         )}
 
-        <div className="my-12 p-8 bg-surface border border-border rounded-2xl">
+        <div className="my-12 p-6 bg-surface border border-border rounded-2xl">
           <h3 className="text-foreground mt-0 mb-4 font-semibold">Read Next</h3>
           <Link href="/blog" className="text-primary hover:underline text-sm font-medium">
             Discover more stories from the journal &rarr;

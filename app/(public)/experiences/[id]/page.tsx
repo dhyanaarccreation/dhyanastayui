@@ -75,7 +75,7 @@ export default function ExperienceDetailsPage() {
 
   return (
     <div className="bg-background pb-24 pt-[88px]">
-      <div className="max-w-[1200px] mx-auto px-6 lg:px-8">
+      <div className="container-page">
         <div className="flex items-center justify-between mb-6">
           <Link
             href="/experiences"
@@ -92,8 +92,8 @@ export default function ExperienceDetailsPage() {
           <span className="px-3 py-1 bg-surface text-foreground text-[10px] uppercase tracking-wider rounded-full border border-border font-semibold mb-3 inline-block">
             {exp.category}
           </span>
-          <h1 className="heading-display text-3xl md:text-4xl text-foreground mb-3">{exp.name}</h1>
-          <div className="flex flex-wrap items-center gap-5 text-sm text-muted">
+          <h1 className="heading-display text-2xl md:text-3xl text-foreground mb-3">{exp.name}</h1>
+          <div className="flex flex-wrap items-center gap-4 text-sm text-muted">
             <div className="flex items-center gap-1 font-medium text-foreground">
               {exp.reviewCount} reviews
             </div>
@@ -104,7 +104,7 @@ export default function ExperienceDetailsPage() {
         </div>
 
         {/* ================= VIDEO + RESERVE ================= */}
-        <div className="grid lg:grid-cols-3 gap-6 mb-4">
+        <div className="grid lg:grid-cols-3 gap-5 mb-4">
           <div className="lg:col-span-2">
             <div ref={videoWrapperRef} className="relative aspect-video rounded-2xl overflow-hidden bg-black">
               {exp.video ? (
@@ -130,13 +130,13 @@ export default function ExperienceDetailsPage() {
               detail page's Reserve card occupies next to its hero media. */}
           <div className="lg:col-span-1">
             <div
-              className="bg-surface border border-border rounded-3xl p-5 md:p-6 sticky top-24 shadow-2xl overflow-y-auto"
+              className="bg-surface border border-border rounded-3xl p-4 md:p-5 sticky top-24 shadow-2xl overflow-y-auto"
               style={videoHeight ? { maxHeight: videoHeight } : undefined}
             >
               {!reserved ? (
                 <>
                   <div className="flex items-baseline gap-2 mb-4 text-foreground">
-                    <span className="text-2xl font-bold">₹{exp.price}</span>
+                    <span className="text-xl font-bold">₹{exp.price}</span>
                     <span className="text-xs text-muted">/ person</span>
                   </div>
 
@@ -225,9 +225,9 @@ export default function ExperienceDetailsPage() {
 
         {/* Up Next — horizontal reel below the video, YouTube-card style
             matching the Stay detail page's Stay Stories row. */}
-        <div className="mt-6 md:mt-8">
+        <div className="mt-6 md:mt-6">
           <p className="text-xs font-semibold uppercase tracking-wider text-primary mb-3">Up Next</p>
-          <div className="flex gap-4 md:gap-5 overflow-x-auto pb-2 scrollbar-hide">
+          <div className="flex gap-4 md:gap-4 overflow-x-auto pb-2 scrollbar-hide">
             {upNext.map((e) => (
               <Link
                 key={e.id}
@@ -270,8 +270,8 @@ export default function ExperienceDetailsPage() {
         </div>
 
         {/* ================= DETAILS ================= */}
-        <div className="max-w-3xl mt-10">
-          <div className="space-y-10">
+        <div className="max-w-3xl mt-8">
+          <div className="space-y-8">
             {exp.host && (
               <div className="flex items-center gap-4 py-6 border-y border-border">
                 <div className="w-14 h-14 rounded-full bg-surface-hover overflow-hidden shrink-0">
@@ -286,13 +286,13 @@ export default function ExperienceDetailsPage() {
             )}
 
             <div>
-              <h2 className="text-2xl font-semibold text-foreground mb-4">What you&apos;ll do</h2>
+              <h2 className="text-xl font-semibold text-foreground mb-4">What you&apos;ll do</h2>
               <p className="text-muted leading-relaxed">{exp.description}</p>
             </div>
 
             {exp.included && (
               <div>
-                <h2 className="text-2xl font-semibold text-foreground mb-4">What&apos;s included</h2>
+                <h2 className="text-xl font-semibold text-foreground mb-4">What&apos;s included</h2>
                 <div className="grid sm:grid-cols-2 gap-4">
                   {exp.included.map((item) => (
                     <div key={item} className="flex items-start gap-3">
@@ -306,7 +306,7 @@ export default function ExperienceDetailsPage() {
 
             {exp.gallery && exp.gallery.length > 0 && (
               <div>
-                <h2 className="text-2xl font-semibold text-foreground mb-4">Photos</h2>
+                <h2 className="text-xl font-semibold text-foreground mb-4">Photos</h2>
                 <div className="grid grid-cols-3 gap-3">
                   {[exp.image, ...exp.gallery].map((src, i) => (
                     <button
@@ -323,10 +323,10 @@ export default function ExperienceDetailsPage() {
             )}
 
             <div>
-              <h2 className="text-2xl font-semibold text-foreground mb-4">Guest Stories</h2>
-              <div className="grid sm:grid-cols-2 gap-5">
+              <h2 className="text-xl font-semibold text-foreground mb-4">Guest Stories</h2>
+              <div className="grid sm:grid-cols-2 gap-4">
                 {experienceTestimonials.map((t) => (
-                  <div key={t.name} className="p-5 rounded-2xl bg-surface border border-border relative">
+                  <div key={t.name} className="p-4 rounded-2xl bg-surface border border-border relative">
                     <Quote size={20} className="text-primary/20 absolute top-4 right-4" />
                     <div className="flex items-center gap-3 mb-3">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -348,7 +348,7 @@ export default function ExperienceDetailsPage() {
       {/* ================= PHOTO LIGHTBOX ================= */}
       {lightbox && (
         <div
-          className="fixed inset-0 z-[100] bg-black/80 backdrop-blur-sm flex items-center justify-center p-6 animate-fade-in"
+          className="fixed inset-0 z-[100] bg-black/80 backdrop-blur-sm flex items-center justify-center p-5 animate-fade-in"
           onClick={() => setLightbox(null)}
         >
           <button

@@ -189,7 +189,7 @@ export default function PublicItineraryPage() {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={itinerary.coverImage} alt={itinerary.title} className="absolute inset-0 w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-transparent" />
-          <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-8">
+          <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6">
             <span className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-white/15 backdrop-blur-sm text-white text-[11px] font-medium mb-2.5">
               {ctx.avatar ? (
                 // eslint-disable-next-line @next/next/no-img-element
@@ -201,7 +201,7 @@ export default function PublicItineraryPage() {
               )}
               Travel Guide by {ctx.displayName} <BadgeCheck size={11} className="text-sage" />
             </span>
-            <h1 className="heading-organic text-xl sm:text-3xl text-white">{itinerary.title}</h1>
+            <h1 className="heading-organic text-xl sm:text-2xl text-white">{itinerary.title}</h1>
             <p className="text-white/80 text-sm mt-1.5 flex items-center gap-3 flex-wrap">
               <span className="flex items-center gap-1"><MapPin size={13} /> {itinerary.region}</span>
               <span className="flex items-center gap-1"><Clock size={13} /> {itinerary.durationLabel}</span>
@@ -250,13 +250,13 @@ export default function PublicItineraryPage() {
       </div>
 
       {/* ================= EXPERIENCE THE TRIP ================= */}
-      <div className="max-w-[1000px] mx-auto px-6 lg:px-8 mt-14">
+      <div className="max-w-[1000px] mx-auto px-6 lg:px-8 mt-10">
         <div className="flex items-end justify-between gap-3 flex-wrap mb-7">
           <div>
             <span className="text-xs font-semibold text-sage uppercase tracking-widest flex items-center gap-1.5">
               <Film size={12} /> Experience the Trip
             </span>
-            <h2 className="heading-organic text-xl sm:text-2xl text-foreground mt-1.5">
+            <h2 className="heading-organic text-xl sm:text-xl text-foreground mt-1.5">
               Watch how {ctx.displayName} explored {itinerary.region}
             </h2>
           </div>
@@ -265,13 +265,13 @@ export default function PublicItineraryPage() {
           </p>
         </div>
 
-        <div className="space-y-8">
+        <div className="space-y-6">
           {itinerary.days.map((d, idx) => {
             const platform = dayPlatform(idx);
             const profileUrl = platform === "instagram" ? ctx.instagramUrl : ctx.youtubeUrl;
             const highlights = dayHighlights(d);
             return (
-              <div key={d.day} id={`day-${d.day}-video`} className="flex gap-4 sm:gap-6 scroll-mt-20">
+              <div key={d.day} id={`day-${d.day}-video`} className="flex gap-4 sm:gap-5 scroll-mt-12">
                 {/* Timeline rail */}
                 <div className="hidden sm:flex flex-col items-center shrink-0 pt-1.5">
                   <span className="w-9 h-9 rounded-full bg-sage text-white text-xs font-bold flex items-center justify-center">
@@ -286,7 +286,7 @@ export default function PublicItineraryPage() {
                   </p>
                   <p className="text-base font-semibold text-foreground mb-3">Day {d.day} — {d.title}</p>
 
-                  <div className="grid sm:grid-cols-[1fr_260px] gap-5">
+                  <div className="grid sm:grid-cols-[1fr_260px] gap-4">
                     <TripVideoCard
                       label={`Day ${d.day} — ${d.title}`}
                       thumbnail={itinerary.coverImage}
@@ -325,13 +325,13 @@ export default function PublicItineraryPage() {
       </div>
 
       {/* ================= INFLUENCER'S STORY ================= */}
-      <div className="max-w-[1000px] mx-auto px-6 lg:px-8 mt-16">
+      <div className="max-w-[1000px] mx-auto px-6 lg:px-8 mt-10">
         <span className="text-xs font-semibold text-sage uppercase tracking-widest">Their Story</span>
-        <h2 className="heading-organic text-xl sm:text-2xl text-foreground mt-1.5 mb-6">
+        <h2 className="heading-organic text-xl sm:text-xl text-foreground mt-1.5 mb-6">
           How {ctx.displayName} Experienced {cityName}
         </h2>
 
-        <div className="rounded-2xl bg-surface border border-border p-6 sm:p-8">
+        <div className="rounded-2xl bg-surface border border-border p-5 sm:p-6">
           <Quote size={22} className="text-sage/40 mb-2" />
           <p className="text-base sm:text-lg text-foreground leading-relaxed">{ctx.story.whyThisDestination}</p>
 
@@ -372,16 +372,16 @@ export default function PublicItineraryPage() {
       </div>
 
       {/* ================= COMPLETE ITINERARY ================= */}
-      <div className="max-w-[1000px] mx-auto px-6 lg:px-8 grid lg:grid-cols-[1fr_320px] gap-8 mt-16">
+      <div className="max-w-[1000px] mx-auto px-6 lg:px-8 grid lg:grid-cols-[1fr_320px] gap-6 mt-10">
         <div>
           <span className="text-xs font-semibold text-sage uppercase tracking-widest">Complete Itinerary</span>
-          <h2 className="heading-organic text-xl sm:text-2xl text-foreground mt-1.5 mb-6">
+          <h2 className="heading-organic text-xl sm:text-xl text-foreground mt-1.5 mb-6">
             {ctx.displayName}&rsquo;s {cityName} Journey
           </h2>
 
           <div className="space-y-4">
             {itinerary.days.map((d) => (
-              <div key={d.day} id={`day-${d.day}-itinerary`} className="rounded-2xl border border-border bg-surface p-5 scroll-mt-20">
+              <div key={d.day} id={`day-${d.day}-itinerary`} className="rounded-2xl border border-border bg-surface p-4 scroll-mt-12">
                 <p className="text-sm font-semibold text-foreground">Day {d.day} — {d.title}</p>
                 <div className="mt-3 space-y-1.5">
                   {d.stops.map((stop, i) => {
@@ -501,12 +501,12 @@ export default function PublicItineraryPage() {
       </div>
 
       {/* ================= FINAL CTA ================= */}
-      <div className="max-w-[1000px] mx-auto px-6 lg:px-8 mt-16">
-        <div className="rounded-2xl bg-sage p-8 sm:p-10 text-center">
+      <div className="max-w-[1000px] mx-auto px-6 lg:px-8 mt-10">
+        <div className="rounded-2xl bg-sage p-6 sm:p-8 text-center">
           <p className="text-white/80 text-xs font-semibold uppercase tracking-widest flex items-center justify-center gap-1.5">
             <Sparkles size={12} /> From Inspiration to Your Own Trip
           </p>
-          <h3 className="heading-organic text-xl sm:text-2xl text-white mt-2">
+          <h3 className="heading-organic text-xl sm:text-xl text-white mt-2">
             Don&rsquo;t just read the itinerary — make this trip yours.
           </h3>
           <p className="text-white/75 text-sm mt-2 max-w-md mx-auto">

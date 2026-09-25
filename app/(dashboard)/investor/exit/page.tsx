@@ -140,7 +140,7 @@ export default function InvestorExitPage() {
         />
 
         <SectionCard title="Request Summary" icon={DoorOpen}>
-          <div className="p-5 flex flex-col sm:flex-row sm:items-center gap-4 sm:justify-between">
+          <div className="p-4 flex flex-col sm:flex-row sm:items-center gap-4 sm:justify-between">
             <div>
               <div className="flex items-center gap-2 flex-wrap">
                 <p className="text-base font-semibold text-foreground">{inv.name}</p>
@@ -166,7 +166,7 @@ export default function InvestorExitPage() {
         </SectionCard>
 
         <SectionCard title="Exit Process Status" icon={ClipboardCheck}>
-          <div className="p-5">
+          <div className="p-4">
             <ol className="space-y-0">
               {EXIT_STAGES.map((stage, i) => {
                 const done = i < exitRequest.stageIndex;
@@ -234,9 +234,9 @@ export default function InvestorExitPage() {
         subtitle="Request to exit an investment. Review your lock-in status and estimated settlement before submitting."
       />
 
-      <div className="grid lg:grid-cols-3 gap-6">
+      <div className="grid lg:grid-cols-3 gap-5">
         <SectionCard title="Request an Exit" icon={DoorOpen} className="lg:col-span-2">
-          <div className="p-5 space-y-5">
+          <div className="p-4 space-y-5">
             <div>
               <label className="text-[11px] font-semibold uppercase tracking-wider text-subtle mb-2 block">
                 Select investment
@@ -335,7 +335,7 @@ export default function InvestorExitPage() {
 
         {/* Process preview */}
         <SectionCard title="How the Exit Process Works" icon={ClipboardCheck}>
-          <div className="p-5">
+          <div className="p-4">
             <ol className="space-y-0">
               {EXIT_STAGES.map((stage, i) => {
                 const StageIcon = stage.icon;

@@ -30,7 +30,7 @@ export default function EventPlannerSettingsPage() {
         subtitle="Business profile, payouts, team and notification rules for Sana Kapoor Events."
       />
 
-      <div className="grid lg:grid-cols-2 gap-6">
+      <div className="grid lg:grid-cols-2 gap-5">
         <SectionCard title="Business Profile" icon={Briefcase}>
           <div className="divide-y divide-surface-hover">
             <SettingRow

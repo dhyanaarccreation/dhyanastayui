@@ -22,7 +22,7 @@ export default function RentalSettingsPage() {
         subtitle="Business details, rental terms, payouts and notifications for Auro Wheels."
       />
 
-      <div className="grid lg:grid-cols-2 gap-6">
+      <div className="grid lg:grid-cols-2 gap-5">
         <SectionCard title="Business Profile" icon={Bike}>
           <div className="divide-y divide-surface-hover">
             <SettingRow

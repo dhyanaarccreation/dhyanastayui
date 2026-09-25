@@ -125,7 +125,7 @@ export default function ItineraryPanel({
           onClick={() => setSkipConfirmId(null)}
         >
           <div
-            className="w-full sm:max-w-sm rounded-t-3xl sm:rounded-2xl bg-background border border-border shadow-2xl p-6 text-center text-foreground"
+            className="w-full sm:max-w-sm rounded-t-3xl sm:rounded-2xl bg-background border border-border shadow-2xl p-5 text-center text-foreground"
             onClick={(e) => e.stopPropagation()}
           >
             <p className="text-sm font-semibold mb-1">Skip this activity?</p>

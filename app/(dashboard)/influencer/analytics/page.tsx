@@ -54,7 +54,7 @@ export default function InfluencerAnalyticsPage() {
         </ul>
       </SectionCard>
 
-      <div className="grid lg:grid-cols-2 gap-6">
+      <div className="grid lg:grid-cols-2 gap-5">
         <SectionCard title="Audience Age Ranges" icon={Users}>
           <div className="px-5 py-4 space-y-3">
             {audienceAnalytics.ageRanges.map((a) => (

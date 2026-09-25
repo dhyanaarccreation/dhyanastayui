@@ -6,7 +6,7 @@ import type { LiveLocation } from "@/lib/trip-dashboard-data";
 export default function LiveMapCard({ location }: { location: LiveLocation }) {
   if (location.permission === "unavailable") {
     return (
-      <div className="bg-surface border border-border rounded-2xl p-6 text-center">
+      <div className="bg-surface border border-border rounded-2xl p-5 text-center">
         <LocateFixed size={22} className="mx-auto text-subtle mb-2" />
         <p className="text-sm font-medium text-foreground mb-1">Location unavailable</p>
         <p className="text-xs text-muted mb-3">

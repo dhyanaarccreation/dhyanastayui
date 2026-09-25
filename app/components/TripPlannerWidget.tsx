@@ -691,7 +691,7 @@ export default function TripPlannerWidget({
               {notifPanelOpen && (
                 <>
                   <div className="fixed inset-0 z-[89]" onClick={() => setNotifPanelOpen(false)} />
-                  <div className="absolute right-0 top-full mt-2 w-[320px] max-h-[70vh] overflow-y-auto rounded-2xl bg-background border border-border shadow-2xl z-[90] animate-fade-in">
+                  <div className="absolute right-0 top-full mt-2 w-[320px] max-w-[88vw] max-h-[70vh] overflow-y-auto rounded-2xl bg-background border border-border shadow-2xl z-[90] animate-fade-in">
                     <div className="flex items-center justify-between px-4 py-3 border-b border-border sticky top-0 bg-background">
                       <div>
                         <p className="text-xs font-semibold uppercase tracking-wider text-subtle">Notification center</p>
@@ -825,7 +825,7 @@ export default function TripPlannerWidget({
 
         {/* ================= PLANNER TAB ================= */}
         {tab === "planner" && (
-          <div className="flex-1 overflow-y-auto px-5 py-5 space-y-6">
+          <div className="flex-1 overflow-y-auto px-5 py-5 space-y-5">
             {/* Trip summary */}
             <div className="rounded-2xl bg-gradient-to-br from-sage/15 to-primary/10 border border-sage/25 p-4">
               <div className="flex items-center justify-between">
@@ -1523,7 +1523,7 @@ export default function TripPlannerWidget({
                 <X size={16} />
               </button>
             </div>
-            <div className="p-5 space-y-4">
+            <div className="p-4 space-y-4">
               {/* Live-tracking map mock — Zomato-style dashed route + moving location dot,
                   built entirely from mock plan data (no real map tiles/API). */}
               <div className="relative h-40 rounded-xl bg-gradient-to-br from-sage/10 to-primary/5 border border-border overflow-hidden">
@@ -1625,7 +1625,7 @@ export default function TripPlannerWidget({
                 <X size={16} />
               </button>
             </div>
-            <div className="p-5 space-y-3">
+            <div className="p-4 space-y-3">
               {plan.map((item) => {
                 const booking = bookingOverrides[item.id] ?? item.bookingStatus;
                 return (
@@ -1688,7 +1688,7 @@ export default function TripPlannerWidget({
               <p className="text-sm font-semibold text-foreground">Running Late</p>
               <p className="text-xs text-muted mt-1">We&apos;ll automatically optimize the rest of your day.</p>
             </div>
-            <div className="p-5 space-y-4">
+            <div className="p-4 space-y-4">
               <div className="grid grid-cols-2 gap-2.5">
                 {(
                   [
@@ -1748,7 +1748,7 @@ export default function TripPlannerWidget({
             className="w-full sm:max-w-sm rounded-t-3xl sm:rounded-2xl bg-background border border-border shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="p-5">
+            <div className="p-4">
               <p className="text-sm font-semibold text-foreground">Skip this activity?</p>
               <p className="text-xs text-muted mt-1.5">Skipping this stop will automatically:</p>
               <div className="space-y-2 mt-3">
@@ -1794,7 +1794,7 @@ export default function TripPlannerWidget({
             className="w-full sm:max-w-sm rounded-t-3xl sm:rounded-2xl bg-background border border-border shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="p-5">
+            <div className="p-4">
               <div className="flex items-start gap-2.5">
                 <AlertTriangle size={16} className="text-terracotta mt-0.5 shrink-0" />
                 <p className="text-sm text-foreground">This booking may have cancellation charges.</p>

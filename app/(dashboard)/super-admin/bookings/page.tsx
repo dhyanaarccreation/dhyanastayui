@@ -143,7 +143,7 @@ export default function SuperAdminBookingsPage() {
         </ul>
       </SectionCard>
 
-      <div className="grid lg:grid-cols-2 gap-6">
+      <div className="grid lg:grid-cols-2 gap-5">
         <SectionCard title="Experience Approvals" icon={Compass}>
           <p className="px-5 pt-4 text-xs text-muted">
             {experienceCategories.join(" · ")}

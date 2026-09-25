@@ -9,7 +9,7 @@ export default function HostSettingsPage() {
         subtitle="Payouts, notifications and default policies for your listings."
       />
 
-      <div className="grid lg:grid-cols-2 gap-6">
+      <div className="grid lg:grid-cols-2 gap-5">
         <SectionCard title="Payout Account" icon={Landmark}>
           <div className="divide-y divide-surface-hover">
             <SettingRow

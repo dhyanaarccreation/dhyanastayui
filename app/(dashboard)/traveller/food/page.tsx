@@ -19,10 +19,10 @@ export default function TravellerFoodPage() {
         subtitle="Today's curated meals — breakfast, lunch and dinner, pre-booked and reserved for you."
       />
 
-      <div className="grid sm:grid-cols-3 gap-5">
+      <div className="grid sm:grid-cols-3 gap-4">
         {dailyMeals.map((meal) => (
           <SectionCard key={meal.id} title={meal.meal}>
-            <div className="p-5">
+            <div className="p-4">
               <div className="flex items-start justify-between gap-2 mb-2">
                 <p className="text-sm font-semibold text-foreground">{meal.restaurant}</p>
                 <StatusPill tone={statusTone[meal.status]}>{meal.status}</StatusPill>

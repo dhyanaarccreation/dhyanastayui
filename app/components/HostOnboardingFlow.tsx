@@ -104,11 +104,11 @@ export default function HostOnboardingFlow({
 
   if (submitted) {
     return (
-      <div className="max-w-[640px] mx-auto py-16 text-center animate-fade-in">
+      <div className="max-w-[640px] mx-auto py-12 text-center animate-fade-in">
         <div className="w-20 h-20 mx-auto rounded-full bg-sage/15 flex items-center justify-center mb-6 border border-sage/30">
           <CheckCircle2 size={40} className="text-sage" />
         </div>
-        <h1 className="heading-display text-3xl text-foreground mb-3">Listing request submitted</h1>
+        <h1 className="heading-display text-2xl text-foreground mb-3">Listing request submitted</h1>
         <p className="text-muted max-w-md mx-auto leading-relaxed">
           <span className="text-foreground font-medium">{name}</span> is now in the pipeline.
           Our systematic checks (papers, photos, location, concept, pricing) run within 24 hours —
@@ -119,7 +119,7 @@ export default function HostOnboardingFlow({
         </div>
         <Link
           href={returnHref}
-          className="inline-flex mt-8 px-8 py-4 bg-gradient-to-r from-primary to-primary-hover text-primary-foreground font-semibold text-sm rounded-xl hover:shadow-[0_0_30px_rgba(16,185,129,0.3)] transition-all"
+          className="inline-flex mt-6 px-8 py-4 bg-gradient-to-r from-primary to-primary-hover text-primary-foreground font-semibold text-sm rounded-xl hover:shadow-[0_0_30px_rgba(16,185,129,0.3)] transition-all"
         >
           {returnLabel}
         </Link>
@@ -130,9 +130,9 @@ export default function HostOnboardingFlow({
   return (
     <div className="max-w-[840px] mx-auto pb-12">
       {/* Header & progress */}
-      <div className="mb-12">
-        <h1 className="heading-display text-3xl text-foreground mb-2">List your property</h1>
-        <p className="text-sm text-muted mb-8">
+      <div className="mb-8">
+        <h1 className="heading-display text-2xl text-foreground mb-2">List your property</h1>
+        <p className="text-sm text-muted mb-6">
           Complete all five sections — clean files clear our systematic checks faster and a manager calls you to approve.
         </p>
 
@@ -171,10 +171,10 @@ export default function HostOnboardingFlow({
         </div>
       </div>
 
-      <div className="bg-surface border border-border rounded-2xl p-6 md:p-10">
+      <div className="bg-surface border border-border rounded-2xl p-5 md:p-8">
         {/* ============ STEP 1 · BASIC INFO ============ */}
         {step === 1 && (
-          <div className="animate-fade-in space-y-6">
+          <div className="animate-fade-in space-y-5">
             <h2 className="text-xl font-semibold text-foreground">Basic Information</h2>
 
             <div>
@@ -269,7 +269,7 @@ export default function HostOnboardingFlow({
 
         {/* ============ STEP 2 · LOCATION ============ */}
         {step === 2 && (
-          <div className="animate-fade-in space-y-6">
+          <div className="animate-fade-in space-y-5">
             <h2 className="text-xl font-semibold text-foreground">Location</h2>
 
             <div>
@@ -355,11 +355,11 @@ export default function HostOnboardingFlow({
 
         {/* ============ STEP 3 · MEDIA ============ */}
         {step === 3 && (
-          <div className="animate-fade-in space-y-6">
+          <div className="animate-fade-in space-y-5">
             <h2 className="text-xl font-semibold text-foreground">Media &amp; Documents</h2>
             <p className="text-sm text-muted -mt-4">High quality photos are crucial for approval — minimum 8.</p>
 
-            <div className="border-2 border-dashed border-border rounded-2xl p-8 text-center hover:border-primary/50 transition-colors cursor-pointer">
+            <div className="border-2 border-dashed border-border rounded-2xl p-6 text-center hover:border-primary/50 transition-colors cursor-pointer">
               <UploadCloud size={36} className="text-primary mx-auto mb-3" />
               <h3 className="text-sm font-medium text-foreground mb-1">Upload property photos</h3>
               <p className="text-xs text-subtle">Drag &amp; drop or browse · JPG/PNG · min 1920×1080 · max 10MB each</p>
@@ -429,7 +429,7 @@ export default function HostOnboardingFlow({
 
         {/* ============ STEP 4 · PRICING ============ */}
         {step === 4 && (
-          <div className="animate-fade-in space-y-6">
+          <div className="animate-fade-in space-y-5">
             <h2 className="text-xl font-semibold text-foreground">Pricing</h2>
 
             <div className="grid sm:grid-cols-2 gap-4">
@@ -459,7 +459,7 @@ export default function HostOnboardingFlow({
             </div>
 
             {/* Live earnings preview */}
-            <div className="rounded-2xl border border-primary/30 bg-primary/5 p-5">
+            <div className="rounded-2xl border border-primary/30 bg-primary/5 p-4">
               <p className="text-xs font-semibold uppercase tracking-wider text-primary flex items-center gap-1.5 mb-4">
                 <Sparkles size={13} /> Your earnings preview
               </p>
@@ -536,7 +536,7 @@ export default function HostOnboardingFlow({
         )}
 
         {/* Navigation */}
-        <div className="flex justify-between mt-10 pt-6 border-t border-border">
+        <div className="flex justify-between mt-8 pt-6 border-t border-border">
           <button
             onClick={() => step > 1 && setStep(step - 1)}
             className={`flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-medium transition-colors ${

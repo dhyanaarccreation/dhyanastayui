@@ -54,7 +54,7 @@ export default function TravellerDocumentsPage() {
       </SectionCard>
 
       <SectionCard title="Travel Documents" icon={FileText}>
-        <div className="p-5 flex items-center justify-between gap-4 flex-wrap">
+        <div className="p-4 flex items-center justify-between gap-4 flex-wrap">
           <p className="text-sm text-muted max-w-md">
             Your KYC, passport and travel insurance documents are managed on your profile.
           </p>

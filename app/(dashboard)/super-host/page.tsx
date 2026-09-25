@@ -84,7 +84,7 @@ export default function SuperHostPage() {
         ]}
       />
 
-      <div className="grid lg:grid-cols-3 gap-6">
+      <div className="grid lg:grid-cols-3 gap-5">
         <SectionCard
           title="Top Performing Properties"
           icon={Building}
@@ -145,7 +145,7 @@ export default function SuperHostPage() {
       </SectionCard>
 
       {/* Expenses, maintenance & local partners — full cluster operations */}
-      <div className="grid lg:grid-cols-3 gap-6">
+      <div className="grid lg:grid-cols-3 gap-5">
         <SectionCard title="Cluster Expenses · MTD" icon={Receipt}>
           <ul className="divide-y divide-surface-hover">
             {clusterExpenses.map((e) => (

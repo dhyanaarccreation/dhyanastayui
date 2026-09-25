@@ -29,7 +29,7 @@ export default function SupportSettingsPage() {
         subtitle="AI behaviour, recording policy and the rules that decide which few chats become calls."
       />
 
-      <div className="grid lg:grid-cols-2 gap-6">
+      <div className="grid lg:grid-cols-2 gap-5">
         <SectionCard title="AI Behaviour" icon={Bot}>
           <div className="divide-y divide-surface-hover">
             <SettingRow

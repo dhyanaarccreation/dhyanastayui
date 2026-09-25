@@ -45,27 +45,27 @@ export default function VerifyOTPPage() {
   return (
     <div className="min-h-screen flex">
       {/* Left: Form */}
-      <div className="flex-1 flex items-center justify-center p-8 lg:p-16">
+      <div className="flex-1 flex items-center justify-center p-6 lg:p-16">
         <div className="w-full max-w-md animate-fade-in">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 mb-12">
+          <Link href="/" className="flex items-center gap-2 mb-8">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center font-bold text-primary-foreground">
               D
             </div>
-            <span className="text-2xl font-semibold text-foreground">
+            <span className="text-xl font-semibold text-foreground">
               Dhyana<span className="text-primary">Stays</span>
             </span>
           </Link>
 
-          <h1 className="heading-display text-3xl text-foreground mb-2">
+          <h1 className="heading-display text-2xl text-foreground mb-2">
             Verify Your Account
           </h1>
-          <p className="text-sm text-muted mb-8 leading-relaxed">
+          <p className="text-sm text-muted mb-6 leading-relaxed">
             We've sent a 6-digit verification code to your email and mobile
             number. Please enter it below.
           </p>
 
-          <form className="space-y-8" onSubmit={handleSubmit}>
+          <form className="space-y-6" onSubmit={handleSubmit}>
             <div className="flex justify-between gap-2">
               {otp.map((digit, index) => (
                 <input
@@ -93,7 +93,7 @@ export default function VerifyOTPPage() {
             </button>
           </form>
 
-          <div className="mt-8 text-center text-sm text-subtle">
+          <div className="mt-6 text-center text-sm text-subtle">
             <p>Didn't receive the code?</p>
             <div className="flex items-center justify-center gap-4 mt-2">
               <button className="text-primary hover:underline font-medium">
@@ -113,10 +113,10 @@ export default function VerifyOTPPage() {
         <div className="absolute top-1/2 -translate-y-1/2 -left-32 w-[600px] h-[600px] rounded-full bg-primary/5 blur-[120px]" />
         
         <div className="relative z-10 text-center p-16 max-w-md">
-          <div className="w-20 h-20 mx-auto rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-8">
+          <div className="w-20 h-20 mx-auto rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-6">
             <ShieldCheck size={32} className="text-primary" />
           </div>
-          <h2 className="heading-display text-3xl text-foreground mb-4">
+          <h2 className="heading-display text-2xl text-foreground mb-4">
             Trusted Community
           </h2>
           <p className="text-sm text-muted leading-relaxed">

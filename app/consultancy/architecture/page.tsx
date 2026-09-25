@@ -9,12 +9,12 @@ export default function ArchitectureConsultancyPage() {
         <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2000&auto=format&fit=crop" alt="Architecture" className="absolute inset-0 w-full h-full object-cover opacity-40" />
         <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-transparent" />
         
-        <div className="relative z-10 max-w-[1200px] mx-auto px-6 lg:px-8 w-full">
+        <div className="relative z-10 container-page w-full">
           <span className="text-xs uppercase tracking-wider text-primary font-bold mb-4 block">Dhyana Consultancy</span>
-          <h1 className="heading-display text-4xl md:text-6xl text-foreground mb-6 max-w-2xl leading-tight">
+          <h1 className="heading-display text-3xl md:text-5xl text-foreground mb-6 max-w-2xl leading-tight">
             Design spaces that<br />breathe life.
           </h1>
-          <p className="text-lg text-muted max-w-xl mb-10 leading-relaxed">
+          <p className="text-lg text-muted max-w-xl mb-8 leading-relaxed">
             Our award-winning architectural team helps you design eco-resorts, boutique homestays, and luxury villas that harmonize with nature and maximize guest experience.
           </p>
           <div className="flex gap-4">
@@ -29,20 +29,20 @@ export default function ArchitectureConsultancyPage() {
       </section>
 
       {/* Services Grid */}
-      <section className="py-24 max-w-[1200px] mx-auto px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl font-bold text-foreground mb-4">Our Expertise</h2>
+      <section className="py-16 container-page">
+        <div className="text-center mb-10">
+          <h2 className="text-2xl font-bold text-foreground mb-4">Our Expertise</h2>
           <p className="text-muted max-w-2xl mx-auto">From conceptual master planning to meticulous interior detailing, we offer end-to-end architectural services for the hospitality sector.</p>
         </div>
         
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {[
             { icon: Compass, title: "Master Planning", desc: "Site analysis, zoning, and spatial flow design for large-scale resorts." },
             { icon: Ruler, title: "Architectural Design", desc: "Biophilic and sustainable structural design for standalone villas or clusters." },
             { icon: Lightbulb, title: "Interior Aesthetics", desc: "Curated furniture, lighting, and material palettes that evoke luxury." },
             { icon: Users, title: "Project Management", desc: "End-to-end execution, contractor liaison, and quality control." },
           ].map((service, i) => (
-            <div key={i} className="p-8 border border-border rounded-2xl bg-surface hover:border-primary/50 transition-colors group">
+            <div key={i} className="p-6 border border-border rounded-2xl bg-surface hover:border-primary/50 transition-colors group">
               <service.icon size={32} className="text-subtle group-hover:text-primary transition-colors mb-6" />
               <h3 className="text-xl font-semibold text-foreground mb-3">{service.title}</h3>
               <p className="text-sm text-muted leading-relaxed">{service.desc}</p>
@@ -52,11 +52,11 @@ export default function ArchitectureConsultancyPage() {
       </section>
 
       {/* The Dhyana Standard */}
-      <section className="py-24 bg-surface border-y border-border">
-        <div className="max-w-[1200px] mx-auto px-6 lg:px-8 flex flex-col md:flex-row gap-16 items-center">
+      <section className="py-16 bg-surface border-y border-border">
+        <div className="container-page flex flex-col md:flex-row gap-16 items-center">
           <div className="md:w-1/2">
-            <h2 className="text-3xl font-bold text-foreground mb-6">The Dhyana Standard</h2>
-            <p className="text-muted leading-relaxed mb-8">
+            <h2 className="text-2xl font-bold text-foreground mb-6">The Dhyana Standard</h2>
+            <p className="text-muted leading-relaxed mb-6">
               Properties designed by our consultancy team are guaranteed direct entry into the Dhyana Stays exclusive rental portfolio, bypassing the standard vetting queue.
             </p>
             <ul className="space-y-4">

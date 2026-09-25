@@ -40,7 +40,7 @@ export default function InfluencerBenefitsPage() {
 
       {/* Tier ladder */}
       <SectionCard title="Curator Tiers" icon={Sparkles}>
-        <div className="p-5">
+        <div className="p-4">
           <div className="flex items-stretch gap-2">
             {performanceTiers.map((t, i) => {
               const Icon = tierIcon[t.key];
@@ -107,7 +107,7 @@ export default function InfluencerBenefitsPage() {
       </SectionCard>
 
       {/* Current + next tier benefits */}
-      <div className="grid lg:grid-cols-2 gap-6">
+      <div className="grid lg:grid-cols-2 gap-5">
         <SectionCard title={`${performanceTiers[currentIndex].label} — Your Benefits`} icon={Gift}>
           <ul className="divide-y divide-surface-hover">
             {performanceTiers[currentIndex].benefits.map((b) => (

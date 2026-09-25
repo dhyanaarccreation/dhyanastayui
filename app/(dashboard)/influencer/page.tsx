@@ -91,8 +91,8 @@ export default function InfluencerDashboardPage() {
       </div>
 
       {/* Dhyana Travel Curator identity + tier */}
-      <div className="bg-gradient-to-r from-sage/15 via-surface to-surface border border-sage/25 rounded-2xl p-6 md:p-8">
-        <div className="flex flex-col md:flex-row md:items-center gap-6">
+      <div className="bg-gradient-to-r from-sage/15 via-surface to-surface border border-sage/25 rounded-2xl p-5 md:p-6">
+        <div className="flex flex-col md:flex-row md:items-center gap-5">
           <div className="flex-1">
             <p className="text-xs font-semibold uppercase tracking-wider text-sage flex items-center gap-1.5">
               <Sparkles size={12} /> {curatorIdentity.title}
@@ -125,7 +125,7 @@ export default function InfluencerDashboardPage() {
 
       {/* Quick actions */}
       <SectionCard title="Quick Actions" icon={Send}>
-        <div className="p-5 flex flex-wrap gap-2.5">
+        <div className="p-4 flex flex-wrap gap-2.5">
           <Link href="/influencer/promo" className="px-4 py-2 text-xs font-semibold bg-primary text-primary-foreground rounded-full hover:bg-primary-hover transition-colors">
             Copy Referral Link
           </Link>
@@ -147,10 +147,10 @@ export default function InfluencerDashboardPage() {
         </div>
       </SectionCard>
 
-      <div className="grid lg:grid-cols-2 gap-6">
+      <div className="grid lg:grid-cols-2 gap-5">
         {/* Promo code + referral quick copy */}
         <SectionCard title="Your Promo Code & Link" icon={Copy}>
-          <div className="p-5 space-y-3">
+          <div className="p-4 space-y-3">
             <div className="flex items-center justify-between gap-3 rounded-xl border border-dashed border-border bg-background px-4 py-3">
               <span className="font-mono text-sm font-bold text-foreground">{promoCode.code}</span>
               <CopyButton value={promoCode.code} />

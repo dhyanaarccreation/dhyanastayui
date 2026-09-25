@@ -15,7 +15,7 @@ export default function AdminUsersPage() {
     <div className="space-y-4 pb-12">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
-          <h1 className="heading-display text-3xl text-foreground mb-2">
+          <h1 className="heading-display text-2xl text-foreground mb-2">
             User & Host Management
           </h1>
           <p className="text-sm text-muted">

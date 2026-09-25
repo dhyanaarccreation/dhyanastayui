@@ -22,7 +22,7 @@ export default function FoodPartnerSettingsPage() {
         subtitle="Licences, payouts, service hours and notifications for Meena's Kitchen."
       />
 
-      <div className="grid lg:grid-cols-2 gap-6">
+      <div className="grid lg:grid-cols-2 gap-5">
         <SectionCard title="Licences & Compliance" icon={ShieldCheck}>
           <div className="divide-y divide-surface-hover">
             <SettingRow

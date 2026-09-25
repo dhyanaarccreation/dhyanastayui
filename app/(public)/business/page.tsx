@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import ContactSection from "@/app/components/ContactSection";
+import ChipScroller from "@/app/components/ChipScroller";
 import {
   Home,
   IndianRupee,
@@ -208,11 +209,11 @@ export default function BusinessPage() {
   return (
     <div className="pb-24">
       {/* Hero */}
-      <section className="max-w-[1400px] mx-auto px-6 lg:px-8 pt-16 pb-10 text-center">
+      <section className="container-page pt-16 pb-10 text-center">
         <span className="text-xs font-semibold text-primary uppercase tracking-widest">
           Business with Dhyana
         </span>
-        <h1 className="heading-display text-4xl lg:text-6xl text-foreground mt-3">
+        <h1 className="heading-display text-3xl lg:text-5xl text-foreground mt-3">
           One door. Every way to grow with us.
         </h1>
         <p className="text-muted mt-4 max-w-2xl mx-auto">
@@ -222,8 +223,8 @@ export default function BusinessPage() {
       </section>
 
       {/* Tabs */}
-      <section className="max-w-[1400px] mx-auto px-6 lg:px-8">
-        <div className="flex gap-2 overflow-x-auto scrollbar-hide justify-start lg:justify-center pb-1 mb-10">
+      <section className="container-page">
+        <ChipScroller label="sections" className="mb-8" contentClassName="gap-2 justify-start lg:justify-center">
           {tabs.map(({ key, label, icon: Icon }) => (
             <button
               key={key}
@@ -238,13 +239,13 @@ export default function BusinessPage() {
               {label}
             </button>
           ))}
-        </div>
+        </ChipScroller>
 
         {/* Cards for active tab */}
         {cards[tab].length > 0 && (
-        <div className={`grid gap-6 stagger-children ${cards[tab].length > 3 ? "sm:grid-cols-2 lg:grid-cols-4" : cards[tab].length === 2 ? "md:grid-cols-2" : cards[tab].length === 1 ? "max-w-xl mx-auto" : "md:grid-cols-3"}`}>
+        <div className={`grid gap-5 stagger-children ${cards[tab].length > 3 ? "sm:grid-cols-2 lg:grid-cols-4" : cards[tab].length === 2 ? "md:grid-cols-2" : cards[tab].length === 1 ? "max-w-xl mx-auto" : "md:grid-cols-3"}`}>
           {cards[tab].map((c) => (
-            <div key={c.title} className="bg-surface border border-surface-hover hover:border-border rounded-2xl p-6 flex flex-col card-hover">
+            <div key={c.title} className="bg-surface border border-surface-hover hover:border-border rounded-2xl p-5 flex flex-col card-hover">
               <span className="w-11 h-11 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-4">
                 <c.icon size={20} />
               </span>
@@ -263,18 +264,18 @@ export default function BusinessPage() {
 
         {/* Invest tab: the three Dhyana investment models */}
         {tab === "invest" && (
-          <div className="animate-fade-in space-y-12">
+          <div className="animate-fade-in space-y-8">
             <p className="text-center text-muted max-w-2xl mx-auto -mt-2">
               Not everyone has land, not everyone has capital, and not everyone has hospitality
               expertise. Dhyana connects all three — pick the model that matches what you bring.
             </p>
 
             {/* Three models */}
-            <div className="grid lg:grid-cols-3 gap-6">
+            <div className="grid lg:grid-cols-3 gap-5">
               {investModels.map((m, i) => (
                 <div
                   key={m.name}
-                  className={`rounded-2xl border p-6 flex flex-col ${
+                  className={`rounded-2xl border p-5 flex flex-col ${
                     i === 2 ? "border-primary/50 bg-primary/5" : "border-border bg-surface"
                   }`}
                 >
@@ -340,7 +341,7 @@ export default function BusinessPage() {
 
             {/* Development process */}
             <div>
-              <h3 className="heading-display text-2xl text-foreground text-center">How a project comes alive</h3>
+              <h3 className="heading-display text-xl text-foreground text-center">How a project comes alive</h3>
               <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide mt-6 pb-2">
                 {["Land evaluation", "Investor matching", "Legal agreements", "Design & planning", "Construction", "Curated inspection", "Platform listing", "Revenue"].map((s, i, arr) => (
                   <div key={s} className="flex items-center gap-2 shrink-0">
@@ -355,8 +356,8 @@ export default function BusinessPage() {
             </div>
 
             {/* Why Dhyana + who can apply */}
-            <div className="grid lg:grid-cols-2 gap-6">
-              <div className="bg-surface border border-border rounded-2xl p-6">
+            <div className="grid lg:grid-cols-2 gap-5">
+              <div className="bg-surface border border-border rounded-2xl p-5">
                 <h3 className="text-base font-semibold text-foreground flex items-center gap-2">
                   <TrendingUp size={16} className="text-primary" /> Why partner with Dhyana?
                 </h3>
@@ -368,7 +369,7 @@ export default function BusinessPage() {
                   ))}
                 </ul>
               </div>
-              <div className="bg-surface border border-border rounded-2xl p-6">
+              <div className="bg-surface border border-border rounded-2xl p-5">
                 <h3 className="text-base font-semibold text-foreground flex items-center gap-2">
                   <Users size={16} className="text-primary" /> Who can apply?
                 </h3>
@@ -387,8 +388,8 @@ export default function BusinessPage() {
             </div>
 
             {/* CTA banner */}
-            <div className="rounded-3xl border border-primary/30 bg-gradient-to-r from-primary/15 via-surface to-surface p-8 md:p-10 text-center">
-              <h3 className="heading-display text-2xl md:text-3xl text-foreground">
+            <div className="rounded-3xl border border-primary/30 bg-gradient-to-r from-primary/15 via-surface to-surface p-6 md:p-8 text-center">
+              <h3 className="heading-display text-xl md:text-2xl text-foreground">
                 Build Together. Grow Together. Earn Together.
               </h3>
               <p className="text-sm text-muted mt-2 max-w-xl mx-auto">
@@ -407,11 +408,11 @@ export default function BusinessPage() {
 
         {/* Influencer tab extra: tiers */}
         {tab === "influencers" && (
-          <div className="mt-12 animate-fade-in">
-            <h3 className="heading-display text-2xl text-foreground text-center">Partner tiers</h3>
-            <div className="grid md:grid-cols-3 gap-6 mt-6">
+          <div className="mt-8 animate-fade-in">
+            <h3 className="heading-display text-xl text-foreground text-center">Partner tiers</h3>
+            <div className="grid md:grid-cols-3 gap-5 mt-6">
               {tiers.map((t, i) => (
-                <div key={t.name} className={`rounded-2xl border p-6 ${i === 1 ? "border-primary/50 bg-primary/5" : "border-border bg-surface"}`}>
+                <div key={t.name} className={`rounded-2xl border p-5 ${i === 1 ? "border-primary/50 bg-primary/5" : "border-border bg-surface"}`}>
                   <p className="text-lg font-semibold text-foreground">{t.name}</p>
                   <p className="text-xs text-muted mt-0.5">{t.range}</p>
                   <ul className="mt-4 space-y-2">
@@ -429,7 +430,7 @@ export default function BusinessPage() {
       </section>
 
       {/* ---------- Rolling ads ---------- */}
-      <section className="max-w-[1400px] mx-auto px-6 lg:px-8 mt-20">
+      <section className="container-page mt-12">
         <div className="relative rounded-3xl overflow-hidden border border-primary/25 h-[300px] md:h-[280px]">
           {rollingAds.map((a, i) => (
             <div
@@ -441,11 +442,11 @@ export default function BusinessPage() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img loading="lazy" src={a.image} alt={a.headline} className="absolute inset-0 w-full h-full object-cover" />
               <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/55 to-black/15" />
-              <div className="relative z-10 h-full flex flex-col justify-center p-8 md:p-12 max-w-xl">
+              <div className="relative z-10 h-full flex flex-col justify-center p-6 md:p-8 max-w-xl">
                 <span className="self-start px-3 py-1 text-[10px] font-semibold uppercase tracking-wider bg-white/10 backdrop-blur-sm text-white/90 rounded-full border border-white/20 mb-3">
                   {a.tag} · Opportunity
                 </span>
-                <h3 className="heading-display text-2xl md:text-3xl text-white">{a.headline}</h3>
+                <h3 className="heading-display text-xl md:text-2xl text-white">{a.headline}</h3>
                 <p className="text-sm text-white/80 mt-2 leading-relaxed">{a.copy}</p>
                 <Link
                   href={a.href}
@@ -477,16 +478,16 @@ export default function BusinessPage() {
       </section>
 
       {/* ---------- Business chatbot ---------- */}
-      <section className="max-w-3xl mx-auto px-6 lg:px-8 mt-20">
+      <section className="max-w-3xl mx-auto px-6 lg:px-8 mt-12">
         <div className="text-center mb-6">
           <span className="text-xs font-semibold text-primary uppercase tracking-widest flex items-center justify-center gap-1.5">
             <Sparkles size={13} /> Not sure where to start?
           </span>
-          <h2 className="heading-display text-3xl text-foreground mt-2">Ask the business assistant</h2>
+          <h2 className="heading-display text-2xl text-foreground mt-2">Ask the business assistant</h2>
         </div>
 
         <div className="bg-surface border border-border rounded-3xl overflow-hidden">
-          <div className="p-5 space-y-4 max-h-[360px] overflow-y-auto">
+          <div className="p-4 space-y-4 max-h-[360px] overflow-y-auto">
             {messages.map((m, i) =>
               m.role === "user" ? (
                 <div key={i} className="flex justify-end">

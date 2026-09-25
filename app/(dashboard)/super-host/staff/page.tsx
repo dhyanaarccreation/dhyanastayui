@@ -78,7 +78,7 @@ export default function SuperHostStaffPage() {
         </div>
       </SectionCard>
 
-      <div className="grid lg:grid-cols-2 gap-6">
+      <div className="grid lg:grid-cols-2 gap-5">
         <SectionCard title="Cluster-wide Quality Standards" icon={ShieldCheck}>
           <div className="divide-y divide-surface-hover">
             {checks.map((c) => (

@@ -83,7 +83,7 @@ export default function VaksanaFarmsPage() {
   return (
     <div className="bg-background min-h-screen pb-24">
       {/* Breadcrumb & Actions */}
-      <div className="max-w-[1200px] mx-auto px-6 lg:px-8 py-6">
+      <div className="container-page py-6">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div className="flex items-center gap-2 text-xs text-subtle">
             <Link href="/" className="hover:text-foreground transition-colors">
@@ -109,8 +109,8 @@ export default function VaksanaFarmsPage() {
       </div>
 
       {/* Header Info */}
-      <div className="max-w-[1200px] mx-auto px-6 lg:px-8 mb-6">
-        <h1 className="heading-display text-3xl md:text-5xl text-foreground mb-3">Vaksana Farms</h1>
+      <div className="container-page mb-6">
+        <h1 className="heading-display text-2xl md:text-4xl text-foreground mb-3">Vaksana Farms</h1>
         <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted">
           <div className="flex items-center gap-1">
             <a href="#reviews" className="underline hover:text-foreground">
@@ -133,7 +133,7 @@ export default function VaksanaFarmsPage() {
       </div>
 
       {/* Gallery Grid (hero) — farm-level, unchanged regardless of which stay a visitor picks below */}
-      <div className="max-w-[1200px] mx-auto px-6 lg:px-8 mb-6">
+      <div className="container-page mb-6">
         <div className="grid grid-cols-4 grid-rows-2 gap-2 md:gap-4 h-22.5 md:h-37.5 rounded-2xl overflow-hidden">
           <div className="col-span-4 md:col-span-2 row-span-2 bg-surface-hover relative overflow-hidden">
             {heroVideoFailed ? (
@@ -262,16 +262,16 @@ export default function VaksanaFarmsPage() {
       {/* Curated Experiences Modal */}
       {experiencesOpen && (
         <div
-          className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-10 bg-white/40 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8 bg-white/40 backdrop-blur-md animate-fade-in"
           onClick={() => setExperiencesOpen(false)}
         >
           <div
-            className="relative w-full max-w-4xl max-h-[85vh] overflow-y-auto bg-background rounded-3xl shadow-2xl p-5 md:p-8 animate-fade-in"
+            className="relative w-full max-w-4xl max-h-[85vh] overflow-y-auto bg-background rounded-3xl shadow-2xl p-4 md:p-6 animate-fade-in"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between mb-6">
               <div>
-                <h3 className="heading-display text-xl md:text-2xl text-foreground">Curated Experiences</h3>
+                <h3 className="heading-display text-xl md:text-xl text-foreground">Curated Experiences</h3>
                 <p className="text-sm text-muted">{vaksanaFarms.experiences.length} experiences at Vaksana Farms</p>
               </div>
               <button
@@ -284,7 +284,7 @@ export default function VaksanaFarmsPage() {
               </button>
             </div>
 
-            <div className="grid sm:grid-cols-2 gap-4 md:gap-5">
+            <div className="grid sm:grid-cols-2 gap-4 md:gap-4">
               {vaksanaFarms.experiences.map((experience, i) => {
                 const Icon = experienceIcons[experience.icon] ?? Sparkles;
                 return (
@@ -320,7 +320,7 @@ export default function VaksanaFarmsPage() {
       {/* Story Modal */}
       {storyOpen && (
         <div
-          className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-10 bg-white/40 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8 bg-white/40 backdrop-blur-md animate-fade-in"
           onClick={() => setStoryOpen(false)}
         >
           <div
@@ -342,19 +342,19 @@ export default function VaksanaFarmsPage() {
               >
                 <X size={18} />
               </button>
-              <div className="absolute inset-x-0 bottom-0 p-6 md:p-8">
+              <div className="absolute inset-x-0 bottom-0 p-5 md:p-6">
                 <span className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider text-white/80">
                   <Sparkles size={12} /> Our Story
                 </span>
-                <h3 className="heading-display text-2xl md:text-3xl text-white mt-1">Vaksana Farms</h3>
+                <h3 className="heading-display text-xl md:text-2xl text-white mt-1">Vaksana Farms</h3>
               </div>
             </div>
 
-            <div className="p-6 md:p-10">
-              <p className="text-muted leading-relaxed mb-8">{vaksanaFarms.story}</p>
+            <div className="p-5 md:p-8">
+              <p className="text-muted leading-relaxed mb-6">{vaksanaFarms.story}</p>
 
               <h4 className="text-xs font-semibold uppercase tracking-wider text-primary mb-4">Mission &amp; Vision</h4>
-              <div className="space-y-4 mb-8">
+              <div className="space-y-4 mb-6">
                 <div className="flex gap-4">
                   <span className="w-20 shrink-0 text-xs font-semibold text-foreground">Mission</span>
                   <p className="text-sm text-muted leading-relaxed">{vaksanaFarms.mission}</p>
@@ -391,7 +391,7 @@ export default function VaksanaFarmsPage() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-10 bg-white/40 backdrop-blur-md"
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8 bg-white/40 backdrop-blur-md"
             onClick={() => {
               setGalleryOpen(false);
               setSelectedImage(null);
@@ -402,12 +402,12 @@ export default function VaksanaFarmsPage() {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.94 }}
               transition={{ type: "spring", stiffness: 320, damping: 30 }}
-              className="relative w-full max-w-4xl max-h-[88vh] overflow-y-auto bg-background rounded-3xl shadow-2xl p-5 md:p-8"
+              className="relative w-full max-w-4xl max-h-[88vh] overflow-y-auto bg-background rounded-3xl shadow-2xl p-4 md:p-6"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-center justify-between mb-6">
                 <div>
-                  <h3 className="heading-display text-xl md:text-2xl text-foreground">Gallery</h3>
+                  <h3 className="heading-display text-xl md:text-xl text-foreground">Gallery</h3>
                   <p className="text-sm text-muted">{vaksanaFarms.gallery.length} photos of Vaksana Farms</p>
                 </div>
                 <button
@@ -449,7 +449,7 @@ export default function VaksanaFarmsPage() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    className="absolute inset-0 bg-background/95 backdrop-blur-sm rounded-3xl flex items-center justify-center p-6"
+                    className="absolute inset-0 bg-background/95 backdrop-blur-sm rounded-3xl flex items-center justify-center p-5"
                     onClick={() => setSelectedImage(null)}
                   >
                     <motion.img
@@ -477,17 +477,17 @@ export default function VaksanaFarmsPage() {
         )}
       </AnimatePresence>
 
-      <div className="max-w-[1200px] mx-auto px-6 lg:px-8">
+      <div className="container-page">
         {/* Available Stays at Vaksana Farms — new carousel, each card is a real,
             independently bookable stay with its own dedicated page. Placed
             immediately below the hero so it's visible with minimal scrolling. */}
         <div className="pt-2 pb-8 border-b border-surface-hover">
-          <h2 className="heading-display text-2xl text-foreground mb-2">Available Stays at Vaksana Farms</h2>
+          <h2 className="heading-display text-xl text-foreground mb-2">Available Stays at Vaksana Farms</h2>
           <p className="text-sm text-muted mb-6">
             Four individually designed stays, one working organic farm — each with its own page.
           </p>
 
-          <div className="flex gap-5 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-2 -mx-6 px-6 lg:-mx-8 lg:px-8">
+          <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-2 -mx-[4.3478%] px-[4.3478%] sm:-mx-[12.5%] sm:px-[12.5%]">
             {accommodations.map((unit) => {
               const unitLabel = unit.name.split("—").pop()?.trim() ?? unit.name;
               const details = vaksanaUnitDetails[unit.slug];
@@ -518,7 +518,7 @@ export default function VaksanaFarmsPage() {
                       </span>
                     )}
                   </div>
-                  <div className="p-5">
+                  <div className="p-4">
                     <div className="flex items-start justify-between gap-2 mb-1">
                       <h3 className="text-base font-semibold text-foreground group-hover:text-primary transition-colors">
                         {unit.name}
@@ -551,9 +551,9 @@ export default function VaksanaFarmsPage() {
 
         {/* About Vaksana Farms — farm introduction */}
         <div className="py-8 border-b border-surface-hover">
-          <h2 className="heading-display text-2xl text-foreground mb-4">About Vaksana Farms</h2>
+          <h2 className="heading-display text-xl text-foreground mb-4">About Vaksana Farms</h2>
           <p className="text-muted leading-relaxed mb-6">{vaksanaFarms.description}</p>
-          <div className="grid sm:grid-cols-2 gap-6">
+          <div className="grid sm:grid-cols-2 gap-5">
             <div className="flex gap-4">
               <Leaf size={24} className="text-primary shrink-0" />
               <div>
@@ -577,7 +577,7 @@ export default function VaksanaFarmsPage() {
 
         {/* Curated experiences (farm-level) */}
         <div className="py-8 border-b border-surface-hover">
-          <h2 className="heading-display text-2xl text-foreground mb-6">Curated experiences at the farm</h2>
+          <h2 className="heading-display text-xl text-foreground mb-6">Curated experiences at the farm</h2>
           <div className="grid sm:grid-cols-3 gap-4">
             {vaksanaFarms.experiences.map((exp) => {
               const Icon = experienceIcons[exp.icon] ?? Sparkles;
@@ -595,7 +595,7 @@ export default function VaksanaFarmsPage() {
 
         {/* Gallery (farm-level) */}
         <div className="py-8 border-b border-surface-hover">
-          <h2 className="heading-display text-2xl text-foreground mb-6">Gallery</h2>
+          <h2 className="heading-display text-xl text-foreground mb-6">Gallery</h2>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 md:gap-4">
             {vaksanaFarms.gallery.slice(0, 7).map((src, i) => (
               <div key={src} className="relative aspect-[4/3] rounded-xl overflow-hidden bg-surface-hover group">
@@ -629,14 +629,14 @@ export default function VaksanaFarmsPage() {
         {/* Reviews (farm-level, pooled across all four stays) */}
         <div className="py-8 border-b border-surface-hover" id="reviews">
           <div className="flex items-center gap-2 mb-6">
-            <h2 className="heading-display text-2xl text-foreground">
+            <h2 className="heading-display text-xl text-foreground">
               {vaksanaFarms.reviewCount} reviews
             </h2>
           </div>
 
-          <div className="grid sm:grid-cols-2 gap-6">
+          <div className="grid sm:grid-cols-2 gap-5">
             {farmReviews.map((review) => (
-              <div key={review.id} className="bg-surface p-5 rounded-2xl border border-border">
+              <div key={review.id} className="bg-surface p-4 rounded-2xl border border-border">
                 <div className="flex items-center gap-3 mb-4">
                   <img
                     src={review.avatar}
@@ -656,7 +656,7 @@ export default function VaksanaFarmsPage() {
 
         {/* Blog Recommendations (farm-level, reused from content-generator) */}
         <div className="py-8 border-b border-surface-hover">
-          <h2 className="heading-display text-2xl text-foreground mb-2">Explore {vaksanaFarms.location.city}</h2>
+          <h2 className="heading-display text-xl text-foreground mb-2">Explore {vaksanaFarms.location.city}</h2>
           <p className="text-sm text-muted mb-6">
             Guides picked for guests staying near {vaksanaFarms.location.city}.
           </p>
@@ -682,7 +682,7 @@ export default function VaksanaFarmsPage() {
 
         {/* Location (farm-level) */}
         <div className="py-8" id="location">
-          <h2 className="heading-display text-2xl text-foreground mb-2">Where you&apos;ll be</h2>
+          <h2 className="heading-display text-xl text-foreground mb-2">Where you&apos;ll be</h2>
           <p className="text-sm text-muted mb-6">
             Near {vaksanaFarms.location.city}, {vaksanaFarms.location.state}, India
           </p>

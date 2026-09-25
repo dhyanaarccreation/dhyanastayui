@@ -33,10 +33,10 @@ export default function InvestorRoiPage() {
         ]}
       />
 
-      <div className="grid lg:grid-cols-3 gap-6">
+      <div className="grid lg:grid-cols-3 gap-5">
         {/* Quarterly returns bars */}
         <SectionCard title="Quarterly Distributions" icon={BarChart3} className="lg:col-span-2">
-          <div className="p-6">
+          <div className="p-5">
             <div className="flex items-end justify-between gap-4 h-44">
               {quarters.map((b, i) => (
                 <div key={b.q} className="flex-1 flex flex-col items-center gap-2">

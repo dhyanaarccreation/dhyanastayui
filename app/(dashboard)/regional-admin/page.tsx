@@ -91,7 +91,7 @@ export default function RegionalAdminPage() {
         ]}
       />
 
-      <div className="grid lg:grid-cols-3 gap-6">
+      <div className="grid lg:grid-cols-3 gap-5">
         {/* Pending approvals */}
         <SectionCard
           title="Pending Approvals"
@@ -151,7 +151,7 @@ export default function RegionalAdminPage() {
       </SectionCard>
 
       {/* Staff & expenses — scoped to this region only */}
-      <div className="grid lg:grid-cols-2 gap-6">
+      <div className="grid lg:grid-cols-2 gap-5">
         <SectionCard title="Regional Staff" icon={Users}>
           <ul className="divide-y divide-surface-hover">
             {regionalStaff.map((s) => (
@@ -186,7 +186,7 @@ export default function RegionalAdminPage() {
       </div>
 
       {/* Investors (view-only) & local CMS content */}
-      <div className="grid lg:grid-cols-2 gap-6">
+      <div className="grid lg:grid-cols-2 gap-5">
         <SectionCard title="Regional Investors" icon={Briefcase}>
           <div className="px-5 pt-3.5">
             <StatusPill tone="muted">View only — approvals with Super Admin</StatusPill>

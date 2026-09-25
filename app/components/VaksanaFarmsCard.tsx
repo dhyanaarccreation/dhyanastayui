@@ -28,7 +28,7 @@ export default function VaksanaFarmsCard({ className = "col-span-full" }: { clas
       </div>
 
       {/* Content */}
-      <div className="flex-1 p-5 sm:p-8 flex flex-col justify-center">
+      <div className="flex-1 p-4 sm:p-6 flex flex-col justify-center">
         <div className="flex items-center flex-wrap gap-2 mb-2">
           <span className="text-[10px] font-semibold uppercase tracking-wider text-primary">
             {vaksanaFarms.tagline}
@@ -38,7 +38,7 @@ export default function VaksanaFarmsCard({ className = "col-span-full" }: { clas
           </span>
         </div>
 
-        <h3 className="heading-display text-2xl sm:text-3xl text-foreground mb-1.5 group-hover:text-primary transition-colors">
+        <h3 className="heading-display text-xl sm:text-2xl text-foreground mb-1.5 group-hover:text-primary transition-colors">
           {vaksanaFarms.name}
         </h3>
 

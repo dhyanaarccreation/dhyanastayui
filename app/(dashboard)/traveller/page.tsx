@@ -38,7 +38,7 @@ export default function TravellerDashboardOverview() {
     <div className="space-y-4 pb-12">
       {/* Header */}
       <div>
-        <h1 className="heading-display text-3xl text-foreground mb-2">
+        <h1 className="heading-display text-2xl text-foreground mb-2">
           Welcome back, Navin
         </h1>
         <p className="text-sm text-muted">
@@ -47,8 +47,8 @@ export default function TravellerDashboardOverview() {
       </div>
 
       {/* AI Trip Planner Prompt */}
-      <div className="bg-gradient-to-r from-surface to-surface-hover border border-border rounded-2xl p-6 md:p-8 relative overflow-hidden">
-        <div className="absolute top-0 right-0 p-8 opacity-10">
+      <div className="bg-gradient-to-r from-surface to-surface-hover border border-border rounded-2xl p-5 md:p-6 relative overflow-hidden">
+        <div className="absolute top-0 right-0 p-6 opacity-10">
           <Sparkles size={120} className="text-primary" />
         </div>
         
@@ -57,7 +57,7 @@ export default function TravellerDashboardOverview() {
             <Sparkles size={18} />
             <span className="text-xs font-semibold uppercase tracking-wider">AI Trip Planner</span>
           </div>
-          <h2 className="text-2xl font-semibold text-foreground mb-4">
+          <h2 className="text-xl font-semibold text-foreground mb-4">
             Where do you want to escape?
           </h2>
           <p className="text-muted mb-6 text-sm leading-relaxed">
@@ -80,9 +80,9 @@ export default function TravellerDashboardOverview() {
         </div>
       </div>
 
-      <div className="grid lg:grid-cols-3 gap-5">
+      <div className="grid lg:grid-cols-3 gap-4">
         {/* Left Column - Upcoming Trip */}
-        <div className="lg:col-span-2 space-y-4">
+        <div className="lg:col-span-2 space-y-4 min-w-0">
           <div className="flex justify-between items-end">
             <h2 className="text-xl font-semibold text-foreground">Upcoming Trip</h2>
             <Link href="/traveller/bookings" className="text-sm text-primary hover:underline">
@@ -94,7 +94,7 @@ export default function TravellerDashboardOverview() {
             <div className="md:w-2/5 h-48 md:h-auto bg-surface-hover relative">
               <img src={upcomingTrip.images[0]} alt="" className="w-full h-full object-cover opacity-80" />
             </div>
-            <div className="p-6 md:p-8 md:w-3/5 flex flex-col justify-center">
+            <div className="p-5 md:p-6 md:w-3/5 flex flex-col justify-center">
               <div className="flex justify-between items-start mb-2">
                 <span className="px-3 py-1 text-[10px] uppercase tracking-wider bg-primary/10 text-primary rounded-full border border-primary/20 font-semibold">
                   Confirmed
@@ -160,7 +160,7 @@ export default function TravellerDashboardOverview() {
           </div>
 
           {/* Quick Stats */}
-          <div className="bg-surface border border-border rounded-2xl p-6 mt-6">
+          <div className="bg-surface border border-border rounded-2xl p-5 mt-6">
             <h3 className="text-sm font-semibold text-foreground mb-4">Travel Summary</h3>
             <div className="space-y-4">
               <div className="flex justify-between items-center">
@@ -179,7 +179,7 @@ export default function TravellerDashboardOverview() {
           </div>
 
           {/* Green Impact */}
-          <div className="bg-surface border border-border rounded-2xl p-6 mt-6">
+          <div className="bg-surface border border-border rounded-2xl p-5 mt-6">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-sm font-semibold text-foreground flex items-center gap-2">
                 <Sprout size={15} className="text-sage" /> Green Impact
@@ -189,7 +189,7 @@ export default function TravellerDashboardOverview() {
               </Link>
             </div>
             <div className="flex items-center gap-3 mb-4">
-              <span className="text-3xl leading-none">{impactTier.emoji}</span>
+              <span className="text-2xl leading-none">{impactTier.emoji}</span>
               <div>
                 <p className="text-sm font-semibold text-foreground">{impactTier.label}</p>
                 <p className="text-xs text-muted">{travellerSeedBalls.toLocaleString()} seed balls contributed</p>

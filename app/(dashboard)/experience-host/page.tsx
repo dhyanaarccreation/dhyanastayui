@@ -49,7 +49,7 @@ export default function ExperienceHostDashboardPage() {
         ]}
       />
 
-      <div className="grid lg:grid-cols-3 gap-6">
+      <div className="grid lg:grid-cols-3 gap-5">
         {/* Today's sessions */}
         <SectionCard title="Today's Sessions · Jul 18" icon={Clock} className="lg:col-span-2">
           <ul className="divide-y divide-surface-hover">
@@ -107,13 +107,13 @@ export default function ExperienceHostDashboardPage() {
             <Sparkles size={10} /> Top earner · July
           </span>
         </div>
-        <div className="p-6 md:p-8 flex-1">
+        <div className="p-5 md:p-6 flex-1">
           <h2 className="text-lg font-semibold text-foreground">{top.name}</h2>
           <p className="text-xs text-muted mt-1 flex items-center gap-1">
             <MapPin size={11} /> {top.location} · {top.duration} · ₹{top.price}/person
           </p>
           <p className="text-sm text-muted mt-3 leading-relaxed max-w-lg">{top.description}</p>
-          <div className="flex items-center gap-5 mt-4 text-xs text-muted">
+          <div className="flex items-center gap-4 mt-4 text-xs text-muted">
             <span>{top.reviewCount} reviews</span>
             <span>68 bookings this month</span>
             <span className="text-sage font-medium">₹54,400 earned</span>

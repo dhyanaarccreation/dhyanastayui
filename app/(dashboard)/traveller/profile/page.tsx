@@ -68,7 +68,7 @@ export default function TravellerProfilePage() {
       />
 
       {/* Identity card */}
-      <div className="bg-gradient-to-r from-surface to-surface-hover border border-border rounded-2xl p-6 md:p-8 flex flex-col sm:flex-row items-start sm:items-center gap-6">
+      <div className="bg-gradient-to-r from-surface to-surface-hover border border-border rounded-2xl p-5 md:p-6 flex flex-col sm:flex-row items-start sm:items-center gap-5">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="https://i.pravatar.cc/150?img=32"
@@ -92,7 +92,7 @@ export default function TravellerProfilePage() {
         </button>
       </div>
 
-      <div className="grid lg:grid-cols-2 gap-6">
+      <div className="grid lg:grid-cols-2 gap-5">
         <SectionCard title="Personal Information" icon={User} action={{ label: "Edit", href: "/traveller/profile" }}>
           <div className="grid sm:grid-cols-2 gap-x-6 px-5 py-2 divide-y sm:divide-y-0 divide-surface-hover">
             {personal.map((f) => (

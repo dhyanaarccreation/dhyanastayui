@@ -60,10 +60,10 @@ export default function MarketingPerformancePage() {
         ]}
       />
 
-      <div className="grid lg:grid-cols-3 gap-6">
+      <div className="grid lg:grid-cols-3 gap-5">
         {/* Leads trend */}
         <SectionCard title="Leads per Month" icon={BarChart3} className="lg:col-span-2">
-          <div className="p-6">
+          <div className="p-5">
             <div className="flex items-end justify-between gap-3 h-44">
               {months.map((b, i) => (
                 <div key={b.m} className="flex-1 flex flex-col items-center gap-2">
@@ -131,11 +131,11 @@ export default function MarketingPerformancePage() {
 
       {/* Promo codes */}
       <SectionCard title="Promo Code Redemptions" icon={Ticket}>
-        <div className="grid sm:grid-cols-3 gap-4 p-5">
+        <div className="grid sm:grid-cols-3 gap-4 p-4">
           {promos.map((p) => (
             <div key={p.code} className="rounded-xl bg-background border border-dashed border-primary/40 p-4 text-center">
               <p className="font-mono text-sm font-bold text-foreground">{p.code}</p>
-              <p className="text-2xl font-bold text-primary mt-1 tabular-nums">{p.uses}</p>
+              <p className="text-xl font-bold text-primary mt-1 tabular-nums">{p.uses}</p>
               <p className="text-[11px] text-subtle">redemptions · {p.revenue} booked</p>
             </div>
           ))}

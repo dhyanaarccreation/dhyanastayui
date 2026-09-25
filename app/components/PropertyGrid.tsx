@@ -19,7 +19,7 @@ export default function PropertyGrid({
 }) {
   if (properties.length === 0 && !leading) {
     return (
-      <div className="text-center py-16">
+      <div className="text-center py-12">
         <Sparkles size={28} className="text-subtle mx-auto mb-3" />
         <p className="text-sm text-subtle">{emptyMessage}</p>
       </div>
@@ -33,7 +33,7 @@ export default function PropertyGrid({
         <ExploreStayCard
           key={property.id}
           property={property}
-          className="shrink-0 w-[62vw] sm:w-64 lg:w-72 aspect-[4/3] snap-start"
+          className="shrink-0 w-[85%] sm:w-[calc((100%-1.25rem)/2)] lg:w-[calc((100%-2.5rem)/3)] aspect-[4/3] snap-start"
         />
       ))}
     </HorizontalScrollRow>

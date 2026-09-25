@@ -109,7 +109,7 @@ export default function SuperAdminCommunityPage() {
         </p>
       </SectionCard>
 
-      <div className="grid lg:grid-cols-2 gap-6">
+      <div className="grid lg:grid-cols-2 gap-5">
         <SectionCard title="Review Moderation" icon={FileWarning}>
           <ul className="divide-y divide-surface-hover">
             {reviews.map((r) => (

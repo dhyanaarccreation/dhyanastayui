@@ -47,13 +47,13 @@ export default function TravellerWishlistPage() {
           </h2>
         </div>
         {!hydrated ? null : savedStays.length > 0 ? (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 stagger-children">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 stagger-children">
             {savedStays.map((p) => (
               <PropertyCard key={p.id} property={p} />
             ))}
           </div>
         ) : (
-          <div className="bg-surface border border-border rounded-2xl p-8 text-center">
+          <div className="bg-surface border border-border rounded-2xl p-6 text-center">
             <Heart size={22} className="text-subtle mx-auto mb-2" />
             <p className="text-sm text-subtle">
               No stays saved yet — tap the heart on any stay to add it here.
@@ -69,7 +69,7 @@ export default function TravellerWishlistPage() {
             <Sparkles size={15} className="text-primary" /> Favourite Experiences
             <span className="text-xs text-subtle font-normal">({savedExperiences.length})</span>
           </h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 stagger-children">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 stagger-children">
             {savedExperiences.map((exp) => (
               <ImageCard
                 key={exp.id}
@@ -88,7 +88,7 @@ export default function TravellerWishlistPage() {
         </div>
       )}
 
-      <div className="grid lg:grid-cols-2 gap-6">
+      <div className="grid lg:grid-cols-2 gap-5">
         <SectionCard title="Bucket List Destinations" icon={MapPin} action={{ label: "Add place", href: "/#explore-stays" }}>
           <ul className="divide-y divide-surface-hover">
             {bucketList.map((b) => (

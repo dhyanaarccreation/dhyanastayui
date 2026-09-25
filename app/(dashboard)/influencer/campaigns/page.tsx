@@ -102,7 +102,7 @@ export default function InfluencerCampaignsPage() {
         </ul>
       </SectionCard>
 
-      <div className="grid lg:grid-cols-2 gap-6">
+      <div className="grid lg:grid-cols-2 gap-5">
         <SectionCard title="Upcoming Deadlines" icon={Clock}>
           <ul className="divide-y divide-surface-hover">
             {calendarEvents.map((e) => (

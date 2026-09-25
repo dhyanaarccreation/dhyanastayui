@@ -74,7 +74,7 @@ export default function InvestorDashboardOverview() {
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
         <div>
-          <h1 className="heading-display text-3xl text-foreground mb-2">
+          <h1 className="heading-display text-2xl text-foreground mb-2">
             Investor Portfolio
           </h1>
           <p className="text-sm text-muted">
@@ -92,7 +92,7 @@ export default function InvestorDashboardOverview() {
       {/* Overview stats — the 8 questions the first screen must answer */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {overviewStats.map((kpi, i) => (
-          <div key={i} className="bg-surface border border-border rounded-2xl p-5 relative overflow-hidden group">
+          <div key={i} className="bg-surface border border-border rounded-2xl p-4 relative overflow-hidden group">
             <div className="absolute -right-4 -top-4 opacity-5 group-hover:opacity-10 transition-opacity">
               <kpi.icon size={80} />
             </div>
@@ -109,7 +109,7 @@ export default function InvestorDashboardOverview() {
       </div>
 
       {/* Quick Actions */}
-      <div className="bg-surface border border-border rounded-2xl p-6">
+      <div className="bg-surface border border-border rounded-2xl p-5">
         <div className="flex items-center justify-between mb-5">
           <h2 className="text-lg font-semibold text-foreground">Quick Actions</h2>
           <span className="text-xs text-subtle">Everything you need, one tap away</span>
@@ -156,7 +156,7 @@ export default function InvestorDashboardOverview() {
       </div>
 
       {/* Investment Activity Timeline */}
-      <div className="bg-surface border border-border rounded-2xl p-6">
+      <div className="bg-surface border border-border rounded-2xl p-5">
         <div className="flex items-center justify-between mb-5">
           <div className="flex items-center gap-2.5">
             <span className="w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
@@ -195,12 +195,12 @@ export default function InvestorDashboardOverview() {
         </div>
       </div>
 
-      <div className="grid lg:grid-cols-3 gap-5">
+      <div className="grid lg:grid-cols-3 gap-4">
         {/* Main Content Area */}
-        <div className="lg:col-span-2 space-y-4 max-md:min-w-0">
+        <div className="lg:col-span-2 space-y-4 min-w-0">
           
           {/* Portfolio Table */}
-          <div className="bg-surface border border-border rounded-2xl p-6">
+          <div className="bg-surface border border-border rounded-2xl p-5">
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-lg font-semibold text-foreground">My Assets</h2>
               <button className="text-sm text-primary hover:underline">Download Report</button>
@@ -246,7 +246,7 @@ export default function InvestorDashboardOverview() {
           </div>
 
           {/* Performance Chart Placeholder */}
-          <div className="bg-surface border border-border rounded-2xl p-6">
+          <div className="bg-surface border border-border rounded-2xl p-5">
             <h2 className="text-lg font-semibold text-foreground mb-6">Yield Performance (2026)</h2>
             <div className="h-64 flex items-end justify-between gap-2 border-b border-border pb-2 mb-2 relative">
               {/* Mock chart lines */}
@@ -270,9 +270,9 @@ export default function InvestorDashboardOverview() {
         {/* Sidebar */}
         <div className="space-y-4">
           {/* Wallet / Payout */}
-          <div className="bg-gradient-to-r from-surface to-surface-hover border border-primary/30 rounded-2xl p-6">
+          <div className="bg-gradient-to-r from-surface to-surface-hover border border-primary/30 rounded-2xl p-5">
             <div className="text-sm font-medium text-muted mb-2 uppercase tracking-wider">Next Payout</div>
-            <div className="text-3xl font-bold text-foreground mb-1">₹24,500</div>
+            <div className="text-2xl font-bold text-foreground mb-1">₹24,500</div>
             <div className="text-xs text-subtle mb-6">Expected on Nov 1, 2026</div>
             
             <button className="w-full py-3 bg-surface-hover border border-border text-foreground font-medium text-sm rounded-xl hover:bg-surface-hover transition-colors mb-3">
@@ -284,7 +284,7 @@ export default function InvestorDashboardOverview() {
           </div>
 
           {/* Recent Documents */}
-          <div className="bg-surface border border-border rounded-2xl p-6">
+          <div className="bg-surface border border-border rounded-2xl p-5">
             <h3 className="text-sm font-semibold text-foreground mb-4">Recent Documents</h3>
             <div className="space-y-4">
               <div className="flex items-center gap-3 p-3 rounded-xl hover:bg-surface-hover transition-colors cursor-pointer border border-transparent hover:border-border">

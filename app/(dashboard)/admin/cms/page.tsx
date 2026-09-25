@@ -14,14 +14,14 @@ export default function AdminCMSPage() {
     <div className="space-y-4 pb-12">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
-          <h1 className="heading-display text-3xl text-foreground mb-2">
+          <h1 className="heading-display text-2xl text-foreground mb-2">
             CMS & Marketing
           </h1>
           <p className="text-sm text-muted">
             Manage landing pages, blog posts, marketing campaigns, and site assets.
           </p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           <button className="px-4 py-2 bg-surface-hover border border-border text-foreground font-semibold text-sm rounded-xl hover:bg-surface-hover transition-colors">
             Upload Assets
           </button>
@@ -92,8 +92,8 @@ export default function AdminCMSPage() {
         </div>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-5">
-        <div className="bg-surface border border-border rounded-2xl p-6">
+      <div className="grid md:grid-cols-2 gap-4">
+        <div className="bg-surface border border-border rounded-2xl p-5">
           <h2 className="text-lg font-semibold text-foreground mb-4">Quick Email Campaign</h2>
           <div className="space-y-4">
             <input type="text" placeholder="Campaign Subject Line" className="w-full px-4 py-3 bg-background border border-border rounded-xl text-sm text-foreground focus:outline-none focus:border-primary" />
@@ -109,7 +109,7 @@ export default function AdminCMSPage() {
           </div>
         </div>
         
-        <div className="bg-surface border border-border rounded-2xl p-6">
+        <div className="bg-surface border border-border rounded-2xl p-5">
           <h2 className="text-lg font-semibold text-foreground mb-4">SEO & Platform Health</h2>
           <div className="space-y-4">
             <div className="flex items-center justify-between p-4 bg-background border border-border rounded-xl">

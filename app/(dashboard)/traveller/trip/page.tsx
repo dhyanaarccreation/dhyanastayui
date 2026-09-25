@@ -123,7 +123,7 @@ export default function TravellerTripPage() {
           <p className="text-xs font-semibold text-primary uppercase tracking-wider mb-1">
             Day {activeTrip.currentDay} of {activeTrip.totalDays}
           </p>
-          <h1 className="heading-display text-2xl sm:text-3xl text-foreground">{activeTrip.name}</h1>
+          <h1 className="heading-display text-xl sm:text-2xl text-foreground">{activeTrip.name}</h1>
         </div>
 
         <div className="relative shrink-0">
@@ -253,7 +253,7 @@ export default function TravellerTripPage() {
       </div>
 
       {/* Map (top left, wider) + detailed itinerary with actions (right, proportion-driven) */}
-      <div className="grid lg:grid-cols-3 gap-5">
+      <div className="grid lg:grid-cols-3 gap-4">
         <div className="lg:col-span-2">
           <LiveMapCard location={liveLocation} />
         </div>
@@ -301,7 +301,7 @@ export default function TravellerTripPage() {
       </SectionCard>
 
       {/* Stay / Food */}
-      <div className="grid lg:grid-cols-2 gap-5">
+      <div className="grid lg:grid-cols-2 gap-4">
         <SectionCard title="Your Stay" action={{ label: "View full details", href: "/traveller/stay" }}>
           <div className="p-4">
             <div className="flex gap-3">

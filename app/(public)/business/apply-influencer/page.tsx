@@ -269,7 +269,7 @@ export default function ApplyInfluencerPage() {
 
   return (
     <div className="bg-background min-h-screen pb-24">
-      <div className="max-w-[1200px] mx-auto px-6 lg:px-8 pt-8">
+      <div className="container-page pt-8">
         <Link
           href="/business"
           className="inline-flex items-center gap-1.5 text-xs text-muted hover:text-primary transition-colors"
@@ -278,11 +278,11 @@ export default function ApplyInfluencerPage() {
         </Link>
       </div>
 
-      <div className="py-10 md:py-14 text-center px-6">
+      <div className="py-8 md:py-10 text-center px-6">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-medium mb-5">
           <Star size={12} /> Influencer Program
         </div>
-        <h1 className="heading-display text-4xl lg:text-5xl text-foreground mb-4">
+        <h1 className="heading-display text-3xl lg:text-4xl text-foreground mb-4">
           Apply as an Influencer
         </h1>
         <p className="text-muted max-w-xl mx-auto text-sm md:text-base">
@@ -291,12 +291,12 @@ export default function ApplyInfluencerPage() {
         </p>
       </div>
 
-      <div className="max-w-[1200px] mx-auto px-6 lg:px-8">
-        <div className="grid lg:grid-cols-3 gap-8 lg:gap-10 items-start">
+      <div className="container-page">
+        <div className="grid lg:grid-cols-3 gap-6 lg:gap-8 items-start">
           {/* Form column */}
           <div className="lg:col-span-2" ref={cardRef}>
             {!submitted ? (
-              <div className="bg-surface border border-border rounded-2xl p-6 md:p-10 shadow-organic">
+              <div className="bg-surface border border-border rounded-2xl p-5 md:p-8 shadow-organic">
                 {/* Step indicator */}
                 <div className="flex items-center mb-2">
                   {steps.map((s, i) => (
@@ -330,7 +330,7 @@ export default function ApplyInfluencerPage() {
                   ))}
                 </div>
 
-                <div className="flex items-center justify-between mt-8 mb-8">
+                <div className="flex items-center justify-between mt-6 mb-6">
                   <div>
                     <h2 className="text-xl font-semibold text-foreground">{steps[step - 1].title}</h2>
                     <p className="text-sm text-muted mt-1">{steps[step - 1].subtitle}</p>
@@ -340,10 +340,10 @@ export default function ApplyInfluencerPage() {
                   </span>
                 </div>
 
-                <form className="space-y-6" noValidate onSubmit={handleFormSubmit}>
+                <form className="space-y-5" noValidate onSubmit={handleFormSubmit}>
                   {step === 1 && (
-                    <div className="space-y-6 animate-fade-in">
-                      <div className="grid sm:grid-cols-2 gap-6">
+                    <div className="space-y-5 animate-fade-in">
+                      <div className="grid sm:grid-cols-2 gap-5">
                         <div>
                           <Label>Full Name</Label>
                           <div className="relative">
@@ -375,7 +375,7 @@ export default function ApplyInfluencerPage() {
                         </div>
                       </div>
 
-                      <div className="grid sm:grid-cols-2 gap-6">
+                      <div className="grid sm:grid-cols-2 gap-5">
                         <div>
                           <Label>Phone</Label>
                           <div className="relative">
@@ -407,7 +407,7 @@ export default function ApplyInfluencerPage() {
                         </div>
                       </div>
 
-                      <div className="grid sm:grid-cols-2 gap-6">
+                      <div className="grid sm:grid-cols-2 gap-5">
                         <div>
                           <Label>Age</Label>
                           <div className="relative">
@@ -457,8 +457,8 @@ export default function ApplyInfluencerPage() {
                   )}
 
                   {step === 2 && (
-                    <div className="space-y-6 animate-fade-in">
-                      <div className="grid sm:grid-cols-2 gap-6">
+                    <div className="space-y-5 animate-fade-in">
+                      <div className="grid sm:grid-cols-2 gap-5">
                         <div>
                           <Label>Instagram Username</Label>
                           <div className="relative">
@@ -489,7 +489,7 @@ export default function ApplyInfluencerPage() {
                         </div>
                       </div>
 
-                      <div className="grid sm:grid-cols-2 gap-6">
+                      <div className="grid sm:grid-cols-2 gap-5">
                         <div>
                           <Label>Followers</Label>
                           <div className="relative">
@@ -528,7 +528,7 @@ export default function ApplyInfluencerPage() {
                         </div>
                       </div>
 
-                      <div className="grid sm:grid-cols-2 gap-6">
+                      <div className="grid sm:grid-cols-2 gap-5">
                         <div>
                           <Label optional>YouTube Link</Label>
                           <div className="relative">
@@ -576,8 +576,8 @@ export default function ApplyInfluencerPage() {
                   )}
 
                   {step === 3 && (
-                    <div className="space-y-6 animate-fade-in">
-                      <div className="grid sm:grid-cols-2 gap-6">
+                    <div className="space-y-5 animate-fade-in">
+                      <div className="grid sm:grid-cols-2 gap-5">
                         <div>
                           <Label>Content Category</Label>
                           <div className="relative">
@@ -815,18 +815,18 @@ export default function ApplyInfluencerPage() {
                 </form>
               </div>
             ) : (
-              <div className="bg-surface border border-border rounded-2xl p-10 md:p-14 text-center shadow-organic animate-fade-in-up">
+              <div className="bg-surface border border-border rounded-2xl p-8 md:p-14 text-center shadow-organic animate-fade-in-up">
                 <div className="w-16 h-16 rounded-full bg-sage/10 border border-sage/20 flex items-center justify-center mx-auto mb-6">
                   <Check size={26} className="text-sage" />
                 </div>
-                <h3 className="heading-display text-2xl md:text-3xl text-foreground mb-3">
+                <h3 className="heading-display text-xl md:text-2xl text-foreground mb-3">
                   Application Submitted
                 </h3>
                 <p className="text-sm text-muted max-w-md mx-auto mb-2">
                   Thanks{values.fullName ? `, ${values.fullName.split(" ")[0]}` : ""} — our partnerships
                   team reviews every application personally.
                 </p>
-                <p className="text-sm text-muted max-w-md mx-auto mb-8">
+                <p className="text-sm text-muted max-w-md mx-auto mb-6">
                   Expect to hear back within <span className="text-foreground font-medium">48 hours</span>
                   {values.email ? ` at ${values.email}` : ""}.
                 </p>
@@ -850,7 +850,7 @@ export default function ApplyInfluencerPage() {
 
           {/* Sticky benefits column — desktop only */}
           <div className="hidden lg:block lg:sticky lg:top-24">
-            <div className="bg-surface border border-border rounded-2xl p-8 shadow-organic">
+            <div className="bg-surface border border-border rounded-2xl p-6 shadow-organic">
               <h3 className="text-lg font-semibold text-foreground mb-1">Why creators choose us</h3>
               <p className="text-sm text-muted mb-6">Everything you get as a DhyanaStays creator partner.</p>
               <div className="space-y-5">

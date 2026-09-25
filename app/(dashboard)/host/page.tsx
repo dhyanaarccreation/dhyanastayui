@@ -21,7 +21,7 @@ export default function HostDashboardOverview() {
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
         <div>
-          <h1 className="heading-display text-3xl text-foreground mb-2">
+          <h1 className="heading-display text-2xl text-foreground mb-2">
             Host Overview
           </h1>
           <p className="text-sm text-muted">
@@ -39,7 +39,7 @@ export default function HostDashboardOverview() {
       {/* KPI Cards */}
       <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {kpis.map((kpi, i) => (
-          <div key={i} className="bg-surface border border-border rounded-2xl p-6 relative overflow-hidden group">
+          <div key={i} className="bg-surface border border-border rounded-2xl p-5 relative overflow-hidden group">
             <div className="absolute -right-4 -top-4 opacity-5 group-hover:opacity-10 transition-opacity">
               <kpi.icon size={100} />
             </div>
@@ -53,41 +53,41 @@ export default function HostDashboardOverview() {
                 {kpi.change}
               </span>
             </div>
-            <div className="text-2xl font-bold text-foreground mb-1">{kpi.value}</div>
+            <div className="text-xl font-bold text-foreground mb-1">{kpi.value}</div>
             <div className="text-sm text-muted">{kpi.label}</div>
           </div>
         ))}
       </div>
 
-      <div className="grid lg:grid-cols-3 gap-5">
+      <div className="grid lg:grid-cols-3 gap-4">
         {/* Main Content Area */}
-        <div className="lg:col-span-2 space-y-4 max-md:min-w-0">
+        <div className="lg:col-span-2 space-y-4 min-w-0">
 
           {/* Action Required */}
-          <div className="bg-gradient-to-r from-surface to-surface-hover border border-primary/30 rounded-2xl p-6">
+          <div className="bg-gradient-to-r from-surface to-surface-hover border border-primary/30 rounded-2xl p-5">
             <h2 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
               <CheckCircle2 className="text-primary" size={20} /> Action Required
             </h2>
             <div className="space-y-3">
-              <div className="flex items-center justify-between p-4 bg-background border border-border rounded-xl max-md:flex-col max-md:items-stretch max-md:gap-3">
-                <div className="flex items-center gap-4 max-md:min-w-0">
+              <div className="flex items-center justify-between gap-3 flex-wrap p-4 bg-background border border-border rounded-xl">
+                <div className="flex items-center gap-4 min-w-0">
                   <MessageSquare className="text-muted shrink-0" size={20} />
-                  <div className="max-md:min-w-0">
+                  <div className="min-w-0">
                     <h3 className="text-sm font-medium text-foreground">New message from Guest (Booking DHY-8472)</h3>
                     <p className="text-xs text-subtle">"Hi, what time is check-in allowed?"</p>
                   </div>
                 </div>
-                <button className="text-sm text-primary font-medium hover:underline max-md:self-end">Reply</button>
+                <button className="text-sm text-primary font-medium hover:underline shrink-0">Reply</button>
               </div>
-              <div className="flex items-center justify-between p-4 bg-background border border-border rounded-xl max-md:flex-col max-md:items-stretch max-md:gap-3">
-                <div className="flex items-center gap-4 max-md:min-w-0">
+              <div className="flex items-center justify-between gap-3 flex-wrap p-4 bg-background border border-border rounded-xl">
+                <div className="flex items-center gap-4 min-w-0">
                   <CheckCircle2 className="text-muted shrink-0" size={20} />
-                  <div className="max-md:min-w-0">
+                  <div className="min-w-0">
                     <h3 className="text-sm font-medium text-foreground">Approve early check-in request</h3>
                     <p className="text-xs text-subtle">Arriving at 11:00 AM on Oct 15</p>
                   </div>
                 </div>
-                <div className="flex gap-2 max-md:justify-end">
+                <div className="flex gap-2 shrink-0">
                   <button className="px-3 py-1.5 border border-border text-xs font-medium text-foreground rounded-lg hover:bg-surface-hover">Decline</button>
                   <button className="px-3 py-1.5 bg-primary text-xs font-medium text-primary-foreground rounded-lg hover:bg-primary-hover">Approve</button>
                 </div>
@@ -96,7 +96,7 @@ export default function HostDashboardOverview() {
           </div>
 
           {/* Upcoming Arrivals */}
-          <div className="bg-surface border border-border rounded-2xl p-6">
+          <div className="bg-surface border border-border rounded-2xl p-5">
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-lg font-semibold text-foreground">Upcoming Arrivals</h2>
               <Link href="/host/calendar" className="text-sm text-primary hover:underline">View Calendar</Link>
@@ -148,7 +148,7 @@ export default function HostDashboardOverview() {
         {/* Sidebar */}
         <div className="space-y-4">
           {/* Revenue Chart Placeholder */}
-          <div className="bg-surface border border-border rounded-2xl p-6">
+          <div className="bg-surface border border-border rounded-2xl p-5">
             <h3 className="text-sm font-semibold text-foreground mb-4">Revenue this month</h3>
             <div className="h-48 w-full flex items-end justify-between gap-2 border-b border-border pb-2 mb-2">
               {[40, 70, 45, 90, 60, 100, 85].map((height, i) => (
@@ -161,7 +161,7 @@ export default function HostDashboardOverview() {
           </div>
 
           {/* Reviews */}
-          <div className="bg-surface border border-border rounded-2xl p-6">
+          <div className="bg-surface border border-border rounded-2xl p-5">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-sm font-semibold text-foreground flex items-center gap-2">
                 <MessageSquare className="text-primary" size={16} /> Recent Reviews
@@ -189,7 +189,7 @@ export default function HostDashboardOverview() {
           </div>
 
           {/* Manage Property */}
-          <div className="bg-surface border border-border rounded-2xl p-6">
+          <div className="bg-surface border border-border rounded-2xl p-5">
             <h3 className="text-sm font-semibold text-foreground mb-4 flex items-center gap-2">
               <Home className="text-primary" size={16} /> Manage Property
             </h3>
@@ -205,7 +205,7 @@ export default function HostDashboardOverview() {
           </div>
 
           {/* Tips */}
-          <div className="bg-surface-hover rounded-2xl p-6">
+          <div className="bg-surface-hover rounded-2xl p-5">
             <h3 className="text-sm font-semibold text-foreground mb-2">Dhyana Host Tip</h3>
             <p className="text-sm text-muted leading-relaxed mb-4">
               Properties with updated high-resolution architectural photography receive 40% more booking inquiries.
@@ -216,9 +216,9 @@ export default function HostDashboardOverview() {
       </div>
 
       {/* Expenses, maintenance & documents — property operations */}
-      <div className="grid lg:grid-cols-3 gap-5">
+      <div className="grid lg:grid-cols-3 gap-4">
         {/* Monthly Expenses */}
-        <div className="bg-surface border border-border rounded-2xl p-6">
+        <div className="bg-surface border border-border rounded-2xl p-5">
           <div className="flex justify-between items-center mb-4">
             <h3 className="text-sm font-semibold text-foreground">Monthly Expenses</h3>
             <button className="text-xs text-primary hover:underline font-medium">Add Expense</button>
@@ -245,7 +245,7 @@ export default function HostDashboardOverview() {
         </div>
 
         {/* Maintenance */}
-        <div className="bg-surface border border-border rounded-2xl p-6">
+        <div className="bg-surface border border-border rounded-2xl p-5">
           <div className="flex justify-between items-center mb-4">
             <h3 className="text-sm font-semibold text-foreground">Maintenance</h3>
             <button className="px-3 py-1.5 bg-primary text-primary-foreground text-xs font-medium rounded-lg hover:bg-primary-hover transition-colors">
@@ -276,7 +276,7 @@ export default function HostDashboardOverview() {
         </div>
 
         {/* Documents */}
-        <div className="bg-surface border border-border rounded-2xl p-6">
+        <div className="bg-surface border border-border rounded-2xl p-5">
           <div className="flex justify-between items-center mb-4">
             <h3 className="text-sm font-semibold text-foreground">Documents</h3>
             <button className="text-xs text-primary hover:underline font-medium">Upload</button>

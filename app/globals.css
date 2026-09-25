@@ -89,7 +89,7 @@
 
   --radius-card: 18px;
   --radius-panel: 20px;
-  --radius-card-lg: 34px;
+  --radius-card-lg: 40px;
 
   /* Property cards specifically want more visible depth than the general
      --shadow-soft/--shadow-hover pair used for navbar/search/pills — a
@@ -176,22 +176,34 @@
   scrollbar-color: var(--color-border-light) transparent;
 }
 
+/* clip, not hidden: 'hidden' makes overflow-y compute to 'auto', which turns
+   html/body into a scroll container and silently breaks position: sticky for
+   every descendant -- the dashboard sidebar and its topbar scrolled away with
+   the page instead of staying put. 'clip' suppresses horizontal overflow
+   without creating a scroll container, so sticky keeps working. */
+html {
+  overflow-x: clip;
+}
+
 body {
   background: var(--color-bg-primary);
   color: var(--color-text-primary);
   font-family: var(--font-inter, 'Inter', system-ui, sans-serif);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
 }
 
 /* Mobile-only safety net: some rows (unwrapped flex/grid content, fixed
    min-width scroll panels) can demand more than the phone's width. Without
    this, that unconstrained content inflates the whole layout viewport
    (everything renders zoomed-out and cramped) instead of just scrolling in
-   place. Scoped to <768px only — tablet and desktop are unaffected. */
+   place. Scoped to <768px only — tablet and desktop are unaffected.
+   html only: html's overflow propagates to the viewport, so 'hidden' there is
+   harmless. On body it would turn body into a scroll container and break
+   position: sticky (the mobile dashboard topbar) — see the note above. */
 @media (max-width: 767px) {
-  html,
-  body {
+  html {
     overflow-x: hidden;
   }
 }
@@ -229,6 +241,37 @@ body {
 }
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
+}
+
+/* ============================================
+   Page shell
+   ============================================ */
+
+/* The single source of truth for how wide page content is. Every top-level
+   page container uses this, so the whole app is retuned from this one rule.
+   The 10% gutters on each side replace the px-6/lg:px-8 padding these
+   containers used to carry, so content measures exactly 80% at every width. */
+.container-page {
+  /* Phones cannot afford 10% gutters on each side — the content column gets
+     too narrow to read. They use a slim gutter instead; the 80% page width
+     kicks in from sm up, where there is room for it. */
+  width: 92%;
+  margin-inline: auto;
+}
+
+@media (min-width: 640px) {
+  .container-page {
+    width: 80%;
+  }
+}
+
+/* Dashboard content sits beside a 256px sidebar, which already provides the
+   left inset. 80% of the remaining column squeezed tables and card rows
+   (names wrapping, titles truncating), so dashboards keep a slim 4% gutter
+   instead. The dashboard topbar uses px-[4%] to line up with it. */
+.container-dashboard {
+  width: 92%;
+  margin-inline: auto;
 }
 
 /* ============================================
@@ -448,8 +491,27 @@ body {
   background: var(--color-text-tertiary);
 }
 
+/* No border-radius here: forcing 6px reshaped every focused element to a
+   box, so pill inputs and round buttons visibly squared off the moment they
+   took focus. Outlines already follow the element's own radius. */
 *:focus-visible {
   outline: 2px solid var(--color-gold);
   outline-offset: 2px;
-  border-radius: 6px;
+}
+
+/* The hero search capsule opts out of the global focus ring on its own text
+   and date inputs: the ring cut across the rounded capsule edge. Focus stays
+   visible there via the text caret. Buttons and links keep the ring, so
+   keyboard navigation is unaffected. This rule has to live here rather than
+   as a utility on the input, because the *:focus-visible rule above is
+   unlayered and so outranks any Tailwind utility regardless of specificity. */
+[role="search"] input:focus-visible {
+  outline: none;
+}
+
+/* Native date pickers follow color-scheme, not our tokens. The inputs carry
+   [color-scheme:light] for the light theme; flip them here so their text and
+   calendar popup stay legible in dark mode. */
+.dark input[type="date"] {
+  color-scheme: dark;
 }

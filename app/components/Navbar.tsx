@@ -44,148 +44,160 @@ export default function Navbar() {
     };
   }, [openMenu]);
 
+  // NOTE: keep backdrop-filter / filter / transform off the <header> below.
+  // Any of them would make it the containing block for its own position:fixed
+  // children (the mobile drawer and its backdrop), collapsing them to the
+  // header's height instead of filling the viewport.
   return (
-    <header className="fixed top-0 left-0 right-0 z-[80] bg-white border-b border-border shadow-sm lg:bg-surface lg:border lg:shadow-[var(--shadow-soft)] lg:rounded-b-[28px]">
-      <div className="max-w-[1400px] mx-auto px-6 lg:px-8">
-        <div className="flex items-center justify-between h-[58px] lg:h-[72px]">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-2.5 group shrink-0">
+    <header className="fixed top-0 left-0 right-0 z-[80] bg-surface border-b border-border shadow-xs">
+      {/* Full-bleed: the header deliberately opts out of .container-page so the
+          logo and actions sit near the viewport edges, not inset with page content. */}
+      <div className="w-full px-5 sm:px-6 lg:px-8">
+        <div className="flex items-center h-[58px] lg:h-[72px]">
+          {/* Left zone. */}
+          <div className="flex items-center shrink-0">
+            <Link href="/" className="flex items-center gap-2.5 group shrink-0">
             <span className="transition-transform duration-300 ease-out group-hover:scale-105 group-hover:-rotate-3">
               <LogoMark size={40} />
             </span>
-            <span className="font-serif text-[1.4rem] font-semibold tracking-tight text-foreground">
+            <span className="font-sans text-[1.3rem] font-bold tracking-[-0.02em] text-foreground">
               Dhyana<span className="text-primary">Stays</span>
             </span>
-          </Link>
+            </Link>
+          </div>
 
-          {/* Desktop Nav — the mobile drawer below covers phones; without
-              this the full link row rendered unconstrained under the lg:hidden
-              actions/toggle, forcing the page wider than the phone screen. */}
-          <nav className="hidden md:flex items-center gap-6">
-            {navLinks.map((link) => {
-              const active = pathname === link.href;
-              const isExperiences = link.label === "Experiences";
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  onMouseEnter={() => setOpenMenu(null)}
-                  className={`group relative flex items-center gap-1 px-4 py-2.5 text-sm font-medium rounded-full transition-colors duration-200 hover:bg-surface-hover ${
-                    active
-                      ? "text-foreground"
-                      : "text-muted hover:text-foreground"
+          {/* Centre zone — mx-auto splits the leftover space equally on both
+              sides of the nav, so the gap to the logo and the gap to the actions
+              match. (Plain page-centring put it 136px from the logo but 6px from
+              the actions, which read as right-aligned.) */}
+          <nav className="hidden xl:flex mx-auto items-center gap-0.5 whitespace-nowrap shrink-0">
+              {navLinks.map((link) => {
+                const active = pathname === link.href;
+                const isExperiences = link.label === "Experiences";
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onMouseEnter={() => setOpenMenu(null)}
+                    className={`group relative flex items-center gap-1 px-2.5 py-2 text-sm font-medium tracking-tight rounded-full transition-colors duration-200 hover:bg-surface-hover ${
+                      active
+                        ? "text-primary"
+                        : "text-muted hover:text-foreground"
+                    }`}
+                  >
+                    {isExperiences ? "Curated Experiences" : link.label}
+                    {/* Underline sits on the header's bottom border: the link
+                        is 36px tall and centred in the 72px row, so it clears
+                        the remaining (72-36)/2 = 18px to reach that edge. */}
+                    <span
+                      className={`pointer-events-none absolute left-2.5 right-2.5 -bottom-[18px] h-[2px] rounded-full bg-primary origin-left transition-transform duration-300 ease-out ${
+                        active
+                          ? "scale-x-100"
+                          : "scale-x-0 group-hover:scale-x-100"
+                      }`}
+                    />
+                  </Link>
+                );
+              })}
+
+              {/* Dashboard role dropdown */}
+              <div className="relative">
+                <button
+                  onClick={() =>
+                    setOpenMenu((m) => (m === "dashboard" ? null : "dashboard"))
+                  }
+                  aria-expanded={dashOpen}
+                  className={`flex items-center gap-1 px-2.5 py-2 text-sm font-medium tracking-tight rounded-full transition-all duration-200 ${
+                    dashOpen
+                      ? "text-foreground bg-surface-hover"
+                      : "text-muted hover:text-foreground hover:bg-surface-hover"
                   }`}
                 >
-                  {isExperiences ? "Curated Experiences" : link.label}
-                  <span
-                    className={`pointer-events-none absolute left-4 right-4 -bottom-0.5 h-[2px] rounded-full bg-primary origin-left transition-transform duration-300 ease-out ${
-                      active
-                        ? "scale-x-100"
-                        : "scale-x-0 group-hover:scale-x-100"
-                    }`}
+                  Dashboard
+                  <ChevronDown
+                    size={14}
+                    className={`transition-transform duration-300 ${dashOpen ? "rotate-180" : ""}`}
                   />
-                </Link>
-              );
-            })}
+                </button>
 
-            {/* Dashboard role dropdown */}
-            <div className="relative">
-              <button
-                onClick={() =>
-                  setOpenMenu((m) => (m === "dashboard" ? null : "dashboard"))
-                }
-                aria-expanded={dashOpen}
-                className={`flex items-center gap-1 px-4 py-2.5 text-sm font-medium rounded-full transition-all duration-200 ${
-                  dashOpen
-                    ? "text-foreground bg-surface-hover"
-                    : "text-muted hover:text-foreground hover:bg-surface-hover"
-                }`}
-              >
-                Dashboard
-                <ChevronDown
-                  size={14}
-                  className={`transition-transform duration-300 ${dashOpen ? "rotate-180" : ""}`}
-                />
-              </button>
-
-              {dashOpen && (
-                <div className="absolute right-0 top-full mt-3 w-[600px] max-h-[72vh] overflow-y-auto rounded-[28px] border border-border bg-surface shadow-organic p-5 animate-fade-in">
-                  <p className="text-[10px] uppercase tracking-wider text-subtle mb-3">
-                    Choose your dashboard — switch anytime if you hold multiple
-                    roles
-                  </p>
-                  <div className="grid grid-cols-2 gap-x-6">
-                    {[0, 1].map((col) => (
-                      <div key={col}>
-                        {dashboardGroups
-                          .filter((_, i) => i % 2 === col)
-                          .map((group) => (
-                            <div key={group} className="mb-4">
-                              <p className="text-[10px] font-semibold uppercase tracking-wider text-primary mb-1.5">
-                                {group}
-                              </p>
-                              {dashboardRoles
-                                .filter((r) => r.group === group && !r.hidden)
-                                .map((r) => (
-                                  <Link
-                                    key={r.slug}
-                                    href={`/${r.slug}`}
-                                    onClick={() => setOpenMenu(null)}
-                                    className="flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-sm text-muted hover:text-foreground hover:bg-surface-hover transition-colors"
-                                  >
-                                    <r.icon
-                                      size={15}
-                                      className="text-subtle shrink-0"
-                                    />
-                                    {r.title.replace(" Dashboard", "")}
-                                  </Link>
-                                ))}
-                            </div>
-                          ))}
-                      </div>
-                    ))}
+                {dashOpen && (
+                  <div className="absolute right-0 top-full mt-3 w-[600px] max-h-[72vh] overflow-y-auto rounded-[28px] border border-border bg-surface shadow-organic p-4 animate-fade-in">
+                    <p className="text-[10px] uppercase tracking-wider text-subtle mb-3">
+                      Choose your dashboard — switch anytime if you hold multiple
+                      roles
+                    </p>
+                    <div className="grid grid-cols-2 gap-x-6">
+                      {[0, 1].map((col) => (
+                        <div key={col}>
+                          {dashboardGroups
+                            .filter((_, i) => i % 2 === col)
+                            .map((group) => (
+                              <div key={group} className="mb-4">
+                                <p className="text-[10px] font-semibold uppercase tracking-wider text-primary mb-1.5">
+                                  {group}
+                                </p>
+                                {dashboardRoles
+                                  .filter((r) => r.group === group && !r.hidden)
+                                  .map((r) => (
+                                    <Link
+                                      key={r.slug}
+                                      href={`/${r.slug}`}
+                                      onClick={() => setOpenMenu(null)}
+                                      className="flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-sm text-muted hover:text-foreground hover:bg-surface-hover transition-colors"
+                                    >
+                                      <r.icon
+                                        size={15}
+                                        className="text-subtle shrink-0"
+                                      />
+                                      {r.title.replace(" Dashboard", "")}
+                                    </Link>
+                                  ))}
+                              </div>
+                            ))}
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              )}
-            </div>
+                )}
+              </div>
           </nav>
 
-          {/* Desktop Actions */}
-          <div className="hidden lg:flex items-center gap-2">
-            <LocationIndicator
-              status={userLocation.status}
-              city={userLocation.city}
-              cityOptions={CITY_OPTIONS}
-              onSelectCity={userLocation.setManualCity}
-              onClear={userLocation.clearCity}
-              onRetryDetection={userLocation.retryDetection}
-            />
-
-            <div className="flex items-center gap-1 pl-2 pr-3 mr-2 border-r border-border/70">
-              <Link
-                href="/traveller/wishlist"
-                aria-label="View wishlist"
-                className="w-10 h-10 flex items-center justify-center rounded-full text-muted hover:text-foreground hover:bg-surface-hover active:scale-90 transition-all duration-200"
-              >
-                <Heart size={18} />
-              </Link>
-              <ThemeToggle />
-            </div>
-            <Link
-              href="/login"
-              className="group flex items-center gap-2 px-5 py-2.5 text-sm font-semibold text-primary-foreground bg-primary rounded-full shadow-[0_4px_10px_rgba(230,126,34,0.18)] hover:bg-primary-hover hover:shadow-[0_6px_16px_rgba(230,126,34,0.24)] hover:-translate-y-px active:translate-y-0 active:scale-95 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-            >
-              <User
-                size={16}
-                className="transition-transform duration-200 group-hover:scale-110"
+          {/* Right zone — flex-1 mirror of the left zone. */}
+          <div className="hidden xl:flex items-center gap-2 shrink-0">
+              <LocationIndicator
+                status={userLocation.status}
+                city={userLocation.city}
+                cityOptions={CITY_OPTIONS}
+                onSelectCity={userLocation.setManualCity}
+                onClear={userLocation.clearCity}
+                onRetryDetection={userLocation.retryDetection}
               />
-              Sign In
-            </Link>
+
+              <div className="flex items-center gap-1 pl-2 pr-3 mr-2 border-r border-border/70 shrink-0">
+                <Link
+                  href="/traveller/wishlist"
+                  aria-label="View wishlist"
+                  className="w-10 h-10 flex items-center justify-center rounded-full text-muted hover:text-foreground hover:bg-surface-hover active:scale-90 transition-all duration-200 shrink-0"
+                >
+                  <Heart size={18} />
+                </Link>
+                <ThemeToggle />
+              </div>
+              <Link
+                href="/login"
+                className="group flex items-center gap-2 px-5 py-2.5 text-sm font-semibold text-primary-foreground bg-primary rounded-lg shadow-[0_4px_10px_rgba(230,126,34,0.18)] hover:bg-primary-hover hover:shadow-[0_6px_16px_rgba(230,126,34,0.24)] hover:-translate-y-px active:translate-y-0 active:scale-95 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background shrink-0 whitespace-nowrap"
+              >
+                <User
+                  size={16}
+                  className="transition-transform duration-200 group-hover:scale-110"
+                />
+                Sign In
+              </Link>
           </div>
 
           {/* Mobile Menu Toggle */}
           <button
-            className="lg:hidden relative w-10 h-10 flex items-center justify-center rounded-full text-foreground hover:bg-surface-hover active:scale-90 transition-all duration-200"
+            className="xl:hidden ml-auto relative w-10 h-10 flex items-center justify-center rounded-full text-foreground hover:bg-surface-hover active:scale-90 transition-all duration-200"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileOpen}
@@ -212,7 +224,7 @@ export default function Navbar() {
 
       {/* Mobile drawer backdrop */}
       <div
-        className={`fixed inset-0 z-[65] bg-black/40 backdrop-blur-sm lg:hidden transition-opacity duration-300 ${
+        className={`fixed inset-0 z-[65] bg-black/40 backdrop-blur-sm xl:hidden transition-opacity duration-300 ${
           mobileOpen
             ? "opacity-100 pointer-events-auto"
             : "opacity-0 pointer-events-none"
@@ -223,7 +235,7 @@ export default function Navbar() {
 
       {/* Mobile drawer panel */}
       <div
-        className={`fixed top-0 right-0 z-[70] h-full w-[86%] max-w-sm bg-background shadow-2xl lg:hidden transition-transform duration-300 ease-out ${
+        className={`fixed top-0 right-0 z-[70] h-full w-[86%] max-w-sm bg-background shadow-2xl xl:hidden transition-transform duration-300 ease-out ${
           mobileOpen ? "translate-x-0" : "translate-x-full"
         }`}
         role="dialog"
@@ -237,7 +249,7 @@ export default function Navbar() {
             onClick={() => setMobileOpen(false)}
           >
             <LogoMark size={34} />
-            <span className="font-serif text-lg font-semibold tracking-tight text-foreground">
+            <span className="font-sans text-lg font-bold tracking-[-0.02em] text-foreground">
               Dhyana<span className="text-primary">Stays</span>
             </span>
           </Link>
@@ -250,7 +262,10 @@ export default function Navbar() {
           </button>
         </div>
 
-        <div className="overflow-y-auto h-[calc(100%-72px)] px-6 py-6 space-y-1">
+        {/* Below the drawer header: one scroll region for the links, with the
+            Sign In row pinned to the bottom edge so it is always reachable. */}
+        <div className="flex flex-col h-[calc(100%-72px)]">
+          <div className="flex-1 overflow-y-auto px-6 py-6 space-y-1">
           {navLinks.map((link) => {
             const active = pathname === link.href;
             const isExperiences = link.label === "Experiences";
@@ -258,7 +273,7 @@ export default function Navbar() {
               <div key={link.href}>
                 <Link
                   href={link.href}
-                  className={`flex items-center gap-1.5 px-4 py-3 text-base rounded-xl transition-colors duration-200 ${
+                  className={`flex items-center gap-1.5 px-4 py-2.5 text-[15px] rounded-xl transition-colors duration-200 ${
                     active
                       ? "text-foreground bg-surface-hover font-medium"
                       : "text-muted hover:text-foreground hover:bg-surface-hover"
@@ -276,7 +291,7 @@ export default function Navbar() {
             <p className="px-4 pb-2 text-[10px] font-semibold uppercase tracking-wider text-primary">
               Dashboards
             </p>
-            <div className="grid grid-cols-2 gap-1 max-h-64 overflow-y-auto">
+            <div className="grid grid-cols-2 gap-1">
               {dashboardRoles
                 .filter((r) => !r.hidden)
                 .map((r) => (
@@ -293,7 +308,10 @@ export default function Navbar() {
             </div>
           </div>
 
-          <div className="pt-4 pb-2 border-t border-border flex items-center gap-2">
+          </div>
+
+          {/* Pinned footer — outside the scroll region above. */}
+          <div className="shrink-0 px-6 py-4 border-t border-border flex items-center gap-2">
             <Link
               href="/login"
               className="flex-1 text-center px-4 py-3 text-sm font-semibold text-primary-foreground bg-primary rounded-full shadow-[0_4px_10px_rgba(230,126,34,0.18)] hover:bg-primary-hover hover:-translate-y-px active:scale-95 transition-all duration-200"

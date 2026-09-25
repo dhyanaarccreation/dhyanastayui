@@ -16,7 +16,7 @@ export default function RescheduleBanner({
   onKeep: () => void;
 }) {
   return (
-    <div className="bg-primary/5 border border-primary/30 rounded-2xl p-5">
+    <div className="bg-primary/5 border border-primary/30 rounded-2xl p-4">
       <div className="flex items-center gap-2 mb-3">
         <Wand2 size={16} className="text-primary" />
         <p className="text-sm font-semibold text-foreground">Your itinerary has been adjusted</p>

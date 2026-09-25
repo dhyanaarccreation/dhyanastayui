@@ -94,7 +94,7 @@ export default function SuperAdminInvestorsPage() {
         </ul>
       </SectionCard>
 
-      <div className="grid lg:grid-cols-2 gap-6">
+      <div className="grid lg:grid-cols-2 gap-5">
         <SectionCard title="Revenue Distribution & Payouts" icon={FileText}>
           <ul className="divide-y divide-surface-hover">
             {investorPayouts.map((p) => (

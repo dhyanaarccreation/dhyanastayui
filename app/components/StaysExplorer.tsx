@@ -1,9 +1,11 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   SlidersHorizontal,
   ChevronDown,
+  ChevronLeft,
+  ChevronRight,
   X,
   Home,
   Sprout,
@@ -154,6 +156,28 @@ export default function StaysExplorer() {
     el.addEventListener("wheel", onWheel, { passive: false });
     return () => el.removeEventListener("wheel", onWheel);
   }, []);
+
+  // Tracks whether the chip strip can still scroll either way, so the chevrons
+  // only appear when there are actually more categories to reveal.
+  const [chipScroll, setChipScroll] = useState({ left: false, right: false });
+  const updateChipScroll = useCallback(() => {
+    const el = categoryScrollerRef.current;
+    if (!el) return;
+    setChipScroll({
+      left: el.scrollLeft > 4,
+      right: el.scrollLeft + el.clientWidth < el.scrollWidth - 4,
+    });
+  }, []);
+  useEffect(() => {
+    updateChipScroll();
+    window.addEventListener("resize", updateChipScroll);
+    return () => window.removeEventListener("resize", updateChipScroll);
+  }, [updateChipScroll]);
+  const scrollChips = (direction: 1 | -1) => {
+    const el = categoryScrollerRef.current;
+    if (!el) return;
+    el.scrollBy({ left: direction * el.clientWidth * 0.8, behavior: "smooth" });
+  };
   const [sortOpen, setSortOpen] = useState(false);
 
   const [filtersOpen, setFiltersOpen] = useState(false);
@@ -240,7 +264,7 @@ export default function StaysExplorer() {
 
   return (
     <div className="bg-background">
-      <div className="max-w-[1400px] mx-auto px-6 lg:px-8">
+      <div className="container-page">
         {/* Section heading — static, never toggles with the picked destination */}
         <div className="mb-5 sm:mb-6">
           <h2 className="heading-organic text-base sm:text-lg lg:text-[22px] leading-[1.05] text-foreground">
@@ -257,38 +281,70 @@ export default function StaysExplorer() {
           </p>
         )}
 
-        {/* Category row — small icon + name pills (no photos), replacing
-            the old standalone "Find Your Perfect Escape" section. Clicking
-            the active tile again resets to "all". Single line, horizontally
-            scrollable instead of wrapping to a second row. */}
-        <div className="mt-3">
-          <div
-            ref={categoryScrollerRef}
-            className="flex items-center gap-3 px-0.5 pt-1.5 pb-3 overflow-x-auto scrollbar-hide"
-          >
-            {categories.map((cat) => (
-              <CategoryTile
-                key={cat.slug}
-                name={cat.name}
-                icon={CATEGORY_ICONS[cat.icon]}
-                iconColorClass={CATEGORY_ICON_COLORS[cat.slug] ?? "text-primary"}
-                active={activeCategory === cat.slug}
-                onClick={() => setActiveCategory(activeCategory === cat.slug ? "all" : cat.slug)}
-              />
-            ))}
-          </div>
-        </div>
+        {/* Controls row — category chips scroll along the left, Filters and
+            Sort stay pinned to the right. Clicking the active chip again
+            resets to "all". The chips stay on one line; the fade at the right
+            edge signals there are more of them past the visible edge, and the
+            full set is always reachable through Filters. */}
+        <div className="mt-3 mb-3 flex flex-col gap-2.5 sm:flex-row sm:items-center sm:gap-3">
+          {/* Bare chevrons — no pill/background of their own — sitting as flex
+              siblings of the scroller so the chips never slide underneath them.
+              The gradients inside the strip fade whichever edge can still
+              scroll, so a part-clipped chip reads as "continues" rather than
+              as a rendering bug. */}
+          <div className="w-full sm:flex-1 sm:min-w-0 flex items-center gap-1">
+            {chipScroll.left && (
+              <button
+                type="button"
+                onClick={() => scrollChips(-1)}
+                aria-label="Show previous categories"
+                className="shrink-0 w-5 h-7 flex items-center justify-center text-subtle hover:text-primary transition-colors"
+              >
+                <ChevronLeft size={16} />
+              </button>
+            )}
 
-        {/* Result count + Filters + Sort */}
-        <div className="mt-3 sm:mt-4 mb-4 sm:mb-5 flex items-center justify-between gap-3">
-          <p className="text-sm text-muted">
-            {filtered.length + (showVaksanaCard ? 1 : 0)} curated{" "}
-            {filtered.length + (showVaksanaCard ? 1 : 0) === 1 ? "stay" : "stays"} found
-          </p>
-          <div className="flex items-center gap-2.5 shrink-0">
+            <div className="relative flex-1 min-w-0">
+              <div
+                ref={categoryScrollerRef}
+                onScroll={updateChipScroll}
+                className="flex items-center gap-2 px-0.5 pt-1.5 pb-2 overflow-x-auto scrollbar-hide"
+              >
+                {categories.map((cat) => (
+                  <CategoryTile
+                    key={cat.slug}
+                    name={cat.name}
+                    icon={CATEGORY_ICONS[cat.icon]}
+                    iconColorClass={CATEGORY_ICON_COLORS[cat.slug] ?? "text-primary"}
+                    active={activeCategory === cat.slug}
+                    onClick={() => setActiveCategory(activeCategory === cat.slug ? "all" : cat.slug)}
+                  />
+                ))}
+              </div>
+
+              {chipScroll.left && (
+                <div className="pointer-events-none absolute top-0 bottom-0 w-8 z-10 left-0 bg-gradient-to-r from-background via-background/70 to-transparent" />
+              )}
+              {chipScroll.right && (
+                <div className="pointer-events-none absolute top-0 bottom-0 w-8 z-10 right-0 bg-gradient-to-l from-background via-background/70 to-transparent" />
+              )}
+            </div>
+
+            {chipScroll.right && (
+              <button
+                type="button"
+                onClick={() => scrollChips(1)}
+                aria-label="Show more categories"
+                className="shrink-0 w-5 h-7 flex items-center justify-center text-subtle hover:text-primary transition-colors"
+              >
+                <ChevronRight size={16} />
+              </button>
+            )}
+          </div>
+          <div className="flex items-center justify-end gap-2 sm:gap-2.5 shrink-0">
             <button
               onClick={() => setFiltersOpen(true)}
-              className={`relative flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all hover:-translate-y-px ${
+              className={`relative flex items-center justify-center gap-1.5 px-2.5 sm:px-3.5 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all hover:-translate-y-px ${
                 activeFilterCount > 0
                   ? "bg-primary text-primary-foreground shadow-[var(--shadow-soft-pill)] hover:shadow-[var(--shadow-hover-pill)]"
                   : "bg-surface border border-border text-foreground shadow-[var(--shadow-soft-pill)] hover:shadow-[var(--shadow-hover-pill)]"
@@ -306,7 +362,7 @@ export default function StaysExplorer() {
             <div className="relative">
               <button
                 onClick={() => setSortOpen((v) => !v)}
-                className="flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-surface border border-border text-xs sm:text-sm text-foreground font-medium shadow-[var(--shadow-soft-pill)] hover:text-primary hover:shadow-[var(--shadow-hover-pill)] hover:-translate-y-px transition-all"
+                className="flex items-center gap-1.5 px-2.5 sm:px-3.5 py-2 rounded-full bg-surface border border-border text-xs sm:text-sm text-foreground font-medium shadow-[var(--shadow-soft-pill)] hover:text-primary hover:shadow-[var(--shadow-hover-pill)] hover:-translate-y-px transition-all"
               >
                 Sort: {sortLabels[sortBy]} <ChevronDown size={13} className={sortOpen ? "rotate-180 transition-transform" : "transition-transform"} />
               </button>
@@ -332,6 +388,13 @@ export default function StaysExplorer() {
             </div>
           </div>
         </div>
+
+        {/* Result count — its own line now that Filters and Sort moved up
+            alongside the category chips. */}
+        <p className="mb-4 sm:mb-5 text-sm text-muted">
+          {filtered.length + (showVaksanaCard ? 1 : 0)} curated{" "}
+          {filtered.length + (showVaksanaCard ? 1 : 0) === 1 ? "stay" : "stays"} found
+        </p>
 
         {/* Active filter chips */}
         {activeFilterCount > 0 && (
@@ -491,7 +554,7 @@ export default function StaysExplorer() {
               </button>
             </div>
 
-            <div className="p-5 border-t border-border bg-surface flex items-center gap-3">
+            <div className="p-4 border-t border-border bg-surface flex items-center gap-3">
               <button onClick={clearFilters} className="flex-1 py-3 text-sm font-medium text-muted hover:text-foreground border border-border rounded-full transition-colors">
                 Clear all
               </button>

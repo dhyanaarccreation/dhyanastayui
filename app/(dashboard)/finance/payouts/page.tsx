@@ -70,7 +70,7 @@ export default function PayoutsAutomationPage() {
       />
 
       {/* Money split */}
-      <div className="bg-surface border border-border rounded-2xl p-6">
+      <div className="bg-surface border border-border rounded-2xl p-5">
         <p className="text-sm font-semibold text-foreground mb-4">Where July&apos;s money went</p>
         <div className="flex flex-col md:flex-row md:items-center gap-3">
           {split.map((s, i) => (
@@ -89,9 +89,9 @@ export default function PayoutsAutomationPage() {
         </p>
       </div>
 
-      <div className="grid lg:grid-cols-3 gap-6">
+      <div className="grid lg:grid-cols-3 gap-5">
         {/* Automation panel */}
-        <div className="bg-gradient-to-br from-sage/15 to-surface border border-sage/25 rounded-2xl p-6">
+        <div className="bg-gradient-to-br from-sage/15 to-surface border border-sage/25 rounded-2xl p-5">
           <div className="flex items-center justify-between">
             <p className="text-sm font-semibold text-foreground flex items-center gap-2">
               <Zap size={15} className="text-sage" /> RazorpayX

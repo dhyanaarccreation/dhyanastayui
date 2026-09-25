@@ -37,7 +37,7 @@ export default function SplitInvestmentProjectsPage() {
     <div className="space-y-4 pb-12">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
-          <h1 className="heading-display text-3xl text-foreground mb-2">
+          <h1 className="heading-display text-2xl text-foreground mb-2">
             Split Investment Opportunities
           </h1>
           <p className="text-sm text-muted">
@@ -47,7 +47,7 @@ export default function SplitInvestmentProjectsPage() {
       </div>
 
       {/* Trust Banner */}
-      <div className="bg-surface border border-border rounded-2xl p-6 flex flex-col md:flex-row items-center gap-6">
+      <div className="bg-surface border border-border rounded-2xl p-5 flex flex-col md:flex-row items-center gap-5">
         <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center shrink-0 border border-primary/20">
           <ShieldCheck size={32} className="text-primary" />
         </div>
@@ -62,7 +62,7 @@ export default function SplitInvestmentProjectsPage() {
         </button>
       </div>
 
-      <div className="grid lg:grid-cols-2 gap-5">
+      <div className="grid lg:grid-cols-2 gap-4">
         {projects.map((proj) => {
           const progressPercentage = (proj.fundRaised / proj.fundTarget) * 100;
           
@@ -78,13 +78,13 @@ export default function SplitInvestmentProjectsPage() {
                 </div>
               </div>
               
-              <div className="p-6 md:p-8 flex-1 flex flex-col">
-                <h2 className="text-2xl font-semibold text-foreground mb-2">{proj.name}</h2>
+              <div className="p-5 md:p-6 flex-1 flex flex-col">
+                <h2 className="text-xl font-semibold text-foreground mb-2">{proj.name}</h2>
                 <div className="flex items-center gap-1 text-sm text-muted mb-6">
                   <MapPin size={14} className="text-primary" /> {proj.location}
                 </div>
 
-                <div className="grid grid-cols-2 gap-6 mb-6">
+                <div className="grid grid-cols-2 gap-5 mb-6">
                   <div>
                     <div className="text-[10px] uppercase tracking-wider text-subtle mb-1 flex items-center gap-1">
                       Projected Yield <Info size={10} />

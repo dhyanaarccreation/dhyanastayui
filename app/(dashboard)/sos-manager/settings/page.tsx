@@ -88,7 +88,7 @@ export default function SosSettingsPage() {
         </p>
       </SectionCard>
 
-      <div className="grid lg:grid-cols-2 gap-6">
+      <div className="grid lg:grid-cols-2 gap-5">
         <SectionCard title="SLA Targets" icon={Clock}>
           <div className="px-5 py-4 grid sm:grid-cols-2 gap-4">
             {[

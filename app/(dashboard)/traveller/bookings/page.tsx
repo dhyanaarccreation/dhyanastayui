@@ -145,7 +145,7 @@ export default function BookingsPage() {
     <div className="pb-12">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-4">
         <div>
-          <h1 className="heading-display text-3xl text-foreground mb-2">My Bookings</h1>
+          <h1 className="heading-display text-2xl text-foreground mb-2">My Bookings</h1>
           <p className="text-sm text-muted">Manage your upcoming stays and review past trips.</p>
         </div>
 
@@ -174,7 +174,7 @@ export default function BookingsPage() {
         </div>
       </div>
 
-      <div className="flex gap-6 border-b border-border mb-4">
+      <div className="flex gap-5 border-b border-border mb-4">
         {["upcoming", "past", "cancelled", "trip"].map((tab) => (
           <button
             key={tab}
@@ -204,7 +204,7 @@ export default function BookingsPage() {
                   <div className="md:w-64 h-48 md:h-auto bg-surface-hover relative">
                     <img src={property.images[0]} alt="" className="w-full h-full object-cover opacity-90" />
                   </div>
-                  <div className="p-6 flex-1 flex flex-col">
+                  <div className="p-5 flex-1 flex flex-col">
                     <div className="flex justify-between items-start mb-2">
                       <span className="px-3 py-1 text-[10px] uppercase tracking-wider bg-primary/10 text-primary rounded-full border border-primary/20 font-semibold">
                         Confirmed
@@ -245,7 +245,7 @@ export default function BookingsPage() {
               );
             })
           ) : (
-            <div className="text-center py-12 border border-border border-dashed rounded-2xl">
+            <div className="text-center py-10 border border-border border-dashed rounded-2xl">
               <p className="text-muted">No upcoming bookings match your search.</p>
             </div>
           )
@@ -267,7 +267,7 @@ export default function BookingsPage() {
                       className="w-full h-full object-cover opacity-60 grayscale hover:grayscale-0 transition-all duration-500"
                     />
                   </div>
-                  <div className="p-6 flex-1 flex flex-col">
+                  <div className="p-5 flex-1 flex flex-col">
                     <div className="flex justify-between items-start mb-2">
                       <span className="px-3 py-1 text-[10px] uppercase tracking-wider bg-border text-muted rounded-full font-semibold">
                         Completed
@@ -307,7 +307,7 @@ export default function BookingsPage() {
               );
             })
           ) : (
-            <div className="text-center py-12 border border-border border-dashed rounded-2xl">
+            <div className="text-center py-10 border border-border border-dashed rounded-2xl">
               <p className="text-muted">No past bookings match your search.</p>
             </div>
           )
@@ -325,7 +325,7 @@ export default function BookingsPage() {
                   <div className="md:w-64 h-48 md:h-auto bg-surface-hover relative">
                     <img src={property.images[0]} alt="" className="w-full h-full object-cover opacity-50 grayscale" />
                   </div>
-                  <div className="p-6 flex-1 flex flex-col">
+                  <div className="p-5 flex-1 flex flex-col">
                     <div className="flex justify-between items-start mb-2">
                       <span className="px-3 py-1 text-[10px] uppercase tracking-wider bg-terracotta/10 text-terracotta rounded-full border border-terracotta/20 font-semibold">
                         Cancelled
@@ -369,7 +369,7 @@ export default function BookingsPage() {
               );
             })
           ) : (
-            <div className="text-center py-12 border border-border border-dashed rounded-2xl">
+            <div className="text-center py-10 border border-border border-dashed rounded-2xl">
               <p className="text-muted">
                 {query ? "No cancelled bookings match your search." : "You have no cancelled bookings."}
               </p>
@@ -380,7 +380,7 @@ export default function BookingsPage() {
         {activeTab === "trip" && (
           <div className="grid md:grid-cols-2 gap-4">
             {tripBookings.map((booking) => (
-              <div key={booking.id} className="bg-surface border border-border rounded-2xl p-5">
+              <div key={booking.id} className="bg-surface border border-border rounded-2xl p-4">
                 <div className="flex items-start justify-between gap-2 mb-2">
                   <div>
                     <p className="text-[10px] uppercase tracking-wider text-subtle">{booking.category}</p>

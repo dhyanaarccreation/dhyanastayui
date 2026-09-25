@@ -139,13 +139,13 @@ export default function InfluencerCollectionPage() {
       />
 
       {/* Curator identity + region + activation progress */}
-      <div className="bg-gradient-to-r from-sage/15 via-surface to-surface border border-sage/25 rounded-2xl p-6 md:p-8">
-        <div className="flex flex-col md:flex-row md:items-center gap-6">
+      <div className="bg-gradient-to-r from-sage/15 via-surface to-surface border border-sage/25 rounded-2xl p-5 md:p-6">
+        <div className="flex flex-col md:flex-row md:items-center gap-5">
           <div className="flex-1">
             <p className="text-xs font-semibold uppercase tracking-wider text-sage flex items-center gap-1.5">
               <Sparkles size={12} /> {curatorIdentity.title}
             </p>
-            <p className="text-2xl font-bold text-foreground mt-2 flex items-center gap-2">
+            <p className="text-xl font-bold text-foreground mt-2 flex items-center gap-2">
               <MapPin size={18} className="text-sage" /> {curatorIdentity.region}
             </p>
             <p className="text-sm text-muted mt-1">{curatorIdentity.tagline}</p>
@@ -227,7 +227,7 @@ export default function InfluencerCollectionPage() {
           )}
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 p-5">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
           {sortedStays.map((s, i) => (
             <div key={s.id} className={`rounded-2xl border overflow-hidden group ${s.featured ? "border-primary/50 ring-1 ring-primary/20" : "border-border"} bg-background`}>
               <div className="relative h-32">

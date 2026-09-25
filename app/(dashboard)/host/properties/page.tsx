@@ -184,7 +184,7 @@ export default function HostPropertiesPage() {
           const isExpanded = expandedId === p.id;
           return (
             <div key={p.id}>
-              <div className="bg-surface border border-border rounded-2xl p-4 flex flex-col md:flex-row gap-5 md:items-center">
+              <div className="bg-surface border border-border rounded-2xl p-4 flex flex-col md:flex-row gap-4 md:items-center">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={p.images[0]}
@@ -199,7 +199,7 @@ export default function HostPropertiesPage() {
                   <p className="text-xs text-muted mt-1 flex items-center gap-1">
                     <MapPin size={11} /> {p.location.city}, {p.location.state} · {p.category}
                   </p>
-                  <div className="flex items-center gap-5 mt-3 text-xs text-muted">
+                  <div className="flex items-center gap-4 mt-3 text-xs text-muted">
                     <span>
                       <span className="text-foreground font-semibold">₹{p.price.toLocaleString("en-IN")}</span>/night
                     </span>
@@ -258,7 +258,7 @@ export default function HostPropertiesPage() {
                   </div>
 
                   {/* Property Information: description + story */}
-                  <div className="p-5 grid md:grid-cols-2 gap-5 border-b border-surface-hover">
+                  <div className="p-4 grid md:grid-cols-2 gap-4 border-b border-surface-hover">
                     <div>
                       <label className="text-xs font-semibold text-subtle uppercase tracking-wider flex items-center gap-1.5 mb-2">
                         <FileText size={12} /> Description
@@ -284,7 +284,7 @@ export default function HostPropertiesPage() {
                   </div>
 
                   {/* Amenities */}
-                  <div className="p-5 border-b border-surface-hover">
+                  <div className="p-4 border-b border-surface-hover">
                     <p className="text-xs font-semibold text-subtle uppercase tracking-wider flex items-center gap-1.5 mb-3">
                       <Tag size={12} /> Amenities
                     </p>
@@ -330,7 +330,7 @@ export default function HostPropertiesPage() {
                   </div>
 
                   {/* House Rules */}
-                  <div className="p-5 border-b border-surface-hover">
+                  <div className="p-4 border-b border-surface-hover">
                     <p className="text-xs font-semibold text-subtle uppercase tracking-wider flex items-center gap-1.5 mb-3">
                       <ListChecks size={12} /> House Rules
                     </p>
@@ -376,7 +376,7 @@ export default function HostPropertiesPage() {
                   </div>
 
                   {/* Gallery: Images / Videos / 360 Tour */}
-                  <div className="p-5">
+                  <div className="p-4">
                     <p className="text-xs font-semibold text-subtle uppercase tracking-wider flex items-center gap-1.5 mb-3">
                       <ImageIcon size={12} /> Gallery
                     </p>

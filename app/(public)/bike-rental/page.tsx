@@ -35,14 +35,14 @@ export default function BikeRentalPage() {
   return (
     <div className="pb-24">
       {/* Hero Section */}
-      <section className="bg-background py-20 border-b border-border">
-        <div className="max-w-[1200px] mx-auto px-6 lg:px-8 flex flex-col md:flex-row items-center gap-12">
+      <section className="bg-background py-14 border-b border-border">
+        <div className="container-page flex flex-col md:flex-row items-center gap-8">
           <div className="flex-1">
             <span className="text-[10px] uppercase tracking-wider text-primary font-bold mb-4 block">Dhyana Wheels</span>
-            <h1 className="heading-display text-4xl md:text-6xl text-foreground mb-6">
+            <h1 className="heading-display text-3xl md:text-5xl text-foreground mb-6">
               Explore at your own pace.
             </h1>
-            <p className="text-lg text-muted mb-10 leading-relaxed">
+            <p className="text-lg text-muted mb-8 leading-relaxed">
               Rent meticulously maintained motorcycles, premium EV scooters, and mountain bikes directly from Dhyana hubs or get them delivered to your stay.
             </p>
             
@@ -80,8 +80,8 @@ export default function BikeRentalPage() {
       </section>
 
       {/* Dhyana Guarantee */}
-      <section className="py-16 max-w-[1200px] mx-auto px-6 lg:px-8 border-b border-border">
-        <div className="grid md:grid-cols-3 gap-8">
+      <section className="py-12 container-page border-b border-border">
+        <div className="grid md:grid-cols-3 gap-6">
           <div className="flex items-start gap-4">
             <div className="w-12 h-12 rounded-xl bg-surface border border-border flex items-center justify-center shrink-0">
               <ShieldCheck size={24} className="text-primary" />
@@ -113,18 +113,18 @@ export default function BikeRentalPage() {
       </section>
 
       {/* Fleet */}
-      <section className="py-16 max-w-[1200px] mx-auto px-6 lg:px-8">
-        <div className="flex justify-between items-end mb-8 max-md:flex-col max-md:items-start max-md:gap-3">
-          <h2 className="text-2xl font-semibold text-foreground">Available Fleet</h2>
-          <div className="flex gap-2 max-md:w-full max-md:flex-nowrap max-md:overflow-x-auto max-md:pb-1">
-            <button className="px-4 py-1.5 rounded-lg bg-primary text-primary-foreground text-sm font-medium max-md:shrink-0">All</button>
-            <button className="px-4 py-1.5 rounded-lg bg-surface border border-border text-muted text-sm hover:border-subtle max-md:shrink-0">Motorcycles</button>
-            <button className="px-4 py-1.5 rounded-lg bg-surface border border-border text-muted text-sm hover:border-subtle max-md:shrink-0">EVs</button>
-            <button className="px-4 py-1.5 rounded-lg bg-surface border border-border text-muted text-sm hover:border-subtle max-md:shrink-0">Bicycles</button>
+      <section className="py-12 container-page">
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-3 mb-6">
+          <h2 className="text-xl font-semibold text-foreground">Available Fleet</h2>
+          <div className="flex gap-2 overflow-x-auto scrollbar-hide -mx-[4.3478%] px-[4.3478%] sm:mx-0 sm:px-0">
+            <button className="shrink-0 px-4 py-1.5 rounded-lg bg-primary text-primary-foreground text-sm font-medium">All</button>
+            <button className="shrink-0 px-4 py-1.5 rounded-lg bg-surface border border-border text-muted text-sm hover:border-subtle">Motorcycles</button>
+            <button className="shrink-0 px-4 py-1.5 rounded-lg bg-surface border border-border text-muted text-sm hover:border-subtle">EVs</button>
+            <button className="shrink-0 px-4 py-1.5 rounded-lg bg-surface border border-border text-muted text-sm hover:border-subtle">Bicycles</button>
           </div>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {bikes.map((bike) => (
             <div key={bike.id} className="bg-surface border border-border rounded-2xl overflow-hidden group">
               <div className="h-48 relative bg-background">
@@ -133,7 +133,7 @@ export default function BikeRentalPage() {
                   {bike.engine}
                 </div>
               </div>
-              <div className="p-5">
+              <div className="p-4">
                 <div className="text-[10px] uppercase tracking-wider text-primary font-semibold mb-1">{bike.type}</div>
                 <h3 className="text-lg font-semibold text-foreground mb-4">{bike.name}</h3>
                 

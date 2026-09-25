@@ -21,7 +21,7 @@ export default function SuperHostSettingsPage() {
         subtitle="Cluster scope, pricing approval thresholds and escalation routing."
       />
 
-      <div className="grid lg:grid-cols-2 gap-6">
+      <div className="grid lg:grid-cols-2 gap-5">
         <SectionCard title="Cluster Scope" icon={MapPin}>
           <div className="divide-y divide-surface-hover">
             <SettingRow

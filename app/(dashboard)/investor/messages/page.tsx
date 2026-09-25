@@ -113,7 +113,7 @@ export default function InvestorMessagesPage() {
       </SectionCard>
 
       <SectionCard title="Need Help?" icon={LifeBuoy}>
-        <div className="p-5 flex flex-wrap gap-2.5">
+        <div className="p-4 flex flex-wrap gap-2.5">
           {supportCategories.map((label) => (
             <button
               key={label}

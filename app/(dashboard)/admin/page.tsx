@@ -16,14 +16,14 @@ export default function AdminDashboardOverview() {
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
         <div>
-          <h1 className="heading-display text-3xl text-foreground mb-2">
+          <h1 className="heading-display text-2xl text-foreground mb-2">
             Command Center
           </h1>
           <p className="text-sm text-muted">
             System-wide metrics and actionable alerts across the Dhyana ecosystem.
           </p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           <Link
             href="/admin/inspections"
             className="px-4 py-2 bg-surface-hover border border-border text-foreground font-semibold text-sm rounded-xl hover:bg-surface-hover transition-colors flex items-center gap-2"
@@ -39,7 +39,7 @@ export default function AdminDashboardOverview() {
       {/* KPI Cards */}
       <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {kpis.map((kpi, i) => (
-          <div key={i} className="bg-surface border border-border rounded-2xl p-6 relative overflow-hidden group">
+          <div key={i} className="bg-surface border border-border rounded-2xl p-5 relative overflow-hidden group">
             <div className="absolute -right-4 -top-4 opacity-5 group-hover:opacity-10 transition-opacity">
               <kpi.icon size={100} />
             </div>
@@ -51,19 +51,19 @@ export default function AdminDashboardOverview() {
                 {kpi.change}
               </span>
             </div>
-            <div className="text-2xl font-bold text-foreground mb-1">{kpi.value}</div>
+            <div className="text-xl font-bold text-foreground mb-1">{kpi.value}</div>
             <div className="text-sm text-muted">{kpi.label}</div>
           </div>
         ))}
       </div>
 
-      <div className="grid lg:grid-cols-3 gap-5">
+      <div className="grid lg:grid-cols-3 gap-4">
         {/* Main Content Area */}
-        <div className="lg:col-span-2 space-y-4 max-md:min-w-0">
+        <div className="lg:col-span-2 space-y-4 min-w-0">
 
           {/* Revenue Chart Placeholder */}
-          <div className="bg-surface border border-border rounded-2xl p-6">
-            <div className="flex justify-between items-center mb-6 max-md:flex-col max-md:items-start max-md:gap-2">
+          <div className="bg-surface border border-border rounded-2xl p-5">
+            <div className="flex justify-between items-center mb-6">
               <h2 className="text-lg font-semibold text-foreground">Platform Revenue (Last 6 Months)</h2>
               <select className="bg-background border border-border text-sm text-foreground rounded-lg px-3 py-1 focus:outline-none max-md:self-stretch">
                 <option>All Regions</option>
@@ -90,14 +90,14 @@ export default function AdminDashboardOverview() {
             <div className="flex justify-between text-[10px] text-subtle uppercase tracking-wider px-2">
               <span>May</span><span>Jun</span><span>Jul</span><span>Aug</span><span>Sep</span><span>Oct</span>
             </div>
-            <div className="flex justify-center gap-6 mt-4 text-xs text-muted">
+            <div className="flex justify-center gap-5 mt-4 text-xs text-muted">
               <div className="flex items-center gap-2"><div className="w-3 h-3 bg-primary rounded-sm"></div> Stay Revenue</div>
               <div className="flex items-center gap-2"><div className="w-3 h-3 bg-surface-hover rounded-sm"></div> Experiences & Add-ons</div>
             </div>
           </div>
 
           {/* Recent Host Applications */}
-          <div className="bg-surface border border-border rounded-2xl p-6">
+          <div className="bg-surface border border-border rounded-2xl p-5">
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-lg font-semibold text-foreground">Recent Host Applications</h2>
               <Link href="/admin/users" className="text-sm text-primary hover:underline">View All</Link>
@@ -141,7 +141,7 @@ export default function AdminDashboardOverview() {
         {/* Sidebar */}
         <div className="space-y-4">
           {/* System Alerts */}
-          <div className="bg-surface border border-red-500/20 rounded-2xl p-6">
+          <div className="bg-surface border border-red-500/20 rounded-2xl p-5">
             <h3 className="text-sm font-semibold text-foreground mb-4 flex items-center gap-2">
               <AlertCircle className="text-red-500" size={16} /> System Alerts
             </h3>
@@ -159,7 +159,7 @@ export default function AdminDashboardOverview() {
           </div>
 
           {/* Quick Actions */}
-          <div className="bg-surface border border-border rounded-2xl p-6">
+          <div className="bg-surface border border-border rounded-2xl p-5">
             <h3 className="text-sm font-semibold text-foreground mb-4">Quick Actions</h3>
             <div className="space-y-2">
               <button className="w-full py-2.5 px-4 bg-surface-hover border border-border text-foreground text-sm text-left rounded-xl hover:bg-surface-hover transition-colors">
@@ -177,9 +177,9 @@ export default function AdminDashboardOverview() {
       </div>
 
       {/* Daily operations queues — refunds, document verification, review moderation */}
-      <div className="grid lg:grid-cols-3 gap-5">
+      <div className="grid lg:grid-cols-3 gap-4">
         {/* Refund Requests */}
-        <div className="bg-surface border border-border rounded-2xl p-6">
+        <div className="bg-surface border border-border rounded-2xl p-5">
           <div className="flex justify-between items-center mb-4">
             <h3 className="text-sm font-semibold text-foreground">Refund Requests</h3>
             <span className="text-xs text-muted">3 pending</span>
@@ -206,7 +206,7 @@ export default function AdminDashboardOverview() {
         </div>
 
         {/* Document Verification */}
-        <div className="bg-surface border border-border rounded-2xl p-6">
+        <div className="bg-surface border border-border rounded-2xl p-5">
           <div className="flex justify-between items-center mb-4">
             <h3 className="text-sm font-semibold text-foreground">Document Verification</h3>
             <span className="text-xs text-muted">4 in queue</span>
@@ -238,7 +238,7 @@ export default function AdminDashboardOverview() {
         </div>
 
         {/* Reviews Moderation */}
-        <div className="bg-surface border border-border rounded-2xl p-6">
+        <div className="bg-surface border border-border rounded-2xl p-5">
           <div className="flex justify-between items-center mb-4">
             <h3 className="text-sm font-semibold text-foreground">Reviews Moderation</h3>
             <span className="text-xs text-muted">2 flagged</span>

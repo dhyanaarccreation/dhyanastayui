@@ -7,7 +7,7 @@ import { stayDetails, hostContact, directionsUrl } from "@/lib/trip-dashboard-da
 
 export default function TravellerStayPage() {
   return (
-    <div className="space-y-6 pb-16">
+    <div className="space-y-5 pb-16">
       <PageHeader title="My Stay" subtitle={`${stayDetails.propertyName} · ${stayDetails.unit}`} />
 
       <div className="bg-surface border border-border rounded-2xl overflow-hidden flex flex-col md:flex-row">
@@ -15,7 +15,7 @@ export default function TravellerStayPage() {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={stayDetails.image} alt={stayDetails.propertyName} className="w-full h-full object-cover" />
         </div>
-        <div className="p-6 md:p-8 md:w-3/5 flex flex-col justify-center">
+        <div className="p-5 md:p-6 md:w-3/5 flex flex-col justify-center">
           <h2 className="text-xl font-semibold text-foreground">{stayDetails.propertyName}</h2>
           <p className="text-sm text-muted flex items-center gap-1.5 mt-1">
             <MapPin size={14} /> {stayDetails.address}
@@ -56,9 +56,9 @@ export default function TravellerStayPage() {
         </div>
       </div>
 
-      <div className="grid lg:grid-cols-2 gap-5">
+      <div className="grid lg:grid-cols-2 gap-4">
         <SectionCard title="Amenities & Facilities" icon={CheckCircle2}>
-          <div className="p-5 grid grid-cols-2 gap-y-2.5 gap-x-3">
+          <div className="p-4 grid grid-cols-2 gap-y-2.5 gap-x-3">
             {stayDetails.facilities.map((f) => (
               <span key={f} className="text-sm text-foreground flex items-center gap-2">
                 <CheckCircle2 size={13} className="text-sage shrink-0" /> {f}
@@ -68,7 +68,7 @@ export default function TravellerStayPage() {
         </SectionCard>
 
         <SectionCard title="House Rules & Instructions" icon={Info}>
-          <ul className="p-5 space-y-2.5">
+          <ul className="p-4 space-y-2.5">
             {stayDetails.houseRules.map((r) => (
               <li key={r} className="text-sm text-muted flex items-start gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-subtle mt-1.5 shrink-0" /> {r}
@@ -79,7 +79,7 @@ export default function TravellerStayPage() {
       </div>
 
       <SectionCard title="Host">
-        <div className="p-5 flex items-center justify-between gap-4 flex-wrap">
+        <div className="p-4 flex items-center justify-between gap-4 flex-wrap">
           <div className="flex items-center gap-3">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={hostContact.avatar} alt={hostContact.name} className="w-11 h-11 rounded-full object-cover" />

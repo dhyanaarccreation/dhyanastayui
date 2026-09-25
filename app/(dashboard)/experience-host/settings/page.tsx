@@ -24,7 +24,7 @@ export default function ExperienceHostSettingsPage() {
         subtitle="Profile, payouts, availability and notifications for your experiences."
       />
 
-      <div className="grid lg:grid-cols-2 gap-6">
+      <div className="grid lg:grid-cols-2 gap-5">
         <SectionCard title="Host Profile" icon={Camera}>
           <div className="divide-y divide-surface-hover">
             <SettingRow

@@ -57,10 +57,10 @@ export default function SupportQualityPage() {
         ]}
       />
 
-      <div className="grid lg:grid-cols-3 gap-6">
+      <div className="grid lg:grid-cols-3 gap-5">
         {/* AI resolution trend */}
         <SectionCard title="AI Resolution Rate Trend" icon={BarChart3} className="lg:col-span-2">
-          <div className="p-6">
+          <div className="p-5">
             <div className="flex items-end justify-between gap-3 h-44">
               {months.map((b, i) => (
                 <div key={b.m} className="flex-1 flex flex-col items-center gap-2">

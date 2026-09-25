@@ -66,7 +66,7 @@ export default function TicketModal({
           </button>
         </div>
 
-        <div className="p-5 space-y-4">
+        <div className="p-4 space-y-4">
           <div className="flex items-center justify-between gap-4 pb-4 border-b border-dashed border-border">
             <div className="min-w-0">
               <p className="text-[10px] uppercase tracking-wider text-primary font-semibold mb-1">Dhyana Pass</p>

@@ -44,7 +44,7 @@ export default function InfluencerProfilePage() {
       />
 
       <SectionCard title="Creator Information" icon={User}>
-        <div className="p-5 flex items-start gap-4">
+        <div className="p-4 flex items-start gap-4">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={influencerProfile.avatar} alt={influencerProfile.name} className="w-16 h-16 rounded-full object-cover shrink-0" />
           <div className="min-w-0 flex-1">
@@ -143,7 +143,7 @@ export default function InfluencerProfilePage() {
         </div>
       </SectionCard>
 
-      <div className="grid lg:grid-cols-2 gap-6">
+      <div className="grid lg:grid-cols-2 gap-5">
         <SectionCard title="Social Profiles" icon={Camera}>
           <ul className="divide-y divide-surface-hover">
             {influencerProfile.socials.map((s) => (

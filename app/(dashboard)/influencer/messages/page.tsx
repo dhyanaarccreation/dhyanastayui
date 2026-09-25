@@ -73,7 +73,7 @@ export default function InfluencerMessagesPage() {
       </SectionCard>
 
       <SectionCard title="Need Help?" icon={LifeBuoy}>
-        <div className="p-5 flex flex-wrap gap-2.5">
+        <div className="p-4 flex flex-wrap gap-2.5">
           <button className="px-4 py-2 text-xs font-medium border border-border rounded-full text-muted hover:text-foreground transition-colors">
             Campaign support
           </button>

@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 import { Search, Quote, ArrowRight, PlayCircle } from "lucide-react";
 import { experiences } from "@/lib/mock-data";
 import ImageCard from "@/app/components/cards/ImageCard";
+import ChipScroller from "@/app/components/ChipScroller";
 
 const categories = ["All", ...Array.from(new Set(experiences.map((e) => e.category)))];
 
@@ -61,13 +62,13 @@ export default function ExperiencesPage() {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
 
-        <div className="relative z-10 max-w-[1200px] mx-auto px-6 lg:px-8 w-full">
-          <h1 className="heading-display text-2xl md:text-3xl text-foreground mb-4">
+        <div className="relative z-10 container-page w-full">
+          <h1 className="heading-display text-xl md:text-2xl text-foreground mb-4">
             Curated Local Experiences.
           </h1>
 
           <div className="max-w-2xl bg-surface/80 backdrop-blur-md p-2 rounded-2xl border border-border flex flex-col sm:flex-row gap-2">
-            <div className="flex-1 relative">
+            <div role="search" className="flex-1 relative">
               <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-subtle" />
               <input
                 type="text"
@@ -89,31 +90,31 @@ export default function ExperiencesPage() {
 
       {/* ================= CATEGORIES ================= */}
       <section className="py-4 sm:py-5 border-b border-border">
-        <div className="max-w-[1200px] mx-auto px-6 lg:px-8 flex gap-3 overflow-x-auto scrollbar-hide">
+        <ChipScroller label="categories" className="container-page">
           {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => setCategory(cat)}
-              className={`px-6 py-2.5 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${
+              className={`shrink-0 px-6 py-2.5 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${
                 category === cat ? "bg-primary text-primary-foreground" : "bg-surface border border-border text-muted hover:border-subtle"
               }`}
             >
               {cat}
             </button>
           ))}
-        </div>
+        </ChipScroller>
       </section>
 
       {/* ================= GRID ================= */}
-      <section id="grid" className="py-5 md:py-7 max-w-[1200px] mx-auto px-6 lg:px-8 scroll-mt-20">
+      <section id="grid" className="py-5 md:py-7 container-page scroll-mt-12">
         <div className="flex justify-between items-end mb-5 sm:mb-6">
-          <h2 className="text-2xl font-semibold text-foreground">
+          <h2 className="text-xl font-semibold text-foreground">
             {category === "All" ? "Trending Experiences" : category}
           </h2>
           <span className="text-sm text-subtle">{visible.length} experiences</span>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {visible.map((exp) => (
             <ImageCard
               key={exp.id}
@@ -135,21 +136,21 @@ export default function ExperiencesPage() {
             />
           ))}
           {visible.length === 0 && (
-            <p className="col-span-full text-center text-sm text-subtle py-12">No experiences match that search — try another category.</p>
+            <p className="col-span-full text-center text-sm text-subtle py-10">No experiences match that search — try another category.</p>
           )}
         </div>
       </section>
 
       {/* ================= TESTIMONIALS ================= */}
-      <section className="py-20 bg-surface/40">
-        <div className="max-w-[1200px] mx-auto px-6 lg:px-8">
-          <div className="text-center mb-12">
+      <section className="py-14 bg-surface/40">
+        <div className="container-page">
+          <div className="text-center mb-8">
             <span className="text-xs font-semibold text-primary uppercase tracking-widest">Guest Stories</span>
-            <h2 className="heading-display text-2xl md:text-4xl text-foreground mt-3">What Guests Say</h2>
+            <h2 className="heading-display text-xl md:text-3xl text-foreground mt-3">What Guests Say</h2>
           </div>
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-3 gap-5">
             {experienceTestimonials.map((t) => (
-              <div key={t.name} className="p-7 rounded-2xl bg-surface border border-border relative">
+              <div key={t.name} className="p-5 rounded-2xl bg-surface border border-border relative">
                 <Quote size={28} className="text-primary/20 absolute top-5 right-5" />
                 <div className="flex items-center gap-3 mb-4">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -168,8 +169,8 @@ export default function ExperiencesPage() {
       </section>
 
       {/* ================= CLOSING CTA ================= */}
-      <section className="py-20 max-w-[900px] mx-auto px-6 lg:px-8 text-center">
-        <h2 className="heading-display text-2xl md:text-4xl text-foreground">Run experiences of your own?</h2>
+      <section className="py-14 max-w-[900px] mx-auto px-6 lg:px-8 text-center">
+        <h2 className="heading-display text-xl md:text-3xl text-foreground">Run experiences of your own?</h2>
         <p className="text-muted mt-3 max-w-lg mx-auto">
           Join Dhyana as an Experience Host — list your workshop, tour or class and reach every guest booking a stay.
         </p>

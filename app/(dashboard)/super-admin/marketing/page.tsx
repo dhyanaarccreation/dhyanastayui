@@ -94,7 +94,7 @@ export default function SuperAdminMarketingPage() {
         </ul>
       </SectionCard>
 
-      <div className="grid lg:grid-cols-2 gap-6">
+      <div className="grid lg:grid-cols-2 gap-5">
         <SectionCard title="Banners & Landing Pages" icon={Image}>
           <ul className="divide-y divide-surface-hover">
             {banners.map((b) => (

@@ -107,12 +107,12 @@ export default function InvestorWalletPage() {
       />
 
       {/* Balance card */}
-      <div className="bg-gradient-to-r from-primary/15 via-surface to-surface border border-primary/25 rounded-2xl p-6 md:p-8 flex flex-col md:flex-row md:items-center gap-6">
+      <div className="bg-gradient-to-r from-primary/15 via-surface to-surface border border-primary/25 rounded-2xl p-5 md:p-6 flex flex-col md:flex-row md:items-center gap-5">
         <div className="flex-1">
           <p className="text-xs font-semibold uppercase tracking-wider text-primary flex items-center gap-1.5">
             <Wallet size={14} /> Available Balance
           </p>
-          <p className="text-4xl font-bold text-foreground mt-2 tabular-nums">₹48,250</p>
+          <p className="text-3xl font-bold text-foreground mt-2 tabular-nums">₹48,250</p>
           <p className="text-sm text-muted mt-1">Next distribution expected Sep 01 · ≈ ₹39,400</p>
         </div>
         <div className="flex gap-3">
@@ -209,7 +209,7 @@ export default function InvestorWalletPage() {
         </p>
       </SectionCard>
 
-      <div className="grid lg:grid-cols-3 gap-6">
+      <div className="grid lg:grid-cols-3 gap-5">
         {/* Transactions */}
         <SectionCard title="Transactions" icon={Wallet} className="lg:col-span-2" action={{ label: "Statement PDF", href: "/investor/wallet" }}>
           <ul className="divide-y divide-surface-hover">

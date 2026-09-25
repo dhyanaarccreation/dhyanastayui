@@ -55,8 +55,8 @@ export default function WriteReviewPage() {
         </Link>
       </div>
 
-      <div className="py-10 md:py-14 text-center px-6">
-        <h1 className="heading-display text-4xl lg:text-5xl text-foreground mb-4">Share your Dhyana story</h1>
+      <div className="py-8 md:py-10 text-center px-6">
+        <h1 className="heading-display text-3xl lg:text-4xl text-foreground mb-4">Share your Dhyana story</h1>
         <p className="text-muted max-w-lg mx-auto text-sm md:text-base">
           Whether it was a stay, an experience or an investment — future travellers read every word.
         </p>
@@ -64,9 +64,9 @@ export default function WriteReviewPage() {
 
       <div className="max-w-[720px] mx-auto px-6 lg:px-8">
         {!submitted ? (
-          <div className="bg-surface border border-border rounded-2xl p-6 sm:p-10 shadow-organic">
-            <form className="space-y-6" noValidate onSubmit={handleSubmit}>
-              <div className="grid sm:grid-cols-2 gap-6">
+          <div className="bg-surface border border-border rounded-2xl p-5 sm:p-8 shadow-organic">
+            <form className="space-y-5" noValidate onSubmit={handleSubmit}>
+              <div className="grid sm:grid-cols-2 gap-5">
                 <div>
                   <label className="block text-xs font-medium text-muted mb-2 uppercase tracking-wider">Your Name</label>
                   <input
@@ -202,12 +202,12 @@ export default function WriteReviewPage() {
             </form>
           </div>
         ) : (
-          <div className="bg-surface border border-border rounded-2xl p-10 md:p-14 text-center shadow-organic animate-fade-in-up">
+          <div className="bg-surface border border-border rounded-2xl p-8 md:p-14 text-center shadow-organic animate-fade-in-up">
             <div className="w-16 h-16 rounded-full bg-sage/10 border border-sage/20 flex items-center justify-center mx-auto mb-6">
               <Check size={26} className="text-sage" />
             </div>
-            <h3 className="heading-display text-2xl md:text-3xl text-foreground mb-3">Thank you, {name.split(" ")[0]}</h3>
-            <p className="text-sm text-muted max-w-md mx-auto mb-8">
+            <h3 className="heading-display text-xl md:text-2xl text-foreground mb-3">Thank you, {name.split(" ")[0]}</h3>
+            <p className="text-sm text-muted max-w-md mx-auto mb-6">
               Your review has been submitted for moderation and will appear on our Guest Stories page shortly.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-3">

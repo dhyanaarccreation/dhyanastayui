@@ -28,7 +28,7 @@ export default function RegionalAdminSettingsPage() {
         subtitle="Region scope, escalation routing and notification preferences."
       />
 
-      <div className="grid lg:grid-cols-2 gap-6">
+      <div className="grid lg:grid-cols-2 gap-5">
         <SectionCard title="Region Scope" icon={MapPin}>
           <div className="divide-y divide-surface-hover">
             <SettingRow

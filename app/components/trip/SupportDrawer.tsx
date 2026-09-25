@@ -27,7 +27,7 @@ export default function SupportDrawer({ open, onClose }: { open: boolean; onClos
           </button>
         </div>
 
-        <div className="p-5 space-y-5">
+        <div className="p-4 space-y-5">
           <div className="grid grid-cols-2 gap-3">
             <a
               href="tel:+911800123456"

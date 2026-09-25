@@ -89,7 +89,7 @@ export default function FleetManagementPage() {
       </div>
 
       {/* Vehicle cards */}
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 stagger-children">
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 stagger-children">
         {visible.map((v) => (
           <div key={v.id} className="bg-surface border border-border rounded-2xl overflow-hidden card-hover">
             <div className="relative h-36 overflow-hidden">
@@ -118,12 +118,12 @@ export default function FleetManagementPage() {
         ))}
       </div>
       {visible.length === 0 && (
-        <p className="text-sm text-muted text-center py-10 bg-surface border border-border rounded-2xl">
+        <p className="text-sm text-muted text-center py-8 bg-surface border border-border rounded-2xl">
           No {type} vehicles in the fleet yet.
         </p>
       )}
 
-      <div className="grid lg:grid-cols-2 gap-6">
+      <div className="grid lg:grid-cols-2 gap-5">
         {/* Maintenance */}
         <SectionCard title="Vehicle Maintenance" icon={Wrench} action={{ label: "Log job", href: "/bike-rental-provider/fleet" }}>
           <ul className="divide-y divide-surface-hover">

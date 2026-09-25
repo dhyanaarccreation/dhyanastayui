@@ -18,16 +18,16 @@ export default function SOSDashboardPage() {
   return (
     <div className="bg-background min-h-screen pb-24 pt-20">
       <div className="max-w-[800px] mx-auto px-6 lg:px-8">
-        <Link href="/" className="inline-flex items-center gap-2 text-xs text-muted hover:text-foreground mb-8 transition-colors">
+        <Link href="/" className="inline-flex items-center gap-2 text-xs text-muted hover:text-foreground mb-6 transition-colors">
           <ArrowLeft size={14} /> Back to main site
         </Link>
 
         {/* SOS Button Area */}
-        <div className="text-center mb-16">
-          <h1 className="text-2xl font-semibold text-foreground mb-2 flex items-center justify-center gap-2">
+        <div className="text-center mb-10">
+          <h1 className="text-xl font-semibold text-foreground mb-2 flex items-center justify-center gap-2">
             <ShieldAlert className="text-red-500" /> Dhyana SOS Network
           </h1>
-          <p className="text-muted mb-10 text-sm">
+          <p className="text-muted mb-8 text-sm">
             Press and hold in case of an immediate medical, security, or fire emergency.
           </p>
 
@@ -50,13 +50,13 @@ export default function SOSDashboardPage() {
         </div>
 
         {/* Emergency Contacts */}
-        <div className="space-y-6">
+        <div className="space-y-5">
           <h2 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-4 border-b border-border pb-2">
             Local Emergency Services
           </h2>
           
           <div className="grid sm:grid-cols-2 gap-4">
-            <div className="bg-surface border border-border rounded-2xl p-6 flex items-center justify-between group">
+            <div className="bg-surface border border-border rounded-2xl p-5 flex items-center justify-between group">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-400">
                   <Shield size={24} />
@@ -71,7 +71,7 @@ export default function SOSDashboardPage() {
               </a>
             </div>
 
-            <div className="bg-surface border border-border rounded-2xl p-6 flex items-center justify-between group">
+            <div className="bg-surface border border-border rounded-2xl p-5 flex items-center justify-between group">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-xl bg-red-500/10 flex items-center justify-center text-red-400">
                   <HeartPulse size={24} />
@@ -86,7 +86,7 @@ export default function SOSDashboardPage() {
               </a>
             </div>
 
-            <div className="bg-surface border border-border rounded-2xl p-6 flex items-center justify-between group">
+            <div className="bg-surface border border-border rounded-2xl p-5 flex items-center justify-between group">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-xl bg-orange-500/10 flex items-center justify-center text-orange-400">
                   <TriangleAlert size={24} />
@@ -101,7 +101,7 @@ export default function SOSDashboardPage() {
               </a>
             </div>
             
-            <div className="bg-surface border border-primary/30 rounded-2xl p-6 flex items-center justify-between group">
+            <div className="bg-surface border border-primary/30 rounded-2xl p-5 flex items-center justify-between group">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
                   <Phone size={24} />
@@ -119,7 +119,7 @@ export default function SOSDashboardPage() {
         </div>
 
         {/* Current Location Data */}
-        <div className="mt-12 p-6 bg-surface border border-border rounded-2xl flex items-start gap-4">
+        <div className="mt-8 p-5 bg-surface border border-border rounded-2xl flex items-start gap-4">
           <MapPin size={24} className="text-subtle shrink-0 mt-1" />
           <div>
             <h3 className="text-sm font-semibold text-foreground mb-1">Your Broadcast Location</h3>

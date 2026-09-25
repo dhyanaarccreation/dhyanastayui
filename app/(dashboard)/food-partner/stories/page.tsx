@@ -25,7 +25,7 @@ const cooks = [
 
 function StoryGrid({ stories }: { stories: typeof chefStories }) {
   return (
-    <div className="grid sm:grid-cols-3 gap-5 p-5">
+    <div className="grid sm:grid-cols-3 gap-4 p-4">
       {stories.map((s) => (
         <div key={s.title} className="rounded-xl overflow-hidden bg-background border border-border card-hover">
           <div className="relative h-32">

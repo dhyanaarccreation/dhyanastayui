@@ -79,7 +79,7 @@ export default function HostGuestsPage() {
         subtitle="Conversations with current and upcoming guests across your properties."
       />
 
-      <div className="grid lg:grid-cols-3 gap-6">
+      <div className="grid lg:grid-cols-3 gap-5">
         {/* Threads */}
         <div className="bg-surface border border-border rounded-2xl overflow-hidden">
           <div className="px-5 py-4 border-b border-surface-hover flex items-center justify-between">
@@ -126,7 +126,7 @@ export default function HostGuestsPage() {
             </div>
           </div>
 
-          <div className="flex-1 p-5 space-y-4 overflow-y-auto">
+          <div className="flex-1 p-4 space-y-4 overflow-y-auto">
             {conversation.map((m, i) => (
               <div key={i} className={`flex ${m.from === "host" ? "justify-end" : ""}`}>
                 <div className="max-w-[75%]">
@@ -177,7 +177,7 @@ export default function HostGuestsPage() {
 
         {detailsOpen && (
           <div className="grid sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-surface-hover">
-            <div className="p-5 space-y-2">
+            <div className="p-4 space-y-2">
               <p className="text-[11px] font-semibold text-subtle uppercase tracking-wide">Guest Information</p>
               <p className="text-sm font-medium text-foreground">{activeGuest.name}</p>
               <p className="text-xs text-muted flex items-center gap-1.5">
@@ -188,7 +188,7 @@ export default function HostGuestsPage() {
               </p>
             </div>
 
-            <div className="p-5 space-y-2">
+            <div className="p-4 space-y-2">
               <p className="text-[11px] font-semibold text-subtle uppercase tracking-wide">Emergency Contact</p>
               <p className="text-sm font-medium text-foreground">{activeGuest.emergencyContact.name}</p>
               <div className="flex items-center justify-between gap-2">
@@ -204,7 +204,7 @@ export default function HostGuestsPage() {
               </div>
             </div>
 
-            <div className="p-5 space-y-2">
+            <div className="p-4 space-y-2">
               <p className="text-[11px] font-semibold text-subtle uppercase tracking-wide">Arrival Time</p>
               <p className="text-sm font-medium text-foreground flex items-center gap-1.5">
                 <Clock size={13} className="text-primary" /> {activeGuest.arrivalTime}

@@ -44,11 +44,11 @@ export default function FinanceDashboardPage() {
   if (!unlocked) {
     return (
       <div className="min-h-[70vh] flex items-center justify-center animate-fade-in">
-        <div className="max-w-md w-full bg-surface border border-border rounded-3xl p-8 text-center">
+        <div className="max-w-md w-full bg-surface border border-border rounded-3xl p-6 text-center">
           <span className="mx-auto w-16 h-16 rounded-2xl bg-terracotta/10 text-terracotta flex items-center justify-center">
             <Lock size={26} />
           </span>
-          <h1 className="heading-display text-2xl text-foreground mt-5">Finance is locked</h1>
+          <h1 className="heading-display text-xl text-foreground mt-5">Finance is locked</h1>
           <p className="text-sm text-muted mt-2 leading-relaxed">
             Revenue, commissions and payment records are visible to the
             <span className="text-foreground font-medium"> Super Admin role only</span>.
@@ -87,7 +87,7 @@ export default function FinanceDashboardPage() {
         ]}
       />
 
-      <div className="grid lg:grid-cols-3 gap-6">
+      <div className="grid lg:grid-cols-3 gap-5">
         {/* Region-wise revenue */}
         <SectionCard title="Region-wise Revenue · July" icon={MapPin} className="lg:col-span-2" action={{ label: "Full breakdown", href: "/finance/revenue" }}>
           <div className="px-5 py-5 space-y-4">
@@ -107,7 +107,7 @@ export default function FinanceDashboardPage() {
 
         {/* Razorpay status */}
         <div className="space-y-4">
-          <div className="bg-gradient-to-br from-sage/15 to-surface border border-sage/25 rounded-2xl p-5">
+          <div className="bg-gradient-to-br from-sage/15 to-surface border border-sage/25 rounded-2xl p-4">
             <div className="flex items-center justify-between">
               <p className="text-sm font-semibold text-foreground flex items-center gap-2">
                 <Zap size={15} className="text-sage" /> RazorpayX Payouts

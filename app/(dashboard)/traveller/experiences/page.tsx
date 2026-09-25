@@ -42,7 +42,7 @@ export default function TravellerExperiencesPage() {
       <div className="space-y-5">
         {tripExperiences.map((exp) => (
           <SectionCard key={exp.id} title={exp.title}>
-            <div className="p-5">
+            <div className="p-4">
               <div className="flex items-start justify-between gap-3 flex-wrap mb-3">
                 <div className="flex flex-wrap items-center gap-3 text-xs text-muted">
                   <span className="flex items-center gap-1">

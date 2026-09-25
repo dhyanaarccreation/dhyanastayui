@@ -95,7 +95,7 @@ export default function SuperAdminContentPage() {
         </p>
       </SectionCard>
 
-      <div className="grid lg:grid-cols-2 gap-6">
+      <div className="grid lg:grid-cols-2 gap-5">
         <SectionCard title="Homepage Announcement" icon={Megaphone}>
           <div className="px-5 py-4 flex items-center justify-between gap-4">
             <div>
@@ -153,7 +153,7 @@ export default function SuperAdminContentPage() {
         </ul>
       </SectionCard>
 
-      <div className="grid lg:grid-cols-2 gap-6">
+      <div className="grid lg:grid-cols-2 gap-5">
         <SectionCard title="Regional & Host Assignments" icon={Users}>
           <ul className="divide-y divide-surface-hover">
             {assignments.map((a) => (

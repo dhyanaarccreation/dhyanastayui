@@ -267,12 +267,12 @@ export default function MembershipPage() {
       )}
 
       {/* ============ HERO ============ */}
-      <div className="relative overflow-hidden rounded-[32px] bg-gradient-to-br from-sage/15 via-surface to-surface border border-sage/20 p-8 md:p-12 text-center">
+      <div className="relative overflow-hidden rounded-[32px] bg-gradient-to-br from-sage/15 via-surface to-surface border border-sage/20 p-6 md:p-8 text-center">
         <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-background border border-sage/30 mb-5">
           <Crown size={14} className="text-sage" />
           <span className="text-xs font-semibold text-foreground uppercase tracking-wide">Dhyana Stays Membership</span>
         </span>
-        <h1 className="heading-display text-3xl md:text-5xl text-foreground max-w-3xl mx-auto">
+        <h1 className="heading-display text-2xl md:text-4xl text-foreground max-w-3xl mx-auto">
           Travel Smarter. Stay Better. Experience More.
         </h1>
         <p className="text-sm md:text-base text-muted max-w-xl mx-auto mt-4 leading-relaxed">
@@ -293,7 +293,7 @@ export default function MembershipPage() {
       </div>
 
       {/* ============ PRICING TIERS ============ */}
-      <div id="plans" className="scroll-mt-20">
+      <div id="plans" className="scroll-mt-12">
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-6">
           <div>
             <h2 className="text-lg font-semibold text-foreground">Membership Plans</h2>
@@ -314,7 +314,7 @@ export default function MembershipPage() {
           </div>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
           {tiers.map((t) => {
             const isCurrent = t.id === tier;
             const price = billing === "monthly" ? t.monthly : t.yearly;
@@ -322,7 +322,7 @@ export default function MembershipPage() {
             return (
               <div
                 key={t.id}
-                className={`relative flex flex-col rounded-2xl p-6 border transition-all ${
+                className={`relative flex flex-col rounded-2xl p-5 border transition-all ${
                   isFounders
                     ? "bg-foreground text-background border-foreground"
                     : t.highlight
@@ -341,15 +341,15 @@ export default function MembershipPage() {
                   </span>
                 )}
 
-                <span className="text-3xl">{t.emoji}</span>
+                <span className="text-2xl">{t.emoji}</span>
                 <h3 className={`text-lg font-bold mt-3 ${isFounders ? "text-background" : "text-foreground"}`}>{t.name}</h3>
                 <p className={`text-xs mt-1 ${isFounders ? "text-background/70" : "text-muted"}`}>{t.tagline}</p>
 
                 <div className="mt-5">
                   {isFounders ? (
-                    <p className="text-2xl font-bold text-background">Invite Only</p>
+                    <p className="text-xl font-bold text-background">Invite Only</p>
                   ) : (
-                    <p className={`text-3xl font-bold tabular-nums ${isFounders ? "text-background" : "text-foreground"}`}>
+                    <p className={`text-2xl font-bold tabular-nums ${isFounders ? "text-background" : "text-foreground"}`}>
                       ₹{price!.toLocaleString("en-IN")}
                       <span className={`text-xs font-normal ${isFounders ? "text-background/70" : "text-subtle"}`}> /{billing === "monthly" ? "mo" : "yr"}</span>
                     </p>
@@ -397,7 +397,7 @@ export default function MembershipPage() {
         <p className="text-sm text-muted mb-5">Everything that makes travelling with Dhyana feel effortless.</p>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {benefits.map((b) => (
-            <div key={b.title} className="bg-surface border border-border rounded-2xl p-5 hover:border-sage/40 transition-colors">
+            <div key={b.title} className="bg-surface border border-border rounded-2xl p-4 hover:border-sage/40 transition-colors">
               <span className="w-11 h-11 rounded-xl bg-sage/10 text-sage flex items-center justify-center">
                 <b.icon size={20} />
               </span>
@@ -410,7 +410,7 @@ export default function MembershipPage() {
 
       {/* ============ REWARD POINTS FLOW ============ */}
       <SectionCard title="How Reward Points Work" icon={Star}>
-        <div className="p-6">
+        <div className="p-5">
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 text-center">
             <div className="px-5 py-3 rounded-xl bg-background border border-border text-sm font-medium text-foreground">Stay 2 Nights</div>
             <ArrowRight size={16} className="text-subtle rotate-90 sm:rotate-0 shrink-0" />
@@ -434,12 +434,12 @@ export default function MembershipPage() {
         <h2 className="text-lg font-semibold text-foreground mb-1">Your Membership</h2>
         <p className="text-sm text-muted mb-5">Status, digital card, wallet and travel stats — all in one place.</p>
 
-        <div className="grid lg:grid-cols-[380px_1fr] gap-6">
+        <div className="grid lg:grid-cols-[380px_1fr] gap-5">
           {/* Digital membership card — flips on hover */}
           <div className="[perspective:1200px] h-56">
             <div className="relative w-full h-full transition-transform duration-700 [transform-style:preserve-3d] hover:[transform:rotateY(180deg)]">
               {/* Front */}
-              <div className="absolute inset-0 [backface-visibility:hidden] rounded-2xl p-6 bg-gradient-to-br from-sage to-[#3a5a44] text-white flex flex-col justify-between overflow-hidden">
+              <div className="absolute inset-0 [backface-visibility:hidden] rounded-2xl p-5 bg-gradient-to-br from-sage to-[#3a5a44] text-white flex flex-col justify-between overflow-hidden">
                 <div className="absolute -right-8 -top-8 w-32 h-32 rounded-full bg-white/10" />
                 <div className="absolute -right-2 top-16 w-20 h-20 rounded-full bg-white/10" />
                 <div className="relative flex items-center justify-between">
@@ -463,7 +463,7 @@ export default function MembershipPage() {
                 </div>
               </div>
               {/* Back */}
-              <div className="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] rounded-2xl p-6 bg-[#233b2c] text-white flex flex-col items-center justify-center gap-3">
+              <div className="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] rounded-2xl p-5 bg-[#233b2c] text-white flex flex-col items-center justify-center gap-3">
                 <QrCode size={64} className="text-white/90" />
                 <p className="text-[11px] text-white/70 text-center leading-relaxed px-4">
                   Scan at partner properties for instant recognition & member pricing.
@@ -490,7 +490,7 @@ export default function MembershipPage() {
             </div>
 
             {/* Progress ladder */}
-            <div className="bg-surface border border-border rounded-2xl p-5">
+            <div className="bg-surface border border-border rounded-2xl p-4">
               <div className="flex items-center justify-between">
                 {tiers.map((t, i) => {
                   const reached = i <= tierIndex[tier];
@@ -568,8 +568,8 @@ export default function MembershipPage() {
       </div>
 
       {/* ============ FAMILY / BUSINESS / STUDENT ============ */}
-      <div className="grid lg:grid-cols-3 gap-5">
-        <div className="bg-surface border border-border rounded-2xl p-6">
+      <div className="grid lg:grid-cols-3 gap-4">
+        <div className="bg-surface border border-border rounded-2xl p-5">
           <span className="w-11 h-11 rounded-xl bg-sage/10 text-sage flex items-center justify-center">
             <Users size={20} />
           </span>
@@ -590,7 +590,7 @@ export default function MembershipPage() {
           </button>
         </div>
 
-        <div className="bg-surface border border-border rounded-2xl p-6">
+        <div className="bg-surface border border-border rounded-2xl p-5">
           <span className="w-11 h-11 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
             <Building2 size={20} />
           </span>
@@ -611,7 +611,7 @@ export default function MembershipPage() {
           </button>
         </div>
 
-        <div className="bg-surface border border-border rounded-2xl p-6">
+        <div className="bg-surface border border-border rounded-2xl p-5">
           <span className="w-11 h-11 rounded-xl bg-sage/10 text-sage flex items-center justify-center">
             <GraduationCap size={20} />
           </span>
@@ -635,7 +635,7 @@ export default function MembershipPage() {
 
       {/* ============ REFERRAL PROGRAM ============ */}
       <SectionCard title="Referral Program" icon={Share2}>
-        <div className="p-6">
+        <div className="p-5">
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 text-center mb-6">
             <div className="px-5 py-3 rounded-xl bg-background border border-border text-sm font-medium text-foreground flex items-center gap-2">
               <UserPlus size={14} className="text-sage" /> Invite Friends
@@ -665,7 +665,7 @@ export default function MembershipPage() {
       </SectionCard>
 
       {/* ============ COMPARISON TABLE ============ */}
-      <div id="comparison" className="scroll-mt-20">
+      <div id="comparison" className="scroll-mt-12">
         <h2 className="text-lg font-semibold text-foreground mb-1">Compare Plans</h2>
         <p className="text-sm text-muted mb-5">Everything, side by side.</p>
         <div className="bg-surface border border-border rounded-2xl overflow-x-auto">
@@ -704,9 +704,9 @@ export default function MembershipPage() {
       </div>
 
       {/* ============ FINAL CTA ============ */}
-      <div className="rounded-[32px] bg-sage p-10 md:p-14 text-center">
+      <div className="rounded-[32px] bg-sage p-8 md:p-14 text-center">
         <ShieldCheck size={28} className="text-white/80 mx-auto mb-4" />
-        <h2 className="heading-display text-2xl md:text-4xl text-white">Join the Dhyana Stays Community</h2>
+        <h2 className="heading-display text-xl md:text-3xl text-white">Join the Dhyana Stays Community</h2>
         <p className="text-sm md:text-base text-white/80 mt-3 max-w-lg mx-auto">
           Travel Smarter. Stay Better. Experience More.
         </p>

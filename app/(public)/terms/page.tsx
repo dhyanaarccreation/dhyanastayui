@@ -2,8 +2,8 @@ export default function TermsPage() {
   return (
     <div className="bg-background min-h-screen pb-24">
       {/* Header */}
-      <div className="py-16 text-center px-6 border-b border-surface-hover">
-        <h1 className="heading-display text-3xl lg:text-5xl text-foreground mb-4">
+      <div className="py-12 text-center px-6 border-b border-surface-hover">
+        <h1 className="heading-display text-2xl lg:text-4xl text-foreground mb-4">
           Terms & Conditions
         </h1>
         <p className="text-muted">
@@ -12,7 +12,7 @@ export default function TermsPage() {
       </div>
 
       {/* Content */}
-      <div className="max-w-[800px] mx-auto px-6 lg:px-8 py-16">
+      <div className="max-w-[800px] mx-auto px-6 lg:px-8 py-12">
         <div className="prose prose-invert prose-p:text-muted prose-p:leading-relaxed prose-headings:font-serif prose-headings:text-foreground prose-headings:font-normal prose-a:text-primary">
           <h2>1. Introduction</h2>
           <p>

@@ -55,7 +55,7 @@ export default function FoodPartnerMenuPage() {
             className="w-full h-full object-cover"
           />
         </div>
-        <div className="p-6 flex-1">
+        <div className="p-5 flex-1">
           <div className="flex items-center gap-2 flex-wrap">
             <h2 className="text-lg font-semibold text-foreground">Meena&apos;s Kitchen</h2>
             <StatusPill tone="sage">FSSAI verified</StatusPill>
@@ -68,7 +68,7 @@ export default function FoodPartnerMenuPage() {
             Home-style Chettinad and farm-to-table cooking from a wood-fired kitchen.
             Every meal is cooked to order by named cooks guests can choose.
           </p>
-          <div className="flex items-center gap-5 mt-4 text-xs text-muted">
+          <div className="flex items-center gap-4 mt-4 text-xs text-muted">
             <span className="flex items-center gap-1">
               <Clock size={12} /> 7 AM – 9:30 PM
             </span>
@@ -130,7 +130,7 @@ export default function FoodPartnerMenuPage() {
 
       {/* Meal packages */}
       <SectionCard title="Meal Packages" icon={Package} action={{ label: "New package", href: "/food-partner/menu" }}>
-        <div className="grid sm:grid-cols-3 gap-4 p-5">
+        <div className="grid sm:grid-cols-3 gap-4 p-4">
           {packages.map((p) => (
             <div key={p.name} className="rounded-xl bg-background border border-border p-4">
               <p className="text-sm font-semibold text-foreground">{p.name}</p>

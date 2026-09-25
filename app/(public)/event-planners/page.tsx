@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import { Search, PartyPopper, ArrowRight, ShieldCheck } from "lucide-react";
 import { eventPlanners } from "@/lib/mock-data";
+import ChipScroller from "@/app/components/ChipScroller";
 
 const types = ["All", ...Array.from(new Set(eventPlanners.map((p) => p.type)))];
 
@@ -36,20 +37,20 @@ export default function EventPlannersPage() {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
 
-        <div className="relative z-10 max-w-[1200px] mx-auto px-6 lg:px-8 w-full mt-16">
+        <div className="relative z-10 container-page w-full mt-10">
           <span className="text-xs uppercase tracking-wider text-primary font-bold mb-4 flex items-center gap-2">
             <PartyPopper size={16} /> Dhyana Events
           </span>
-          <h1 className="heading-display text-4xl md:text-6xl text-foreground mb-6">
+          <h1 className="heading-display text-3xl md:text-5xl text-foreground mb-6">
             Celebrate it at a curated stay.
           </h1>
-          <p className="text-lg text-muted max-w-xl mb-8">
+          <p className="text-lg text-muted max-w-xl mb-6">
             Weddings, surprises, and team retreats — see past work, download a brochure, and book
             straight through to payment.
           </p>
 
           <div className="max-w-2xl bg-surface/80 backdrop-blur-md p-2 rounded-2xl border border-border flex flex-col sm:flex-row gap-2">
-            <div className="flex-1 relative">
+            <div role="search" className="flex-1 relative">
               <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-subtle" />
               <input
                 type="text"
@@ -71,29 +72,29 @@ export default function EventPlannersPage() {
 
       {/* ================= TYPE FILTER ================= */}
       <section className="py-8 border-b border-border">
-        <div className="max-w-[1200px] mx-auto px-6 lg:px-8 flex gap-3 overflow-x-auto scrollbar-hide">
+        <ChipScroller label="categories" className="container-page">
           {types.map((t) => (
             <button
               key={t}
               onClick={() => setType(t)}
-              className={`px-6 py-2.5 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${
+              className={`shrink-0 px-6 py-2.5 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${
                 type === t ? "bg-primary text-primary-foreground" : "bg-surface border border-border text-muted hover:border-subtle"
               }`}
             >
               {t}
             </button>
           ))}
-        </div>
+        </ChipScroller>
       </section>
 
       {/* ================= GRID ================= */}
-      <section id="grid" className="py-16 max-w-[1200px] mx-auto px-6 lg:px-8 scroll-mt-20">
-        <div className="flex justify-between items-end mb-8">
-          <h2 className="text-2xl font-semibold text-foreground">Curated Event Planners</h2>
+      <section id="grid" className="py-12 container-page scroll-mt-12">
+        <div className="flex justify-between items-end mb-6">
+          <h2 className="text-xl font-semibold text-foreground">Curated Event Planners</h2>
           <span className="text-sm text-subtle">{visible.length} planners</span>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-3 gap-5">
           {visible.map((p) => (
             <Link
               key={p.id}
@@ -107,7 +108,7 @@ export default function EventPlannersPage() {
                   {p.type}
                 </span>
               </div>
-              <div className="p-5">
+              <div className="p-4">
                 <div className="flex items-center gap-1.5">
                   <p className="text-base font-semibold text-foreground group-hover:text-primary transition-colors">{p.name}</p>
                   <ShieldCheck size={14} className="text-sage" />
@@ -130,14 +131,14 @@ export default function EventPlannersPage() {
             </Link>
           ))}
           {visible.length === 0 && (
-            <p className="col-span-full text-center text-sm text-subtle py-12">No planners match that search.</p>
+            <p className="col-span-full text-center text-sm text-subtle py-10">No planners match that search.</p>
           )}
         </div>
       </section>
 
       {/* ================= CLOSING CTA ================= */}
-      <section className="py-20 max-w-[900px] mx-auto px-6 lg:px-8 text-center">
-        <h2 className="heading-display text-2xl md:text-4xl text-foreground">Planning events yourself?</h2>
+      <section className="py-14 max-w-[900px] mx-auto px-6 lg:px-8 text-center">
+        <h2 className="heading-display text-xl md:text-3xl text-foreground">Planning events yourself?</h2>
         <p className="text-muted mt-3 max-w-lg mx-auto">
           Join Dhyana as an event planning partner — get matched with guests booking weddings, surprises and retreats.
         </p>

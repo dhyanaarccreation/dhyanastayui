@@ -76,7 +76,7 @@ export default function ConsultancyProjectsPage() {
       {/* Playbooks */}
       <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {playbooks.map((p) => (
-          <div key={p.name} className="bg-surface border border-border rounded-2xl p-5">
+          <div key={p.name} className="bg-surface border border-border rounded-2xl p-4">
             <span className="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-3">
               <p.icon size={18} />
             </span>

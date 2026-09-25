@@ -153,7 +153,7 @@ export default function StayMediaExperience({
   };
 
   return (
-    <div className="max-w-[1200px] mx-auto px-6 lg:px-8 mb-10 md:mb-14">
+    <div className="container-page mb-8 md:mb-10">
       {/* Hero media row — main video + story panel */}
       <div className="grid grid-cols-1 md:grid-cols-[3fr_2fr] lg:grid-cols-[2fr_1fr] gap-3 md:gap-4">
         {/* Main video */}
@@ -294,7 +294,7 @@ export default function StayMediaExperience({
       <StayRoomSelector rooms={rooms} selectedRoomId={selectedRoomId} onSelectRoom={handleSelectRoom} />
 
       {/* Media tabs + horizontal reel */}
-      <div className="mt-6 md:mt-8">
+      <div className="mt-6 md:mt-6">
         <p className="text-xs font-semibold uppercase tracking-wider text-primary mb-3">
           Stay Stories
         </p>
@@ -316,7 +316,7 @@ export default function StayMediaExperience({
           ))}
         </div>
 
-        <div className="flex gap-4 md:gap-5 overflow-x-auto pb-2 mt-4 scrollbar-hide">
+        <div className="flex gap-4 md:gap-4 overflow-x-auto pb-2 mt-4 scrollbar-hide">
           {activeTab.items.map((item) => (
             <button
               key={item.id}

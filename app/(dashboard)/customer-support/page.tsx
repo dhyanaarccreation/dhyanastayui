@@ -52,7 +52,7 @@ export default function CustomerSupportDashboardPage() {
         ]}
       />
 
-      <div className="grid lg:grid-cols-3 gap-6">
+      <div className="grid lg:grid-cols-3 gap-5">
         {/* AI funnel */}
         <SectionCard title="Where Conversations End" icon={Bot} className="lg:col-span-1">
           <div className="px-5 py-5 space-y-4">
@@ -98,7 +98,7 @@ export default function CustomerSupportDashboardPage() {
       </div>
 
       {/* Trending + recording note */}
-      <div className="grid lg:grid-cols-2 gap-6">
+      <div className="grid lg:grid-cols-2 gap-5">
         <SectionCard title="Trending Topics Today" icon={Sparkles}>
           <div className="px-5 py-5 flex flex-wrap gap-2">
             {topics.map((t) => (
@@ -112,7 +112,7 @@ export default function CustomerSupportDashboardPage() {
           </p>
         </SectionCard>
 
-        <div className="bg-gradient-to-br from-sage/15 to-surface border border-sage/25 rounded-2xl p-6 flex items-start gap-4">
+        <div className="bg-gradient-to-br from-sage/15 to-surface border border-sage/25 rounded-2xl p-5 flex items-start gap-4">
           <span className="w-10 h-10 rounded-xl bg-sage/20 text-sage flex items-center justify-center shrink-0">
             <ShieldCheck size={18} />
           </span>

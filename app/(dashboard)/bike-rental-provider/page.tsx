@@ -47,7 +47,7 @@ export default function BikeRentalDashboardPage() {
         ]}
       />
 
-      <div className="grid lg:grid-cols-3 gap-6">
+      <div className="grid lg:grid-cols-3 gap-5">
         {/* Active rentals */}
         <SectionCard title="Out on Rent" icon={Clock} className="lg:col-span-2" action={{ label: "All bookings", href: "/bike-rental-provider/bookings" }}>
           <ul className="divide-y divide-surface-hover">
@@ -85,10 +85,10 @@ export default function BikeRentalDashboardPage() {
       </div>
 
       {/* Utilization */}
-      <div className="bg-gradient-to-r from-sage/15 via-surface to-surface border border-sage/25 rounded-2xl p-6 flex flex-col md:flex-row md:items-center gap-5">
+      <div className="bg-gradient-to-r from-sage/15 via-surface to-surface border border-sage/25 rounded-2xl p-5 flex flex-col md:flex-row md:items-center gap-4">
         <div className="flex-1">
           <p className="text-xs font-semibold uppercase tracking-wider text-sage">Utilization this week</p>
-          <p className="text-3xl font-bold text-foreground mt-1 tabular-nums">76%</p>
+          <p className="text-2xl font-bold text-foreground mt-1 tabular-nums">76%</p>
           <p className="text-sm text-muted mt-1">
             Scooters are your workhorse — 88% utilization. The Thar earns the most per day but sits idle midweek.
           </p>

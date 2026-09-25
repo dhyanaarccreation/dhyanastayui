@@ -75,7 +75,7 @@ export default function ReviewsCallsPage() {
         ]}
       />
 
-      <div className="grid lg:grid-cols-3 gap-6">
+      <div className="grid lg:grid-cols-3 gap-5">
         {/* Review queue */}
         <SectionCard title="Owner Review Calls" icon={PhoneCall} className="lg:col-span-2">
           <ul className="divide-y divide-surface-hover">

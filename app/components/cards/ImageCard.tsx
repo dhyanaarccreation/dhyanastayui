@@ -217,7 +217,7 @@ export default function ImageCard({
     </>
   );
 
-  const shellClass = `group relative overflow-hidden rounded-card-lg border-[5px] border-white bg-surface-hover shadow-[0_12px_35px_rgba(0,0,0,0.12)] transition-all duration-300 hover:shadow-[0_16px_44px_rgba(0,0,0,0.16)] hover:-translate-y-1 ${sizeClass} ${className}`;
+  const shellClass = `group relative overflow-hidden rounded-card-lg border-[5px] border-surface bg-surface-hover transition-all duration-300 hover:-translate-y-1 ${sizeClass} ${className}`;
 
   if (href) {
     return (

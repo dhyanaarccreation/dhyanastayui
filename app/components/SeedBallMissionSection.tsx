@@ -56,10 +56,10 @@ export default function SeedBallMissionSection() {
   const progressPct = Math.min(100, (seedBallMission.distributed / seedBallMission.goal) * 100);
 
   return (
-    <section ref={sectionRef} className="py-6 md:py-10 bg-background">
-      <div className="max-w-[1400px] mx-auto px-6 lg:px-8">
+    <section ref={sectionRef} className="py-6 md:py-8 bg-background">
+      <div className="container-page">
         {/* Header */}
-        <div className="text-center max-w-2xl mx-auto mb-6 md:mb-8">
+        <div className="text-center max-w-2xl mx-auto mb-6 md:mb-6">
           <span className="text-xs font-semibold text-sage uppercase tracking-widest">
             Our Mission
           </span>
@@ -73,10 +73,10 @@ export default function SeedBallMissionSection() {
         </div>
 
         {/* Live progress counter */}
-        <div className="rounded-2xl sm:rounded-[32px] bg-sage overflow-hidden shadow-organic p-4 sm:p-7 lg:p-10 mb-6 md:mb-8">
+        <div className="rounded-2xl sm:rounded-[32px] bg-sage overflow-hidden shadow-organic p-4 sm:p-5 lg:p-8 mb-6 md:mb-6">
           <div className="text-center">
             <p className="text-xs font-semibold text-white/80 uppercase tracking-widest">Live Progress</p>
-            <p className="heading-organic text-2xl sm:text-4xl lg:text-5xl text-white mt-2 tabular-nums">
+            <p className="heading-organic text-xl sm:text-3xl lg:text-4xl text-white mt-2 tabular-nums">
               {distributed.toLocaleString("en-IN")}
             </p>
             <p className="text-white/80 text-xs sm:text-sm mt-1">

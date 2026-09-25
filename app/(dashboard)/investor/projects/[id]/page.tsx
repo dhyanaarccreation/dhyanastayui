@@ -357,7 +357,7 @@ export default function InvestorProjectDetailPage() {
                 {currentDevStage.stage} · {currentDevStage.completion}% complete
               </span>
             </div>
-            <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-2">{project.name}</h1>
+            <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-2">{project.name}</h1>
             <p className="text-muted flex items-center gap-2">
               <MapPin size={16} /> {project.location}
             </p>
@@ -384,10 +384,10 @@ export default function InvestorProjectDetailPage() {
         ]}
       />
 
-      <div className="grid md:grid-cols-2 gap-5">
+      <div className="grid md:grid-cols-2 gap-4">
         {/* Left Column - Investment Calculator */}
         <div className="space-y-4">
-          <div className="bg-surface border border-border rounded-2xl p-6 md:p-8">
+          <div className="bg-surface border border-border rounded-2xl p-5 md:p-6">
             <h2 className="text-xl font-semibold text-foreground mb-6 flex items-center gap-2">
               <Calculator size={20} className="text-primary" /> Investment Calculator
             </h2>
@@ -430,7 +430,7 @@ export default function InvestorProjectDetailPage() {
                   <div className="text-[10px] uppercase tracking-wider text-primary mb-1 font-semibold">
                     Value after 5 Years (Projected)
                   </div>
-                  <div className="text-2xl font-bold text-foreground">
+                  <div className="text-xl font-bold text-foreground">
                     ₹{fiveYearValue.toLocaleString(undefined, { maximumFractionDigits: 0 })}
                   </div>
                   <div className="text-xs text-muted mt-1 flex items-center gap-1">
@@ -446,7 +446,7 @@ export default function InvestorProjectDetailPage() {
             </div>
           </div>
 
-          <div className="bg-surface border border-border rounded-2xl p-6">
+          <div className="bg-surface border border-border rounded-2xl p-5">
             <h3 className="text-sm font-semibold text-foreground mb-4">Investment Documents</h3>
             <div className="space-y-3">
               {["Project Brochure", "Financial Projections (Detailed)", "Term Sheet"].map((doc, i) => (
@@ -469,7 +469,7 @@ export default function InvestorProjectDetailPage() {
 
         {/* Right Column - Project Details */}
         <div className="space-y-4">
-          <div className="bg-surface border border-border rounded-2xl p-6 md:p-8">
+          <div className="bg-surface border border-border rounded-2xl p-5 md:p-6">
             <h3 className="text-lg font-semibold text-foreground mb-4">Project Overview</h3>
             <p className="text-sm text-muted leading-relaxed mb-6">{project.story}</p>
 
@@ -537,7 +537,7 @@ export default function InvestorProjectDetailPage() {
             <h3 className="text-sm font-semibold text-foreground mb-4 uppercase tracking-wider">
               Ownership Structure
             </h3>
-            <div className="flex items-center gap-6">
+            <div className="flex items-center gap-5">
               <div className="w-24 h-24 rounded-full border-8 border-surface-hover relative flex items-center justify-center">
                 <div
                   className="absolute inset-0 rounded-full border-8 border-primary"
@@ -576,7 +576,7 @@ export default function InvestorProjectDetailPage() {
       {/* Construction Progress specifics — only while the project is still in development */}
       {project.inDevelopment && project.construction && (
         <SectionCard title="Construction Progress" icon={HardHat}>
-          <div className="p-5 md:p-6 space-y-4">
+          <div className="p-4 md:p-5 space-y-4">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div>
                 <p className="text-[11px] uppercase tracking-wider text-subtle mb-1">Current Phase</p>
@@ -681,7 +681,7 @@ export default function InvestorProjectDetailPage() {
       )}
 
       {/* Trust footer */}
-      <div className="bg-surface border border-border rounded-2xl p-6 flex items-center gap-4">
+      <div className="bg-surface border border-border rounded-2xl p-5 flex items-center gap-4">
         <ShieldCheck size={22} className="text-primary shrink-0" />
         <p className="text-xs text-muted">
           All financials, construction data and development milestones on this page are maintained and verified by

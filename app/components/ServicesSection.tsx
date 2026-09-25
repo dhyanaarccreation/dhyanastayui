@@ -38,16 +38,16 @@ export default function ServicesSection() {
   const featured = properties.filter((p) => p.isFeatured).slice(0, 3);
 
   return (
-    <section className="py-8 md:py-14 bg-background">
-      <div className="max-w-[1400px] mx-auto px-6 lg:px-8">
-      <div className="rounded-2xl sm:rounded-[32px] bg-surface-hover p-3.5 sm:p-5 md:p-10 lg:p-12">
+    <section className="py-8 md:py-10 bg-background">
+      <div className="container-page">
+      <div className="rounded-2xl sm:rounded-[32px] bg-surface-hover p-3.5 sm:p-4 md:p-8 lg:p-8">
         {/* Header */}
-        <div className="flex items-end justify-between mb-3 sm:mb-5 lg:mb-8">
+        <div className="flex items-end justify-between mb-3 sm:mb-5 lg:mb-6">
           <div>
             <span className="text-xs font-semibold text-sage uppercase tracking-widest">
               One platform · Every experience
             </span>
-            <h2 className="heading-organic text-xl sm:text-2xl lg:text-3xl text-foreground mt-1 sm:mt-2">
+            <h2 className="heading-organic text-xl sm:text-xl lg:text-2xl text-foreground mt-1 sm:mt-2">
               Explore Dhyana Services
             </h2>
             <p className="text-muted text-sm sm:text-base mt-1.5 sm:mt-3 max-w-lg">
@@ -64,7 +64,7 @@ export default function ServicesSection() {
         </div>
 
         {/* Tab bar */}
-        <div className="flex items-center gap-1.5 sm:gap-2 mb-3 sm:mb-5 lg:mb-10">
+        <div className="flex items-center gap-1.5 sm:gap-2 mb-3 sm:mb-5 lg:mb-8">
           {tabs.map(({ key, label, icon: Icon }) => (
             <button
               key={key}
@@ -84,7 +84,7 @@ export default function ServicesSection() {
 
         {/* ============ STAYS ============ */}
         {tab === "stays" && (
-          <div className="relative flex overflow-x-auto overscroll-x-contain snap-x snap-mandatory scroll-smooth scrollbar-hide gap-3 md:gap-6 -mx-6 px-6 pb-1 md:grid md:grid-cols-2 md:mx-0 md:px-0 md:pb-0 md:overflow-visible md:snap-none lg:grid-cols-3 stagger-children">
+          <div className="relative flex overflow-x-auto overscroll-x-contain snap-x snap-mandatory scroll-smooth scrollbar-hide gap-3 md:gap-5 -mx-[4.3478%] px-[4.3478%] sm:-mx-[12.5%] sm:px-[12.5%] pb-1 md:grid md:grid-cols-2 md:mx-0 md:px-0 md:pb-0 md:overflow-visible md:snap-none lg:grid-cols-3 stagger-children">
             {featured.map((property) => (
               <div key={property.id} className="shrink-0 w-[220px] snap-start md:w-auto md:shrink">
                 <PropertyCard property={property} />
@@ -96,7 +96,7 @@ export default function ServicesSection() {
 
         {/* ============ EXPERIENCES ============ */}
         {tab === "experiences" && (
-          <div className="relative flex overflow-x-auto overscroll-x-contain snap-x snap-mandatory scroll-smooth scrollbar-hide gap-3 sm:gap-6 -mx-6 px-6 pb-1 sm:grid sm:grid-cols-2 sm:mx-0 sm:px-0 sm:pb-0 sm:overflow-visible sm:snap-none lg:grid-cols-4 stagger-children">
+          <div className="relative flex overflow-x-auto overscroll-x-contain snap-x snap-mandatory scroll-smooth scrollbar-hide gap-3 sm:gap-5 -mx-[4.3478%] px-[4.3478%] pb-1 sm:grid sm:grid-cols-2 sm:mx-0 sm:px-0 sm:pb-0 sm:overflow-visible sm:snap-none lg:grid-cols-4 stagger-children">
             {experiences.map((exp) => (
               <ImageCard
                 key={exp.id}
@@ -123,7 +123,7 @@ export default function ServicesSection() {
         )}
 
         {/* Mobile view-all */}
-        <div className="mt-8 md:hidden">
+        <div className="mt-6 md:hidden">
           <Link
             href={viewAll[tab].href}
             className="flex items-center justify-center gap-2 text-sm text-primary"
@@ -210,9 +210,9 @@ export function SpotlightSection({ embedded = false }: { embedded?: boolean }) {
   // taller than the Hero's left column — the standalone (non-embedded) usage
   // keeps its original min-height/padding/type-scale untouched.
   const slideSize = embedded ? "h-[150px] sm:h-[175px] lg:h-[195px] overflow-hidden" : "min-h-[220px] sm:min-h-[300px]";
-  const cardPadding = embedded ? "p-3 sm:p-4 md:p-5 lg:p-6" : "p-4 sm:p-5 md:p-8 lg:p-12";
+  const cardPadding = embedded ? "p-3 sm:p-4 md:p-4 lg:p-5" : "p-4 sm:p-4 md:p-6 lg:p-8";
   const badgeRowMargin = embedded ? "mb-1.5" : "mb-2 sm:mb-4";
-  const headlineSize = embedded ? "text-base sm:text-lg md:text-xl" : "text-lg sm:text-2xl md:text-3xl";
+  const headlineSize = embedded ? "text-base sm:text-lg md:text-xl" : "text-lg sm:text-xl md:text-2xl";
   const copyClasses = embedded
     ? "text-xs text-white/80 mt-1 leading-snug line-clamp-1"
     : "text-xs sm:text-sm text-white/80 mt-1.5 sm:mt-3 leading-relaxed line-clamp-2 sm:line-clamp-none";
@@ -290,7 +290,7 @@ export function SpotlightSection({ embedded = false }: { embedded?: boolean }) {
           </div>
         ) : (
           /* ---- Fallback: AI suggestions fill the slot ---- */
-          <div className="relative soft-3d-double rounded-[32px] bg-surface-hover p-6 md:p-8">
+          <div className="relative soft-3d-double rounded-[32px] bg-surface-hover p-5 md:p-6">
             <div className="flex items-center gap-2 mb-5">
               <Sparkles size={15} className="text-sage" />
               <p className="text-sm font-semibold text-foreground">
@@ -336,7 +336,7 @@ export function SpotlightSection({ embedded = false }: { embedded?: boolean }) {
 
   return (
     <section className="pt-10 md:pt-14 pb-4 bg-background">
-      <div className="max-w-[1400px] mx-auto px-6 lg:px-8">{content}</div>
+      <div className="container-page">{content}</div>
     </section>
   );
 }

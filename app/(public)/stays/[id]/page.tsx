@@ -115,7 +115,7 @@ export default function PropertyDetailsPage() {
   return (
     <div className="bg-background min-h-screen pb-24">
       {/* Breadcrumb & Actions */}
-      <div className="max-w-[1200px] mx-auto px-6 lg:px-8 py-6">
+      <div className="container-page py-6">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div className="flex items-center gap-2 text-xs text-subtle">
             <Link href="/" className="hover:text-foreground transition-colors">
@@ -142,10 +142,10 @@ export default function PropertyDetailsPage() {
       </div>
 
       {/* Header Info */}
-      <div className="max-w-[1200px] mx-auto px-6 lg:px-8 mb-6">
+      <div className="container-page mb-6">
         <div className="flex flex-col md:flex-row justify-between items-start gap-4">
           <div>
-            <h1 className="heading-display text-2xl md:text-4xl text-foreground mb-3">
+            <h1 className="heading-display text-xl md:text-3xl text-foreground mb-3">
               {property.name}
             </h1>
             <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted">
@@ -184,7 +184,7 @@ export default function PropertyDetailsPage() {
           <div className="bg-surface border border-border rounded-2xl p-3.5 sm:p-4 shadow-xl w-full">
             <div className="flex items-end justify-between mb-1.5">
               <div>
-                <span className="text-xl sm:text-2xl font-bold text-foreground">
+                <span className="text-xl sm:text-xl font-bold text-foreground">
                   ₹{selectedRoom.price.toLocaleString()}
                 </span>
                 <span className="text-muted text-sm"> /night</span>
@@ -245,16 +245,16 @@ export default function PropertyDetailsPage() {
       {/* Curated Experiences Modal */}
       {experiencesOpen && (
         <div
-          className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-10 bg-white/40 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8 bg-white/40 backdrop-blur-md animate-fade-in"
           onClick={() => window.history.back()}
         >
           <div
-            className="relative w-full max-w-4xl max-h-[85vh] overflow-y-auto bg-background rounded-3xl shadow-2xl p-5 md:p-8 animate-fade-in"
+            className="relative w-full max-w-4xl max-h-[85vh] overflow-y-auto bg-background rounded-3xl shadow-2xl p-4 md:p-6 animate-fade-in"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between mb-6">
               <div>
-                <h3 className="heading-display text-xl md:text-2xl text-foreground">
+                <h3 className="heading-display text-xl md:text-xl text-foreground">
                   Curated Experiences
                 </h3>
                 <p className="text-sm text-muted">
@@ -271,7 +271,7 @@ export default function PropertyDetailsPage() {
               </button>
             </div>
 
-            <div className="grid sm:grid-cols-2 gap-4 md:gap-5">
+            <div className="grid sm:grid-cols-2 gap-4 md:gap-4">
               {enriched.curatedExperiences.map((experience, i) => (
                 <div
                   key={experience.name}
@@ -312,7 +312,7 @@ export default function PropertyDetailsPage() {
           a one-line tagline, and a fuller detail section below. */}
       {selectedExperience && (
         <div
-          className="fixed inset-0 z-[100] flex items-start justify-center overflow-y-auto p-0 md:p-10 bg-white/40 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-[100] flex items-start justify-center overflow-y-auto p-0 md:p-8 bg-white/40 backdrop-blur-md animate-fade-in"
           onClick={() => window.history.back()}
         >
           <div
@@ -341,15 +341,15 @@ export default function PropertyDetailsPage() {
               >
                 <X size={18} />
               </button>
-              <div className="absolute inset-x-0 bottom-0 p-5 md:p-6">
-                <h3 className="heading-display text-2xl md:text-3xl text-white mb-1.5">
+              <div className="absolute inset-x-0 bottom-0 p-4 md:p-5">
+                <h3 className="heading-display text-xl md:text-2xl text-white mb-1.5">
                   {selectedExperience.name}
                 </h3>
                 <p className="text-sm text-white/80 max-w-md">{selectedExperience.description}</p>
               </div>
             </div>
 
-            <div className="p-5 md:p-8">
+            <div className="p-4 md:p-6">
               <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-muted mb-6 pb-6 border-b border-border">
                 <span className="flex items-center gap-1.5">
                   <Clock size={14} /> {selectedExperience.duration}
@@ -426,7 +426,7 @@ export default function PropertyDetailsPage() {
       {/* Story Modal */}
       {storyOpen && (
         <div
-          className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-10 bg-white/40 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8 bg-white/40 backdrop-blur-md animate-fade-in"
           onClick={() => window.history.back()}
         >
           <div
@@ -448,23 +448,23 @@ export default function PropertyDetailsPage() {
               >
                 <X size={18} />
               </button>
-              <div className="absolute inset-x-0 bottom-0 p-6 md:p-8">
+              <div className="absolute inset-x-0 bottom-0 p-5 md:p-6">
                 <span className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider text-white/80">
                   <Sparkles size={12} /> Our Story
                 </span>
-                <h3 className="heading-display text-2xl md:text-3xl text-white mt-1">
+                <h3 className="heading-display text-xl md:text-2xl text-white mt-1">
                   {property.name}
                 </h3>
               </div>
             </div>
 
-            <div className="p-6 md:p-10">
-              <p className="text-muted leading-relaxed mb-8">{enriched.generatedStory}</p>
+            <div className="p-5 md:p-8">
+              <p className="text-muted leading-relaxed mb-6">{enriched.generatedStory}</p>
 
               <h4 className="text-xs font-semibold uppercase tracking-wider text-primary mb-4">
                 Timeline
               </h4>
-              <div className="space-y-4 mb-8">
+              <div className="space-y-4 mb-6">
                 {enriched.storyTimeline.map((entry) => (
                   <div key={entry.label} className="flex gap-4">
                     <span className="w-20 shrink-0 text-xs font-semibold text-foreground">
@@ -506,7 +506,7 @@ export default function PropertyDetailsPage() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-10 bg-white/40 backdrop-blur-md"
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8 bg-white/40 backdrop-blur-md"
             onClick={() => window.history.back()}
           >
             <motion.div
@@ -514,12 +514,12 @@ export default function PropertyDetailsPage() {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.94 }}
               transition={{ type: "spring", stiffness: 320, damping: 30 }}
-              className="relative w-full max-w-4xl max-h-[88vh] overflow-y-auto bg-background rounded-3xl shadow-2xl p-5 md:p-8"
+              className="relative w-full max-w-4xl max-h-[88vh] overflow-y-auto bg-background rounded-3xl shadow-2xl p-4 md:p-6"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-center justify-between mb-6">
                 <div>
-                  <h3 className="heading-display text-xl md:text-2xl text-foreground">Gallery</h3>
+                  <h3 className="heading-display text-xl md:text-xl text-foreground">Gallery</h3>
                   <p className="text-sm text-muted">
                     {property.galleryImages.length} photos of {property.name}
                   </p>
@@ -560,7 +560,7 @@ export default function PropertyDetailsPage() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    className="absolute inset-0 bg-background/95 backdrop-blur-sm rounded-3xl flex items-center justify-center p-6"
+                    className="absolute inset-0 bg-background/95 backdrop-blur-sm rounded-3xl flex items-center justify-center p-5"
                     onClick={() => setSelectedImage(null)}
                   >
                     <motion.img
@@ -588,8 +588,8 @@ export default function PropertyDetailsPage() {
         )}
       </AnimatePresence>
 
-      <div className="max-w-[1200px] mx-auto px-6 lg:px-8">
-        <div className="flex flex-col lg:flex-row gap-12">
+      <div className="container-page">
+        <div className="flex flex-col lg:flex-row gap-8">
           {/* Main Content (Left) */}
           <div className="lg:w-2/3">
             {/* Curated Experiences — auto-assigned by stay category. Clicking
@@ -597,7 +597,7 @@ export default function PropertyDetailsPage() {
                 the Stay Stories reel's Experiences tab), showing what that
                 specific experience involves and letting it be added here. */}
             <div className="py-8 border-b border-surface-hover">
-              <h2 className="heading-display text-2xl text-foreground mb-6">
+              <h2 className="heading-display text-xl text-foreground mb-6">
                 Curated Experiences Near You
               </h2>
               <div className="grid sm:grid-cols-3 gap-4">
@@ -644,15 +644,15 @@ export default function PropertyDetailsPage() {
 
             {/* Description & Story */}
             <div className="py-8 border-b border-surface-hover" id="story">
-              <h2 className="heading-display text-2xl text-foreground mb-4">
+              <h2 className="heading-display text-xl text-foreground mb-4">
                 About this space
               </h2>
               <p className="text-muted leading-relaxed mb-6">
                 {property.description}
               </p>
               
-              <div className="bg-surface border border-border rounded-2xl p-6 relative overflow-hidden">
-                <div className="absolute top-0 right-0 p-8 opacity-5">
+              <div className="bg-surface border border-border rounded-2xl p-5 relative overflow-hidden">
+                <div className="absolute top-0 right-0 p-6 opacity-5">
                   <Star size={100} />
                 </div>
                 <h3 className="text-sm font-semibold text-primary uppercase tracking-wider mb-2">
@@ -666,7 +666,7 @@ export default function PropertyDetailsPage() {
 
             {/* Amenities */}
             <div className="py-8 border-b border-surface-hover">
-              <h2 className="heading-display text-2xl text-foreground mb-6">
+              <h2 className="heading-display text-xl text-foreground mb-6">
                 What this place offers
               </h2>
               <div className="grid grid-cols-2 gap-y-4 gap-x-8">
@@ -686,7 +686,7 @@ export default function PropertyDetailsPage() {
                 Sequenced ahead of Reviews below (Explore first, then
                 Reviews), each full-width rather than side by side. */}
             <div className="py-8 border-b border-surface-hover">
-              <h2 className="heading-display text-2xl text-foreground mb-2">
+              <h2 className="heading-display text-xl text-foreground mb-2">
                 Explore {property.location.city}
               </h2>
               <p className="text-sm text-muted mb-6">
@@ -716,13 +716,13 @@ export default function PropertyDetailsPage() {
 
             {/* Reviews (Preview) */}
             <div className="py-8 border-b border-surface-hover" id="reviews">
-              <h2 className="heading-display text-2xl text-foreground mb-6">
+              <h2 className="heading-display text-xl text-foreground mb-6">
                 {property.reviewCount} reviews
               </h2>
 
-              <div className="grid sm:grid-cols-2 gap-6">
+              <div className="grid sm:grid-cols-2 gap-5">
                 {propertyReviews.slice(0, 4).map((review) => (
-                  <div key={review.id} className="bg-surface p-5 rounded-2xl border border-border">
+                  <div key={review.id} className="bg-surface p-4 rounded-2xl border border-border">
                     <div className="flex items-center gap-3 mb-4">
                       <img
                         src={review.avatar}

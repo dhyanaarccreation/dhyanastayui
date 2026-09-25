@@ -77,7 +77,7 @@ export default function EventPlannerDetailsPage() {
 
   return (
     <div className="bg-background pb-24 pt-[88px]">
-      <div className="max-w-[1200px] mx-auto px-6 lg:px-8">
+      <div className="container-page">
         <Link
           href="/event-planners"
           className="inline-flex items-center gap-2 px-4 py-2 mb-6 bg-surface hover:bg-surface-hover rounded-full text-xs font-medium text-foreground transition-colors border border-border"
@@ -86,16 +86,16 @@ export default function EventPlannerDetailsPage() {
         </Link>
 
         {/* ================= HEADER ================= */}
-        <div className="relative h-72 rounded-2xl overflow-hidden mb-8">
+        <div className="relative h-72 rounded-2xl overflow-hidden mb-6">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={planner.image} alt={planner.name} className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/10" />
-          <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 flex flex-wrap items-end justify-between gap-4">
+          <div className="absolute bottom-0 left-0 right-0 p-5 md:p-6 flex flex-wrap items-end justify-between gap-4">
             <div>
               <span className="px-3 py-1 bg-white/10 backdrop-blur-sm text-white text-[10px] uppercase tracking-wider rounded-full border border-white/20 font-semibold mb-3 inline-block">
                 {planner.type}
               </span>
-              <h1 className="heading-display text-3xl md:text-4xl text-white flex items-center gap-2">
+              <h1 className="heading-display text-2xl md:text-3xl text-white flex items-center gap-2">
                 {planner.name} <ShieldCheck size={22} className="text-sage" />
               </h1>
               <div className="flex items-center gap-4 text-sm text-white/80 mt-2">
@@ -111,11 +111,11 @@ export default function EventPlannerDetailsPage() {
           </div>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-12">
-          <div className="lg:col-span-2 space-y-10 max-md:min-w-0">
+        <div className="grid lg:grid-cols-3 gap-8">
+          <div className="lg:col-span-2 space-y-8 min-w-0">
             {/* About */}
             <div>
-              <h2 className="text-2xl font-semibold text-foreground mb-4">About {planner.name}</h2>
+              <h2 className="text-xl font-semibold text-foreground mb-4">About {planner.name}</h2>
               <p className="text-muted leading-relaxed">{planner.description}</p>
               <div className="flex flex-wrap gap-2 mt-4">
                 {planner.tags.map((t) => (
@@ -127,7 +127,7 @@ export default function EventPlannerDetailsPage() {
             {/* Portfolio */}
             {planner.gallery && planner.gallery.length > 0 && (
               <div>
-                <h2 className="text-2xl font-semibold text-foreground mb-4">Previous Designs</h2>
+                <h2 className="text-xl font-semibold text-foreground mb-4">Previous Designs</h2>
                 <div className="grid grid-cols-3 gap-3">
                   {[planner.image, ...planner.gallery].map((src, i) => (
                     <button key={i} onClick={() => setLightbox(src)} className="relative aspect-square rounded-xl overflow-hidden group">
@@ -142,7 +142,7 @@ export default function EventPlannerDetailsPage() {
             {/* Brochures */}
             {planner.brochures && planner.brochures.length > 0 && (
               <div>
-                <h2 className="text-2xl font-semibold text-foreground mb-4">Design Brochures</h2>
+                <h2 className="text-xl font-semibold text-foreground mb-4">Design Brochures</h2>
                 <div className="space-y-3">
                   {planner.brochures.map((b) => (
                     <div key={b.title} className="flex items-center justify-between gap-4 bg-surface border border-border rounded-xl p-4">
@@ -170,10 +170,10 @@ export default function EventPlannerDetailsPage() {
             {/* Testimonials */}
             {planner.testimonials && planner.testimonials.length > 0 && (
               <div>
-                <h2 className="text-2xl font-semibold text-foreground mb-4">Guest Stories</h2>
-                <div className="grid sm:grid-cols-2 gap-5">
+                <h2 className="text-xl font-semibold text-foreground mb-4">Guest Stories</h2>
+                <div className="grid sm:grid-cols-2 gap-4">
                   {planner.testimonials.map((t) => (
-                    <div key={t.name} className="p-5 rounded-2xl bg-surface border border-border relative">
+                    <div key={t.name} className="p-4 rounded-2xl bg-surface border border-border relative">
                       <Quote size={20} className="text-primary/20 absolute top-4 right-4" />
                       <div className="flex items-center gap-3 mb-3">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -193,8 +193,8 @@ export default function EventPlannerDetailsPage() {
           </div>
 
           {/* ================= BOOKING MODULE ================= */}
-          <div id="book" className="lg:col-span-1 scroll-mt-24 max-md:min-w-0">
-            <div className="bg-surface border border-border rounded-3xl p-6 md:p-7 sticky top-24 shadow-2xl">
+          <div id="book" className="lg:col-span-1 scroll-mt-24">
+            <div className="bg-surface border border-border rounded-3xl p-5 md:p-5 sticky top-24 shadow-2xl">
               {confirmed ? (
                 <div className="text-center py-4 animate-fade-in-up">
                   <div className="w-16 h-16 rounded-full bg-sage/10 border border-sage/20 flex items-center justify-center mx-auto mb-5">
@@ -382,7 +382,7 @@ export default function EventPlannerDetailsPage() {
 
       {/* ================= LIGHTBOX ================= */}
       {lightbox && (
-        <div className="fixed inset-0 z-[100] bg-black/80 backdrop-blur-sm flex items-center justify-center p-6 animate-fade-in" onClick={() => setLightbox(null)}>
+        <div className="fixed inset-0 z-[100] bg-black/80 backdrop-blur-sm flex items-center justify-center p-5 animate-fade-in" onClick={() => setLightbox(null)}>
           <button onClick={() => setLightbox(null)} aria-label="Close" className="absolute top-6 right-6 w-9 h-9 rounded-full bg-white/10 text-white flex items-center justify-center hover:bg-white/20 transition-colors">
             <X size={18} />
           </button>

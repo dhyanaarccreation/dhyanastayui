@@ -33,8 +33,8 @@ export default function ContactPage() {
   return (
     <div className="bg-background min-h-screen pb-24">
       {/* Header */}
-      <div className="py-20 text-center px-6 border-b border-surface-hover">
-        <h1 className="heading-display text-4xl lg:text-6xl text-foreground mb-6">
+      <div className="py-14 text-center px-6 border-b border-surface-hover">
+        <h1 className="heading-display text-3xl lg:text-5xl text-foreground mb-6">
           Get in Touch
         </h1>
         <p className="text-muted max-w-2xl mx-auto">
@@ -42,15 +42,15 @@ export default function ContactPage() {
         </p>
       </div>
 
-      <div className="max-w-[1200px] mx-auto px-6 lg:px-8 pt-16">
+      <div className="container-page pt-16">
         <div className="grid lg:grid-cols-2 gap-16">
           {/* Contact Info */}
           <div>
-            <h2 className="text-2xl font-semibold text-foreground mb-8">
+            <h2 className="text-xl font-semibold text-foreground mb-6">
               Contact Information
             </h2>
             
-            <div className="space-y-8">
+            <div className="space-y-6">
               <div className="flex gap-4">
                 <div className="w-12 h-12 rounded-xl bg-surface border border-border flex items-center justify-center shrink-0">
                   <Mail className="text-primary" size={20} />
@@ -98,7 +98,7 @@ export default function ContactPage() {
             </div>
 
             {/* Department Emails */}
-            <div className="mt-12 pt-8 border-t border-surface-hover">
+            <div className="mt-8 pt-8 border-t border-surface-hover">
               <h3 className="text-sm font-medium text-foreground mb-4">Specific Inquiries</h3>
               <div className="grid grid-cols-2 gap-4 max-md:grid-cols-1">
                 <div>
@@ -114,10 +114,10 @@ export default function ContactPage() {
           </div>
 
           {/* Contact Form */}
-          <div className="bg-surface border border-border rounded-2xl p-8">
+          <div className="bg-surface border border-border rounded-2xl p-6">
             {!isSubmitted ? (
-              <form className="space-y-6" noValidate onSubmit={handleSubmit}>
-                <div className="grid grid-cols-2 gap-6">
+              <form className="space-y-5" noValidate onSubmit={handleSubmit}>
+                <div className="grid grid-cols-2 gap-5">
                   <div>
                     <label className="block text-xs font-medium text-muted mb-2 uppercase tracking-wider">
                       First Name
@@ -222,12 +222,12 @@ export default function ContactPage() {
                 </button>
               </form>
             ) : (
-              <div className="h-full flex flex-col items-center justify-center text-center py-12 animate-fade-in-up">
+              <div className="h-full flex flex-col items-center justify-center text-center py-10 animate-fade-in-up">
                 <div className="w-16 h-16 rounded-full bg-sage/10 border border-sage/20 flex items-center justify-center mb-6">
                   <Mail size={24} className="text-sage" />
                 </div>
-                <h3 className="heading-display text-2xl text-foreground mb-2">Message Sent</h3>
-                <p className="text-sm text-muted mb-8">
+                <h3 className="heading-display text-xl text-foreground mb-2">Message Sent</h3>
+                <p className="text-sm text-muted mb-6">
                   Thank you for reaching out. A member of our team will get back to you within 24 hours.
                 </p>
                 <button

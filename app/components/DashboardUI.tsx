@@ -18,7 +18,7 @@ export function PageHeader({
   return (
     <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
       <div>
-        <h1 className="heading-display text-2xl sm:text-3xl lg:text-4xl text-foreground mb-2">{title}</h1>
+        <h1 className="heading-display text-xl sm:text-2xl lg:text-3xl text-foreground mb-2">{title}</h1>
         <p className="text-sm text-muted max-w-xl">{subtitle}</p>
       </div>
       {action && (
@@ -42,12 +42,12 @@ export function StatGrid({
   return (
     <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
       {stats.map((s) => (
-        <div key={s.label} className="bg-surface border border-border rounded-2xl p-5">
+        <div key={s.label} className="bg-surface border border-border rounded-2xl p-4">
           <div className="flex items-center justify-between">
             <p className="text-xs text-muted">{s.label}</p>
             {s.icon && <s.icon size={15} className="text-primary" />}
           </div>
-          <p className="text-2xl font-bold text-foreground mt-1.5 tabular-nums">{s.value}</p>
+          <p className="text-xl font-bold text-foreground mt-1.5 tabular-nums">{s.value}</p>
           {s.delta && <p className="text-[11px] text-sage mt-1">{s.delta}</p>}
         </div>
       ))}

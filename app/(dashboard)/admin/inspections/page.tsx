@@ -15,7 +15,7 @@ export default function AdminInspectionsPage() {
     <div className="space-y-4 pb-12">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
-          <h1 className="heading-display text-3xl text-foreground mb-2">
+          <h1 className="heading-display text-2xl text-foreground mb-2">
             Architectural Inspections
           </h1>
           <p className="text-sm text-muted">
@@ -88,8 +88,8 @@ export default function AdminInspectionsPage() {
           <FileText className="text-primary" size={20} /> Scorecard Preview (INS-104)
         </h2>
         
-        <div className="bg-surface border border-border rounded-2xl p-6 md:p-8">
-          <div className="grid md:grid-cols-2 gap-12">
+        <div className="bg-surface border border-border rounded-2xl p-5 md:p-6">
+          <div className="grid md:grid-cols-2 gap-8">
             <div>
               <h3 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-6">The 7 Dimensions</h3>
               <div className="space-y-4">

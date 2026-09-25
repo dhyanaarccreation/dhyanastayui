@@ -54,7 +54,7 @@ export default function DashboardLayout({
         <div className="relative border-b border-border">
           <button
             onClick={() => setSwitcherOpen(!switcherOpen)}
-            className="w-full p-5 flex items-center gap-3 text-left hover:bg-surface-hover transition-colors"
+            className="w-full p-4 flex items-center gap-3 text-left hover:bg-surface-hover transition-colors"
             aria-expanded={switcherOpen}
           >
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center font-bold text-primary-foreground shrink-0">
@@ -142,7 +142,10 @@ export default function DashboardLayout({
           })}
         </nav>
 
-        <div className="p-4 border-t border-border">
+        {/* pb-20 keeps these two links clear of the floating quick-action
+            button, which is fixed at left-6 bottom-6 and was sitting on top
+            of them. */}
+        <div className="p-4 pb-20 border-t border-border">
           <Link
             href="/"
             className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm text-muted hover:bg-surface-hover hover:text-foreground transition-colors mb-1"
@@ -158,8 +161,8 @@ export default function DashboardLayout({
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 w-full relative">
-        <div className="hidden md:flex h-16 bg-background/95 backdrop-blur-md border-b border-surface-hover sticky top-0 z-30 items-center justify-between px-8">
+      <main className="flex-1 min-w-0 w-full relative">
+        <div className="hidden md:flex h-16 bg-background/95 backdrop-blur-md border-b border-surface-hover sticky top-0 z-30 items-center justify-between px-[4%]">
           <p className="text-sm text-muted">
             <span className="text-foreground font-medium">{role.title}</span>
           </p>
@@ -176,7 +179,7 @@ export default function DashboardLayout({
             </div>
           </div>
         </div>
-        <div className="p-6 md:p-8 lg:p-10 max-w-[1200px] mx-auto">
+        <div className="py-5 md:py-6 lg:py-8 container-dashboard">
           {children}
         </div>
       </main>

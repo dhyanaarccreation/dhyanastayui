@@ -127,7 +127,7 @@ function ReportRowItem({
         <p className="text-sm font-medium text-foreground">{report.name}</p>
         <p className="text-xs text-muted mt-0.5">{report.description}</p>
       </div>
-      <div className="flex items-center justify-between sm:justify-end gap-5 shrink-0">
+      <div className="flex items-center justify-between sm:justify-end gap-4 shrink-0">
         <div className="text-right">
           <p className="text-[11px] text-subtle">{report.period}</p>
           <p className="text-[11px] text-subtle">Generated {report.lastGenerated}</p>

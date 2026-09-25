@@ -186,7 +186,7 @@ export default function ListingRequestsPage() {
               <div className="flex flex-col md:flex-row">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img loading="lazy" src={r.image} alt={r.property} className="w-full md:w-56 h-40 md:h-auto object-cover shrink-0" />
-                <div className="flex-1 p-5">
+                <div className="flex-1 p-4">
                   <div className="flex items-start justify-between gap-3 flex-wrap">
                     <div>
                       <div className="flex items-center gap-2 flex-wrap">
@@ -250,7 +250,7 @@ export default function ListingRequestsPage() {
           );
         })}
         {visible.length === 0 && (
-          <p className="text-sm text-muted text-center py-10 bg-surface border border-border rounded-2xl">
+          <p className="text-sm text-muted text-center py-8 bg-surface border border-border rounded-2xl">
             No requests under “{filter}”.
           </p>
         )}

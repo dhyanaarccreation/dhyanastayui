@@ -197,20 +197,20 @@ export default function CuratedFoodPage() {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
 
-        <div className="relative z-10 max-w-[1200px] mx-auto px-6 lg:px-8 w-full mt-16">
+        <div className="relative z-10 container-page w-full mt-10">
           <span className="text-xs uppercase tracking-wider text-primary font-bold mb-4 flex items-center gap-2">
             <ChefHat size={16} /> Dhyana Dining
           </span>
-          <h1 className="heading-display text-4xl md:text-6xl text-foreground mb-6">
+          <h1 className="heading-display text-3xl md:text-5xl text-foreground mb-6">
             Taste the destination.
           </h1>
-          <p className="text-lg text-muted max-w-xl mb-8">
+          <p className="text-lg text-muted max-w-xl mb-6">
             Pre-book home-cooked thalis, meet the cooks behind every dish, and join a hands-on
             cooking workshop — food that&apos;s part of the stay, not an add-on.
           </p>
 
           <div className="max-w-2xl bg-surface/80 backdrop-blur-md p-2 rounded-2xl border border-border flex flex-col sm:flex-row gap-2">
-            <div className="flex-1 relative">
+            <div role="search" className="flex-1 relative">
               <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-subtle" />
               <input
                 type="text"
@@ -231,7 +231,7 @@ export default function CuratedFoodPage() {
       </section>
 
       {/* ================= SPONSORED · FOOD HUB ================= */}
-      <section className="pt-10 max-w-[1200px] mx-auto px-6 lg:px-8">
+      <section className="pt-10 container-page">
         <div className="relative rounded-2xl overflow-hidden border border-primary/25">
           <div
             className="flex transition-transform duration-700 ease-in-out"
@@ -242,7 +242,7 @@ export default function CuratedFoodPage() {
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={ad.image} alt={ad.headline} className="absolute inset-0 w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/55 to-black/15" />
-                <div className="relative p-6 md:p-8 max-w-lg">
+                <div className="relative p-5 md:p-6 max-w-lg">
                   <div className="flex items-center gap-2 mb-3 flex-wrap">
                     <span className="flex items-center gap-1.5 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider bg-white/10 backdrop-blur-sm text-white/90 rounded-full border border-white/20">
                       <Megaphone size={11} /> Food Hub · Sponsored
@@ -252,7 +252,7 @@ export default function CuratedFoodPage() {
                     </span>
                   </div>
                   <p className="text-xs text-white/70 uppercase tracking-widest mb-1">{ad.partner}</p>
-                  <h3 className="text-xl md:text-2xl font-semibold text-white">{ad.headline}</h3>
+                  <h3 className="text-xl md:text-xl font-semibold text-white">{ad.headline}</h3>
                   <p className="text-sm text-white/80 mt-2 leading-relaxed">{ad.copy}</p>
                   <a
                     href={ad.href}
@@ -283,17 +283,17 @@ export default function CuratedFoodPage() {
       </section>
 
       {/* ================= TYPES OF MENUS ================= */}
-      <section className="py-16 max-w-[1200px] mx-auto px-6 lg:px-8">
-        <div className="text-center mb-10">
+      <section className="py-12 container-page">
+        <div className="text-center mb-8">
           <span className="text-xs font-semibold text-primary uppercase tracking-widest">How you can eat with us</span>
-          <h2 className="heading-display text-2xl md:text-4xl text-foreground mt-3">Types of Menus</h2>
+          <h2 className="heading-display text-xl md:text-3xl text-foreground mt-3">Types of Menus</h2>
         </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {menuTypes.map((m) => (
             <a
               key={m.title}
               href="#menu"
-              className="group bg-surface border border-border rounded-2xl p-6 hover:border-primary/40 transition-colors"
+              className="group bg-surface border border-border rounded-2xl p-5 hover:border-primary/40 transition-colors"
             >
               <span className="w-11 h-11 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
                 <m.icon size={20} />
@@ -306,10 +306,10 @@ export default function CuratedFoodPage() {
       </section>
 
       {/* ================= DISH MENU ================= */}
-      <section id="menu" className="py-16 max-w-[1200px] mx-auto px-6 lg:px-8 scroll-mt-20">
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8">
+      <section id="menu" className="py-12 container-page scroll-mt-12">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-6">
           <div>
-            <h2 className="text-2xl font-semibold text-foreground">Curated Dish Menu</h2>
+            <h2 className="text-xl font-semibold text-foreground">Curated Dish Menu</h2>
             <p className="text-sm text-muted mt-1">Choose your cook, set the quantity, pre-book with your stay.</p>
           </div>
           <button
@@ -323,7 +323,7 @@ export default function CuratedFoodPage() {
         </div>
 
         {/* Cuisine filter */}
-        <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-1 mb-8 -mx-1 px-1">
+        <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-1 mb-6 -mx-1 px-1">
           {cuisines.map((c) => (
             <button
               key={c}
@@ -337,7 +337,7 @@ export default function CuratedFoodPage() {
           ))}
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {visible.map((f) => (
             <div key={f.id} className="rounded-2xl overflow-hidden bg-surface border border-border hover:border-primary/30 transition-colors flex flex-col">
               <div className="relative h-44 overflow-hidden group">
@@ -433,7 +433,7 @@ export default function CuratedFoodPage() {
             </div>
           ))}
           {visible.length === 0 && (
-            <p className="col-span-full text-center text-sm text-subtle py-12">No dishes match that filter — try clearing search or cuisine.</p>
+            <p className="col-span-full text-center text-sm text-subtle py-10">No dishes match that filter — try clearing search or cuisine.</p>
           )}
         </div>
       </section>
@@ -441,7 +441,7 @@ export default function CuratedFoodPage() {
       {/* ================= VIDEO / STORY MODAL ================= */}
       {videoDish && (
         <div
-          className="fixed inset-0 z-[100] bg-black/70 backdrop-blur-sm flex items-center justify-center p-6 animate-fade-in"
+          className="fixed inset-0 z-[100] bg-black/70 backdrop-blur-sm flex items-center justify-center p-5 animate-fade-in"
           onClick={() => setVideoDish(null)}
         >
           <div
@@ -468,7 +468,7 @@ export default function CuratedFoodPage() {
                 <X size={16} />
               </button>
             </div>
-            <div className="p-6">
+            <div className="p-5">
               <p className="text-[10px] font-semibold uppercase tracking-wider text-primary mb-1">The story behind this dish</p>
               <h3 className="text-lg font-semibold text-foreground mb-2">{videoDish.name}</h3>
               <p className="text-sm text-muted leading-relaxed">{videoDish.story}</p>
@@ -479,18 +479,18 @@ export default function CuratedFoodPage() {
       )}
 
       {/* ================= CHEF STORIES ================= */}
-      <section className="py-20 bg-surface/40">
-        <div className="max-w-[1200px] mx-auto px-6 lg:px-8">
-          <div className="text-center mb-12">
+      <section className="py-14 bg-surface/40">
+        <div className="container-page">
+          <div className="text-center mb-8">
             <span className="text-xs font-semibold text-primary uppercase tracking-widest">Meet the Kitchen</span>
-            <h2 className="heading-display text-2xl md:text-4xl text-foreground mt-3">The Story Behind Every Plate</h2>
+            <h2 className="heading-display text-xl md:text-3xl text-foreground mt-3">The Story Behind Every Plate</h2>
             <p className="text-muted mt-3 max-w-xl mx-auto">
               Every cook on Dhyana has a name, a kitchen, and a recipe that means something to them.
             </p>
           </div>
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-3 gap-5">
             {chefStories.map((c) => (
-              <div key={c.name} className="bg-surface border border-border rounded-2xl p-6">
+              <div key={c.name} className="bg-surface border border-border rounded-2xl p-5">
                 <div className="flex items-center gap-3 mb-4">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={c.avatar} alt={c.name} className="w-12 h-12 rounded-full object-cover border border-border" />
@@ -508,11 +508,11 @@ export default function CuratedFoodPage() {
       </section>
 
       {/* ================= WORKSHOPS ================= */}
-      <section className="py-20 max-w-[1200px] mx-auto px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10">
+      <section className="py-14 container-page">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8">
           <div>
             <span className="text-xs font-semibold text-primary uppercase tracking-widest">Cook alongside us</span>
-            <h2 className="heading-display text-2xl md:text-4xl text-foreground mt-3">Culinary Workshops</h2>
+            <h2 className="heading-display text-xl md:text-3xl text-foreground mt-3">Culinary Workshops</h2>
             <p className="text-muted mt-3 max-w-lg">
               Not just eating — learn the recipe. Hands-on sessions with the same cooks behind the menu above.
             </p>
@@ -522,12 +522,12 @@ export default function CuratedFoodPage() {
           </Link>
         </div>
 
-        <div className="grid sm:grid-cols-2 gap-6">
+        <div className="grid sm:grid-cols-2 gap-5">
           {workshops.map((w) => (
             <Link
               key={w.title}
               href={w.href}
-              className="group flex flex-col sm:flex-row gap-5 bg-surface border border-border rounded-2xl p-4 hover:border-primary/40 transition-colors"
+              className="group flex flex-col sm:flex-row gap-4 bg-surface border border-border rounded-2xl p-4 hover:border-primary/40 transition-colors"
             >
               <div className="w-full sm:w-40 h-40 sm:h-auto rounded-xl overflow-hidden shrink-0">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -547,21 +547,21 @@ export default function CuratedFoodPage() {
             </Link>
           ))}
         </div>
-        <Link href="/experiences" className="flex md:hidden items-center justify-center gap-2 text-sm text-primary mt-8">
+        <Link href="/experiences" className="flex md:hidden items-center justify-center gap-2 text-sm text-primary mt-6">
           All experiences <ArrowRight size={14} />
         </Link>
       </section>
 
       {/* ================= TESTIMONIALS ================= */}
-      <section className="py-20 bg-surface/40">
-        <div className="max-w-[1200px] mx-auto px-6 lg:px-8">
-          <div className="text-center mb-12">
+      <section className="py-14 bg-surface/40">
+        <div className="container-page">
+          <div className="text-center mb-8">
             <span className="text-xs font-semibold text-primary uppercase tracking-widest">Guest Stories</span>
-            <h2 className="heading-display text-2xl md:text-4xl text-foreground mt-3">What Guests Say About the Food</h2>
+            <h2 className="heading-display text-xl md:text-3xl text-foreground mt-3">What Guests Say About the Food</h2>
           </div>
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-3 gap-5">
             {foodTestimonials.map((t) => (
-              <div key={t.name} className="p-7 rounded-2xl bg-surface border border-border relative">
+              <div key={t.name} className="p-5 rounded-2xl bg-surface border border-border relative">
                 <Quote size={28} className="text-primary/20 absolute top-5 right-5" />
                 <div className="flex items-center gap-3 mb-4">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -580,9 +580,9 @@ export default function CuratedFoodPage() {
       </section>
 
       {/* ================= CLOSING CTA ================= */}
-      <section className="py-20 max-w-[900px] mx-auto px-6 lg:px-8 text-center">
+      <section className="py-14 max-w-[900px] mx-auto px-6 lg:px-8 text-center">
         <Sparkles size={22} className="text-primary mx-auto mb-4" />
-        <h2 className="heading-display text-2xl md:text-4xl text-foreground">Are you a cook or a chef?</h2>
+        <h2 className="heading-display text-xl md:text-3xl text-foreground">Are you a cook or a chef?</h2>
         <p className="text-muted mt-3 max-w-lg mx-auto">
           Join Dhyana as a food partner — cook for guests at curated stays, choose your own hours, and get paid per plate.
         </p>

@@ -287,7 +287,7 @@ function AITripPlannerContent() {
       {phase === "form" && (
         <div className="animate-fade-in">
           {hasSeed && (
-            <div className="flex items-start gap-3 bg-sage/10 border border-sage/30 rounded-2xl p-4 sm:p-5 mb-6">
+            <div className="flex items-start gap-3 bg-sage/10 border border-sage/30 rounded-2xl p-4 sm:p-4 mb-6">
               <span className="w-9 h-9 rounded-xl bg-sage/20 text-sage flex items-center justify-center shrink-0">
                 <Wand2 size={16} />
               </span>
@@ -306,14 +306,14 @@ function AITripPlannerContent() {
             <div className="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br from-primary/20 to-primary-dark/10 border border-primary/30 flex items-center justify-center mb-6">
               <Sparkles size={32} className="text-primary" />
             </div>
-            <h1 className="heading-display text-3xl md:text-5xl text-foreground mb-4">AI Trip Planner</h1>
+            <h1 className="heading-display text-2xl md:text-4xl text-foreground mb-4">AI Trip Planner</h1>
             <p className="text-muted max-w-lg mx-auto">
               Describe your dream getaway — the AI matches curated stays, builds your days,
               and prices the whole trip.
             </p>
           </div>
 
-          <div className="bg-surface border border-border rounded-2xl p-6 md:p-8 space-y-4">
+          <div className="bg-surface border border-border rounded-2xl p-5 md:p-6 space-y-4">
             <div>
               <label className="block text-sm font-medium text-foreground mb-2">
                 What kind of trip are you dreaming of?
@@ -383,7 +383,7 @@ function AITripPlannerContent() {
 
       {/* ================= LOADING ================= */}
       {phase === "loading" && (
-        <div className="bg-surface border border-border rounded-2xl p-10 text-center animate-fade-in">
+        <div className="bg-surface border border-border rounded-2xl p-8 text-center animate-fade-in">
           <span className="relative mx-auto w-16 h-16 rounded-2xl bg-sage/10 border border-sage/30 flex items-center justify-center">
             <span className="absolute inset-0 rounded-2xl bg-sage/20 animate-ping" />
             <Bot size={28} className="text-sage relative" />
@@ -407,13 +407,13 @@ function AITripPlannerContent() {
       {phase === "result" && plan && stay && (
         <div className="animate-fade-in-up space-y-4">
           {/* Plan header */}
-          <div className="bg-surface border border-primary/30 rounded-2xl p-6 md:p-8">
+          <div className="bg-surface border border-primary/30 rounded-2xl p-5 md:p-6">
             <div className="flex items-start justify-between gap-3 flex-wrap">
               <div>
                 <span className="text-[10px] uppercase tracking-wider text-primary font-semibold flex items-center gap-1.5">
                   <Sparkles size={12} /> Curated itinerary · {plan.nights} nights · {guestCount} guests
                 </span>
-                <h2 className="heading-display text-2xl md:text-3xl text-foreground mt-2">{plan.title}</h2>
+                <h2 className="heading-display text-xl md:text-2xl text-foreground mt-2">{plan.title}</h2>
                 <p className="text-sm text-muted mt-2 max-w-xl leading-relaxed">{plan.intro}</p>
                 <div className="flex flex-wrap gap-1.5 mt-3">
                   {plan.tags.map((t) => (
@@ -441,7 +441,7 @@ function AITripPlannerContent() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img loading="lazy" src={stay.images[0]} alt={stay.name} className="w-full h-full object-cover" />
             </div>
-            <div className="p-5 flex-1">
+            <div className="p-4 flex-1">
               <div className="flex items-center justify-between gap-2 flex-wrap">
                 <div>
                   <p className="text-[10px] uppercase tracking-wider text-subtle">Your matched stay</p>
@@ -525,7 +525,7 @@ function AITripPlannerContent() {
           </div>
 
           {/* Cost breakdown — live */}
-          <div className="bg-surface border border-border rounded-2xl p-6">
+          <div className="bg-surface border border-border rounded-2xl p-5">
             <p className="text-sm font-semibold text-foreground flex items-center gap-2 mb-4">
               <IndianRupee size={15} className="text-primary" /> Trip cost · updates as you edit
             </p>

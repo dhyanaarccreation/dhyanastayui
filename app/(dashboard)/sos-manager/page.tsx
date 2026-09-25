@@ -37,7 +37,7 @@ export default function SosCommandCenterPage() {
       />
 
       {/* Live alert banner */}
-      <div className="border border-terracotta/40 bg-terracotta/10 rounded-2xl p-5 flex flex-col md:flex-row md:items-center gap-4">
+      <div className="border border-terracotta/40 bg-terracotta/10 rounded-2xl p-4 flex flex-col md:flex-row md:items-center gap-4">
         <span className="relative w-11 h-11 rounded-full bg-terracotta text-white flex items-center justify-center shrink-0">
           <span className="absolute inset-0 rounded-full bg-terracotta animate-ping opacity-30" />
           <Siren size={20} />
@@ -68,7 +68,7 @@ export default function SosCommandCenterPage() {
         ]}
       />
 
-      <div className="grid lg:grid-cols-2 gap-6">
+      <div className="grid lg:grid-cols-2 gap-5">
         {/* On duty now — numbers visible */}
         <SectionCard title="On Duty Now" icon={Users} action={{ label: "Manage team", href: "/sos-manager/teams" }}>
           <ul className="divide-y divide-surface-hover">

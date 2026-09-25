@@ -19,7 +19,7 @@ export default function TravellerSettingsPage() {
         subtitle="Account, notifications, privacy and payment preferences."
       />
 
-      <div className="grid lg:grid-cols-2 gap-6">
+      <div className="grid lg:grid-cols-2 gap-5">
         <SectionCard title="Account" icon={User}>
           <div className="divide-y divide-surface-hover">
             <SettingRow

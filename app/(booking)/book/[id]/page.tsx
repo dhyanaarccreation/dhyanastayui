@@ -363,7 +363,7 @@ function BookingPageContent() {
     <div className="bg-background min-h-screen pb-24 pt-[72px]">
       {/* Progress Bar Header */}
       <div className="sticky top-[72px] z-40 bg-background/95 backdrop-blur-xl border-b border-surface-hover py-4">
-        <div className="max-w-[1200px] mx-auto px-6 lg:px-8">
+        <div className="container-page">
           <div className="flex items-center justify-between gap-4">
             <button
               onClick={prevStep}
@@ -430,19 +430,19 @@ function BookingPageContent() {
         </div>
       </div>
 
-      <div className="max-w-[1200px] mx-auto px-6 lg:px-8 py-8">
-        <div className="flex flex-col lg:flex-row gap-8">
+      <div className="container-page py-8">
+        <div className="flex flex-col lg:flex-row gap-6">
           {/* Main Content Area */}
           <div className="flex-1">
             {/* Step 1: Dates & Guests */}
             {step === 1 && (
               <div className="animate-fade-in">
-                <h1 className="heading-display text-3xl text-foreground mb-6">
+                <h1 className="heading-display text-2xl text-foreground mb-6">
                   Review dates and guests
                 </h1>
 
                 <div className="space-y-4">
-                  <div ref={datesRef} className="bg-surface border border-border rounded-2xl p-6">
+                  <div ref={datesRef} className="bg-surface border border-border rounded-2xl p-5">
                     <div className="flex justify-between items-center mb-4">
                       <h2 className="text-lg font-semibold text-foreground">Dates</h2>
                     </div>
@@ -527,7 +527,7 @@ function BookingPageContent() {
                     </div>
                   </div>
 
-                  <div ref={guestsRef} className="bg-surface border border-border rounded-2xl p-6">
+                  <div ref={guestsRef} className="bg-surface border border-border rounded-2xl p-5">
                     <button
                       type="button"
                       onClick={() => setGuestsOpen((v) => !v)}
@@ -618,11 +618,11 @@ function BookingPageContent() {
             {/* Step 2: Curated Experiences */}
             {step === 2 && (
               <div className="animate-fade-in">
-                <h1 className="heading-display text-2xl text-foreground mb-4 ml-1">
+                <h1 className="heading-display text-xl text-foreground mb-4 ml-1">
                   Curated Experiences
                 </h1>
 
-                <div className="bg-surface border border-border rounded-2xl shadow-organic p-6">
+                <div className="bg-surface border border-border rounded-2xl shadow-organic p-5">
                   <div className="grid sm:grid-cols-2 gap-4">
                     {(showAllExperiences ? curationExperiences : curationExperiences.slice(0, 4)).map((exp) => {
                     const isAdded = selectedExperiences.includes(exp.id);
@@ -728,12 +728,12 @@ function BookingPageContent() {
             {/* Step 3: Details & Payment */}
             {step === 3 && (
               <div className="animate-fade-in">
-                <h1 className="heading-display text-3xl text-foreground mb-6">
+                <h1 className="heading-display text-2xl text-foreground mb-6">
                   Almost there
                 </h1>
 
                 <div className="space-y-4">
-                  <div className="bg-surface border border-border rounded-2xl p-6">
+                  <div className="bg-surface border border-border rounded-2xl p-5">
                     <h2 className="text-lg font-semibold text-foreground mb-4">Guest Details</h2>
                     <div className="space-y-4">
                       <div className="grid grid-cols-2 gap-4">
@@ -796,7 +796,7 @@ function BookingPageContent() {
             {/* Step 4: Review & Payment */}
             {step === 4 && (
               <div className="animate-fade-in">
-                <h1 className="heading-display text-3xl text-foreground mb-2">
+                <h1 className="heading-display text-2xl text-foreground mb-2">
                   Review & Payment
                 </h1>
                 <p className="text-muted mb-6">
@@ -816,7 +816,7 @@ function BookingPageContent() {
                     </div>
                   </div>
 
-                  <div className="bg-surface border border-border rounded-2xl p-6">
+                  <div className="bg-surface border border-border rounded-2xl p-5">
                     <h2 className="text-lg font-semibold text-foreground mb-4">Dates & Guests</h2>
                     <div className="grid grid-cols-2 gap-4 text-sm">
                       <div>
@@ -836,7 +836,7 @@ function BookingPageContent() {
                     </div>
                   </div>
 
-                  <div className="bg-surface border border-border rounded-2xl p-6">
+                  <div className="bg-surface border border-border rounded-2xl p-5">
                     <h2 className="text-lg font-semibold text-foreground mb-4">Curated Experiences</h2>
                     {selectedExperiences.length === 0 && stayPageAddOns.length === 0 ? (
                       <p className="text-sm text-muted">No experiences added yet.</p>
@@ -860,7 +860,7 @@ function BookingPageContent() {
                     )}
                   </div>
 
-                  <div className="bg-surface border border-border rounded-2xl p-6">
+                  <div className="bg-surface border border-border rounded-2xl p-5">
                     <h2 className="text-lg font-semibold text-foreground mb-4">Price Summary</h2>
                     <div className="space-y-2 text-sm">
                       <div className="flex justify-between text-muted">
@@ -904,7 +904,7 @@ function BookingPageContent() {
                 </span>
               </div>
 
-              <div className="p-5">
+              <div className="p-4">
                 <h3 className="font-semibold text-foreground text-sm leading-snug mb-3.5">
                   {property.name}
                 </h3>

@@ -49,7 +49,7 @@ export default function FoodPartnerDashboardPage() {
         ]}
       />
 
-      <div className="grid lg:grid-cols-3 gap-6">
+      <div className="grid lg:grid-cols-3 gap-5">
         {/* Live order queue */}
         <SectionCard title="Live Orders" icon={Clock} className="lg:col-span-2" action={{ label: "All orders", href: "/food-partner/orders" }}>
           <ul className="divide-y divide-surface-hover">
@@ -95,7 +95,7 @@ export default function FoodPartnerDashboardPage() {
             <Sparkles size={10} /> Bestseller · July
           </span>
         </div>
-        <div className="p-6 md:p-8 flex-1">
+        <div className="p-5 md:p-6 flex-1">
           <div className="flex items-center gap-2">
             <h2 className="text-lg font-semibold text-foreground">{topDish.name}</h2>
             {topDish.veg && <Leaf size={14} className="text-sage" />}
@@ -104,7 +104,7 @@ export default function FoodPartnerDashboardPage() {
           <p className="text-sm text-muted mt-3 leading-relaxed max-w-lg">
             412 plates served this month. Guests love it with Meena Akka as the chosen cook — 92% pick her for this dish.
           </p>
-          <div className="flex items-center gap-5 mt-4 text-xs text-muted">
+          <div className="flex items-center gap-4 mt-4 text-xs text-muted">
             <span className="text-sage font-medium">₹1,44,200 earned</span>
             <Link href="/food-partner/menu" className="text-primary hover:underline flex items-center gap-1">
               Edit dish <ArrowRight size={12} />

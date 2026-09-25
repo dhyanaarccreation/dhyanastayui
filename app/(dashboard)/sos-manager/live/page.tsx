@@ -56,7 +56,7 @@ export default function SosLiveResponsePage() {
       />
 
       {/* ===== Active incident ===== */}
-      <div className="grid lg:grid-cols-3 gap-6">
+      <div className="grid lg:grid-cols-3 gap-5">
         {/* GPS MAP */}
         <div className="lg:col-span-2 bg-surface border border-terracotta/40 rounded-2xl overflow-hidden">
           <div className="flex items-center justify-between px-5 py-3.5 border-b border-surface-hover">

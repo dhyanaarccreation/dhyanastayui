@@ -106,11 +106,11 @@ export default function ItineraryBuilderPage() {
         subtitle="Arrange stays, experiences, food and activities into a day-by-day trip travellers can copy."
       />
 
-      <div className="grid lg:grid-cols-[1fr_280px] gap-6">
+      <div className="grid lg:grid-cols-[1fr_280px] gap-5">
         <div className="space-y-4">
           {/* Trip basics */}
           <SectionCard title="Trip Details" icon={Sparkles}>
-            <div className="p-5 space-y-3">
+            <div className="p-4 space-y-3">
               <input
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
@@ -136,7 +136,7 @@ export default function ItineraryBuilderPage() {
 
           {/* Day-by-day builder */}
           <SectionCard title={`Day-by-Day (${days.length} days · ${totalActivities} stops)`} icon={Home}>
-            <div className="p-5 space-y-4">
+            <div className="p-4 space-y-4">
               {days.map((day, dayIndex) => (
                 <div key={day.id} className="rounded-2xl border border-border bg-background p-4">
                   <div className="flex items-center gap-2.5">
@@ -256,7 +256,7 @@ export default function ItineraryBuilderPage() {
         {/* Sidebar: cover image + save actions */}
         <div className="space-y-4">
           <SectionCard title="Cover Image" icon={ImageIcon}>
-            <div className="p-5">
+            <div className="p-4">
               <div className="relative h-32 rounded-xl overflow-hidden mb-3">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={coverImage} alt="Itinerary cover" className="absolute inset-0 w-full h-full object-cover" />
@@ -277,7 +277,7 @@ export default function ItineraryBuilderPage() {
           </SectionCard>
 
           <SectionCard title="Save & Publish" icon={Send}>
-            <div className="p-5 space-y-2.5">
+            <div className="p-4 space-y-2.5">
               <button
                 onClick={() => setSaveState("draft")}
                 disabled={!title.trim()}

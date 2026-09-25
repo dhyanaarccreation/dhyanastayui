@@ -65,13 +65,13 @@ export default function TravellerRewardsPage() {
       />
 
       {/* Seed ball hero */}
-      <div className="bg-gradient-to-r from-sage/15 via-surface to-surface border border-sage/25 rounded-2xl p-6 md:p-8">
-        <div className="flex flex-col md:flex-row md:items-center gap-6">
+      <div className="bg-gradient-to-r from-sage/15 via-surface to-surface border border-sage/25 rounded-2xl p-5 md:p-6">
+        <div className="flex flex-col md:flex-row md:items-center gap-5">
           <div className="flex-1">
             <p className="text-xs font-semibold uppercase tracking-wider text-sage flex items-center gap-1.5">
               <span>{current.emoji}</span> {current.label}
             </p>
-            <p className="text-4xl font-bold text-foreground mt-2 tabular-nums">
+            <p className="text-3xl font-bold text-foreground mt-2 tabular-nums">
               {totalSeedBalls.toLocaleString("en-IN")} Seed Balls
             </p>
             <p className="text-sm text-muted mt-1">Funded through bookings, donations &amp; purchases</p>
@@ -123,7 +123,7 @@ export default function TravellerRewardsPage() {
         ]}
       />
 
-      <div className="grid lg:grid-cols-2 gap-6">
+      <div className="grid lg:grid-cols-2 gap-5">
         <SectionCard title="Your Coupons" icon={Ticket}>
           <ul className="divide-y divide-surface-hover">
             {coupons.map((c) => (
@@ -164,9 +164,9 @@ export default function TravellerRewardsPage() {
       </div>
 
       {/* Convert reward points → seed balls + volunteer campaign events */}
-      <div className="grid lg:grid-cols-2 gap-6">
+      <div className="grid lg:grid-cols-2 gap-5">
         <SectionCard title="Convert Reward Points to Seed Balls" icon={Gift}>
-          <div className="p-5">
+          <div className="p-4">
             <div className="flex items-center justify-between gap-3 flex-wrap mb-4">
               <p className="text-sm text-muted max-w-xs">
                 Turn your loyalty points into native-species seed balls for India&apos;s forests.
@@ -225,7 +225,7 @@ export default function TravellerRewardsPage() {
       {/* Buy Seed Balls */}
       <div id="buy-seed-balls" className="scroll-mt-24">
         <SectionCard title="Buy Seed Balls" icon={ShoppingBag}>
-          <div className="p-5">
+          <div className="p-4">
             <p className="text-sm text-muted mb-4 max-w-xl">
               Order seed balls to disperse yourself on your next trip — delivered to your address, with simple
               guidelines on suitable locations, planting seasons and native species included.
@@ -259,7 +259,7 @@ export default function TravellerRewardsPage() {
       </div>
 
       {/* Referral */}
-      <div className="bg-surface border border-border rounded-2xl p-6 md:p-8 flex flex-col md:flex-row md:items-center gap-6">
+      <div className="bg-surface border border-border rounded-2xl p-5 md:p-6 flex flex-col md:flex-row md:items-center gap-5">
         <div className="flex-1">
           <h2 className="text-lg font-semibold text-foreground flex items-center gap-2">
             <Share2 size={16} className="text-primary" /> Refer friends, earn ₹500 each

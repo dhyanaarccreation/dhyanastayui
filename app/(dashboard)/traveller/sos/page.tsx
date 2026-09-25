@@ -60,7 +60,7 @@ export default function TravellerSosPage() {
       />
 
       {step === "select" && (
-        <div className="bg-surface border border-terracotta/30 rounded-2xl p-6 md:p-8">
+        <div className="bg-surface border border-terracotta/30 rounded-2xl p-5 md:p-6">
           <div className="flex flex-col items-center text-center mb-6">
             <div className="relative w-20 h-20 mb-3">
               <span className="absolute inset-0 rounded-full bg-terracotta/20 animate-ping" />
@@ -92,7 +92,7 @@ export default function TravellerSosPage() {
       )}
 
       {step === "confirm" && selected && (
-        <div className="bg-surface border border-terracotta/30 rounded-2xl p-8 text-center max-w-md mx-auto">
+        <div className="bg-surface border border-terracotta/30 rounded-2xl p-6 text-center max-w-md mx-auto">
           <div className="w-16 h-16 mx-auto rounded-full bg-terracotta/10 flex items-center justify-center mb-4">
             <ShieldAlert size={28} className="text-terracotta" />
           </div>
@@ -118,7 +118,7 @@ export default function TravellerSosPage() {
       )}
 
       {step === "contacting" && (
-        <div className="bg-surface border border-terracotta/30 rounded-2xl p-8 text-center max-w-md mx-auto">
+        <div className="bg-surface border border-terracotta/30 rounded-2xl p-6 text-center max-w-md mx-auto">
           <div className="relative w-16 h-16 mx-auto mb-4">
             <span className="absolute inset-0 rounded-full bg-terracotta/30 animate-ping" />
             <div className="relative w-16 h-16 rounded-full bg-terracotta flex items-center justify-center">
@@ -131,7 +131,7 @@ export default function TravellerSosPage() {
       )}
 
       {step === "notified" && (
-        <div className="bg-surface border border-sage/30 rounded-2xl p-8 text-center max-w-md mx-auto">
+        <div className="bg-surface border border-sage/30 rounded-2xl p-6 text-center max-w-md mx-auto">
           <div className="w-16 h-16 mx-auto rounded-full bg-sage/15 flex items-center justify-center mb-4">
             <Check size={28} className="text-sage" />
           </div>

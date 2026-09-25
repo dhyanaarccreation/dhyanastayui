@@ -61,7 +61,7 @@ export default function InfluencerContentPage() {
       />
 
       <SectionCard title="Submit Content" icon={Send}>
-        <div className="p-5 space-y-3">
+        <div className="p-4 space-y-3">
           <input
             value={title}
             onChange={(e) => setTitle(e.target.value)}

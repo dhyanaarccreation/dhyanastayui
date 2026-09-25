@@ -36,7 +36,7 @@ export default function DestinationDetailPage() {
         <img src={destination.image} alt={destination.name} className="absolute inset-0 w-full h-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-black/10" />
         <div className="absolute inset-0 flex flex-col justify-end">
-          <div className="max-w-[1200px] mx-auto px-6 lg:px-8 w-full pb-8">
+          <div className="container-page w-full pb-8">
             <div className="flex items-center gap-2 text-xs text-white/70 mb-4">
               <Link href="/" className="hover:text-white transition-colors">Home</Link>
               <ChevronRight size={12} />
@@ -44,7 +44,7 @@ export default function DestinationDetailPage() {
             </div>
             <div className="flex items-end justify-between gap-4 flex-wrap">
               <div>
-                <h1 className="heading-display text-3xl md:text-5xl text-white mb-2">{destination.name}</h1>
+                <h1 className="heading-display text-2xl md:text-4xl text-white mb-2">{destination.name}</h1>
                 <p className="text-white/80 text-sm flex items-center gap-1.5">
                   <MapPin size={14} /> {destination.state} · {stays.length} curated stay{stays.length === 1 ? "" : "s"}
                 </p>
@@ -55,12 +55,12 @@ export default function DestinationDetailPage() {
         </div>
       </div>
 
-      <div className="max-w-[1200px] mx-auto px-6 lg:px-8 mt-10 space-y-14">
+      <div className="container-page mt-8 space-y-14">
         {/* Travel Guides — blog guides + relevant travel curators, the same
             two sources the Stay detail page's "Explore [City]" section and
             the homepage Travel Guides section already draw from. */}
         <section>
-          <h2 className="heading-display text-2xl text-foreground mb-1.5">
+          <h2 className="heading-display text-xl text-foreground mb-1.5">
             Travel Guides for {destination.name}
           </h2>
           <p className="text-sm text-muted mb-6">
@@ -117,7 +117,7 @@ export default function DestinationDetailPage() {
 
         {/* Places to Visit & Experiences */}
         <section>
-          <h2 className="heading-display text-2xl text-foreground mb-1.5">
+          <h2 className="heading-display text-xl text-foreground mb-1.5">
             Places to Visit in {destination.name}
           </h2>
           <p className="text-sm text-muted mb-6">
@@ -148,7 +148,7 @@ export default function DestinationDetailPage() {
 
         {/* Featured Stays */}
         <section>
-          <h2 className="heading-display text-2xl text-foreground mb-1.5">
+          <h2 className="heading-display text-xl text-foreground mb-1.5">
             Featured Stays in {destination.name}
           </h2>
           <p className="text-sm text-muted mb-6">

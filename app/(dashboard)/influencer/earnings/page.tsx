@@ -55,7 +55,7 @@ export default function InfluencerEarningsPage() {
 
       {/* Funnel visualization */}
       <SectionCard title="Revenue → Commission Funnel" icon={IndianRupee}>
-        <div className="p-5 grid sm:grid-cols-4 gap-3 text-center">
+        <div className="p-4 grid sm:grid-cols-4 gap-3 text-center">
           {[
             { label: "Booking Revenue", value: `₹${(coreMetrics.revenueGenerated / 100000).toFixed(1)}L` },
             { label: "Commission", value: `₹${coreMetrics.commissionEarned.toLocaleString("en-IN")}` },
@@ -130,7 +130,7 @@ export default function InfluencerEarningsPage() {
         </p>
       </SectionCard>
 
-      <div className="grid lg:grid-cols-2 gap-6">
+      <div className="grid lg:grid-cols-2 gap-5">
         <SectionCard title="Commission History" icon={FileText}>
           <ul className="divide-y divide-surface-hover">
             {earningsHistory.map((e) => (

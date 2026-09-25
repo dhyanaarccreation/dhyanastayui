@@ -88,12 +88,12 @@ export default function ContentStudioPage() {
       />
 
       {/* Type tabs */}
-      <div className="flex gap-2">
+      <div className="flex gap-2 overflow-x-auto scrollbar-hide">
         {types.map((t) => (
           <button
             key={t.key}
             onClick={() => switchType(t.key)}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-medium border transition-colors ${
+            className={`shrink-0 flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-medium border transition-colors ${
               type === t.key
                 ? "bg-primary text-primary-foreground border-primary"
                 : "bg-surface border-border text-muted hover:text-foreground"
@@ -105,9 +105,9 @@ export default function ContentStudioPage() {
         ))}
       </div>
 
-      <div className="grid lg:grid-cols-3 gap-6">
+      <div className="grid lg:grid-cols-3 gap-5">
         {/* Composer */}
-        <div className="bg-gradient-to-br from-primary/10 via-surface to-surface border border-primary/25 rounded-2xl p-6 space-y-5">
+        <div className="bg-gradient-to-br from-primary/10 via-surface to-surface border border-primary/25 rounded-2xl p-5 space-y-5">
           <p className="text-sm font-semibold text-foreground flex items-center gap-2">
             <TypeIcon size={15} className="text-primary" />
             New {type}
@@ -164,7 +164,7 @@ export default function ContentStudioPage() {
             </div>
           </div>
 
-          <div className="border-2 border-dashed border-border rounded-xl p-6 text-center hover:border-primary/50 transition-colors cursor-pointer">
+          <div className="border-2 border-dashed border-border rounded-xl p-5 text-center hover:border-primary/50 transition-colors cursor-pointer">
             <Upload size={18} className="mx-auto text-subtle" />
             <p className="text-xs text-muted mt-2">
               {type === "poster" ? "Drop poster · JPG/PNG · 1920×1080" : type === "video" ? "Drop video · MP4 · up to 60s" : "Paste or write in the editor after publish"}

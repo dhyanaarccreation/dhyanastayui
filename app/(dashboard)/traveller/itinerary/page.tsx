@@ -61,13 +61,13 @@ export default function TravellerItineraryPage() {
   }
 
   return (
-    <div className="space-y-6 pb-16">
+    <div className="space-y-5 pb-16">
       <PageHeader
         title="Complete Travel Plan"
         subtitle={`${activeTrip.name} · ${activeTrip.startDate.slice(5)} – ${activeTrip.endDate.slice(5)}`}
       />
 
-      <div className="bg-surface border border-border rounded-2xl p-5 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm">
+      <div className="bg-surface border border-border rounded-2xl p-4 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm">
         <span className="flex items-center gap-1.5 text-foreground font-medium">
           <MapPin size={14} className="text-primary" /> {activeTrip.destination}
         </span>
@@ -81,7 +81,7 @@ export default function TravellerItineraryPage() {
 
       <StatGrid stats={stats} />
 
-      <div className="flex gap-6 border-b border-border">
+      <div className="flex gap-5 border-b border-border">
         {(["today", "tomorrow", "all"] as TabId[]).map((t) => (
           <button
             key={t}

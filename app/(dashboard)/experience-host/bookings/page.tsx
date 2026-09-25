@@ -117,7 +117,7 @@ export default function ExperienceBookingsPage() {
         </ul>
       </SectionCard>
 
-      <div className="grid lg:grid-cols-3 gap-6">
+      <div className="grid lg:grid-cols-3 gap-5">
         {/* Upcoming sessions */}
         <SectionCard title="Upcoming Sessions" icon={Clock} className="lg:col-span-2">
           <div className="overflow-x-auto">
@@ -146,7 +146,7 @@ export default function ExperienceBookingsPage() {
 
         {/* Revenue chart */}
         <SectionCard title="Revenue Tracking" icon={BarChart3}>
-          <div className="p-5">
+          <div className="p-4">
             <div className="flex items-end justify-between gap-2 h-36">
               {months.map((b, i) => (
                 <div key={b.m} className="flex-1 flex flex-col items-center gap-1.5">

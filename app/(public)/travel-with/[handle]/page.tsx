@@ -84,8 +84,8 @@ function RiyaCuratorPage() {
     <div className="bg-background min-h-screen pb-20">
       {/* Hero */}
       <div className="bg-gradient-to-br from-sage/15 via-background to-primary/5 border-b border-border">
-        <div className="max-w-[1100px] mx-auto px-6 lg:px-8 py-10 sm:py-14">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5">
+        <div className="max-w-[1100px] mx-auto px-6 lg:px-8 py-8 sm:py-10">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={influencerProfile.avatar}
@@ -96,7 +96,7 @@ function RiyaCuratorPage() {
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sage/15 text-sage text-[11px] font-semibold uppercase tracking-wider">
                 <Sparkles size={11} /> {curatorIdentity.title}
               </span>
-              <h1 className="heading-organic text-2xl sm:text-3xl lg:text-4xl text-foreground mt-2 flex items-center gap-2 flex-wrap">
+              <h1 className="heading-organic text-xl sm:text-2xl lg:text-3xl text-foreground mt-2 flex items-center gap-2 flex-wrap">
                 Travel with {influencerProfile.name}
                 <BadgeCheck size={20} className="text-sage" />
               </h1>
@@ -118,18 +118,18 @@ function RiyaCuratorPage() {
 
       <div className="max-w-[1100px] mx-auto px-6 lg:px-8">
         {/* My Stays */}
-        <section className="py-10 sm:py-14">
+        <section className="py-8 sm:py-10">
           <div className="flex items-center justify-between mb-6">
             <div>
               <span className="text-xs font-semibold text-sage uppercase tracking-widest flex items-center gap-1.5">
                 <Bookmark size={12} /> My Stays
               </span>
-              <h2 className="heading-organic text-xl sm:text-2xl text-foreground mt-1.5">
+              <h2 className="heading-organic text-xl sm:text-xl text-foreground mt-1.5">
                 {curatedStays.length} Curated Stays in {curatorIdentity.region.split(" & ")[0]} & Beyond
               </h2>
             </div>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {curatedStays.map((s) => (
               <Link
                 key={s.id}
@@ -156,9 +156,9 @@ function RiyaCuratorPage() {
         </section>
 
         {/* My Itineraries */}
-        <section className="py-10 sm:py-14 border-t border-border">
+        <section className="py-8 sm:py-10 border-t border-border">
           <span className="text-xs font-semibold text-sage uppercase tracking-widest">My Itineraries</span>
-          <h2 className="heading-organic text-xl sm:text-2xl text-foreground mt-1.5 mb-6">
+          <h2 className="heading-organic text-xl sm:text-xl text-foreground mt-1.5 mb-6">
             Ready-Made Trips You Can Copy &amp; Customise
           </h2>
 
@@ -176,7 +176,7 @@ function RiyaCuratorPage() {
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img src={it.coverImage} alt={it.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                     </Link>
-                    <div className="flex-1 p-5">
+                    <div className="flex-1 p-4">
                       <div className="flex items-start justify-between gap-3 flex-wrap">
                         <div>
                           <Link
@@ -244,17 +244,17 @@ function RiyaCuratorPage() {
               );
             })}
             {publishedItineraries.length === 0 && (
-              <p className="text-sm text-subtle text-center py-10">No published itineraries yet — check back soon.</p>
+              <p className="text-sm text-subtle text-center py-8">No published itineraries yet — check back soon.</p>
             )}
           </div>
         </section>
 
         {/* CTA */}
-        <div className="rounded-2xl bg-sage p-8 sm:p-10 text-center">
+        <div className="rounded-2xl bg-sage p-6 sm:p-8 text-center">
           <p className="text-white/80 text-xs font-semibold uppercase tracking-widest flex items-center justify-center gap-1.5">
             <Star size={12} /> Curated by {influencerProfile.name}
           </p>
-          <h3 className="heading-organic text-xl sm:text-2xl text-white mt-2">
+          <h3 className="heading-organic text-xl sm:text-xl text-white mt-2">
             Every stay here is hand-picked. Every itinerary is trip-tested.
           </h3>
           <Link
@@ -294,17 +294,17 @@ function VjSiddhuCuratorPage() {
       {/* Hero */}
       <div className="bg-gradient-to-br from-sage/15 via-background to-primary/5 border-b border-border">
         <div className="max-w-[1100px] mx-auto px-6 lg:px-8 pt-10 sm:pt-14 pb-6 sm:pb-8">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
             <CuratorAvatar
               name={p.name}
               avatar={p.avatar}
-              className="w-26 h-26 sm:w-31 sm:h-31 rounded-full object-cover border-4 border-background shadow-organic text-2xl"
+              className="w-26 h-26 sm:w-31 sm:h-31 rounded-full object-cover border-4 border-background shadow-organic text-xl"
             />
             <div className="min-w-0">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sage/15 text-sage text-[11px] font-semibold uppercase tracking-wider">
                 <Sparkles size={11} /> Dhyana Travel Curator
               </span>
-              <h1 className="heading-organic text-2xl sm:text-3xl lg:text-4xl text-foreground mt-2 flex items-center gap-2 flex-wrap">
+              <h1 className="heading-organic text-xl sm:text-2xl lg:text-3xl text-foreground mt-2 flex items-center gap-2 flex-wrap">
                 Explore Tamil Nadu with {p.name}
                 <BadgeCheck size={20} className="text-sage" />
               </h1>
@@ -323,11 +323,11 @@ function VjSiddhuCuratorPage() {
             <span className="text-xs font-semibold text-sage uppercase tracking-widest flex items-center gap-1.5">
               <Bookmark size={12} /> My Handpicked Stays
             </span>
-            <h2 className="heading-organic text-xl sm:text-2xl text-foreground mt-1.5">
+            <h2 className="heading-organic text-xl sm:text-xl text-foreground mt-1.5">
               Stays I Actually Recommend
             </h2>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {vjSiddhuCuratedStays.map((s) => (
               <Link
                 key={s.id}
@@ -356,7 +356,7 @@ function VjSiddhuCuratorPage() {
         {/* Itineraries */}
         <section className="pt-6 sm:pt-8 pb-10 sm:pb-14 border-t border-border">
           <span className="text-xs font-semibold text-sage uppercase tracking-widest">My Travel Guides</span>
-          <h2 className="heading-organic text-xl sm:text-2xl text-foreground mt-1.5 mb-6">
+          <h2 className="heading-organic text-xl sm:text-xl text-foreground mt-1.5 mb-6">
             Ready-Made Trips You Can Copy &amp; Customise
           </h2>
 
@@ -374,7 +374,7 @@ function VjSiddhuCuratorPage() {
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img src={it.coverImage} alt={it.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                     </Link>
-                    <div className="flex-1 p-5">
+                    <div className="flex-1 p-4">
                       <div className="flex items-start justify-between gap-3 flex-wrap">
                         <div>
                           <Link
@@ -445,11 +445,11 @@ function VjSiddhuCuratorPage() {
         </section>
 
         {/* CTA */}
-        <div className="rounded-2xl bg-sage p-8 sm:p-10 text-center">
+        <div className="rounded-2xl bg-sage p-6 sm:p-8 text-center">
           <p className="text-white/80 text-xs font-semibold uppercase tracking-widest flex items-center justify-center gap-1.5">
             <Star size={12} /> Curated by {p.name}
           </p>
-          <h3 className="heading-organic text-xl sm:text-2xl text-white mt-2">
+          <h3 className="heading-organic text-xl sm:text-xl text-white mt-2">
             Every stay here is hand-picked. Every itinerary is trip-tested.
           </h3>
           <Link
@@ -474,18 +474,18 @@ function GuideComingSoonPage({ curator }: { curator: NonNullable<ReturnType<type
   return (
     <div className="bg-background min-h-screen pb-20">
       <div className="bg-gradient-to-br from-sage/15 via-background to-primary/5 border-b border-border">
-        <div className="max-w-[900px] mx-auto px-6 lg:px-8 py-10 sm:py-14">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5">
+        <div className="max-w-[900px] mx-auto px-6 lg:px-8 py-8 sm:py-10">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
             <CuratorAvatar
               name={curator.name}
               avatar={curator.avatar}
-              className="w-26 h-26 sm:w-31 sm:h-31 rounded-full object-cover border-4 border-background shadow-organic text-2xl"
+              className="w-26 h-26 sm:w-31 sm:h-31 rounded-full object-cover border-4 border-background shadow-organic text-xl"
             />
             <div className="min-w-0">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sage/15 text-sage text-[11px] font-semibold uppercase tracking-wider">
                 <Sparkles size={11} /> Dhyana Travel Curator
               </span>
-              <h1 className="heading-organic text-2xl sm:text-3xl text-foreground mt-2">{curator.name}</h1>
+              <h1 className="heading-organic text-xl sm:text-2xl text-foreground mt-2">{curator.name}</h1>
               <p className="text-sm text-muted mt-1.5 flex items-center gap-1.5">
                 <MapPin size={13} /> {curator.region} · {curator.creatorName}
               </p>
@@ -502,9 +502,9 @@ function GuideComingSoonPage({ curator }: { curator: NonNullable<ReturnType<type
         </div>
       </div>
 
-      <div className="max-w-[900px] mx-auto px-6 lg:px-8 py-14 sm:py-20 text-center">
+      <div className="max-w-[900px] mx-auto px-6 lg:px-8 py-10 sm:py-14 text-center">
         <p className="text-xs font-semibold text-sage uppercase tracking-widest">Full Travel Guide</p>
-        <h2 className="heading-organic text-xl sm:text-2xl text-foreground mt-2">
+        <h2 className="heading-organic text-xl sm:text-xl text-foreground mt-2">
           {curator.name}&apos;s curated stays and itineraries are coming soon
         </h2>
         <p className="text-sm text-subtle mt-3 max-w-md mx-auto leading-relaxed">
@@ -524,7 +524,7 @@ function GuideComingSoonPage({ curator }: { curator: NonNullable<ReturnType<type
 
 function CuratorNotFoundPage() {
   return (
-    <div className="bg-background min-h-screen flex items-center justify-center px-6 py-24 text-center">
+    <div className="bg-background min-h-screen flex items-center justify-center px-6 py-16 text-center">
       <div>
         <p className="text-sm text-subtle">We couldn&apos;t find that Travel Curator.</p>
         <Link

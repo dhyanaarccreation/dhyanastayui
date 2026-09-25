@@ -47,7 +47,7 @@ export default function TravellerSupportPage() {
           { icon: PhoneCall, title: "Call Us", sub: "1800-369-DHYANA", cta: "Call now" },
           { icon: Mail, title: "Email", sub: "care@dhyanastays.in", cta: "Write to us" },
         ].map((c) => (
-          <div key={c.title} className="bg-surface border border-border rounded-2xl p-5 flex flex-col items-start">
+          <div key={c.title} className="bg-surface border border-border rounded-2xl p-4 flex flex-col items-start">
             <span className="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-3">
               <c.icon size={18} />
             </span>
@@ -60,7 +60,7 @@ export default function TravellerSupportPage() {
         ))}
       </div>
 
-      <div className="grid lg:grid-cols-2 gap-6">
+      <div className="grid lg:grid-cols-2 gap-5">
         <SectionCard title="Browse Topics" icon={HelpCircle}>
           <ul className="divide-y divide-surface-hover">
             {topics.map((t) => (

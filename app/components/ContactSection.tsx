@@ -13,11 +13,11 @@ export default function ContactSection() {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   return (
-    <section id="contact" className="py-24 scroll-mt-20">
-      <div className="max-w-[1200px] mx-auto px-6 lg:px-8">
-        <div className="text-center mb-14">
+    <section id="contact" className="py-16 scroll-mt-12">
+      <div className="container-page">
+        <div className="text-center mb-10">
           <span className="text-xs font-semibold text-primary uppercase tracking-widest">Get in Touch</span>
-          <h2 className="heading-display text-lg sm:text-2xl lg:text-3xl text-foreground mt-3">
+          <h2 className="heading-display text-lg sm:text-xl lg:text-2xl text-foreground mt-3">
             Talk to Our Team
           </h2>
           <p className="text-muted mt-4 max-w-xl mx-auto">
@@ -26,7 +26,7 @@ export default function ContactSection() {
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12">
+        <div className="grid lg:grid-cols-2 gap-8">
           {/* Contact Info */}
           <div>
             <div className="space-y-7">
@@ -77,7 +77,7 @@ export default function ContactSection() {
             </div>
 
             {/* Department Emails */}
-            <div className="mt-10 pt-8 border-t border-surface-hover">
+            <div className="mt-8 pt-8 border-t border-surface-hover">
               <h3 className="text-sm font-medium text-foreground mb-4">Specific Inquiries</h3>
               <div className="grid grid-cols-2 gap-4 max-md:grid-cols-1">
                 <div>
@@ -93,16 +93,16 @@ export default function ContactSection() {
           </div>
 
           {/* Contact Form */}
-          <div className="bg-surface border border-border rounded-2xl p-8">
+          <div className="bg-surface border border-border rounded-2xl p-6">
             {!isSubmitted ? (
               <form
-                className="space-y-6"
+                className="space-y-5"
                 onSubmit={(e) => {
                   e.preventDefault();
                   setIsSubmitted(true);
                 }}
               >
-                <div className="grid grid-cols-2 gap-6">
+                <div className="grid grid-cols-2 gap-5">
                   <div>
                     <label className="block text-xs font-medium text-muted mb-2 uppercase tracking-wider">
                       First Name
@@ -172,12 +172,12 @@ export default function ContactSection() {
                 </button>
               </form>
             ) : (
-              <div className="h-full flex flex-col items-center justify-center text-center py-12 animate-fade-in-up">
+              <div className="h-full flex flex-col items-center justify-center text-center py-10 animate-fade-in-up">
                 <div className="w-16 h-16 rounded-full bg-sage/10 border border-sage/20 flex items-center justify-center mb-6">
                   <Mail size={24} className="text-sage" />
                 </div>
-                <h3 className="heading-display text-2xl text-foreground mb-2">Message Sent</h3>
-                <p className="text-sm text-muted mb-8">
+                <h3 className="heading-display text-xl text-foreground mb-2">Message Sent</h3>
+                <p className="text-sm text-muted mb-6">
                   Thank you for reaching out. A member of our team will get back to you within 24 hours.
                 </p>
                 <button

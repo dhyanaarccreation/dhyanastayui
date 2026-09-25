@@ -142,7 +142,7 @@ export default function InvestorFinancialsPage() {
 
       {/* Revenue funnel */}
       <SectionCard title="Revenue Funnel" icon={IndianRupee}>
-        <div className="p-5 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 text-center">
+        <div className="p-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 text-center">
           {revenueFunnel.map((f, i, arr) => (
             <div key={f.label} className="relative rounded-xl bg-background border border-border p-4">
               <p className={`text-base font-bold tabular-nums ${f.negative ? "text-terracotta" : "text-foreground"}`}>
@@ -163,7 +163,7 @@ export default function InvestorFinancialsPage() {
 
       {/* Expense dashboard */}
       <SectionCard title="Expense Dashboard" icon={Receipt}>
-        <div className="p-5">
+        <div className="p-4">
           <StatGrid
             stats={[
               { label: "Monthly Expenses", value: inr(totalMonthlyExpense), icon: Receipt },
@@ -258,7 +258,7 @@ export default function InvestorFinancialsPage() {
 
       {/* ROI dashboard */}
       <SectionCard title="ROI Dashboard" icon={Percent}>
-        <div className="p-5">
+        <div className="p-4">
           <StatGrid
             stats={[
               { label: "Current ROI", value: roi.current, delta: "cumulative, to date", icon: Percent },

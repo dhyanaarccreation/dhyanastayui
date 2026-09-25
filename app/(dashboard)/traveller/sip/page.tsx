@@ -93,11 +93,11 @@ export default function TravellerSipPage() {
       />
 
       {/* Active SIPs */}
-      <div className="grid lg:grid-cols-2 gap-6">
+      <div className="grid lg:grid-cols-2 gap-5">
         {activeSips.map((s) => {
           const pct = Math.round((s.saved / s.target) * 100);
           return (
-            <div key={s.id} className="bg-surface border border-border rounded-2xl p-6">
+            <div key={s.id} className="bg-surface border border-border rounded-2xl p-5">
               <div className="flex items-start justify-between gap-3">
                 <div className="flex items-center gap-3">
                   <span className="w-11 h-11 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
@@ -161,11 +161,11 @@ export default function TravellerSipPage() {
         })}
       </div>
 
-      <div className="grid lg:grid-cols-3 gap-6">
+      <div className="grid lg:grid-cols-3 gap-5">
         {/* Calculator */}
         <div
           id="calculator"
-          className="lg:col-span-2 scroll-mt-24 bg-gradient-to-br from-primary/10 via-surface to-surface border border-primary/25 rounded-2xl p-6"
+          className="lg:col-span-2 scroll-mt-24 bg-gradient-to-br from-primary/10 via-surface to-surface border border-primary/25 rounded-2xl p-5"
         >
           <div className="flex items-center gap-2 mb-1">
             <Target size={16} className="text-primary" />
@@ -175,7 +175,7 @@ export default function TravellerSipPage() {
             Drag the sliders — see what your monthly saving grows into.
           </p>
 
-          <div className="grid sm:grid-cols-2 gap-6">
+          <div className="grid sm:grid-cols-2 gap-5">
             <div>
               <div className="flex justify-between text-xs mb-2">
                 <span className="text-muted">Monthly amount</span>

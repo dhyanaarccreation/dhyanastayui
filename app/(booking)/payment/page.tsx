@@ -22,25 +22,25 @@ export default function PaymentPage() {
 
   return (
     <div className="bg-background min-h-screen pt-[72px] pb-24">
-      <div className="max-w-[1000px] mx-auto px-6 lg:px-8 py-12">
+      <div className="max-w-[1000px] mx-auto px-6 lg:px-8 py-10">
         <button
           onClick={() => router.back()}
-          className="flex items-center gap-2 text-xs text-muted hover:text-foreground mb-8 transition-colors"
+          className="flex items-center gap-2 text-xs text-muted hover:text-foreground mb-6 transition-colors"
         >
           <ArrowLeft size={14} /> Back to booking details
         </button>
 
-        <h1 className="heading-display text-3xl md:text-5xl text-foreground mb-10">
+        <h1 className="heading-display text-2xl md:text-4xl text-foreground mb-8">
           Complete your booking
         </h1>
 
-        <div className="flex flex-col lg:flex-row gap-12">
+        <div className="flex flex-col lg:flex-row gap-8">
           {/* Payment Form */}
           <div className="flex-1">
-            <div className="bg-surface border border-border rounded-2xl p-6 md:p-8">
+            <div className="bg-surface border border-border rounded-2xl p-5 md:p-6">
               <h2 className="text-xl font-semibold text-foreground mb-6">Payment Method</h2>
               
-              <div className="grid grid-cols-2 gap-4 mb-8">
+              <div className="grid grid-cols-2 gap-4 mb-6">
                 <button
                   onClick={() => setMethod("card")}
                   className={`flex flex-col items-center justify-center gap-3 p-4 rounded-xl border transition-colors ${
@@ -146,7 +146,7 @@ export default function PaymentPage() {
                   </div>
                 )}
 
-                <div className="mt-8 pt-8 border-t border-border">
+                <div className="mt-6 pt-8 border-t border-border">
                   <button
                     type="submit"
                     disabled={isProcessing}
@@ -174,7 +174,7 @@ export default function PaymentPage() {
 
           {/* Sidebar - Summary */}
           <div className="lg:w-[350px]">
-            <div className="bg-surface border border-border rounded-2xl p-6 sticky top-[100px]">
+            <div className="bg-surface border border-border rounded-2xl p-5 sticky top-[100px]">
               <h3 className="text-lg font-semibold text-foreground mb-6">Booking Summary</h3>
               
               <div className="space-y-4 text-sm text-muted border-b border-border pb-6 mb-6">

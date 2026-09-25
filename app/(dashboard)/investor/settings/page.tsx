@@ -9,7 +9,7 @@ export default function InvestorSettingsPage() {
         subtitle="KYC, payout preferences, nominee and notifications."
       />
 
-      <div className="grid lg:grid-cols-2 gap-6">
+      <div className="grid lg:grid-cols-2 gap-5">
         <SectionCard title="Identity & KYC" icon={ShieldCheck}>
           <div className="divide-y divide-surface-hover">
             <SettingRow

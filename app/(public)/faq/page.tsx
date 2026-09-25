@@ -23,17 +23,17 @@ export default function FAQPage() {
   return (
     <div className="bg-background min-h-screen">
       {/* Header */}
-      <div className="bg-surface border-b border-surface-hover py-16">
+      <div className="bg-surface border-b border-surface-hover py-12">
         <div className="max-w-[800px] mx-auto px-6 lg:px-8 text-center">
-          <h1 className="heading-display text-3xl lg:text-5xl text-foreground mb-4">
+          <h1 className="heading-display text-2xl lg:text-4xl text-foreground mb-4">
             How can we help?
           </h1>
-          <p className="text-muted mb-8">
+          <p className="text-muted mb-6">
             Find answers to common questions about bookings, hosting, and
             investing.
           </p>
 
-          <div className="relative max-w-xl mx-auto">
+          <div role="search" className="relative max-w-xl mx-auto">
             <Search
               size={20}
               className="absolute left-4 top-1/2 -translate-y-1/2 text-subtle"
@@ -49,8 +49,8 @@ export default function FAQPage() {
         </div>
       </div>
 
-      <div className="max-w-[1200px] mx-auto px-6 lg:px-8 py-16">
-        <div className="flex flex-col md:flex-row gap-12">
+      <div className="container-page py-12">
+        <div className="flex flex-col md:flex-row gap-8">
           {/* Sidebar Categories */}
           <div className="md:w-64 shrink-0">
             <h3 className="text-xs font-semibold text-muted uppercase tracking-wider mb-4">
@@ -80,7 +80,7 @@ export default function FAQPage() {
 
           {/* FAQ Accordion */}
           <div className="flex-1">
-            <h2 className="text-2xl font-semibold text-foreground mb-6">
+            <h2 className="text-xl font-semibold text-foreground mb-6">
               {searchQuery ? "Search Results" : activeCategory}
             </h2>
             
@@ -103,7 +103,7 @@ export default function FAQPage() {
                     >
                       <button
                         onClick={() => setOpenIndex(isOpen ? null : index)}
-                        className="w-full flex items-center justify-between p-5 text-left"
+                        className="w-full flex items-center justify-between p-4 text-left"
                       >
                         <span className="font-medium text-foreground">
                           {faq.question}

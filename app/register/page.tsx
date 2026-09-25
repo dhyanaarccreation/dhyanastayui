@@ -71,27 +71,27 @@ export default function RegisterPage() {
   return (
     <div className="min-h-screen flex">
       {/* Left: Form */}
-      <div className="flex-1 flex items-center justify-center p-8 lg:p-16">
+      <div className="flex-1 flex items-center justify-center p-6 lg:p-16">
         <div className="w-full max-w-md animate-fade-in">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 mb-10">
+          <Link href="/" className="flex items-center gap-2 mb-8">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center font-bold text-primary-foreground">
               D
             </div>
-            <span className="text-2xl font-semibold text-foreground">
+            <span className="text-xl font-semibold text-foreground">
               Dhyana<span className="text-primary">Stays</span>
             </span>
           </Link>
 
-          <h1 className="heading-display text-3xl text-foreground mb-2">
+          <h1 className="heading-display text-2xl text-foreground mb-2">
             Create Account
           </h1>
-          <p className="text-sm text-muted mb-8">
+          <p className="text-sm text-muted mb-6">
             Join the most curated travel community in India
           </p>
 
           {/* Progress Steps */}
-          <div className="flex items-center gap-2 mb-10">
+          <div className="flex items-center gap-2 mb-8">
             {[1, 2].map((s) => (
               <div key={s} className="flex items-center gap-2">
                 <div
@@ -120,7 +120,7 @@ export default function RegisterPage() {
           {/* Social Login */}
           {step === 1 && (
             <>
-              <div className="space-y-3 mb-8">
+              <div className="space-y-3 mb-6">
                 <button className="w-full flex items-center justify-center gap-3 px-4 py-3.5 rounded-xl border border-border text-sm text-foreground hover:bg-surface-hover hover:border-border-light transition-all">
                   <svg viewBox="0 0 24 24" className="w-5 h-5">
                     <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/>
@@ -138,7 +138,7 @@ export default function RegisterPage() {
                 </button>
               </div>
 
-              <div className="flex items-center gap-4 mb-8">
+              <div className="flex items-center gap-4 mb-6">
                 <div className="flex-1 h-px bg-border" />
                 <span className="text-xs text-subtle uppercase tracking-wider">
                   or register with email
@@ -435,7 +435,7 @@ export default function RegisterPage() {
             </form>
           )}
 
-          <p className="text-center text-sm text-subtle mt-8">
+          <p className="text-center text-sm text-subtle mt-6">
             Already have an account?{" "}
             <Link
               href="/login"
@@ -453,10 +453,10 @@ export default function RegisterPage() {
         <div className="absolute bottom-1/3 -left-20 w-80 h-80 rounded-full bg-terracotta/5 blur-[100px]" />
 
         <div className="relative z-10 text-center p-16 max-w-md">
-          <div className="w-20 h-20 mx-auto rounded-2xl bg-sage/10 border border-sage/20 flex items-center justify-center mb-8">
-            <span className="text-4xl">🌿</span>
+          <div className="w-20 h-20 mx-auto rounded-2xl bg-sage/10 border border-sage/20 flex items-center justify-center mb-6">
+            <span className="text-3xl">🌿</span>
           </div>
-          <h2 className="heading-display text-3xl text-foreground mb-4">
+          <h2 className="heading-display text-2xl text-foreground mb-4">
             Join the Community
           </h2>
           <p className="text-sm text-muted leading-relaxed">
@@ -464,7 +464,7 @@ export default function RegisterPage() {
             projects — your journey with Dhyana starts here.
           </p>
           {/* Features */}
-          <div className="mt-10 space-y-4 text-left">
+          <div className="mt-8 space-y-4 text-left">
             {[
               "Access 312+ architect-curated stays",
               "AI-powered trip planning",

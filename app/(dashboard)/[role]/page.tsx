@@ -40,7 +40,7 @@ export default async function RoleDashboardPage({
             <role.icon size={13} className="text-primary" />
             {role.group}
           </div>
-          <h1 className="heading-display text-3xl lg:text-4xl text-foreground">
+          <h1 className="heading-display text-2xl lg:text-3xl text-foreground">
             {role.title}
           </h1>
           <p className="text-sm text-muted mt-1.5">
@@ -59,10 +59,10 @@ export default async function RoleDashboardPage({
           {role.stats.map((s) => (
             <div
               key={s.label}
-              className="rounded-2xl bg-surface border border-surface-hover p-5"
+              className="rounded-2xl bg-surface border border-surface-hover p-4"
             >
               <p className="text-xs text-muted">{s.label}</p>
-              <p className="text-2xl font-bold text-foreground mt-1.5 tabular-nums">
+              <p className="text-xl font-bold text-foreground mt-1.5 tabular-nums">
                 {s.value}
               </p>
               {s.delta && (
@@ -74,7 +74,7 @@ export default async function RoleDashboardPage({
       )}
 
       {/* Sections (anchor targets for the sidebar) */}
-      <div className="grid lg:grid-cols-2 gap-6">
+      <div className="grid lg:grid-cols-2 gap-5">
         {(role.sections ?? []).map((section, si) => (
           <section
             key={section.id}
@@ -125,7 +125,7 @@ export default async function RoleDashboardPage({
         {/* Settings anchor */}
         <section
           id="settings"
-          className="scroll-mt-24 rounded-2xl bg-surface border border-surface-hover p-5 flex items-center justify-between"
+          className="scroll-mt-24 rounded-2xl bg-surface border border-surface-hover p-4 flex items-center justify-between"
         >
           <div className="flex items-center gap-2.5">
             <span className="w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center">

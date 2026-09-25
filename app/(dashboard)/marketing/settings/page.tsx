@@ -21,7 +21,7 @@ export default function MarketingSettingsPage() {
         subtitle="Approval rules, brand assets and tracking defaults for everything you publish."
       />
 
-      <div className="grid lg:grid-cols-2 gap-6">
+      <div className="grid lg:grid-cols-2 gap-5">
         <SectionCard title="Publishing Rules" icon={ShieldCheck}>
           <div className="divide-y divide-surface-hover">
             <SettingRow

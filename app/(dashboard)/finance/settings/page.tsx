@@ -36,7 +36,7 @@ export default function FinanceSettingsPage() {
         </StatusPill>
       </div>
 
-      <div className="grid lg:grid-cols-2 gap-6">
+      <div className="grid lg:grid-cols-2 gap-5">
         {/* Access control */}
         <SectionCard title="Access Control" icon={Lock}>
           <div className="divide-y divide-surface-hover">

@@ -72,7 +72,7 @@ export default function HostBookingsPage() {
         ]}
       />
 
-      <div className="grid lg:grid-cols-3 gap-6">
+      <div className="grid lg:grid-cols-3 gap-5">
         {/* Upcoming guests */}
         <SectionCard title="Upcoming Guests" icon={CalendarDays} className="lg:col-span-2">
           <div className="overflow-x-auto">

@@ -52,7 +52,7 @@ export default function MarketingDashboardPage() {
         ]}
       />
 
-      <div className="grid lg:grid-cols-3 gap-6">
+      <div className="grid lg:grid-cols-3 gap-5">
         {/* Live placements */}
         <SectionCard title="What's Live in the App Right Now" icon={Sparkles} className="lg:col-span-2" action={{ label: "Manage placements", href: "/marketing/placements" }}>
           <ul className="divide-y divide-surface-hover">
@@ -99,7 +99,7 @@ export default function MarketingDashboardPage() {
           <Link
             key={q.label}
             href={q.href}
-            className="bg-surface border border-border rounded-2xl p-5 flex items-start gap-3 hover:border-primary/40 transition-colors group"
+            className="bg-surface border border-border rounded-2xl p-4 flex items-start gap-3 hover:border-primary/40 transition-colors group"
           >
             <span className="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
               <q.icon size={18} />

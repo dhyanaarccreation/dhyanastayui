@@ -151,10 +151,10 @@ export default function StaysDiscoveryPage() {
     <div className="bg-background min-h-screen">
       {/* Search & Filter Header */}
       <div className="sticky top-[72px] z-40 bg-background border-b border-border py-5">
-        <div className="max-w-[1400px] mx-auto px-6 lg:px-8">
+        <div className="container-page">
           <div className="flex flex-col md:flex-row gap-3 items-center justify-between">
             {/* Search Input */}
-            <div className="relative w-full md:w-auto md:flex-1 max-w-xl">
+            <div role="search" className="relative w-full md:w-auto md:flex-1 max-w-xl">
               <Search
                 size={18}
                 className="absolute left-4 top-1/2 -translate-y-1/2 text-subtle"
@@ -164,7 +164,7 @@ export default function StaysDiscoveryPage() {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search by destination, property name, or theme..."
-                className="w-full pl-11 pr-4 py-3 bg-surface rounded-full text-sm text-foreground placeholder-muted shadow-organic focus:outline-none focus:ring-2 focus:ring-primary/40 transition-shadow"
+                className="w-full pl-11 pr-4 py-3 bg-surface rounded-full text-sm text-foreground placeholder-muted shadow-organic focus:outline-none transition-shadow"
               />
             </div>
 
@@ -230,8 +230,8 @@ export default function StaysDiscoveryPage() {
       </div>
 
       {/* Main Content Area */}
-      <div className="max-w-[1400px] mx-auto px-6 lg:px-8 py-8">
-        <div className="flex gap-8">
+      <div className="container-page py-8">
+        <div className="flex gap-6">
           {/* Results Grid */}
           <div className={`flex-1 transition-all ${showMap ? "lg:w-3/5" : "w-full"}`}>
             <div className="mb-6 flex items-center justify-between">
@@ -293,7 +293,7 @@ export default function StaysDiscoveryPage() {
 
             {filtered.length > 0 || showVaksanaCard ? (
               <div
-                className={`grid gap-6 ${
+                className={`grid gap-5 ${
                   showMap
                     ? "grid-cols-1 md:grid-cols-2"
                     : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
@@ -305,7 +305,7 @@ export default function StaysDiscoveryPage() {
                 ))}
               </div>
             ) : (
-              <div className="text-center py-20">
+              <div className="text-center py-14">
                 <Sparkles size={28} className="text-subtle mx-auto mb-3" />
                 <p className="text-sm text-subtle">No stays match your filters yet.</p>
                 <button onClick={clearFilters} className="text-sm text-primary hover:underline mt-2">
@@ -316,7 +316,7 @@ export default function StaysDiscoveryPage() {
 
             {/* Pagination Placeholder */}
             {filtered.length > 0 && (
-              <div className="mt-12 flex justify-center">
+              <div className="mt-8 flex justify-center">
                 <div className="flex items-center gap-2">
                   <button className="w-10 h-10 flex items-center justify-center rounded-full bg-surface text-muted shadow-organic hover:text-foreground transition-colors disabled:opacity-50">
                     {"<"}
@@ -343,7 +343,7 @@ export default function StaysDiscoveryPage() {
           {showMap && (
             <div className="hidden lg:block lg:w-2/5 animate-fade-in-up">
               <div className="sticky top-[160px] h-[calc(100vh-180px)] rounded-[28px] overflow-hidden bg-surface shadow-organic flex items-center justify-center">
-                <div className="text-center p-8">
+                <div className="text-center p-6">
                   <span className="w-16 h-16 rounded-full bg-sage/12 text-sage flex items-center justify-center mx-auto mb-4">
                     <MapIcon size={26} />
                   </span>
@@ -499,7 +499,7 @@ export default function StaysDiscoveryPage() {
               </button>
             </div>
 
-            <div className="p-5 border-t border-border bg-surface flex items-center gap-3">
+            <div className="p-4 border-t border-border bg-surface flex items-center gap-3">
               <button onClick={clearFilters} className="flex-1 py-3 text-sm font-medium text-muted hover:text-foreground border border-border rounded-full transition-colors">
                 Clear all
               </button>

@@ -124,7 +124,7 @@ export default function MarketingCampaignsPage() {
           </div>
         ))}
         {visible.length === 0 && (
-          <p className="text-sm text-muted text-center py-10 bg-surface border border-border rounded-2xl">
+          <p className="text-sm text-muted text-center py-8 bg-surface border border-border rounded-2xl">
             No campaigns targeting {region} yet.
           </p>
         )}

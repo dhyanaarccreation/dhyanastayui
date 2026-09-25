@@ -111,12 +111,12 @@ export default function InvestorPortfolioPage() {
         ]}
       />
 
-      <div className="grid lg:grid-cols-3 gap-6">
+      <div className="grid lg:grid-cols-3 gap-5">
         {/* Investment cards */}
         <SectionCard title="My Investments" icon={Briefcase} className="lg:col-span-2">
-          <div className="p-5 space-y-4">
+          <div className="p-4 space-y-4">
             {holdings.map((h) => (
-              <div key={h.project} className="rounded-2xl border border-border bg-surface-hover/30 p-5">
+              <div key={h.project} className="rounded-2xl border border-border bg-surface-hover/30 p-4">
                 <div className="flex flex-wrap items-start justify-between gap-3">
                   <div>
                     <p className="text-sm text-foreground font-medium">{h.project}</p>

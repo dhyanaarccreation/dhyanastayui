@@ -48,7 +48,7 @@ export default function InfluencerPromoPage() {
       />
 
       <SectionCard title="Your Promo Code" icon={Ticket}>
-        <div className="p-5">
+        <div className="p-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-2xl border border-dashed border-primary/40 bg-primary/5 px-5 py-4">
             <div>
               <p className="font-mono text-xl font-bold text-foreground">{promoCode.code}</p>
@@ -97,7 +97,7 @@ export default function InfluencerPromoPage() {
       </SectionCard>
 
       <SectionCard title="QR Code" icon={QrCode}>
-        <div className="p-5 flex flex-col sm:flex-row items-center gap-5">
+        <div className="p-4 flex flex-col sm:flex-row items-center gap-4">
           <div className="w-32 h-32 rounded-2xl bg-surface-hover border border-border flex items-center justify-center shrink-0">
             <QrCode size={64} className="text-muted" />
           </div>

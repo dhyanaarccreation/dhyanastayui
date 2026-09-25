@@ -135,7 +135,7 @@ export default function EventPlannerDashboardPage() {
                   <Check size={10} /> {b.advance}
                 </p>
               </div>
-              <div className="flex items-center gap-5 md:gap-6 shrink-0">
+              <div className="flex items-center gap-4 md:gap-5 shrink-0">
                 <div className="text-center">
                   <p className="text-[10px] uppercase tracking-wider text-subtle">Date</p>
                   <p className="text-sm font-semibold text-foreground">{b.date}</p>
@@ -170,7 +170,7 @@ export default function EventPlannerDashboardPage() {
             <Plus size={13} /> New package
           </button>
         </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {packages.map((p) => (
             <div key={p.name} className="bg-surface border border-border rounded-2xl overflow-hidden card-hover">
               <div className="relative h-36 overflow-hidden">
@@ -204,9 +204,9 @@ export default function EventPlannerDashboardPage() {
       </section>
 
       {/* ============ REVENUE ============ */}
-      <section id="revenue" className="scroll-mt-24 grid lg:grid-cols-3 gap-6">
+      <section id="revenue" className="scroll-mt-24 grid lg:grid-cols-3 gap-5">
         <SectionCard title="Event Revenue" icon={BarChart3} className="lg:col-span-2">
-          <div className="p-6">
+          <div className="p-5">
             <div className="flex items-end justify-between gap-4 h-40">
               {months.map((b, i) => (
                 <div key={b.m} className="flex-1 flex flex-col items-center gap-2">
@@ -279,7 +279,7 @@ export default function EventPlannerDashboardPage() {
       </section>
 
       {/* ============ SETTINGS ANCHOR ============ */}
-      <section id="settings" className="scroll-mt-24 bg-surface border border-border rounded-2xl p-5 flex items-center justify-between">
+      <section id="settings" className="scroll-mt-24 bg-surface border border-border rounded-2xl p-4 flex items-center justify-between">
         <div className="flex items-center gap-2.5">
           <span className="w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
             <Settings size={16} />

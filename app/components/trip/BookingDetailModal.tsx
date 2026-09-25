@@ -34,7 +34,7 @@ export default function BookingDetailModal({
           </button>
         </div>
 
-        <div className="p-5 space-y-4">
+        <div className="p-4 space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <div>
               <p className="text-[10px] uppercase tracking-wider text-subtle mb-1 flex items-center gap-1">

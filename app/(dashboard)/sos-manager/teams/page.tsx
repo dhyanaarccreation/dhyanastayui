@@ -111,7 +111,7 @@ export default function SosTeamsPage() {
         </p>
       </SectionCard>
 
-      <div className="grid lg:grid-cols-2 gap-6">
+      <div className="grid lg:grid-cols-2 gap-5">
         {/* Escalation matrix */}
         <SectionCard title="Escalation Matrix" icon={ShieldAlert}>
           <ul className="divide-y divide-surface-hover">

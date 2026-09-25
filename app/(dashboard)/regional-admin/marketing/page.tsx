@@ -62,7 +62,7 @@ export default function RegionalAdminMarketingPage() {
         subtitle="Campaigns, offers, banners, blogs and notifications for Tamil Nadu & Pondicherry — publishes instantly, no national review needed."
       />
 
-      <div className="bg-surface border border-border rounded-2xl p-5">
+      <div className="bg-surface border border-border rounded-2xl p-4">
         <p className="text-sm font-semibold text-foreground mb-3">Quick create</p>
         <div className="flex flex-col sm:flex-row gap-3">
           <select

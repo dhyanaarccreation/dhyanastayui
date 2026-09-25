@@ -85,7 +85,7 @@ export default function InfluencerSharePage() {
         <p className="px-5 pt-4 text-xs text-muted">
           Drop these straight into a Story, post caption or bio link — sized for social sharing.
         </p>
-        <div className="grid sm:grid-cols-2 gap-4 p-5">
+        <div className="grid sm:grid-cols-2 gap-4 p-4">
           <div className="rounded-2xl overflow-hidden border border-border bg-background">
             <div className="relative h-40">
               {/* eslint-disable-next-line @next/next/no-img-element */}

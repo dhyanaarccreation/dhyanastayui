@@ -115,7 +115,7 @@ export default function SuperAdminPage() {
           <a
             key={m.title}
             href={m.href}
-            className="bg-surface border border-border rounded-2xl p-5 hover:border-primary/40 transition-colors group"
+            className="bg-surface border border-border rounded-2xl p-4 hover:border-primary/40 transition-colors group"
           >
             <span className="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
               <m.icon size={18} />
@@ -140,12 +140,12 @@ export default function SuperAdminPage() {
             { label: "Members", value: "14,205", delta: "2,375 paid tiers", icon: Crown },
             { label: "Seed Balls Dispersed", value: "1.28Cr", delta: "12.8% of goal", icon: Sprout },
           ].map((s) => (
-            <div key={s.label} className="bg-surface border border-border rounded-2xl p-5">
+            <div key={s.label} className="bg-surface border border-border rounded-2xl p-4">
               <div className="flex items-center justify-between">
                 <p className="text-xs text-muted">{s.label}</p>
                 <s.icon size={15} className="text-primary" />
               </div>
-              <p className="text-2xl font-bold text-foreground mt-1.5 tabular-nums">{s.value}</p>
+              <p className="text-xl font-bold text-foreground mt-1.5 tabular-nums">{s.value}</p>
               <p className="text-[11px] text-sage mt-1">{s.delta}</p>
             </div>
           ))}
@@ -153,7 +153,7 @@ export default function SuperAdminPage() {
       </div>
 
       {/* Employee & organization management */}
-      <div className="grid lg:grid-cols-2 gap-6">
+      <div className="grid lg:grid-cols-2 gap-5">
         <SectionCard title="Employee Management" icon={UserCog}>
           <ul className="divide-y divide-surface-hover">
             {employees.map((e) => (
@@ -205,7 +205,7 @@ export default function SuperAdminPage() {
       </div>
 
       {/* Membership control + financial controls */}
-      <div className="grid lg:grid-cols-2 gap-6">
+      <div className="grid lg:grid-cols-2 gap-5">
         <SectionCard title="Membership Plans & Rewards" icon={Crown}>
           <ul className="divide-y divide-surface-hover">
             {membershipPlans.map((m) => (
@@ -252,7 +252,7 @@ export default function SuperAdminPage() {
         </SectionCard>
       </div>
 
-      <div className="grid lg:grid-cols-3 gap-6">
+      <div className="grid lg:grid-cols-3 gap-5">
         <SectionCard title="Live Audit Feed" icon={Activity} className="lg:col-span-2">
           <ul className="divide-y divide-surface-hover">
             {auditFeed.map((a) => (

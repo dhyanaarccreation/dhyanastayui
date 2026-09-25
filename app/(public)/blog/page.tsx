@@ -18,11 +18,11 @@ export default function BlogListingPage() {
   return (
     <div className="bg-background min-h-screen pb-24">
       {/* Header */}
-      <div className="py-20 text-center px-6 border-b border-surface-hover">
-        <h1 className="heading-display text-4xl lg:text-6xl text-foreground mb-6">
+      <div className="py-14 text-center px-6 border-b border-surface-hover">
+        <h1 className="heading-display text-3xl lg:text-5xl text-foreground mb-6">
           The Journal
         </h1>
-        <p className="text-muted max-w-2xl mx-auto mb-10">
+        <p className="text-muted max-w-2xl mx-auto mb-8">
           Stories about design, sustainable travel, local culture, and the
           future of hospitality.
         </p>
@@ -47,7 +47,7 @@ export default function BlogListingPage() {
 
       {/* Featured Post (if All category) */}
       {activeCategory === "All" && blogPosts.length > 0 && (
-        <div className="max-w-[1200px] mx-auto px-6 lg:px-8 py-16">
+        <div className="container-page py-12">
           <Link
             href={`/blog/${blogPosts[0].slug}`}
             className="group block rounded-card-lg overflow-hidden bg-surface border-[5px] border-surface shadow-[var(--shadow-card)] transition-all duration-300 hover:shadow-[var(--shadow-card-hover)] hover:-translate-y-1"
@@ -60,11 +60,11 @@ export default function BlogListingPage() {
                   className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
               </div>
-              <div className="w-full md:w-2/5 p-8 md:p-12 flex flex-col justify-center">
+              <div className="w-full md:w-2/5 p-6 md:p-8 flex flex-col justify-center">
                 <span className="text-xs font-semibold text-primary uppercase tracking-wider mb-4">
                   Featured · {blogPosts[0].category}
                 </span>
-                <h2 className="heading-display text-2xl lg:text-4xl text-foreground mb-4 group-hover:text-primary transition-colors">
+                <h2 className="heading-display text-xl lg:text-3xl text-foreground mb-4 group-hover:text-primary transition-colors">
                   {blogPosts[0].title}
                 </h2>
                 <p className="text-muted leading-relaxed">
@@ -77,8 +77,8 @@ export default function BlogListingPage() {
       )}
 
       {/* Grid */}
-      <div className="max-w-[1200px] mx-auto px-6 lg:px-8 pt-8">
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="container-page pt-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredPosts.slice(activeCategory === "All" ? 1 : 0).map((post) => (
             <Link
               key={post.id}
@@ -92,7 +92,7 @@ export default function BlogListingPage() {
                   className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
               </div>
-              <div className="p-6 flex flex-col flex-1">
+              <div className="p-5 flex flex-col flex-1">
                 <span className="text-[10px] font-semibold text-primary uppercase tracking-wider mb-3">
                   {post.category}
                 </span>

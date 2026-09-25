@@ -159,17 +159,17 @@ export default function TestimonialsCarousel({ testimonials, totalCount }: Testi
   };
 
   return (
-    <section ref={sectionRef} className="py-8 md:py-14 bg-background">
-      <div className="max-w-[1400px] mx-auto px-6 lg:px-8">
-        <div className="text-center mb-6 sm:mb-8">
+    <section ref={sectionRef} className="py-8 md:py-10 bg-background">
+      <div className="container-page">
+        <div className="text-center mb-6 sm:mb-6">
           <span className="text-xs font-semibold text-sage uppercase tracking-widest">Guest Stories</span>
-          <h2 className="heading-organic text-xl sm:text-2xl lg:text-3xl text-foreground mt-1 sm:mt-2">
+          <h2 className="heading-organic text-xl sm:text-xl lg:text-2xl text-foreground mt-1 sm:mt-2">
             What Our Guests Say
           </h2>
         </div>
 
         {/* Filter pills */}
-        <div className="flex flex-wrap items-center justify-center gap-2 mb-8 sm:mb-10">
+        <div className="flex flex-wrap items-center justify-center gap-2 mb-6 sm:mb-8">
           {filters.map((f) => (
             <button
               key={f.key}
@@ -203,7 +203,7 @@ export default function TestimonialsCarousel({ testimonials, totalCount }: Testi
             onPointerMove={onPointerMove}
             onPointerUp={endDrag}
             onPointerLeave={endDrag}
-            className={`relative flex gap-3 sm:gap-6 overflow-x-auto overscroll-x-contain snap-x snap-mandatory scroll-smooth scrollbar-hide -mx-6 px-6 sm:mx-0 sm:px-0 pb-1 items-start transition-opacity duration-200 ${
+            className={`relative flex gap-3 sm:gap-5 overflow-x-auto overscroll-x-contain snap-x snap-mandatory scroll-smooth scrollbar-hide -mx-[4.3478%] px-[4.3478%] sm:mx-0 sm:px-0 pb-1 items-start transition-opacity duration-200 ${
               isFiltering ? "opacity-0" : "opacity-100"
             } ${isDragging ? "cursor-grabbing select-none scroll-auto" : "cursor-grab"}`}
           >
@@ -226,7 +226,7 @@ export default function TestimonialsCarousel({ testimonials, totalCount }: Testi
             {showMoreCard && (
               <Link
                 href="/reviews"
-                className="relative shrink-0 snap-start w-[85%] sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] p-6 sm:p-8 rounded-2xl sm:rounded-[28px] border-2 border-dashed border-primary/30 bg-primary/5 hover:bg-primary/10 flex flex-col items-center justify-center text-center gap-3 transition-colors card-hover"
+                className="relative shrink-0 snap-start w-[85%] sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] p-5 sm:p-6 rounded-2xl sm:rounded-[28px] border-2 border-dashed border-primary/30 bg-primary/5 hover:bg-primary/10 flex flex-col items-center justify-center text-center gap-3 transition-colors card-hover"
               >
                 <span className="w-12 h-12 rounded-full bg-primary/15 text-primary flex items-center justify-center">
                   <MessageCircleHeart size={22} />
@@ -263,7 +263,7 @@ export default function TestimonialsCarousel({ testimonials, totalCount }: Testi
         </div>
 
         {/* Dot pagination */}
-        <div className="flex items-center justify-center gap-2 mt-6 sm:mt-8 flex-wrap">
+        <div className="flex items-center justify-center gap-2 mt-6 sm:mt-6 flex-wrap">
           {filtered.map((t, i) => (
             <button
               key={t.id}
@@ -278,8 +278,8 @@ export default function TestimonialsCarousel({ testimonials, totalCount }: Testi
         </div>
 
         {/* Closing CTA */}
-        <div className="mt-12 sm:mt-16 text-center border-t border-border/60 pt-10 sm:pt-12">
-          <h3 className="heading-organic text-lg sm:text-2xl text-foreground mb-2">Share your Dhyana story</h3>
+        <div className="mt-8 sm:mt-10 text-center border-t border-border/60 pt-10 sm:pt-12">
+          <h3 className="heading-organic text-lg sm:text-xl text-foreground mb-2">Share your Dhyana story</h3>
           <p className="text-sm text-muted max-w-md mx-auto mb-5">
             Tell future travellers what your stay, experience or investment with us was like.
           </p>
@@ -323,7 +323,7 @@ function TestimonialCard({
   return (
     <div
       ref={cardRef}
-      className={`relative shrink-0 snap-start w-[85%] sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] p-6 sm:p-8 rounded-2xl sm:rounded-[28px] bg-surface card-hover transition-[opacity,transform] duration-700 ease-out ${
+      className={`relative shrink-0 snap-start w-[85%] sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] p-5 sm:p-6 rounded-2xl sm:rounded-[28px] bg-surface card-hover transition-[opacity,transform] duration-700 ease-out ${
         entered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
       }`}
       style={{ transitionDelay: entered ? `${delay}ms` : "0ms" }}

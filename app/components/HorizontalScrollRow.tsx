@@ -10,7 +10,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 export default function HorizontalScrollRow({
   children,
   label,
-  rowClassName = "flex gap-3 sm:gap-4 overflow-x-auto pb-2 scrollbar-hide snap-x snap-mandatory",
+  rowClassName = "flex gap-4 sm:gap-5 overflow-x-auto pt-2 -mt-2 pb-3 -mx-[4.3478%] sm:mx-0 scrollbar-hide snap-x snap-mandatory",
 }: {
   children: ReactNode;
   /** Used in the arrow buttons' aria-labels, e.g. "stays" → "Show next stays". */
@@ -34,10 +34,25 @@ export default function HorizontalScrollRow({
     updateScrollState();
   });
 
+  // Below sm the row bleeds out past the page gutter (-mx matches the 4%
+  // viewport gutter that .container-page leaves at its 92% mobile width), so a
+  // swiped card snaps flush to the screen edge rather than stopping short of
+  // it. From sm up the margins reset and the arrows take over.
+  //
+  // overflow-x:auto makes overflow-y compute as auto too, so anything drawn
+  // outside a card is clipped at the scroll box. The small pt/-mt pair gives the
+  // 4px hover lift room without shifting the row.
+  //
+  // One "page" is exactly the set of cards currently in view. Cards are sized
+  // so N of them plus their gaps fill clientWidth, which makes a page advance
+  // clientWidth + one gap. The browser clamps scrollLeft at the end, so a final
+  // partial page lands flush right — a full row of cards, the last one included,
+  // rather than one lonely card with dead space beside it.
   const scrollByPage = (direction: 1 | -1) => {
     const el = scrollerRef.current;
     if (!el) return;
-    el.scrollBy({ left: direction * el.clientWidth * 0.9, behavior: "smooth" });
+    const gap = parseFloat(getComputedStyle(el).columnGap) || 0;
+    el.scrollBy({ left: direction * (el.clientWidth + gap), behavior: "smooth" });
   };
 
   return (

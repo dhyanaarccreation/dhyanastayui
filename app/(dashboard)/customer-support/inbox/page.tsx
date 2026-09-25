@@ -77,7 +77,7 @@ export default function AiChatInboxPage() {
         ))}
       </div>
 
-      <div className="grid lg:grid-cols-3 gap-6">
+      <div className="grid lg:grid-cols-3 gap-5">
         {/* Thread list */}
         <div className="bg-surface border border-border rounded-2xl overflow-hidden">
           <div className="px-5 py-3.5 border-b border-surface-hover flex items-center justify-between">
@@ -112,7 +112,7 @@ export default function AiChatInboxPage() {
         </div>
 
         {/* Transcript + process log */}
-        <div className="lg:col-span-2 space-y-4">
+        <div className="lg:col-span-2 space-y-4 min-w-0">
           <div className="bg-surface border border-border rounded-2xl overflow-hidden">
             <div className="px-5 py-3.5 border-b border-surface-hover flex items-center gap-3">
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -146,7 +146,7 @@ export default function AiChatInboxPage() {
               </button>
             </div>
 
-            <div className="p-5 space-y-4 max-h-[380px] overflow-y-auto">
+            <div className="p-4 space-y-4 max-h-[380px] overflow-y-auto">
               {transcript.map((m, i) =>
                 m.from === "guest" ? (
                   <div key={i} className="flex justify-end">

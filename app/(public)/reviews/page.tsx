@@ -25,23 +25,23 @@ export default function ReviewsPage() {
 
   return (
     <div className="bg-background min-h-screen pb-24">
-      <div className="max-w-[1200px] mx-auto px-6 lg:px-8 pt-8">
+      <div className="container-page pt-8">
         <Link href="/" className="inline-flex items-center gap-1.5 text-xs text-muted hover:text-primary transition-colors">
           <ArrowLeft size={12} /> Back to Home
         </Link>
       </div>
 
-      <div className="py-10 md:py-14 text-center px-6">
+      <div className="py-8 md:py-10 text-center px-6">
         <span className="text-xs font-semibold text-sage uppercase tracking-widest">Guest Stories</span>
-        <h1 className="heading-display text-4xl lg:text-5xl text-foreground mt-2 mb-4">All Reviews</h1>
+        <h1 className="heading-display text-3xl lg:text-4xl text-foreground mt-2 mb-4">All Reviews</h1>
         <p className="text-muted max-w-xl mx-auto text-sm md:text-base">
           {testimonials.length}{" "}
           stories from guests, creators and investors who&apos;ve built something with DhyanaStays.
         </p>
       </div>
 
-      <div className="max-w-[1200px] mx-auto px-6 lg:px-8">
-        <div className="flex flex-wrap items-center justify-center gap-2 mb-10">
+      <div className="container-page">
+        <div className="flex flex-wrap items-center justify-center gap-2 mb-8">
           {filters.map((f) => (
             <button
               key={f.key}
@@ -58,9 +58,9 @@ export default function ReviewsPage() {
           ))}
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 animate-fade-in">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 animate-fade-in">
           {filtered.map((t) => (
-            <div key={t.id} className="relative p-6 sm:p-8 rounded-2xl bg-surface border border-surface-hover card-hover">
+            <div key={t.id} className="relative p-5 sm:p-6 rounded-2xl bg-surface border border-surface-hover card-hover">
               <Quote size={28} className="text-sage/20 absolute top-6 right-6" />
               <div className="flex items-center gap-3 mb-4">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -81,8 +81,8 @@ export default function ReviewsPage() {
           ))}
         </div>
 
-        <div className="mt-14 text-center border-t border-border/60 pt-10">
-          <h3 className="heading-organic text-xl sm:text-2xl text-foreground mb-2">Share your Dhyana story</h3>
+        <div className="mt-10 text-center border-t border-border/60 pt-10">
+          <h3 className="heading-organic text-xl sm:text-xl text-foreground mb-2">Share your Dhyana story</h3>
           <p className="text-sm text-muted max-w-md mx-auto mb-5">
             Tell future travellers what your stay, experience or investment with us was like.
           </p>

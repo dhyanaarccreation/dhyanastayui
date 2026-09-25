@@ -59,12 +59,12 @@ const footerSections = [
 export default function Footer() {
   return (
     <footer className="bg-background border-t border-surface-hover">
-      <div className="max-w-[1400px] mx-auto px-6 lg:px-8 py-6 sm:py-10 lg:py-16">
+      <div className="container-page py-6 sm:py-8 lg:py-12">
         {/* Newsletter + contact — organic rounded band */}
-        <div className="rounded-2xl sm:rounded-[32px] bg-surface-hover p-4 sm:p-6 lg:p-12 mb-5 sm:mb-8 lg:mb-16">
-          <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 sm:gap-5 lg:gap-8">
+        <div className="rounded-2xl sm:rounded-[32px] bg-surface-hover p-4 sm:p-5 lg:p-8 mb-5 sm:mb-6 lg:mb-10">
+          <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 sm:gap-4 lg:gap-6">
             <div>
-              <h3 className="heading-organic text-2xl lg:text-3xl text-foreground mb-2">
+              <h3 className="heading-organic text-xl lg:text-2xl text-foreground mb-2">
                 Stay Inspired
               </h3>
               <p className="text-muted text-sm max-w-md">
@@ -85,7 +85,7 @@ export default function Footer() {
           </div>
 
           {/* Quick contact row */}
-          <div className="grid sm:grid-cols-3 gap-3 sm:gap-5 mt-4 pt-4 sm:mt-6 sm:pt-6 lg:mt-10 lg:pt-8 border-t border-border">
+          <div className="grid sm:grid-cols-3 gap-3 sm:gap-4 mt-4 pt-4 sm:mt-6 sm:pt-6 lg:mt-8 lg:pt-8 border-t border-border">
             {contactInfo.map((c) => (
               <div key={c.label} className="flex items-center gap-3">
                 <span className="w-10 h-10 rounded-full bg-sage/15 text-sage flex items-center justify-center shrink-0">
@@ -98,7 +98,7 @@ export default function Footer() {
         </div>
 
         {/* Links Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 lg:gap-12 py-6 sm:py-10 lg:py-16">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-5 sm:gap-6 lg:gap-8 py-6 sm:py-8 lg:py-12">
           {footerSections.map((section) => (
             <div key={section.title}>
               <h4 className="text-xs font-semibold text-primary uppercase tracking-widest mb-5">
@@ -121,7 +121,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4 lg:gap-6 pt-6 lg:pt-8 border-t border-surface-hover">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4 lg:gap-5 pt-6 lg:pt-8 border-t border-surface-hover">
           <div className="flex items-center gap-3">
             <LogoMark size={32} />
             <span className="text-sm text-subtle">
@@ -129,7 +129,7 @@ export default function Footer() {
             </span>
           </div>
 
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-5">
             <Link
               href="/terms"
               className="text-xs text-subtle hover:text-muted transition-colors"

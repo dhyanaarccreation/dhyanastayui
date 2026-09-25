@@ -30,7 +30,7 @@ export default function TravellerLocationPage() {
 
       <LiveMapCard location={liveLocation} />
 
-      <div className="bg-surface border border-border rounded-2xl p-6">
+      <div className="bg-surface border border-border rounded-2xl p-5">
         <p className="text-sm font-semibold text-foreground mb-4">Route to your next stops</p>
         <div className="space-y-0">
           {waypoints.map((wp, i) => (
