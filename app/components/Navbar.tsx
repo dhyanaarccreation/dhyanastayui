@@ -58,8 +58,10 @@ export default function Navbar() {
             </span>
           </Link>
 
-          {/* Desktop Nav */}
-          <nav className="flex items-center gap-6">
+          {/* Desktop Nav — the mobile drawer below covers phones; without
+              this the full link row rendered unconstrained under the lg:hidden
+              actions/toggle, forcing the page wider than the phone screen. */}
+          <nav className="hidden md:flex items-center gap-6">
             {navLinks.map((link) => {
               const active = pathname === link.href;
               const isExperiences = link.label === "Experiences";

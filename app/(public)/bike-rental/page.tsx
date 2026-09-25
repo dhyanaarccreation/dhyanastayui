@@ -114,13 +114,13 @@ export default function BikeRentalPage() {
 
       {/* Fleet */}
       <section className="py-16 max-w-[1200px] mx-auto px-6 lg:px-8">
-        <div className="flex justify-between items-end mb-8">
+        <div className="flex justify-between items-end mb-8 max-md:flex-col max-md:items-start max-md:gap-3">
           <h2 className="text-2xl font-semibold text-foreground">Available Fleet</h2>
-          <div className="flex gap-2">
-            <button className="px-4 py-1.5 rounded-lg bg-primary text-primary-foreground text-sm font-medium">All</button>
-            <button className="px-4 py-1.5 rounded-lg bg-surface border border-border text-muted text-sm hover:border-subtle">Motorcycles</button>
-            <button className="px-4 py-1.5 rounded-lg bg-surface border border-border text-muted text-sm hover:border-subtle">EVs</button>
-            <button className="px-4 py-1.5 rounded-lg bg-surface border border-border text-muted text-sm hover:border-subtle">Bicycles</button>
+          <div className="flex gap-2 max-md:w-full max-md:flex-nowrap max-md:overflow-x-auto max-md:pb-1">
+            <button className="px-4 py-1.5 rounded-lg bg-primary text-primary-foreground text-sm font-medium max-md:shrink-0">All</button>
+            <button className="px-4 py-1.5 rounded-lg bg-surface border border-border text-muted text-sm hover:border-subtle max-md:shrink-0">Motorcycles</button>
+            <button className="px-4 py-1.5 rounded-lg bg-surface border border-border text-muted text-sm hover:border-subtle max-md:shrink-0">EVs</button>
+            <button className="px-4 py-1.5 rounded-lg bg-surface border border-border text-muted text-sm hover:border-subtle max-md:shrink-0">Bicycles</button>
           </div>
         </div>
 

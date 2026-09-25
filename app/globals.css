@@ -184,6 +184,18 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Mobile-only safety net: some rows (unwrapped flex/grid content, fixed
+   min-width scroll panels) can demand more than the phone's width. Without
+   this, that unconstrained content inflates the whole layout viewport
+   (everything renders zoomed-out and cramped) instead of just scrolling in
+   place. Scoped to <768px only — tablet and desktop are unaffected. */
+@media (max-width: 767px) {
+  html,
+  body {
+    overflow-x: hidden;
+  }
+}
+
 /* ============================================
    Glass Morphism Utilities
    ============================================ */

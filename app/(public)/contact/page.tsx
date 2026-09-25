@@ -100,7 +100,7 @@ export default function ContactPage() {
             {/* Department Emails */}
             <div className="mt-12 pt-8 border-t border-surface-hover">
               <h3 className="text-sm font-medium text-foreground mb-4">Specific Inquiries</h3>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-2 gap-4 max-md:grid-cols-1">
                 <div>
                   <div className="text-xs text-subtle uppercase tracking-wider mb-1">Company</div>
                   <a href="mailto:dhyanaarccreation@gmail.com" className="text-sm text-muted hover:text-primary">dhyanaarccreation@gmail.com</a>

@@ -197,7 +197,7 @@ export default function InvestorDashboardOverview() {
 
       <div className="grid lg:grid-cols-3 gap-5">
         {/* Main Content Area */}
-        <div className="lg:col-span-2 space-y-4">
+        <div className="lg:col-span-2 space-y-4 max-md:min-w-0">
           
           {/* Portfolio Table */}
           <div className="bg-surface border border-border rounded-2xl p-6">

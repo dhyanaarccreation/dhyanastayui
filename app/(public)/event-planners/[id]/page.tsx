@@ -112,7 +112,7 @@ export default function EventPlannerDetailsPage() {
         </div>
 
         <div className="grid lg:grid-cols-3 gap-12">
-          <div className="lg:col-span-2 space-y-10">
+          <div className="lg:col-span-2 space-y-10 max-md:min-w-0">
             {/* About */}
             <div>
               <h2 className="text-2xl font-semibold text-foreground mb-4">About {planner.name}</h2>
@@ -193,7 +193,7 @@ export default function EventPlannerDetailsPage() {
           </div>
 
           {/* ================= BOOKING MODULE ================= */}
-          <div id="book" className="lg:col-span-1 scroll-mt-24">
+          <div id="book" className="lg:col-span-1 scroll-mt-24 max-md:min-w-0">
             <div className="bg-surface border border-border rounded-3xl p-6 md:p-7 sticky top-24 shadow-2xl">
               {confirmed ? (
                 <div className="text-center py-4 animate-fade-in-up">

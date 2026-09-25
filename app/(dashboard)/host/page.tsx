@@ -61,33 +61,33 @@ export default function HostDashboardOverview() {
 
       <div className="grid lg:grid-cols-3 gap-5">
         {/* Main Content Area */}
-        <div className="lg:col-span-2 space-y-4">
-          
+        <div className="lg:col-span-2 space-y-4 max-md:min-w-0">
+
           {/* Action Required */}
           <div className="bg-gradient-to-r from-surface to-surface-hover border border-primary/30 rounded-2xl p-6">
             <h2 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
               <CheckCircle2 className="text-primary" size={20} /> Action Required
             </h2>
             <div className="space-y-3">
-              <div className="flex items-center justify-between p-4 bg-background border border-border rounded-xl">
-                <div className="flex items-center gap-4">
-                  <MessageSquare className="text-muted" size={20} />
-                  <div>
+              <div className="flex items-center justify-between p-4 bg-background border border-border rounded-xl max-md:flex-col max-md:items-stretch max-md:gap-3">
+                <div className="flex items-center gap-4 max-md:min-w-0">
+                  <MessageSquare className="text-muted shrink-0" size={20} />
+                  <div className="max-md:min-w-0">
                     <h3 className="text-sm font-medium text-foreground">New message from Guest (Booking DHY-8472)</h3>
                     <p className="text-xs text-subtle">"Hi, what time is check-in allowed?"</p>
                   </div>
                 </div>
-                <button className="text-sm text-primary font-medium hover:underline">Reply</button>
+                <button className="text-sm text-primary font-medium hover:underline max-md:self-end">Reply</button>
               </div>
-              <div className="flex items-center justify-between p-4 bg-background border border-border rounded-xl">
-                <div className="flex items-center gap-4">
-                  <CheckCircle2 className="text-muted" size={20} />
-                  <div>
+              <div className="flex items-center justify-between p-4 bg-background border border-border rounded-xl max-md:flex-col max-md:items-stretch max-md:gap-3">
+                <div className="flex items-center gap-4 max-md:min-w-0">
+                  <CheckCircle2 className="text-muted shrink-0" size={20} />
+                  <div className="max-md:min-w-0">
                     <h3 className="text-sm font-medium text-foreground">Approve early check-in request</h3>
                     <p className="text-xs text-subtle">Arriving at 11:00 AM on Oct 15</p>
                   </div>
                 </div>
-                <div className="flex gap-2">
+                <div className="flex gap-2 max-md:justify-end">
                   <button className="px-3 py-1.5 border border-border text-xs font-medium text-foreground rounded-lg hover:bg-surface-hover">Decline</button>
                   <button className="px-3 py-1.5 bg-primary text-xs font-medium text-primary-foreground rounded-lg hover:bg-primary-hover">Approve</button>
                 </div>

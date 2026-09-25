@@ -59,13 +59,13 @@ export default function AdminDashboardOverview() {
 
       <div className="grid lg:grid-cols-3 gap-5">
         {/* Main Content Area */}
-        <div className="lg:col-span-2 space-y-4">
-          
+        <div className="lg:col-span-2 space-y-4 max-md:min-w-0">
+
           {/* Revenue Chart Placeholder */}
           <div className="bg-surface border border-border rounded-2xl p-6">
-            <div className="flex justify-between items-center mb-6">
+            <div className="flex justify-between items-center mb-6 max-md:flex-col max-md:items-start max-md:gap-2">
               <h2 className="text-lg font-semibold text-foreground">Platform Revenue (Last 6 Months)</h2>
-              <select className="bg-background border border-border text-sm text-foreground rounded-lg px-3 py-1 focus:outline-none">
+              <select className="bg-background border border-border text-sm text-foreground rounded-lg px-3 py-1 focus:outline-none max-md:self-stretch">
                 <option>All Regions</option>
                 <option>North India</option>
                 <option>South India</option>
